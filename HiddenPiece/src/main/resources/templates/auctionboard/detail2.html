@@ -38,8 +38,8 @@
 
 			<div class="col-lg-7 h-auto mb-30">
 				<div class="h-100 bg-light p-30">
-					<h3>Product Name Goes Here</h3> <p style="text-align: right;">조회수: 30</p>
-					<h5 class="font-weight-semi-bold mb-4">경매종료시각: 2022/12/29 18:00</h5>
+					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: 30</p>
+					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
 					<h3 class="font-weight-semi-bold mb-4">입찰가: $130.00</h3>
 					<h5 class="font-weight-semi-bold mb-4">즉시구매가: $150.00</h5>
 					<h5 class="font-weight-semi-bold mb-4">현재입찰자: Kosta</h5>

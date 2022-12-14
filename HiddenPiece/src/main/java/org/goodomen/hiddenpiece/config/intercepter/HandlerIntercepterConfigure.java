@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration	//핸들러 인터셉터 설정 클래스임을 스프링 컨테이너에 알린다
 public class HandlerIntercepterConfigure implements WebMvcConfigurer{
 	private final LoginCheckInterceptor loginCheckInterceptor;
