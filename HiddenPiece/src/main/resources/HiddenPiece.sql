@@ -6,6 +6,20 @@ CREATE TABLE Account_Info(
 	balance NUMBER NOT NULL,
 	CONSTRAINT PK_Account_Info PRIMARY KEY (account_no)
 )
+select * from ACCOUNT_INFO;
+
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111111,'국한은행',763000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111112,'신일은행',3000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111113,'코스타은행',21);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111114,'제민은행',300000000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111115,'KBK은행',303940100);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111116,'국한은행',293800);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111117,'신일은행',39990600);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111118,'코스타은행',998000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111119,'제민은행',7804000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',111200);
+
+
 
 --회원정보
 CREATE TABLE HP_Member(
@@ -21,6 +35,7 @@ CREATE TABLE HP_Member(
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
+select * from HP_MEMBER
 --회원권한
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,
