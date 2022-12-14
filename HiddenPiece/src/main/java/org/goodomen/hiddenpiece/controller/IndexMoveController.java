@@ -35,4 +35,12 @@ public class IndexMoveController {
 	public String exchangePointResult() {
 		return "mypage/exchangePoint-result";
 	}
+	@RequestMapping("registerForm")
+	public String registerForm() {
+		return "member/register-form";
+	}
+	@RequestMapping("registerMember")
+	public String registerMember() {
+		return "member/register-result";
+	}
 }
