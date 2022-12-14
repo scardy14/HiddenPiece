@@ -35,6 +35,7 @@ CREATE TABLE HP_Member(
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
+select * from HP_MEMBER
 --회원권한
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,
