@@ -98,8 +98,31 @@
                 </form>
             </div>
             <div class="col-lg-4 col-6 text-right">
+            	<th:block th:if="${session.mvo==null}">
+ <form action="login" method="post">
+ 	<input type="text" name="id" placeholder="아이디" required="required"><br>
+ 	<input type="password" name="password" placeholder="패스워드" required="required"><br>
+ 	<button type="submit">로그인</button>
+ </form>
+ <br><br>
+ <a href="" th:href="@{/registerMemberForm}">회원가입</a>
+</th:block>
+<th:block th:if="${session.mvo!=null}">
+ <span th:text="|${session.mvo.name}님|"></span><br>
+ <form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
+ <a href="#" id="logoutBtn">로그아웃</a>
+	<script>
+		$(function(){
+			$("#logoutBtn").click(function() {
+				$("#logoutForm").submit();
+			});
+		});
+	</script>
+  	<br><br>
+  	<a href="" th:href="@{/updateMemberForm}">회원정보수정</a>
+</th:block>                                
             	<h4 class="text-black mb-3">대박징조님</h4>
-            	<p class="m-0"><a href = "">로그아웃</a></p>                                
+            	<p class="m-0"><a href = "" th:href="@{/registerForm}">로그아웃</a></p>                     
             </div>
         </div>
     </div>
