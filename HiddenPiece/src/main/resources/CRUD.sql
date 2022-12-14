@@ -1,0 +1,4 @@
+-- AWS IP: 54.180.2.161
+-- AWS ID: scott
+-- AWS PW: tiger
+-- AWS TableName: xe
