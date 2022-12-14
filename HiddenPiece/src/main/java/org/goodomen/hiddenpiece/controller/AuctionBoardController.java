@@ -15,7 +15,7 @@ public class AuctionBoardController {
 	@RequestMapping("findAuctionBoardPostDetail")
 	public String findAuctionBoardPostDetail(long postNo, Model model) {
 		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
-		model.addAttribute("postVO",postVO);
+		model.addAttribute("postVO", postVO);
 		return "auctionboard/detail2";
 	}
 	

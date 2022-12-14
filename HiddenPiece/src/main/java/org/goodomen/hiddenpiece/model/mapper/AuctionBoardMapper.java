@@ -1,9 +1,13 @@
 package org.goodomen.hiddenpiece.model.mapper;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.goodomen.hiddenpiece.controller.AuctionBoardPostVO;
 
 @Mapper
 public interface AuctionBoardMapper {
-	public AuctionBoardPostVO findAuctionBoardPostDetail(long postNo); 
+	public AuctionBoardPostVO findAuctionBoardPostDetail(long postNo);
+
+	public ArrayList<AuctionBoardPostVO> findAuctionBoardPostList(); 
 }

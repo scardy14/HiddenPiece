@@ -1,5 +1,7 @@
 package org.goodomen.hiddenpiece.model.service;
 
+import java.util.ArrayList;
+
 import org.goodomen.hiddenpiece.controller.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.springframework.stereotype.Service;
@@ -14,5 +16,10 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public AuctionBoardPostVO findAuctionBoardPostDetail(long postNo) {
 		return auctionBoardMapper.findAuctionBoardPostDetail(postNo);
 	}
+	@Override
+	public ArrayList<AuctionBoardPostVO> findAuctionBoardPostList() {
+		return auctionBoardMapper.findAuctionBoardPostList();
+	}
+
 
 }

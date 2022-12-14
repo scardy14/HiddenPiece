@@ -15,7 +15,7 @@
 					data-ride="carousel">
 					<div class="carousel-inner bg-light">
 						<div class="carousel-item active">
-							<img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+							<img class="w-100 h-100" th:src="@{/img/}+ ${postVO.photo}" alt="Image">
 						</div>
 						<div class="carousel-item">
 							<img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
@@ -40,18 +40,17 @@
 				<div class="h-100 bg-light p-30">
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: 30</p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
-					<h3 class="font-weight-semi-bold mb-4">입찰가: $130.00</h3>
-					<h5 class="font-weight-semi-bold mb-4">즉시구매가: $150.00</h5>
-					<h5 class="font-weight-semi-bold mb-4">현재입찰자: Kosta</h5>
+					<h3 class="font-weight-semi-bold mb-4" th:text="|입찰가 ${postVO.currentPrice}원|">입찰가: $130.00</h3>
+					<h5 class="font-weight-semi-bold mb-4" th:text="|즉시구매가 ${postVO.sellPrice}원|">즉시구매가: $150.00</h5>
+					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰자 ${postVO.nowId}님|">현재입찰자: Kosta</h5>
 					<div class="d-flex align-items-center mb-4 pt-2">
-						<div class="input-group quantity mr-3" style="width: 130px;">
+						<div class="input-group quantity mr-3" style="width: 200px;">
 							<div class="input-group-btn">
 								<button class="btn btn-primary btn-minus">
 									<i class="fa fa-minus"></i>
 								</button>
 							</div>
-							<input type="text"
-								class="form-control bg-secondary border-0 text-center" value="130">
+							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${postVO.currentPrice}">
 							<div class="input-group-btn">
 								<button class="btn btn-primary btn-plus">
 									<i class="fa fa-plus"></i>
@@ -74,7 +73,7 @@
 					</div>
 					<div class="tab-content">
 						<div class="tab-pane fade show active" id="tab-pane-1">
-							<p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam
+							<p th:text="${postVO.content}">Eos no lorem eirmod diam diam, eos elitr et gubergren diam
 								sea. Consetetur vero aliquyam invidunt duo dolores et duo sit.
 								Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur
 								invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd
@@ -84,12 +83,6 @@
 								eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at
 								sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr
 								sanctus eirmod takimata dolor ea invidunt.</p>
-							<p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod
-								et ipsum. Amet dolore tempor consetetur sed lorem dolor sit
-								lorem tempor. Gubergren amet amet labore sadipscing clita clita
-								diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore
-								voluptua sit rebum. Ea erat sed et diam takimata sed justo.
-								Magna takimata justo et amet magna et.</p>
 						</div>
 				</div>
 			</div>
