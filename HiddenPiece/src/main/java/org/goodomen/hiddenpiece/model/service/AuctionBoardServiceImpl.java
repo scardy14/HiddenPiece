@@ -1,7 +1,7 @@
 package org.goodomen.hiddenpiece.model.service;
 
-import org.goodomen.hiddenpiece.controller.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;

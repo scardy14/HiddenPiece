@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.controller;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
