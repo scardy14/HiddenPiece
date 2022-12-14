@@ -1,4 +1,4 @@
-package org.kosta.myproject;
+package org.goodomen.hiddenpiece;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
