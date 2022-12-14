@@ -84,23 +84,30 @@
                         </div>
                     </div>
                     <!-- 이거 아래거 반복시키면 됨 -->
-                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                    
+                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1"  th:each="group:${postList}">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                                <img class="img-fluid w-100" th:src="@{/img/}+ ${group.photo}" alt="">
                                 <div class="product-action">
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="" th:href="@{/findAuctionBoardPostDetail?postNo=1}"><i class="fa fa-search"></i></a>
+                                    
+                                    <!--<a th:href="@{/board(no=${board.no})}">링크1</a>  -->
+                                    <a class="btn btn-outline-dark btn-square" href="" th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="text-center py-4">
+<<<<<<< HEAD
                                 <a class="h6 text-decoration-none text-truncate" href="" th:href="@{/findAuctionBoardPostDetail?postNo=1}">Product Name Goes Here</a>
+=======
+                                <a class="h6 text-decoration-none text-truncate" href="" th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}" th:text="${group.title}">${group.title}</a>
+>>>>>>> refs/heads/main
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>$130.00</h5><h6 class="text-muted ml-2"><del>$150.00</del></h6>
+                                    <h5 th:text="|${group.currentPrice}원|">${group.currentPrice}</h5><h6 class="text-muted ml-2" th:text="|${group.startPrice}원|"><del>${group.startPrice}</del></h6>
                                 </div>
-            
                             </div>
                         </div>
+                        
                     </div>
                     <!-- 이거 위에거 반복시키면 됨 -->
                     <div class="col-12">

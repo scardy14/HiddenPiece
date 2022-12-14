@@ -15,7 +15,11 @@
 					data-ride="carousel">
 					<div class="carousel-inner bg-light">
 						<div class="carousel-item active">
+<<<<<<< HEAD
 							<img class="w-100 h-100" src="img/product-1.jpg" alt="Image" th:src="@{/img/}+${postVO.photo}">
+=======
+							<img class="w-100 h-100" th:src="@{/img/}+ ${postVO.photo}" alt="Image">
+>>>>>>> refs/heads/main
 						</div>
 						<!-- 
 						<div class="carousel-item">
@@ -44,19 +48,24 @@
 				<div class="h-100 bg-light p-30">
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
+<<<<<<< HEAD
 					<h3 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h3>
 					<h3 class="font-weight-semi-bold mb-4">입찰가: <span th:text="${postVO.currentPrice}">현재가격표시</span></h3>
 					<h5 class="font-weight-semi-bold mb-4">즉시구매가: <span th:text="${postVO.sellPrice}">즉구가격표시</span></h5>
 					<h5 class="font-weight-semi-bold mb-4">현재입찰자: <span th:text="${postVO.nowId}">현재입찰자</span></h5>
+=======
+					<h3 class="font-weight-semi-bold mb-4" th:text="|입찰가 ${postVO.currentPrice}원|">입찰가: $130.00</h3>
+					<h5 class="font-weight-semi-bold mb-4" th:text="|즉시구매가 ${postVO.sellPrice}원|">즉시구매가: $150.00</h5>
+					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰자 ${postVO.nowId}님|">현재입찰자: Kosta</h5>
+>>>>>>> refs/heads/main
 					<div class="d-flex align-items-center mb-4 pt-2">
-						<div class="input-group quantity mr-3" style="width: 130px;">
+						<div class="input-group quantity mr-3" style="width: 200px;">
 							<div class="input-group-btn">
 								<button class="btn btn-primary btn-minus">
 									<i class="fa fa-minus"></i>
 								</button>
 							</div>
-							<input type="text"
-								class="form-control bg-secondary border-0 text-center" value="130">
+							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${postVO.currentPrice}">
 							<div class="input-group-btn">
 								<button class="btn btn-primary btn-plus">
 									<i class="fa fa-plus"></i>
@@ -79,8 +88,21 @@
 					</div>
 					<div class="tab-content">
 						<div class="tab-pane fade show active" id="tab-pane-1">
+<<<<<<< HEAD
 							<p th:text="${postVO.content}">상품설명란</p>
 
+=======
+							<p th:text="${postVO.content}">Eos no lorem eirmod diam diam, eos elitr et gubergren diam
+								sea. Consetetur vero aliquyam invidunt duo dolores et duo sit.
+								Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur
+								invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd
+								ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod.
+								Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut
+								diam consetetur duo justo est, sit sanctus diam tempor aliquyam
+								eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at
+								sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr
+								sanctus eirmod takimata dolor ea invidunt.</p>
+>>>>>>> refs/heads/main
 						</div>
 				</div>
 			</div>
