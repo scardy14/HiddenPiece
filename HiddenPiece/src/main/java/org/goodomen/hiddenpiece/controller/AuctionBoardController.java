@@ -19,5 +19,9 @@ public class AuctionBoardController {
 		model.addAttribute("postVO",postVO);
 		return "auctionboard/detail2";
 	}
+	@RequestMapping("writeAuctionBoardPost")
+	public String writeAuctionBoardPost() {
+		return "auctionboard/write-form";
+	}
 	
 }

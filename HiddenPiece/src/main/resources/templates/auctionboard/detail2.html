@@ -15,8 +15,9 @@
 					data-ride="carousel">
 					<div class="carousel-inner bg-light">
 						<div class="carousel-item active">
-							<img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+							<img class="w-100 h-100" src="img/product-1.jpg" alt="Image" th:src="@{/img/}+${postVO.photo}">
 						</div>
+						<!-- 
 						<div class="carousel-item">
 							<img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
 						</div>
@@ -26,23 +27,27 @@
 						<div class="carousel-item">
 							<img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
 						</div>
+						-->
 					</div>
+					<!-- 
 					<a class="carousel-control-prev" href="#product-carousel"
 						data-slide="prev"> <i class="fa fa-2x fa-angle-left text-dark"></i>
 					</a> <a class="carousel-control-next" href="#product-carousel"
 						data-slide="next"> <i
 						class="fa fa-2x fa-angle-right text-dark"></i>
 					</a>
+					 -->
 				</div>
 			</div>
 
 			<div class="col-lg-7 h-auto mb-30">
 				<div class="h-100 bg-light p-30">
-					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: 30</p>
+					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
-					<h3 class="font-weight-semi-bold mb-4">입찰가: $130.00</h3>
-					<h5 class="font-weight-semi-bold mb-4">즉시구매가: $150.00</h5>
-					<h5 class="font-weight-semi-bold mb-4">현재입찰자: Kosta</h5>
+					<h3 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h3>
+					<h3 class="font-weight-semi-bold mb-4">입찰가: <span th:text="${postVO.currentPrice}">현재가격표시</span></h3>
+					<h5 class="font-weight-semi-bold mb-4">즉시구매가: <span th:text="${postVO.sellPrice}">즉구가격표시</span></h5>
+					<h5 class="font-weight-semi-bold mb-4">현재입찰자: <span th:text="${postVO.nowId}">현재입찰자</span></h5>
 					<div class="d-flex align-items-center mb-4 pt-2">
 						<div class="input-group quantity mr-3" style="width: 130px;">
 							<div class="input-group-btn">
@@ -74,22 +79,8 @@
 					</div>
 					<div class="tab-content">
 						<div class="tab-pane fade show active" id="tab-pane-1">
-							<p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam
-								sea. Consetetur vero aliquyam invidunt duo dolores et duo sit.
-								Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur
-								invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd
-								ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod.
-								Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut
-								diam consetetur duo justo est, sit sanctus diam tempor aliquyam
-								eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at
-								sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr
-								sanctus eirmod takimata dolor ea invidunt.</p>
-							<p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod
-								et ipsum. Amet dolore tempor consetetur sed lorem dolor sit
-								lorem tempor. Gubergren amet amet labore sadipscing clita clita
-								diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore
-								voluptua sit rebum. Ea erat sed et diam takimata sed justo.
-								Magna takimata justo et amet magna et.</p>
+							<p th:text="${postVO.content}">상품설명란</p>
+
 						</div>
 				</div>
 			</div>

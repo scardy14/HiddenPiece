@@ -35,4 +35,8 @@ public class IndexMoveController {
 	public String exchangePointResult() {
 		return "mypage/exchangePoint-result";
 	}
+	@RequestMapping("testCheckOut")
+	public String testCheckOut() {
+		return "checkout2";
+	}
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuctionBoardPostVO {
-	private long number;
+	private long postNo;
 	private String id;
 	private String title;
 	private String content;
