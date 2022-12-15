@@ -22,8 +22,8 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	}
 	@Override
 	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		
 		return auctionBoardMapper.writeAuctionBoardPost(auctionBoardPostVO);
 	}
-
 
 }

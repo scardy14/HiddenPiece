@@ -1,9 +1,11 @@
 package org.goodomen.hiddenpiece.controller;
 
+
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -22,10 +24,10 @@ public class AuctionBoardController {
 	@RequestMapping("moveAuctionBoardPostForm")
 	public String moveAuctionBoardPostForm() {
 		return "auctionboard/write-form";
-	}
-	@RequestMapping("writeAuctionBoardPost")
+	}	
+	@PostMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		System.out.println(auctionBoardPostVO);
+		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
 		int result = auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/write-ok";
 	}

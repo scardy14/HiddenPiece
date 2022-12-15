@@ -1,32 +1,30 @@
 -------------------------회원정보--------------------------------------
 --계좌정보
 CREATE TABLE Account_Info(
-	account_no NUMBER NOT NULL,
+	account_no VARCHAR2(100) NOT NULL,
 	bank VARCHAR2(100) NOT NULL,
 	balance NUMBER NOT NULL,
 	CONSTRAINT PK_Account_Info PRIMARY KEY (account_no)
 )
 select * from ACCOUNT_INFO;
 
-
-
 --회원정보
 CREATE TABLE HP_Member(
-	id VARCHAR2(100) NOT NULL,
-	tel NUMBER NOT NULL,
+	id VARCHAR2(100) NOT NULL,	
 	email VARCHAR2(100) NOT NULL,
 	address VARCHAR2(100) NOT NULL,
 	point NUMBER NOT NULL,
 	name VARCHAR2(100) NOT NULL,
 	nickname VARCHAR2(100) NOT NULL,
-	status VARCHAR2(100) NOT NULL,
-	account_no NUMBER NOT NULL,	
+	account_no VARCHAR2(100) NOT NULL,	
+	password VARCHAR2(100) NOT NULL,
+	tel VARCHAR2(100) NOT NULL,	
+	status NUMBER NOT NULL,
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
 
 select * from HP_MEMBER
-
 --회원권한
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,
@@ -55,6 +53,7 @@ CREATE TABLE AuctionBoard(
 	CONSTRAINT PK_AuctionBoard PRIMARY KEY (post_no),
 	CONSTRAINT FK_AuctionBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+SELECT * FROM AuctionBoard
 --경매게시판댓글
 CREATE SEQUENCE AuctionBoard_Comment_seq;
 CREATE TABLE AuctionBoard_Comment (

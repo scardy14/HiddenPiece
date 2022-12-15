@@ -14,6 +14,6 @@
 		<include refid="selectAuctionBoardPostList"></include> order by post_no desc
 	</select>
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		INSERT INTO AuctionBoard VALUES()
+		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval, #{id}, #{title}, #{content}, #{photo}, #{startPrice}, #{startPrice}, #{sellPrice}, DEFAULT, DEFAULT, TO_DATE(#{endDate},'YYYY-MM-DD HH24:MI'), ' ', DEFAULT)
 	</insert>
 </mapper>

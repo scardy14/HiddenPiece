@@ -11,7 +11,6 @@ CREATE TABLE Account_Info(
 	balance NUMBER NOT NULL,
 	CONSTRAINT PK_Account_Info PRIMARY KEY (account_no)
 )
-INSERT INTO Account_Info VALUES(333308,'카카오뱅크','124124124')
 INSERT INTO Account_Info VALUES(99150201,'국민','70000000')
 insert into ACCOUNT_INFO(account_no, bank, balance) values(111111,'국한은행',763000);
 insert into ACCOUNT_INFO(account_no, bank, balance) values(111112,'신일은행',3000);
@@ -41,7 +40,7 @@ CREATE TABLE HP_Member(
 )
 
 select * from HP_Member where id='yerin0110';
-INSERT INTO HP_Member VALUES('scardy',01063462516,'jyhong20@naver.com','상일동',1414141414,'홍주영','코스타짱돌','회원',333308)
+INSERT INTO HP_Member VALUES('scardy','jyhong20@naver.com','상일동',1414141414,'홍주영','코스타짱돌','3333-08-6112059','scardy14','01063462516',1)
 INSERT INTO HP_Member VALUES('yerin0110',01093124050,'yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','회원',99150201)
 
 
