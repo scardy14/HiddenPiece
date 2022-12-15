@@ -2,6 +2,7 @@ package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
 
+import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.controller.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,31 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public AuctionBoardPostVO findAuctionBoardPostDetail(long postNo) {
 		return auctionBoardMapper.findAuctionBoardPostDetail(postNo);
 	}
+	
 	@Override
 	public ArrayList<AuctionBoardPostVO> findAuctionBoardPostList() {
 		return auctionBoardMapper.findAuctionBoardPostList();
 	}
+	
+	@Override
+	public ArrayList<AuctionBoardCommentVO> findAuctionBoardCommentListByPostNo(long postNo) {
+		return auctionBoardMapper.findAuctionBoardCommentListByPostNo(postNo);
+	}
+	
+	@Override
+	public void writeComment(AuctionBoardCommentVO commentVO) {
+		auctionBoardMapper.writeComment(commentVO);
+	}
 
+	@Override
+	public void changeCommentStatus(long commentNo) {
+		auctionBoardMapper.changeCommentStatus(commentNo);
+	}
+
+	@Override
+	public String selectCommentByCommentNo(long commentNo) {
+		String content = auctionBoardMapper.selectCommentByCommentNo(commentNo);
+		return content;
+	}
 
 }

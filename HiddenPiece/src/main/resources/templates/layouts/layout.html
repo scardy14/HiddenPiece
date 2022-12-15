@@ -111,7 +111,9 @@
  <span th:text="|${session.mvo.name}님|"></span><br>
  <form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
  <a href="#" id="logoutBtn">로그아웃</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
+	
 		$(function(){
 			$("#logoutBtn").click(function() {
 				$("#logoutForm").submit();
