@@ -36,7 +36,12 @@ public class MemberController {
 			session.invalidate();
 		return "redirect:/";
 	}
-	
+	@PostMapping("registerMember")
+	public String register(MemberVO memberVO) {
+		System.out.println(memberVO);
+		memberSerivce.registerMember(memberVO);
+		return "member/register-result";
+	}
 
 	
 	

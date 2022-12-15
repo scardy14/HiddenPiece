@@ -9,7 +9,7 @@
 
 	<insert id="registerMember" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO">
 	insert into HP_Member 
-	values(#{id},#{email},#{address},#{point},#{name},#{nickName},#{accountNo},#{password},#{tel},#{status})	
+	values(#{id},#{email},#{address},0,#{name},#{nickName},#{accountNo},#{password},#{tel},1)	
 	</insert>
 
 
