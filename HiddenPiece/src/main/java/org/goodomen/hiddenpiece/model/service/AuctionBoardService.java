@@ -24,5 +24,7 @@ public interface AuctionBoardService {
 
 	int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
 
+	int deleteAuctionBoardPost(long postNo);
+
 
 }

@@ -43,8 +43,9 @@ public class AuctionBoardController {
 	}
 	
 	@PostMapping("moveAuctionBoardPostDelete")
-	public String moveAuctionBoardPostDelete() {
-		return "auctionboard/delete-form";
+	public String moveAuctionBoardPostDelete(long postNo) {
+		auctionBoardService.deleteAuctionBoardPost(postNo);
+		return "auctionboard/delete-ok";
 	}	
 	
 	@ResponseBody

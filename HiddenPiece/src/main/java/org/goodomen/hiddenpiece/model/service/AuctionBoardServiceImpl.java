@@ -49,4 +49,9 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		String content = auctionBoardMapper.selectCommentByCommentNo(commentNo);
 		return content;
 	}
+
+	@Override
+	public int deleteAuctionBoardPost(long postNo) {
+		return auctionBoardMapper.deleteAuctionBoardPost(postNo);
+	}
 }

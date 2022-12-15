@@ -31,6 +31,7 @@ CREATE TABLE HP_Member(
 )
 <<<<<<< HEAD
 SELECT * FROM HP_Member 
+UPDATE AuctionBoard SET status=0 WHERE post
 =======
 -- 계좌 생성하기
 INSERT INTO ACCOUNT_INFO values('99150201', '국민', 50000);

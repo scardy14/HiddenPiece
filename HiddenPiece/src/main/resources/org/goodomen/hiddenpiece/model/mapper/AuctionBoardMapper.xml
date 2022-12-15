@@ -50,5 +50,8 @@
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval, #{id}, #{title}, #{content}, '꾸깃.PNG', #{startPrice}, #{startPrice}, #{sellPrice}, DEFAULT, DEFAULT, TO_DATE(#{endDate},'YYYY-MM-DD HH24:MI'), ' ', DEFAULT)
 	</insert>
+	<update id="deleteAuctionBoardPost" parameterType="long">
+		UPDATE AutionBoard SET status=0 WHERE post
+	</update>
 
 </mapper>

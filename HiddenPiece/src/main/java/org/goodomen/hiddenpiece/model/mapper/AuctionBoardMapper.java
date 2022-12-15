@@ -21,6 +21,8 @@ public interface AuctionBoardMapper {
 
 	public String selectCommentByCommentNo(long commentNo); 
 
-	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO); 
+	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public int deleteAuctionBoardPost(long postNo); 
 
 }
