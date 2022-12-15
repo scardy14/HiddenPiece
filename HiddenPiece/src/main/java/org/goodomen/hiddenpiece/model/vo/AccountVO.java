@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountVO {
-	private int accountNo;
+	private String accountNo;
 	private String bank;
 	private long balance;
 }

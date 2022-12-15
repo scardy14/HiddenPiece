@@ -5,4 +5,8 @@
 	<select id="login" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
 		select * from HP_Member where id=#{id} and password=#{password}
 	</select>
+	<insert id="registerMember" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO">
+	insert into HP_Member 
+	values(#{id},#{email},#{address},#{point},#{name},#{nickName},#{accountNo},#{password},#{tel},#{status})	
+	</insert>
 </mapper>
