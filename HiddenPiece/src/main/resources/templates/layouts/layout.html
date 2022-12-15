@@ -65,16 +65,11 @@
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
-					&nbsp;
-					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"></form>
-					<a href="#" id="logoutBtn">로그아웃</a>
-					<script>
-						$(function() {
-							$("#logoutBtn").click(function() {
-								$("#logoutForm").submit();
-							});
-						});
-					</script>
+					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
+ 					<a href="#" id="logoutBtn">로그아웃</a>
+ 						
+ 						
+ 						
 					<br>
 					<br>
 					<a href="" th:href="@{/updateMemberForm}">회원정보수정</a>
@@ -224,6 +219,9 @@
 					return false;
 				}
 			});
+			$("#logoutBtn").click(function(){
+					$("#logoutForm").submit();
+				});
 		});
 	</script>
 </body>

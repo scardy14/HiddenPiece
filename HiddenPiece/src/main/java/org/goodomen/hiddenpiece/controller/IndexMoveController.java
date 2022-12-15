@@ -62,5 +62,6 @@ public class IndexMoveController {
 	public String loginForm() {
 		return "member/login-form";
 	}
+	
 }
 

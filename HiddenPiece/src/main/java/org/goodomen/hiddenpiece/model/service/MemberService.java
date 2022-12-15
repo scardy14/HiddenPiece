@@ -6,4 +6,6 @@ public interface MemberService {
 
 	int registerMember(MemberVO memberVO);
 
+	MemberVO login(MemberVO memberVO);
+
 }

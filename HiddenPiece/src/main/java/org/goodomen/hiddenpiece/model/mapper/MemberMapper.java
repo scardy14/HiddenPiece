@@ -6,8 +6,8 @@ import org.goodomen.hiddenpiece.model.vo.MemberVO;
 @Mapper
 public interface MemberMapper {
 
-	MemberVO login(MemberVO memberVO);
+	public MemberVO login(MemberVO memberVO);
 
-	int registerMember(MemberVO memberVO);
+	public int registerMember(MemberVO memberVO);
 	
 }
