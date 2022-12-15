@@ -108,15 +108,20 @@
                     </div>
                     <!-- 이거 위에거 반복시키면 됨 -->
                     <div class="col-12">
-                        <nav>
-                          <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</span></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                          </ul>
-                        </nav>
+                    	<!-- <th:block th:if="${session.mvo.id!=null}"> -->
+                    		<div style="text-align: right;">
+                    			<a style="background-color:  #FFD333; color: white; width: 80px; height: 30px;" th:href="@{/moveAuctionBoardPostForm}">글작성</a>
+                    		</div>
+                    	<!-- </th:block> -->
+                    	<nav>
+	                        <ul class="pagination justify-content-center">
+	                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+	                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+	                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+	                        <li class="page-item"><a class="page-link" href="#" th:href="@{/testCheckOut}">3</a></li>
+	                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+	                    	</ul>
+	                    </nav>
                     </div>
                 </div>
             </div>

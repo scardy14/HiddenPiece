@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,10 @@ public class IndexMoveController {
 	public String exchangePointResult() {
 		return "mypage/exchangePoint-result";
 	}
+	@RequestMapping("testCheckOut")
+	public String testCheckOut() {
+		return "checkout2";
+	}
 	@RequestMapping("registerForm")
 	public String registerForm() {
 		return "member/register-form";
@@ -53,4 +58,10 @@ public class IndexMoveController {
 	public String registerMember() {
 		return "member/register-result";
 	}
+	@RequestMapping("loginForm")
+	public String loginForm() {
+		return "member/login-form";
+	}
+	
 }
+

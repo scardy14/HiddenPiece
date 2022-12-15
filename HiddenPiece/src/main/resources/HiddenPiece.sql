@@ -8,23 +8,58 @@ CREATE TABLE Account_Info(
 )
 select * from ACCOUNT_INFO;
 
+<<<<<<< HEAD
+=======
+
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111111','국한은행',763000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111112','신일은행',3000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111113','코스타은행',21);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111114','제민은행',300000000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111115','KBK은행',303940100);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111116','국한은행',293800);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111117','신일은행',39990600);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111118','코스타은행',998000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111119','제민은행',7804000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values('111120','KBK은행',111200);
+
+commit
+
+
+
+
+>>>>>>> refs/heads/main
 --회원정보
 CREATE TABLE HP_Member(
+<<<<<<< HEAD
 	id VARCHAR2(100) NOT NULL,	
+=======
+	id VARCHAR2(100) NOT NULL,
+>>>>>>> refs/heads/main
 	email VARCHAR2(100) NOT NULL,
 	address VARCHAR2(100) NOT NULL,
 	point NUMBER NOT NULL,
 	name VARCHAR2(100) NOT NULL,
+<<<<<<< HEAD
 	nickname VARCHAR2(100) NOT NULL,
 	account_no VARCHAR2(100) NOT NULL,	
 	password VARCHAR2(100) NOT NULL,
 	tel VARCHAR2(100) NOT NULL,	
 	status NUMBER NOT NULL,
+=======
+	nickname VARCHAR2(100) NOT NULL,	
+	account_no NUMBER NOT NULL,
+	tel VARCHAR2(100) NOT NULL,
+	status	NUMBER NOT NULL,
+>>>>>>> refs/heads/main
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
 
 select * from HP_MEMBER
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/heads/main
 --회원권한
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,
@@ -54,6 +89,7 @@ CREATE TABLE AuctionBoard(
 	CONSTRAINT FK_AuctionBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
 --경매게시판댓글
+select * from AUCTIONBOARD;
 CREATE SEQUENCE AuctionBoard_Comment_seq;
 CREATE TABLE AuctionBoard_Comment (
 	comment_no NUMBER NOT NULL,

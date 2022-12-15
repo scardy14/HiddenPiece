@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,16 @@ public class AuctionBoardController {
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);
 		return "auctionboard/detail2";
+	}
+	@RequestMapping("moveAuctionBoardPostForm")
+	public String moveAuctionBoardPostForm() {
+		return "auctionboard/write-form";
+	}
+	@RequestMapping("writeAuctionBoardPost")
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		System.out.println(auctionBoardPostVO);
+		int result = auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
+		return "auctionboard/write-ok";
 	}
 	
 	@ResponseBody

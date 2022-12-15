@@ -3,8 +3,8 @@ package org.goodomen.hiddenpiece.model.service;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
-import org.goodomen.hiddenpiece.controller.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,12 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@Override
 	public void writeComment(AuctionBoardCommentVO commentVO) {
 		auctionBoardMapper.writeComment(commentVO);
+	}
+	
+	@Override
+	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		return auctionBoardMapper.writeAuctionBoardPost(auctionBoardPostVO);
+
 	}
 
 	@Override

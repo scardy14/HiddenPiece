@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
-import org.goodomen.hiddenpiece.controller.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+
 
 @Mapper
 public interface AuctionBoardMapper {
@@ -19,4 +20,7 @@ public interface AuctionBoardMapper {
 	public void changeCommentStatus(long commentNo);
 
 	public String selectCommentByCommentNo(long commentNo); 
+
+	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO); 
+
 }

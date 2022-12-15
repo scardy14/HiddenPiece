@@ -13,6 +13,18 @@ CREATE TABLE Account_Info(
 )
 INSERT INTO Account_Info VALUES(333308,'카카오뱅크','124124124')
 INSERT INTO Account_Info VALUES(99150201,'국민','70000000')
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111111,'국한은행',763000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111112,'신일은행',3000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111113,'코스타은행',21);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111114,'제민은행',300000000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111115,'KBK은행',303940100);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111116,'국한은행',293800);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111117,'신일은행',39990600);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111118,'코스타은행',998000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111119,'제민은행',7804000);
+insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',111200);
+
+
 
 
 CREATE TABLE HP_Member(
@@ -35,6 +47,12 @@ INSERT INTO ACCOUNT_INFO values('144322', '국민', 5000);
 INSERT INTO HP_Member VALUES('yerin0110','yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','99150201', 'a', 01093124050, 1);
 INSERT INTO HP_Member VALUES('java','java@naver.com','오리',5000,'김자바','쏘해피자바','144322', 'a', 01081085855, 1);
 
+<<<<<<< HEAD
+=======
+select * from HP_Member where id='yerin0110';
+INSERT INTO HP_Member VALUES('scardy',01063462516,'jyhong20@naver.com','상일동',1414141414,'홍주영','코스타짱돌','회원',333308)
+INSERT INTO HP_Member VALUES('yerin0110',01093124050,'yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','회원',99150201)
+>>>>>>> refs/heads/main
 
 
 CREATE TABLE AuctionBoard(
