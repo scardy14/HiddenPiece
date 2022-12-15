@@ -10,4 +10,9 @@ public interface MemberMapper {
 
 	int registerMember(MemberVO memberVO);
 	
+	String findId(String email, String address, String name, String tel);
+
+	String findPassword(String id, String email, String name, String tel);
+
+	
 }

@@ -25,5 +25,23 @@ public class HiddenPieceTest {
 		MemberVO resultVO = memberMapper.login(memberVO);
 		logger.debug("login vo: {}", resultVO);
 	}
-
+	@Test
+	public void findId() {
+		String email = "jyhong20@naver.com";
+		String address = "상일동";
+		String name = "홍주영";
+		String tel = "01063462516";
+		String id = memberMapper.findId(email,address,name,tel);
+		System.out.println(id);
+	}
+	
+	@Test
+	public void findPassword() {
+		String id = "scardy";
+		String email = "jyhong20@naver.com";
+		String name = "홍주영";
+		String tel = "01063462516";
+		String password = memberMapper.findPassword(id,email,name,tel);
+		System.out.println(password);
+	}
 }
