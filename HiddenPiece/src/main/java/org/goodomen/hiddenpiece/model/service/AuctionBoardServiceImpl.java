@@ -39,9 +39,6 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		return auctionBoardMapper.writeAuctionBoardPost(auctionBoardPostVO);
 
 	}
-
-<<<<<<< HEAD
-=======
 	@Override
 	public void changeCommentStatus(long commentNo) {
 		auctionBoardMapper.changeCommentStatus(commentNo);
@@ -52,6 +49,4 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		String content = auctionBoardMapper.selectCommentByCommentNo(commentNo);
 		return content;
 	}
-
->>>>>>> refs/heads/main
 }
