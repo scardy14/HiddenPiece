@@ -26,6 +26,7 @@ public class AuctionBoardController {
 	@RequestMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		System.out.println(auctionBoardPostVO);
+		int result = auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/write-ok";
 	}
 	

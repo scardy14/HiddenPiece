@@ -20,6 +20,10 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public ArrayList<AuctionBoardPostVO> findAuctionBoardPostList() {
 		return auctionBoardMapper.findAuctionBoardPostList();
 	}
+	@Override
+	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		return auctionBoardMapper.writeAuctionBoardPost(auctionBoardPostVO);
+	}
 
 
 }

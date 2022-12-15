@@ -9,5 +9,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 public interface AuctionBoardMapper {
 	public AuctionBoardPostVO findAuctionBoardPostDetail(long postNo);
 
-	public ArrayList<AuctionBoardPostVO> findAuctionBoardPostList(); 
+	public ArrayList<AuctionBoardPostVO> findAuctionBoardPostList();
+
+	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO); 
 }

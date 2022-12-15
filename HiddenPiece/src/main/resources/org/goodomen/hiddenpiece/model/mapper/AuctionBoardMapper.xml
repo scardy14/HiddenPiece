@@ -13,4 +13,7 @@
 	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		<include refid="selectAuctionBoardPostList"></include> order by post_no desc
 	</select>
+	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		INSERT INTO AuctionBoard VALUES()
+	</insert>
 </mapper>

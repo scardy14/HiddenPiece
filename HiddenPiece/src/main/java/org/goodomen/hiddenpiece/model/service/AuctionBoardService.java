@@ -12,4 +12,6 @@ public interface AuctionBoardService {
 
 	ArrayList<AuctionBoardPostVO> findAuctionBoardPostList();
 
+	int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
 }
