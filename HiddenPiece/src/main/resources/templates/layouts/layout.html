@@ -32,110 +32,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-    <!-- Topbar Start -->
-    <div class="container-fluid">
-    <!-- 
-        <div class="row bg-secondary py-1 px-xl-5">
-        
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="d-inline-flex align-items-center h-100">
-                    <a class="text-body mr-3" href="">About</a>
-                    <a class="text-body mr-3" href="" th:href="layout">Contact</a>
-                    <a class="text-body mr-3" href="">Help</a>
-                    <a class="text-body mr-3" href="">FAQs</a>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Sign in</button>
-                            <button class="dropdown-item" type="button">Sign up</button>
-                        </div>
-                    </div>
-                    <div class="btn-group mx-2">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">EUR</button>
-                            <button class="dropdown-item" type="button">GBP</button>
-                            <button class="dropdown-item" type="button">CAD</button>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">FR</button>
-                            <button class="dropdown-item" type="button">AR</button>
-                            <button class="dropdown-item" type="button">RU</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-inline-flex align-items-center d-block d-lg-none">
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-heart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                    </a>
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-shopping-cart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-         -->
-        <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
-            <div class="col-lg-4">
-                <a href="" class="text-decoration-none" th:href="@{/}">
-                 	<img alt="" src="img/HiddenPieceLong.png" style="width: 357px; height: 88px;">
-                </a>
-            </div>
-            <div class="col-lg-4 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-4 col-6 text-right">
-            	<th:block th:if="${session.mvo==null}">
- <form action="login" method="post">
- 	<input type="text" name="id" placeholder="아이디" required="required"><br>
- 	<input type="password" name="password" placeholder="패스워드" required="required"><br>
- 	<button type="submit">로그인</button>
- </form>
- <br><br>
- <a href="" th:href="@{/registerMemberForm}">회원가입</a>
-</th:block>
-<th:block th:if="${session.mvo!=null}">
- <span th:text="|${session.mvo.name}님|"></span><br>
- <form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
- <a href="#" id="logoutBtn">로그아웃</a>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script>
-	
-		$(function(){
-			$("#logoutBtn").click(function() {
-				$("#logoutForm").submit();
-			});
-		});
-	</script>
-  	<br><br>
-  	<a href="" th:href="@{/updateMemberForm}">회원정보수정</a>
-</th:block>                                
-            	<h4 class="text-black mb-3">대박징조님</h4>
-            	<p class="m-0"><a href = "" th:href="@{/registerForm}">로그아웃</a></p>                     
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-=======
 	<!-- Topbar Start -->
 	<div class="container-fluid">
 		<div
@@ -182,7 +78,6 @@
 		</div>
 	</div>
 	<!-- Topbar End -->
->>>>>>> refs/heads/main
 
 
 	<!-- Navbar Start -->
@@ -324,9 +219,23 @@
 					return false;
 				}
 			});
+			
+			$("#moveAuctionBoardPostUpdateForm").submit(function() {
+				let updateformmove = confirm("수정하시겠습니까?");
+				if(updateformmove) {
+					location.href="moveAuctionBoardPostUpdateForm";
+				} else {
+					return false;
+				}				
+			});
+			
+			$("#moveAuctionBoardPostUpdateFormBtn").click(function() {
+				location.href="moveAuctionBoardPostDelete";
+			});
+			
 			$("#logoutBtn").click(function(){
 					$("#logoutForm").submit();
-				});
+			});
 		});
 	</script>
 </body>
