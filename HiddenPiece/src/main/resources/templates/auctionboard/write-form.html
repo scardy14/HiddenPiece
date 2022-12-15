@@ -15,7 +15,7 @@
             <div style="width: 100%; text-align: center;">
                 <div class="contact-form bg-light p-30">
                     <form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="get">
-                        <input name="id" th:value="${Session.mvo.id}" type = "hidden"> 
+                        <input name="id" th:value="${session.mvo.id}" type = "hidden"> 
                         <input name="title" type="text"  placeholder="제목" required="required" data-validation-required-message="Please enter your name" style="width: 56%; height: 40px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
                         <input name="endDate" type="datetime-local"><p class="help-block text-danger"></p>                   
                         <input name="startPrice" type = "number"  placeholder="시작가" required="required">     
