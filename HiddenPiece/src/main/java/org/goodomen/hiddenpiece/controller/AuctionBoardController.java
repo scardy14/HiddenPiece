@@ -31,5 +31,16 @@ public class AuctionBoardController {
 		int result = auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/write-ok";
 	}
+	@RequestMapping("moveAuctionBoardPostUpdateForm")
+	public String moveAuctionBoardPostUpdateForm(Model model, long postNo) {
+		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		model.addAttribute("postVO", postVO);
+		return "auctionboard/update-form";
+	}
+	
+	@PostMapping("moveAuctionBoardPostDelete")
+	public String moveAuctionBoardPostDelete() {
+		return "auctionboard/delete-form";
+	}	
 	
 }
