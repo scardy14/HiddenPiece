@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController {
 	private final MemberMapper memberMapper;
+	private final MemberService memberSerivce;
 
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
@@ -34,5 +36,10 @@ public class MemberController {
 			session.invalidate();
 		return "redirect:/";
 	}
+	
+
+	
+	
+	
 
 }

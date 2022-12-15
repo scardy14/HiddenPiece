@@ -7,19 +7,20 @@ CREATE TABLE Account_Info(
 	CONSTRAINT PK_Account_Info PRIMARY KEY (account_no)
 )
 select * from ACCOUNT_INFO;
+commit
 
 --회원정보
 CREATE TABLE HP_Member(
-	id VARCHAR2(100) NOT NULL,	
+	id VARCHAR2(100) NOT NULL,
 	email VARCHAR2(100) NOT NULL,
 	address VARCHAR2(100) NOT NULL,
 	point NUMBER NOT NULL,
 	name VARCHAR2(100) NOT NULL,
-	nickname VARCHAR2(100) NOT NULL,
-	account_no VARCHAR2(100) NOT NULL,	
+	nickname VARCHAR2(100) NOT NULL,	
+	account_no VARCHAR2(100) NOT NULL,
 	password VARCHAR2(100) NOT NULL,
-	tel VARCHAR2(100) NOT NULL,	
-	status NUMBER NOT NULL,
+	tel VARCHAR2(100) NOT NULL,
+	status	NUMBER NOT NULL,
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
@@ -55,6 +56,7 @@ CREATE TABLE AuctionBoard(
 )
 SELECT * FROM AuctionBoard
 --경매게시판댓글
+select * from AUCTIONBOARD;
 CREATE SEQUENCE AuctionBoard_Comment_seq;
 CREATE TABLE AuctionBoard_Comment (
 	comment_no NUMBER NOT NULL,

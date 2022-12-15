@@ -52,6 +52,7 @@
 						<button class="btn px-3">
 							<i class="fas fa-heart text-primary"></i> 찜하기
 						</button>
+						<th:block th:if="${session.mvo.id==postVO.id}"><a href="수정하기 이동" th:href="${}">수정하기</a>  &nbsp;<a href="삭제하기 이동" th:href="${}">삭제하기</a> </th:block>
 					</div>
 					<br>
 					<div class="nav nav-tabs mb-4">
