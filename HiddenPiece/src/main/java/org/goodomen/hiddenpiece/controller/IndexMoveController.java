@@ -2,6 +2,8 @@ package org.goodomen.hiddenpiece.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
@@ -62,6 +64,9 @@ public class IndexMoveController {
 	public String loginForm() {
 		return "member/login-form";
 	}
-	
+	@RequestMapping("myInfo")
+	public String myInfo() {
+		return "mypage/myInfo";		
+	}
 }
 
