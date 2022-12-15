@@ -3,6 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+
 <head>
 <title>HiddenPiece</title>
 </head>
@@ -23,6 +24,11 @@
 
 			<div class="col-lg-7 h-auto mb-30">
 				<div class="h-100 bg-light p-30">
+
+				<form>
+				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
+			</form>
+
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
 					<h3 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h3>
@@ -64,6 +70,126 @@
 				</div>
 			</div>
 		</div>
+		
+<div class="card bg-light" style="width:2500px" id="commentBody">
+<!-- cList.commentStatus가 1인것만 출력 -->
+	<th:block th:if="${cList.commentStatus}==1" th:each="cList:${commentList}">
+           <div class="card-body" id="card" style="background-color: white; margin: 10px 50px 20px;">
+               		
+               		<div class="d-flex">
+                   		<div class="flex-shrink-0"><img src="" alt="" style="width:30px"/></div>
+                   		<div class="ms-3">
+                       			<div class="fw-bold">
+                      				 <a href="#" role="button" class="comment_nickname" id="comment_nickname" th:text=${cList.id}></a>
+                       			</div>
+					<form id="modifyCommentForm" action="UpdateCommentController.do" method="post">
+						<input type="hidden" name="commentNo" id="commentNo" th:value="${cList.commentNo}">
+					</form>
+					<form id="deleteCommentForm" action="DeleteCommentController.do" method="post">
+						<input type="hidden" name="commentNo" th:value="${cList.commentNo}">
+					</form>
+					<p th:text="${cList.content}" id="commentContentOne">${cList.content}</p><br>
+					
+                    
+					<span class="comment_info_date"th:text="${cList.timePosted}"></span>
+					<th:block th:if="${session.mvo.id==cList.id}">
+					<button type="button" id="updateBtn" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
+						<button type="button" id="changeCommentStatusBtn" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
+                            <hr style="width:65vw">
+					</th:block>
+						
+                     </div>
+                    </div>   	
+                    </div>
+                    
+               		</th:block>
+ 		
+              <hr>
+                              	 <!-- Comment form-->
+                              	 <div style="margin: 10px 50px 20px;">
+                               		<em class="comment_inbox_name" id="comment_inbox_name" th:text="${session.mvo.id}" >현재로그인된회원이름</em>
+                               		<textarea class="form-control" id="commentContent" rows="3" placeholder="댓글을 등록하세요!"></textarea><br>
+                               		<!-- <button name="commentbtn" id="commentbtn"  class="btn btn-warning" style=" color: white; margin-left:90%; background-color: #ef7b35; border-color: #ef7b35; ">등록</button> -->
+                               		<div class="form-group mb-0">
+									<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button>
+								</div>
+								<input name="memberId" id="memberId" type="hidden" value="" />
+                           </div>
+                           
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+                           $(document).ready(function() {
+                        	   /*댓글 작성 */
+	                           	$("#commentbtn").click(function() {
+									let content=$("#commentContent").val();
+									let postNo = document.getElementById("articleNo").value;
+									let id =  document.getElementById("comment_inbox_name").innerHTML;
+									if(content.trim()<1){
+										alert("공백 등록은 불가능합니다.");
+										event.preventDefault();
+									}
+									else{
+		                           		$.ajax({
+		                           			type:"get",
+		                           			url:"writeComment",
+		                           			data: {
+		                           				"content":content,
+		                           				"postNo":postNo,
+		                           				"id":id
+		                           			},
+		                           			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+		                           				$("#commentContent").val("");
+		                           				location.reload();
+		                           			}
+		                           		});
+	                           		}
+	                           	});
+	                           	
+                        	   /* 댓글 삭제  : 댓글 상태 0으로 바꾸기*/
+	                           	$("#changeCommentStatusBtn").click(function() {
+									let postNo = document.getElementById("articleNo").value;
+									let commentNo =  document.getElementById("commentNo").value;
+									let result = confirm("댓글을 삭제하시겠습니까?");
+									if(result){
+										$.ajax({
+		                           			type:"get",
+		                           			url:"changeCommentStatus",
+		                           			data: {
+		                           				"commentNo":commentNo
+		                           			},
+		                           			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+		                           				location.reload();
+		                           			}
+	                           			});
+									}
+	                           	});
+                        	   
+                        	   /* 댓글 수정  */
+	                           	$("#updateBtn").click(function() {
+									let postNo = document.getElementById("articleNo").value;
+									let commentNo =  document.getElementById("commentNo").value;
+									let commentContent = $("#commentContentOne").text();
+									let result = confirm("댓글을 수정하시겠습니까?");
+									alert(commentContent)
+									if(result){
+										$.ajax({
+		                           			type:"get",
+		                           			url:"selectCommentByCommentNo",
+		                           			data: {
+		                           				"commentNo":commentNo
+		                           			},
+		                           			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+		                           				alert(result);
+		                           			}
+	                           			});
+									}
+	                           	});
+                        	   
+                        	   
+                           })
+                           </script>
+		<!-- 
 		<div class="row px-xl-5" style="width: 100%;">
 			<div class="col">
 				<div class="bg-light p-30">
@@ -72,22 +198,44 @@
 							href="#tab-pane-1">댓글</a>
 					</div>
 					<div class="tab-content">
+			
 						<div class="tab-pane fade show active" id="tab-pane-1" >
-						</div>
+							<div class="card">
+							<div class="card-header" >댓글목록</div>
+							<div class="">
+								<ul id="comment-box" class="list-group" th:each="cList:${commentList}">
+									<li id="comment--1" class="list-group-item d-flex justify-content-between">
+										<div th:text="${cList.content}">댓글 내용</div>
+										<div class="font-italic" th:text="${cList.id}">작성자 : 작성자명</div>
+										<br>
+											<button class="badge">삭제</button>
+										
+									</li>
+								</ul>
+								</div>
+							</div>
+							</div>
+                                		
+						-->
+						<br>
+						<!-- 
 						<div class="col-md-6">	
 							<form>
 								<div class="form-group">
-									<textarea id="message" cols="300" rows="5" class="form-control" placeholder="댓글을 입력하세요"></textarea>
+									<textarea id="message" rows="2" class="form-control" placeholder="댓글을 입력하세요"></textarea>
 								</div>
 								<div class="form-group mb-0">
-									<input type="submit" value="댓글작성" class="btn btn-primary px-3">
+									<button type="button" class="btn btn-primary px-3">댓글 작성</button>
 								</div>
 							</form>
 						</div>
+						 -->
 					</div>
 				</div>
 			</div>
-		</div>
+		
+		
+		
 	</div>
 </div>
 </div>
