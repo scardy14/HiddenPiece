@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+> <!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+	<form action="" th:action="@{/findId}" method="post">
+	<div class="container-fluid">
+		<div class="row px-xl-5">
+			<div style="width: 100%;">
+				<h5 class="section-title position-relative text-uppercase mb-3">
+					<span class="bg-secondary pr-3">아이디 찾기</span>
+				</h5>
+				<div class="bg-light p-30 mb-5">
+					<div style="text-align: center;">
+						<div>
+							<label>이메일</label><br>
+							<input class="form-control1" type="text" name="email" placeholder="000@000.com"><br> 
+							<br>
+						</div>
+						<div>
+							<label>주소</label><br>
+							<input class="form-control1" type="text" name="address" placeholder="123 Street"><br>
+							<br>
+						</div>
+						<div>
+							<label>이름</label><br>
+							<input class="form-control1" type="text" name="name" placeholder="Kosta"><br> 
+							<br>
+						</div>
+						<div>
+							<label>전화번호</label><br>
+							<input class="form-control1" type="text" name="tel" placeholder="000-0000-0000"><br>
+							<br>
+						</div>
+						<br>
+						<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;">아이디 찾기</button>
+					</div>
+				</div>
+				</div>
+				</div>
+				</div>
+	</form>
+</div>

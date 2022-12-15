@@ -15,14 +15,23 @@ public class MemberServiceImpl implements MemberService {
 	public int registerMember(MemberVO memberVO) {
 		return memberMapper.registerMember(memberVO);
 	}
-	/*
+
+
 	@Override
-	public MemberVO login(MemberVO memberVO, HttpServletRequest request) {
-		return memberMapper.login(memberVO);
+	public String findId(String email, String address, String name, String tel) {
+		return memberMapper.findId(email, address, name, tel);
 	}
-	*/
+
+	@Override
+	public String findPassword(String id, String address, String name, String tel) {
+		return memberMapper.findPassword(id, address, name, tel);
+	}
+	
+
+
 	@Override
 	public MemberVO login(MemberVO memberVO) {
 		return memberMapper.login(memberVO);
 	}
+
 }
