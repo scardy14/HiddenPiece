@@ -90,4 +90,5 @@ public class MemberController {
 		model.addAttribute("password", password);
 		return "member/findPassword-result";
 	}
+
 }
