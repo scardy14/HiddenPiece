@@ -15,4 +15,14 @@ public class MemberServiceImpl implements MemberService {
 	public int registerMember(MemberVO memberVO) {
 		return memberMapper.registerMember(memberVO);
 	}
+	/*
+	@Override
+	public MemberVO login(MemberVO memberVO, HttpServletRequest request) {
+		return memberMapper.login(memberVO);
+	}
+	*/
+	@Override
+	public MemberVO login(MemberVO memberVO) {
+		return memberMapper.login(memberVO);
+	}
 }
