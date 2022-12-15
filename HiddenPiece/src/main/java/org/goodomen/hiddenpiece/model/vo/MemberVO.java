@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.model.vo;
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MemberVO implements Serializable {
 	private static final long serialVersionUID = 5024864320551167008L;
 	private String id;
