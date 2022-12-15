@@ -57,7 +57,8 @@
 								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 								<button type = "submit">수정하기</button>
 							</form>  &nbsp;
-							<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostDelete}">
+							<form id = "moveAuctionBoardPostDelete" th:action="@{/moveAuctionBoardPostDelete}">
+								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 								<button  type = "submit">삭제하기</button> 
 							</form>
 						</th:block>
