@@ -19,11 +19,11 @@ public class MemberVO implements Serializable {
 	private String password;
 	private String email;
 	private String tel;
-	private int accountNo;
+	private String accountNo;
 	private String address;
 	private long point;
 	private String nickName;
 	private String name;
-	private String status;
-	
+	private int status;
+	private int HPLevel;
 }
