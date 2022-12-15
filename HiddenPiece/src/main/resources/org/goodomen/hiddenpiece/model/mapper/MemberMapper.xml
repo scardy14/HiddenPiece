@@ -5,4 +5,10 @@
 	<select id="login" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
 		select * from HP_Member where id=#{id} and password=#{password}
 	</select>
+	<select id="findId" resultType="String">
+		Select id from HP_Member where email=#{email} and address=#{address} and name=#{name} and tel=#{tel}
+	</select>
+	<select id="findPassword" resultType="String">
+		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel}
+	</select>
 </mapper>

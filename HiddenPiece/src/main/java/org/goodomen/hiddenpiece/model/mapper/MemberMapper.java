@@ -7,5 +7,9 @@ import org.goodomen.hiddenpiece.model.vo.MemberVO;
 public interface MemberMapper {
 
 	MemberVO login(MemberVO memberVO);
+
+	String findId(String email, String address, String name, String tel);
+
+	String findPassword(String id, String email, String name, String tel);
 	
 }
