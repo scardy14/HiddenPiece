@@ -56,18 +56,16 @@
 			</div>
 			<div class="col-lg-4 col-6 text-right">
 				<th:block th:if="${session.mvo==null}">
-					<form action="login" method="post">
-						<input type="text" name="id" placeholder="아이디" required="required">
-						<input type="password" name="password" placeholder="패스워드"
-							required="required"><br>
-						<button type="submit" style="background-color:  #FFD333; color: white; width: 80px; height: 30px; border: none;">로그인</button><br>
+					
+						<a href="" th:href="@{/loginForm}" style="background-color:#FFD333; color: white;">로그인</a>
+					
+					
 						<a href="" th:href="@{/registerMemberForm}" style="background-color:#FFD333; color: white;">회원가입</a>
-					</form>
 					
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
-					<span th:text="|${session.mvo.name}님|"></span>
-					<br>
+					<span th:text="|${session.mvo.name}님|"></span><br>
+					&nbsp;
 					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"></form>
 					<a href="#" id="logoutBtn">로그아웃</a>
 					<script>

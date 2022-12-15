@@ -58,4 +58,9 @@ public class IndexMoveController {
 	public String registerMember() {
 		return "member/register-result";
 	}
+	@RequestMapping("loginForm")
+	public String loginForm() {
+		return "member/login-form";
+	}
 }
+
