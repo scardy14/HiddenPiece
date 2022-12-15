@@ -6,8 +6,12 @@ import org.goodomen.hiddenpiece.model.vo.MemberVO;
 @Mapper
 public interface MemberMapper {
 
-	public MemberVO login(MemberVO memberVO);
+	MemberVO login(MemberVO memberVO);
 
-	public int registerMember(MemberVO memberVO);
+	int registerMember(MemberVO memberVO);
+	
+	String findId(String email, String address, String name, String tel);
+
+	String findPassword(String id, String email, String name, String tel);
 	
 }

@@ -6,9 +6,18 @@
 	</select>
 
 
+
 	<insert id="registerMember" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO">
 	insert into HP_Member 
-	values(#{id},#{email},#{address},#{point},#{name},#{nickName},#{accountNo},#{password},#{tel},#{status})	
+	values(#{id},#{email},#{address},0,#{name},#{nickName},#{accountNo},#{password},#{tel},1)	
 	</insert>
+
+
+	<select id="findId" resultType="String">
+		Select id from HP_Member where email=#{email} and address=#{address} and name=#{name} and tel=#{tel}
+	</select>
+	<select id="findPassword" resultType="String">
+		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel}
+	</select>
 
 </mapper>
