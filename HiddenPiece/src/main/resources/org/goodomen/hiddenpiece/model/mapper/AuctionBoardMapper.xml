@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper	namespace="org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper">
-<<<<<<< HEAD
-	<select id="findAuctionBoardPostDetail" parameterType="long" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-=======
+	
 	<sql id="selectAuctionBoardPostList">
 		SELECT * FROM AuctionBoard
 	</sql>
 	
-	<select id="findAuctionBoardPostDetail" parameterType="long" resultType="org.goodomen.hiddenpiece.controller.AuctionBoardPostVO">
->>>>>>> refs/heads/main
+	<select id="findAuctionBoardPostDetail" parameterType="long" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		SELECT * FROM AuctionBoard WHERE post_no=#{value}
 	</select>
 	
-	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.controller.AuctionBoardPostVO">
+	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		<include refid="selectAuctionBoardPostList"></include> order by post_no desc
 	</select>
-	
-	
 </mapper>

@@ -1891,7 +1891,6 @@ pre code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-<<<<<<< HEAD
 .form-control1 {
   width: 50%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -1907,7 +1906,6 @@ pre code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-=======
  .form-control1 {
   width: 50%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -1922,7 +1920,7 @@ pre code {
   border-radius: 0;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
->>>>>>> refs/heads/main
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

@@ -14,16 +14,15 @@
         <div>
             <div style="width: 100%; text-align: center;">
                 <div class="contact-form bg-light p-30">
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                            <input type="text" id="name" placeholder="제목" required="required" data-validation-required-message="Please enter your name" style="width: 70%; height: 40px;"/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="datetime-local">
-                            <p class="help-block text-danger"></p>              
-                           
-                            <textarea class="form-control" rows="8" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
-                            <p class="help-block text-danger"></p>
-
-                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">판매글등록</button>
+                    <form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="get">
+                        <input name="id" value=${SessionScope.mvo.id} type = "hidden"> 
+                        <input name="title" type="text"  placeholder="제목" required="required" data-validation-required-message="Please enter your name" style="width: 56%; height: 40px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
+                        <input name="endDate" type="datetime-local"><p class="help-block text-danger"></p>                   
+                        <input name="startPrice" type = "number"  placeholder="시작가" required="required">     
+                        <input name="sellPrice" type = "number"  placeholder="즉시구매가" required="required"><p class="help-block text-danger"></p>                 
+                        <textarea name="content" rows="8" placeholder="Message" required="required" data-validation-required-message="Please enter your message" style="width: 70%; height: 400px;"></textarea>                        <p class="help-block text-danger"></p>
+                        <input name = "photo" type="file" required="required"><p class="help-block text-danger"></p>							
+                        <button class="btn btn-primary py-2 px-4" type="submit">판매글등록</button>                       
                     </form>
                 </div>
             </div>
