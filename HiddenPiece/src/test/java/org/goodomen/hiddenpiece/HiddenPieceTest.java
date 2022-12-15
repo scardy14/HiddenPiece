@@ -21,7 +21,7 @@ public class HiddenPieceTest {
 
 	@Test
 	public void login() {
-		MemberVO memberVO = new MemberVO("yerin0110", "a", null, null, null, null, 0, null, null, 0, 0);
+		MemberVO memberVO = new MemberVO("yerin0110", "a", null, null, null, null, 0, null, null, null);
 		MemberVO resultVO = memberMapper.login(memberVO);
 		logger.debug("login vo: {}", resultVO);
 	}

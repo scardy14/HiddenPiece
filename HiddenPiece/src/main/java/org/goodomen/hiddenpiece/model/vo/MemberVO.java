@@ -24,6 +24,5 @@ public class MemberVO implements Serializable {
 	private long point;
 	private String nickName;
 	private String name;
-	private int status;
-	private int HPLevel;
+	private String status;
 }
