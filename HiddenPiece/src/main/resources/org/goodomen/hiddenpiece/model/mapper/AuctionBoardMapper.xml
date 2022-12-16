@@ -51,4 +51,7 @@
 		INSERT INTO AuctionBoard VALUES()
 	</insert>
 
+	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
+		UPDATE AuctionBoard_Comment SET content=#{content} WHERE comment_no=#{commentNo}
+	</update>
 </mapper>

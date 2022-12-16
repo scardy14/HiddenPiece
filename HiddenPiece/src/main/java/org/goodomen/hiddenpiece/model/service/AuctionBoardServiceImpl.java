@@ -46,8 +46,15 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 
 	@Override
 	public String selectCommentByCommentNo(long commentNo) {
-		String content = auctionBoardMapper.selectCommentByCommentNo(commentNo);
-		return content;
+		return null;
 	}
+
+	@Override
+	public void updateComment(AuctionBoardCommentVO commentVO) {
+		auctionBoardMapper.updateComment(commentVO);
+	}
+
+
+
 
 }

@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class AuctionBoardController {
 	private final AuctionBoardService auctionBoardService;
 	
+	// 경매게시판 상세보기
 	@RequestMapping("findAuctionBoardPostDetail")
 	public String findAuctionBoardPostDetail(long postNo, Model model) {
 		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
@@ -24,17 +25,22 @@ public class AuctionBoardController {
 		model.addAttribute("commentList", commentList);
 		return "auctionboard/detail2";
 	}
+	
+	// 경매게시판 글 작성 폼 화면 이동
 	@RequestMapping("moveAuctionBoardPostForm")
 	public String moveAuctionBoardPostForm() {
 		return "auctionboard/write-form";
 	}
+	
+	// 경매게시판 글 작성
 	@RequestMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		System.out.println(auctionBoardPostVO);
-		int result = auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
+		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/write-ok";
 	}
 	
+	// 경매게시판 댓글 작성
 	@ResponseBody
 	@RequestMapping("writeComment")
 	public String writeComment(Model model, AuctionBoardCommentVO commentVO) {
@@ -43,15 +49,18 @@ public class AuctionBoardController {
 		return result;
 	}
 	
+	// 경매게시판 댓글 삭제(상태 0으로 변경)
 	@ResponseBody
 	@RequestMapping("changeCommentStatus")
 	public void changeCommentStatus(long commentNo) {
 		auctionBoardService.changeCommentStatus(commentNo);
 	}
 
+	// 경매게시판 댓글 수정
 	@ResponseBody
-	@RequestMapping("selectCommentByCommentNo")
-	public void selectCommentByCommentNo(long commentNo) {
-		auctionBoardService.selectCommentByCommentNo(commentNo);
+	@RequestMapping("updateComment")
+	public void selectCommentByCommentNo(AuctionBoardCommentVO commentVO) {
+		System.out.println(commentVO);
+		auctionBoardService.updateComment(commentVO);
 	}
 }
