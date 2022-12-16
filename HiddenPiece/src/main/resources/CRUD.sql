@@ -80,7 +80,7 @@ INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','역사깊�
 INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','녹지않는눈사람모형','폭염이와도 녹지않는 눈사람입니다. 아이들 장난감으로 좋아요 겨울 놀이 해보셔요 ','녹지않는눈사람.PNG',7000,9000,15000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT)
 
 --경매게시판 게시물 리스트
-SELECT * FROM AuctionBoard
+SELECT * FROM AuctionBoard WHERE post_status=1 order by post_no desc 
 
 -- 경매게시판 댓글 등록
 INSERT INTO AuctionBoard_Comment VALUES(AuctionBoard_Comment_seq.nextval, 1, 'yerin0110', '이거 어디서 사셨나요',sysdate, 1)

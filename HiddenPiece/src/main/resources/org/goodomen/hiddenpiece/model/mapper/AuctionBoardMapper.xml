@@ -24,7 +24,7 @@
 
 	<!-- 경매 게시판 게시물 리스트 조회 -->
 	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		<include refid="selectAuctionBoardPostList"></include> order by post_no desc
+		<include refid="selectAuctionBoardPostList"></include> WHERE post_status=1 order by post_no desc 
 	</select>
 
 	

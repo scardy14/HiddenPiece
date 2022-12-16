@@ -89,12 +89,11 @@
 						<input type="hidden" name="commentNo" th:value="${cList.commentNo}">
 					</form>
 					<p th:text="${cList.content}" id="commentContentOne">${cList.content}</p><br>
-					
                     
 					<span class="comment_info_date"th:text="${cList.timePosted}"></span>
 					<th:block th:if="${session.mvo.id==cList.id}">
-					<button type="button" id="updateBtn" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
-						<button type="button" id="changeCommentStatusBtn" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
+					<button type="button" id="updateBtn" onclick="" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
+						<button type="button" id="changeCommentStatusBtn" th:onclick="changeCommentStatus([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
                             <hr style="width:65vw">
 					</th:block>
 						
@@ -119,54 +118,59 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
-                           $(document).ready(function() {
-                        	   /*댓글 작성 */
-	                           	$("#commentbtn").click(function() {
-									let content=$("#commentContent").val();
-									let postNo = document.getElementById("articleNo").value;
-									let id =  document.getElementById("comment_inbox_name").innerHTML;
-									if(content.trim()<1){
-										alert("공백 등록은 불가능합니다.");
-										event.preventDefault();
-									}
-									else{
-		                           		$.ajax({
-		                           			type:"get",
-		                           			url:"writeComment",
-		                           			data: {
-		                           				"content":content,
-		                           				"postNo":postNo,
-		                           				"id":id
-		                           			},
-		                           			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
-		                           				$("#commentContent").val("");
-		                           				location.reload();
-		                           			}
-		                           		});
-	                           		}
-	                           	});
-	                           	
-                        	   /* 댓글 삭제  : 댓글 상태 0으로 바꾸기*/
-	                           	$("#changeCommentStatusBtn").click(function() {
-									let postNo = document.getElementById("articleNo").value;
-									let commentNo =  document.getElementById("commentNo").value;
-									let result = confirm("댓글을 삭제하시겠습니까?");
-									if(result){
-										$.ajax({
-		                           			type:"get",
-		                           			url:"changeCommentStatus",
-		                           			data: {
-		                           				"commentNo":commentNo
-		                           			},
-		                           			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
-		                           				location.reload();
-		                           			}
-	                           			});
-									}
-	                           	});
+
+	/* 댓글 삭제  : 댓글 상태 0으로 바꾸기*/
+	function changeCommentStatus(commentNo){
+		let postNo = document.getElementById("articleNo").value;
+	//let commentNo =  document.getElementById("commentNo").value;
+	alert(commentNo);
+	let result = confirm("댓글을 삭제하시겠습니까?");
+	if(result){
+		$.ajax({
+   			type:"get",
+   			url:"changeCommentStatus",
+   			data: {
+   				"commentNo":commentNo
+   			},
+   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+   				location.reload();
+   			}
+			});
+		}
+	}
+	
+   $(document).ready(function() {
+   /*댓글 작성 */
+   		$("#commentbtn").click(function() {
+			let content=$("#commentContent").val();
+			let postNo = document.getElementById("articleNo").value;
+			let id =  document.getElementById("comment_inbox_name").innerHTML;
+			if(content.trim()<1){
+				alert("공백 등록은 불가능합니다.");
+				event.preventDefault();
+			}
+			else{
+	       		$.ajax({
+	       			type:"get",
+	       			url:"writeComment",
+	       			data: {
+	       				"content":content,
+	       				"postNo":postNo,
+	       				"id":id
+	       			},
+	       			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+	       				$("#commentContent").val("");
+	       				location.reload();
+	       			}
+	       		});
+      		}
+      	});
+   
+   })
+	                 
                         	   
-                        	   /* 댓글 수정  */
-	                           	$("#updateBtn").click(function() {
+   /* 댓글 수정  */
+	                           	/* $("#updateBtn").click(function() {
 									let postNo = document.getElementById("articleNo").value;
 									let commentNo =  document.getElementById("commentNo").value;
 									let commentContent = $("#commentContentOne").text();
@@ -184,10 +188,10 @@
 		                           			}
 	                           			});
 									}
-	                           	});
+	                           	}); */
                         	   
                         	   
-                           })
+     
                            </script>
 		<!-- 
 		<div class="row px-xl-5" style="width: 100%;">

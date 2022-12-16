@@ -91,9 +91,7 @@
                                 <img class="img-fluid w-100" th:src="@{/img/}+ ${group.photo}" alt="">
                                 <div class="product-action">
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                    
-                                    <!--<a th:href="@{/board(no=${board.no})}">링크1</a>  -->
-                                   <!--  <a th:href="@{/board/view(id = ${board.id}, writer = ${board.writer}})}">글 상세보기</a>-->
+                         
                                     <a class="btn btn-outline-dark btn-square" href="" th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
