@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.test;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,24 @@ public class HiddenPieceMemberTest {
 		int result = memberMapper.checkId(id);
 		System.out.println(result);
 	}
+	@Test
+	public void checkAccount() {
+		String accountNo = "11111800";
+		MemberVO memberVO = memberMapper.findMemberByAccount(accountNo);
+		System.out.println(memberVO);
+		if(memberVO.getId()!=null) {
+			System.out.println(1);
+		}else {
+			System.out.println(2);
+		}
+	}
 	
-	
-	
+	@Test
+	public void checkAccountInfo() {
+		String accountNo = "111113";
+		AccountVO accountVO = memberMapper.findAccountInfoByAccountNo(accountNo);
+		System.out.println(accountVO);
+	}
 	
 	
 }

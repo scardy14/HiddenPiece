@@ -1,5 +1,6 @@
 package org.goodomen.hiddenpiece.model.service;
 
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 
 public interface MemberService {
@@ -15,6 +16,12 @@ public interface MemberService {
 
 
 	int checkId(String id);
+
+
+	MemberVO findMemberByAccount(String accountNo);
+
+
+	AccountVO findAccountInfoByAccountNo(String accountNo);
 
 
 }

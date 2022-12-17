@@ -3,8 +3,8 @@ package org.goodomen.hiddenpiece.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,7 +71,22 @@ public class MemberController {
 			message = "사용가능한 아이디입니다";
 		}
 		return message;
-		
+	}
+	@SuppressWarnings("unused")
+	@ResponseBody
+	@RequestMapping("ajaxAccountCheck")
+	public String ajaxAccountCheck(String accountNo) {
+		String message = null;
+		AccountVO accountVO = memberService.findAccountInfoByAccountNo(accountNo);
+		MemberVO memberVO = memberService.findMemberByAccount(accountNo);
+		if(memberVO != null && accountVO!=null) {
+			message = " 이미 사용중인 계좌번호입니다";
+		}else if(memberVO == null && accountVO!=null) {
+			message = "사용 가능한 계좌번호입니다 ";
+		}else if(accountVO == null){
+			message = "일치하는 계좌번호가 없습니다";
+		}
+		return message;
 	}
 	
 	
