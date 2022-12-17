@@ -7,6 +7,8 @@ import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController {
 	//private final MemberMapper memberMapper;
-	private final MemberService memberSerivce;
+	private final MemberService memberService;
 
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
-		MemberVO vo = memberSerivce.login(memberVO);
+		MemberVO vo = memberService.login(memberVO);
 		if (vo == null) {
 			return "member/login-fail";
 		} else {
@@ -35,15 +37,11 @@ public class MemberController {
 			session.invalidate();
 		return "redirect:/";
 	}
+	
 	@PostMapping("registerMember")
 	public String register(MemberVO memberVO) {
 		System.out.println(memberVO);
-		memberSerivce.registerMember(memberVO);
+		memberService.registerMember(memberVO);
 		return "member/register-result";
 	}
-
-	
-	
-	
-
 }

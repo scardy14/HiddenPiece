@@ -1,6 +1,9 @@
 package org.goodomen.hiddenpiece.model.service;
 
+import java.util.ArrayList;
+
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +18,22 @@ public class MemberServiceImpl implements MemberService {
 	public int registerMember(MemberVO memberVO) {
 		return memberMapper.registerMember(memberVO);
 	}
+	
 	/*
 	@Override
 	public MemberVO login(MemberVO memberVO, HttpServletRequest request) {
 		return memberMapper.login(memberVO);
 	}
 	*/
+	
 	@Override
 	public MemberVO login(MemberVO memberVO) {
 		return memberMapper.login(memberVO);
+	}
+
+	@Override
+	public ArrayList<AuctionBoardPostVO> selectMyWishlist(String id) {
+		ArrayList<AuctionBoardPostVO> list = memberMapper.selectMyWishlist(id);
+		return list;
 	}
 }

@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,12 +56,29 @@ public class AuctionBoardController {
 	public void changeCommentStatus(long commentNo) {
 		auctionBoardService.changeCommentStatus(commentNo);
 	}
-
+	
+	// 경매게시판 댓글 조회
+	@ResponseBody
+	@RequestMapping("selectCommentByCommentNo")
+	public String selectCommentByCommentNo(long commentNo) {
+		String content = auctionBoardService.selectCommentByCommentNo(commentNo);
+		return content;
+	}
+	
 	// 경매게시판 댓글 수정
 	@ResponseBody
 	@RequestMapping("updateComment")
-	public void selectCommentByCommentNo(AuctionBoardCommentVO commentVO) {
-		System.out.println(commentVO);
+	public void updateComment(AuctionBoardCommentVO commentVO) {
 		auctionBoardService.updateComment(commentVO);
 	}
+	
+	// 찜하기 버튼 눌르기
+	@ResponseBody
+	@RequestMapping("addToWishlist")
+	public void addToWishlist(String id,long postNo) {
+		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
+		auctionBoardService.addToWishlist(likesVO);
+		
+	}
+
 }

@@ -78,8 +78,8 @@
                	
                		<div class="d-flex">
                    		<div class="flex-shrink-0"><img src="" alt="" style="width:30px"/></div>
-                   		
-	                   		<div class="ms-3">
+							<div >
+	                   		<div class="ms-3" th:id="'ms-3'+${cList.commentNo}" >
 	                     		<div class="fw-bold">
 	                      			 <a href="#" role="button" class="comment_nickname" id="comment_nickname" th:text=${cList.id}></a>
 	                       		</div>
@@ -89,35 +89,30 @@
 								<form id="deleteCommentForm" action="DeleteCommentController.do" method="post">
 									<input type="hidden" name="commentNo" th:value="${cList.commentNo}">
 								</form>
-								<p th:text="${cList.content}" id="commentContentOne">${cList.content}</p><br>
-	                    
-								<span class="comment_info_date"th:text="${cList.timePosted}"></span>
+								<p th:text="${cList.content}" th:id="'commentContentOne'+${cList.commentNo}"></p><br>
+	                    </div>
+								<span class="comment_info_date" th:id="'timePosted'+${cList.commentNo}" th:text="${cList.timePosted}"></span>
 								<th:block th:if="${session.mvo} and ${session.mvo.id==cList.id}">
-									<button type="button" id="updateBtn" th:onclick="updateCommentForm([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
-									<button type="button" id="changeCommentStatusBtn" th:onclick="changeCommentStatus([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
-		                           
-		                            <hr style="width:65vw">
+									<button type="button" th:id="'updateBtn'+${cList.commentNo}" th:onclick="updateCommentForm([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
+									<button type="button" th:id="'changeCommentStatusBtn'+${cList.commentNo}" th:onclick="changeCommentStatus([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
 		                            <div th:id="'commentUpdateZone'+${cList.commentNo}">
 										<input type="hidden" th:id="'comment_No'+${cList.commentNo}" value="${cList.commentNo}">
-										<textarea class="" th:id="'comment_update_content'+${cList.commentNo}" rows="3" style="width:60vw" th:value="${cList.content}" th:text="${cList.content}">${cList.content}</textarea><br>
+										<textarea class="" th:id="'comment_update_content'+${cList.commentNo}" rows="3" style="width:60vw" th:value="${cList.content}" th:text="${cList.content}"></textarea><br>
 										<button name="commentupdatebtn" id="commentupdatebtn" class="btn btn-warning" th:onclick="updateComment([[${cList.commentNo}]])" style=" color: white; margin-left:52vw; background-color: #ef7b35; border-color: #ef7b35; ">수정</button>
 										<button name="commentupdatebtn_no" id="commentupdatebtn_no" class="btn btn-warning" th:onclick="commentUpdateZoneHide([[${cList.commentNo}]])" style=" color: white; background-color: #ef7b35; border-color: #ef7b35;">취소</button>
 									</div>
+		                            <hr style="width:65vw">
+		                           
 								</th:block>
 	                     </div>
                     	</div>   	
-                    	
-                    	
                     </div>
-                    
                		</th:block>
- 		
               <hr>
                               	 <!-- Comment form-->
                               	 <div style="margin: 10px 50px 20px;">
                                		<em class="comment_inbox_name" id="comment_inbox_name" th:text="${session.mvo.id}" >현재로그인된회원이름</em>
                                		<textarea class="form-control" id="commentContent" rows="3" placeholder="댓글을 등록하세요!"></textarea><br>
-                               		<!-- <button name="commentbtn" id="commentbtn"  class="btn btn-warning" style=" color: white; margin-left:90%; background-color: #ef7b35; border-color: #ef7b35; ">등록</button> -->
                                		<div class="form-group mb-0">
 									<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button>
 								</div>
@@ -143,6 +138,12 @@
 	   			}
 			});
 		}
+	}
+	function commentUpdateZoneHide(commentNo){
+		$("#commentUpdateZone"+commentNo).hide();
+		$("#ms-3"+commentNo).show();
+	  	$("#updateBtn"+commentNo).show();
+	  	$("#changeCommentStatusBtn"+commentNo).show();
 	}
 	
    $(document).ready(function() {
@@ -180,25 +181,52 @@
    /* 댓글 수정  */
    function updateCommentForm(commentNo) {
 	  	$("#commentUpdateZone"+commentNo).show();
-	}
-
-   function updateComment(commentNo){
-	  let result = confirm("수정하시겠습니까?");
-	  let content =  document.getElementById("comment_update_content"+commentNo).value;
-	  if(result){
-	  $.ajax({
+	  //	let content = $("#commentContentOne"+commentNo).text();
+	  	$("#ms-3"+commentNo).hide();
+	  	$("#updateBtn"+commentNo).hide();
+	  	$("#changeCommentStatusBtn"+commentNo).hide();
+	  	$("#timePosted"+commentNo).hide();
+	  	
+	  	$.ajax({
    			type:"get",
-   			url:"updateComment",
+   			url:"selectCommentByCommentNo",
    			data: {
-   				"content" : content,
    				"commentNo":commentNo
    			},
    			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
-   				location.reload();
+   				let content=result;
+   				document.getElementById("comment_update_content"+commentNo).value=content;
    			}
-		}); 
-	  }
-	
+		});
+	  	
+	  	
+   }
+   
+  	function updateComment(commentNo){
+	  let content =  document.getElementById("comment_update_content"+commentNo).value;
+	  
+	  if(content.trim().length>0){
+		  let result = confirm("수정하시겠습니까?");
+		  let commentContent = content.trim();
+		  if(result){
+				$.ajax({
+		   			type:"get",
+		   			url:"updateComment",
+		   			data: {
+		   				"content" : commentContent,
+		   				"commentNo":commentNo
+		   			},
+		   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+		   				location.reload();
+		   			}
+				});
+		  }
+	}
+	else{
+	  alert("공백 등록은 불가합니다.");
+	  event.preventDefault();
+ 	}
+	  
 	}
    </script>
 					</div>

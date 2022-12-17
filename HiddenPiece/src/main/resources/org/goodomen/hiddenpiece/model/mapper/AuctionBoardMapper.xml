@@ -44,7 +44,7 @@
 	</update>
 	
 	<select id="selectCommentByCommentNo" resultType="string" parameterType="long">
-		SELECT * FROM AuctionBoard_Comment WHERE comment_no=#{value}
+		SELECT content FROM AuctionBoard_Comment WHERE comment_no=#{value}
 	</select>
 
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
@@ -54,4 +54,9 @@
 	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
 		UPDATE AuctionBoard_Comment SET content=#{content} WHERE comment_no=#{commentNo}
 	</update>
+	
+	<!-- 찜하기 버튼 눌렀을 때 -->
+	<insert id="addToWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO">
+		INSERT INTO AuctionBoard_Likes VALUES(#{postNo}, #{id})
+	</insert>
 </mapper>
