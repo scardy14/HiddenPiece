@@ -22,6 +22,12 @@ public class HiddenPieceMemberTest {
 		System.out.println("회원가입완료");
 	}
 	
+	@Test
+	public void checkId() {
+		String id = "java";
+		int result = memberMapper.checkId(id);
+		System.out.println(result);
+	}
 	
 	
 	

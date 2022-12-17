@@ -19,5 +19,7 @@
 	<select id="findPassword" resultType="String">
 		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel}
 	</select>
-
+	<select id="checkId" resultType="int">
+	Select count(*) from HP_Member where id = #{id}	
+	</select>
 </mapper>

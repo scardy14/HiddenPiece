@@ -19,7 +19,7 @@
 					<div style="text-align: center;">
 						<form action="" th:action="@{/registerMember}" method="post">
 							<label>ID</label><br>
-							<input name="id" class="form-control1" type="text" placeholder="hiddenpiece"><br>
+							<input name="id" class="form-control1" type="text" placeholder="hiddenpiece" id="id"><br><span id="ajaxId"></span>
 							<br>
 							<label>Password</label><br>
 							<input name="password" class="form-control1" type="text" placeholder="Password"><br>
@@ -42,6 +42,8 @@
 							<br>
 							<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;">회원가입하기</button>
 						</form>
+
+						
 					</div>
 				</div>
 			</div>

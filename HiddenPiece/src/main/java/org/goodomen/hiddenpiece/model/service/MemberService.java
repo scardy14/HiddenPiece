@@ -14,4 +14,7 @@ public interface MemberService {
 	MemberVO login(MemberVO memberVO);
 
 
+	int checkId(String id);
+
+
 }

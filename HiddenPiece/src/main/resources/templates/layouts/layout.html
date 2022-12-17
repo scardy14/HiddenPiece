@@ -213,7 +213,23 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
+	
 		$(function() {
+			
+			
+			let checkId = $("input[name=id]");
+			checkId.keyup(function(){
+				$.ajax({
+					type:"get",
+					url:"ajaxIdCheck",
+					data:"id="+checkId.val(),
+					success:function(result){
+						$("#ajaxId").text(result);
+					}
+				});
+			});
+			
+			
 			$("#writeAuctionBoardPostForm").submit(function() {
 				let result = confirm("경매글을 등록하시겠습니까?");
 				if(!result) {
