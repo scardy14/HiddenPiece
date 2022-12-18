@@ -3,7 +3,9 @@ package org.goodomen.hiddenpiece.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
+import org.goodomen.hiddenpiece.model.service.MemberServiceImpl;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +18,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController {
 
-	//private final MemberMapper memberMapper;
+	private final MemberMapper memberMapper;
 	private final MemberService memberService;
 
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
-		MemberVO vo = memberService.login(memberVO);
-		if (vo == null) {
+		memberVO = memberService.login(memberVO);
+		if (memberVO == null) {
 			return "member/login-fail";
 		} else {
 			HttpSession session = request.getSession();
-			session.setAttribute("mvo", vo);
+			session.setAttribute("mvo", memberVO);
 			return "redirect:/";
 		}
 	}
@@ -90,5 +92,27 @@ public class MemberController {
 		model.addAttribute("password", password);
 		return "member/findPassword-result";
 	}
-
+	
+	@RequestMapping("deleteMemberForm")
+	public String deleteMemberForm() {
+		return "mypage/deleteMember-form";
+	}
+	
+	@RequestMapping("deleteMember")
+	public String deleteMember(HttpServletRequest request,String password) {
+		String viewPath = null;
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		System.out.println(memberVO.getPassword());
+		System.out.println(password);
+		if(memberVO.getPassword().equals(password)) {
+			memberService.deleteMember(memberVO.getId());
+			System.out.println(memberVO);
+			session.invalidate();
+			viewPath = "mypage/deleteMember-result";
+		}else {
+			viewPath = "mypage/deleteMember-fail";
+		}	
+		return viewPath;
+	}
 }
