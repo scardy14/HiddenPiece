@@ -24,7 +24,7 @@
 
 	<!-- 경매 게시판 게시물 리스트 조회 -->
 	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		<include refid="selectAuctionBoardPostList"></include> order by post_no desc
+		<include refid="selectAuctionBoardPostList"></include> WHERE post_status = 1 order by post_no desc
 	</select>
 
 	
@@ -51,7 +51,7 @@
 		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval, #{id}, #{title}, #{content}, '꾸깃.PNG', #{startPrice}, #{startPrice}, #{sellPrice}, DEFAULT, DEFAULT, TO_DATE(#{endDate},'YYYY-MM-DD HH24:MI'), ' ', DEFAULT)
 	</insert>
 	<update id="deleteAuctionBoardPost" parameterType="long">
-		UPDATE AutionBoard SET status=0 WHERE post
+		UPDATE AutionBoard SET status=0 WHERE postNo=#{value}
 	</update>
 
 </mapper>

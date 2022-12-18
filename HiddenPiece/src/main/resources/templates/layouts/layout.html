@@ -215,8 +215,7 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#writeAuctionBoardPostForm").submit(function() {
-				let result = confirm("경매글을 등록하시겠습니까?");
-				if(!result) {
+				if(!confirm("경매글을 등록하시겠습니까?")) {
 					return false;
 				}
 			});		
@@ -237,6 +236,16 @@
 			$("#logoutBtn").click(function(){
 					$("#logoutForm").submit();
 			});
+			$("#writeAuctionBoardPostCancle").click(function() {
+				if(confirm("글 등록을 취소하시겠습니까?")) {
+					location.href="home";
+				}			
+			})
+			$("#moveAuctionBoardPostDelete").click(function() {
+				if(confirm("글을 삭제하시겠습니까?")) {
+					location.href="home";
+				}			
+			})
 		});
 	</script>
 </body>

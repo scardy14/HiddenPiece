@@ -4619,7 +4619,15 @@ input[type="button"].btn-block {
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
-
+.page-link1 {
+	 position: relative;
+  line-height: 1.25;
+  color: #FFF;
+  background-color: #FFD333;
+  border: 1px solid #dee2e6;
+  width: 100px;
+  height: 30px;
+}
 .page-link:hover {
   z-index: 2;
   color: #e6b400;
