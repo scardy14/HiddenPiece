@@ -24,7 +24,7 @@
 
 	<!-- 경매 게시판 게시물 리스트 조회 -->
 	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		<include refid="selectAuctionBoardPostList"></include> WHERE post_status = 1 order by post_no desc
+		<include refid="selectAuctionBoardPostList"></include> WHERE post_status=1 order by post_no desc 
 	</select>
 
 	
@@ -44,7 +44,7 @@
 	</update>
 	
 	<select id="selectCommentByCommentNo" resultType="string" parameterType="long">
-		SELECT * FROM AuctionBoard_Comment WHERE comment_no=#{value}
+		SELECT content FROM AuctionBoard_Comment WHERE comment_no=#{value}
 	</select>
 
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
@@ -54,4 +54,12 @@
 		UPDATE AutionBoard SET status=0 WHERE postNo=#{value}
 	</update>
 
+	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
+		UPDATE AuctionBoard_Comment SET content=#{content} WHERE comment_no=#{commentNo}
+	</update>
+	
+	<!-- 찜하기 버튼 눌렀을 때 -->
+	<insert id="addToWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO">
+		INSERT INTO AuctionBoard_Likes VALUES(#{postNo}, #{id})
+	</insert>
 </mapper>

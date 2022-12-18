@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 
 
@@ -24,5 +25,8 @@ public interface AuctionBoardMapper {
 	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
 
 	public int deleteAuctionBoardPost(long postNo); 
+	public void updateComment(AuctionBoardCommentVO commentVO);
+
+	public void addToWishlist(AuctionBoardLikesVO likesVO);
 
 }

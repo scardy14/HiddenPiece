@@ -58,4 +58,10 @@ public class AuctionBoardUnitTest {
 		String content = auctionBoardMapper.selectCommentByCommentNo(22);
 		log.debug("content: {}", content);
 	}
+	
+	@Test
+	void updateComment() {
+		AuctionBoardCommentVO commentVO = new AuctionBoardCommentVO(1, 44, "yerin0110", "2022-12-15 13:00:00.0","댓글22", "1");
+		auctionBoardMapper.updateComment(commentVO);
+	}
 }

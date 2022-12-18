@@ -38,7 +38,6 @@ public class MemberController {
 			session.invalidate();
 		return "redirect:/";
 	}
-
 	
 	@RequestMapping("findIdForm")
 	public String findIdForm() {
@@ -55,7 +54,6 @@ public class MemberController {
 		memberService.registerMember(memberVO);
 		return "member/register-result";
 	}
-
 	
 	@PostMapping("findId")
 	public String findId(String email,String name,String address,String tel) {
@@ -89,6 +87,17 @@ public class MemberController {
 	public String findPasswordresult(String password,Model model) {
 		model.addAttribute("password", password);
 		return "member/findPassword-result";
+	}
+
+	@RequestMapping("deleteFromWishlist")
+	public String deleteFromWishlist(long postNo) {
+		memberService.deleteFromWishlist(postNo);
+		return "redirect:deleteFromWishlistResult";
+	}
+	
+	@RequestMapping("deleteFromWishlistResult")
+	public String deleteFromWishlistResult() {
+		return "/wishlist";
 	}
 
 }

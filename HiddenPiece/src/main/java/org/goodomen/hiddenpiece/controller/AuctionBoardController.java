@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class AuctionBoardController {
 	private final AuctionBoardService auctionBoardService;
 	
+	// 경매게시판 상세보기
 	@RequestMapping("findAuctionBoardPostDetail")
 	public String findAuctionBoardPostDetail(long postNo, Model model) {
 		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
@@ -25,14 +27,18 @@ public class AuctionBoardController {
 		model.addAttribute("commentList", commentList);
 		return "auctionboard/detail2";
 	}
+	
+	// 경매게시판 글 작성 폼 화면 이동
 	@RequestMapping("moveAuctionBoardPostForm")
 	public String moveAuctionBoardPostForm() {
 		return "auctionboard/write-form";
 	}	
-	@PostMapping("writeAuctionBoardPost")
+	// 경매게시판 글 작성
+	@RequestMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
 		int result = auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
+		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/write-ok";
 	}
 	@RequestMapping("moveAuctionBoardPostUpdateForm")
@@ -48,6 +54,7 @@ public class AuctionBoardController {
 		return "auctionboard/delete-ok";
 	}	
 	
+	// 경매게시판 댓글 작성
 	@ResponseBody
 	@RequestMapping("writeComment")
 	public String writeComment(Model model, AuctionBoardCommentVO commentVO) {
@@ -56,15 +63,35 @@ public class AuctionBoardController {
 		return result;
 	}
 	
+	// 경매게시판 댓글 삭제(상태 0으로 변경)
 	@ResponseBody
 	@RequestMapping("changeCommentStatus")
 	public void changeCommentStatus(long commentNo) {
 		auctionBoardService.changeCommentStatus(commentNo);
 	}
-
+	
+	// 경매게시판 댓글 조회
 	@ResponseBody
 	@RequestMapping("selectCommentByCommentNo")
-	public void selectCommentByCommentNo(long commentNo) {
-		auctionBoardService.selectCommentByCommentNo(commentNo);
+	public String selectCommentByCommentNo(long commentNo) {
+		String content = auctionBoardService.selectCommentByCommentNo(commentNo);
+		return content;
 	}
+	
+	// 경매게시판 댓글 수정
+	@ResponseBody
+	@RequestMapping("updateComment")
+	public void updateComment(AuctionBoardCommentVO commentVO) {
+		auctionBoardService.updateComment(commentVO);
+	}
+	
+	// 찜하기 버튼 눌르기
+	@ResponseBody
+	@RequestMapping("addToWishlist")
+	public void addToWishlist(String id,long postNo) {
+		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
+		auctionBoardService.addToWishlist(likesVO);
+		
+	}
+
 }

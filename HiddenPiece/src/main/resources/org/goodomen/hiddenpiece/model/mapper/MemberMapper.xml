@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.goodomen.hiddenpiece.model.mapper.MemberMapper">
+
+	
+
 	<select id="login" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
 		select * from HP_Member where id=#{id} and password=#{password}
 	</select>
-
-
 
 	<insert id="registerMember" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO">
 	insert into HP_Member 
 	values(#{id},#{email},#{address},0,#{name},#{nickName},#{accountNo},#{password},#{tel},1)	
 	</insert>
 
-
 	<select id="findId" resultType="String">
 		Select id from HP_Member where email=#{email} and address=#{address} and name=#{name} and tel=#{tel}
 	</select>
+	
 	<select id="findPassword" resultType="String">
 		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel}
 	</select>
-
+	
+	<!-- 찜 목록 -->
+	<select id="selectMyWishlist" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" parameterType="String">
+		SELECT ab.post_no, ab.id, ab.title, ab.content, ab.photo, ab.start_price, ab.current_price, ab.sell_price, ab.time_posted, ab.hits, ab.end_date, ab.now_id, ab.post_status, abl.post_no
+		FROM AuctionBoard ab
+		INNER JOIN AuctionBoard_Likes abl ON ab.post_no=abl.post_no
+		WHERE abl.id=#{value}
+	</select>
+	
+	<!-- 찜목록에서 삭제 -->
+	<delete id="deleteFromWishlist" parameterType="long">
+		DELETE FROM AuctionBoard_Likes WHERE post_no=#{postNo}
+	</delete>
+	
 </mapper>

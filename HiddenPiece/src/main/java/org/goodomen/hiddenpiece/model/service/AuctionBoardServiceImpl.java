@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +35,11 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	}
 	
 	@Override
-	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		
+	public int writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {	
 		return auctionBoardMapper.writeAuctionBoardPost(auctionBoardPostVO);
-
 	}
+
+
 	@Override
 	public void changeCommentStatus(long commentNo) {
 		auctionBoardMapper.changeCommentStatus(commentNo);
@@ -46,12 +47,22 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 
 	@Override
 	public String selectCommentByCommentNo(long commentNo) {
-		String content = auctionBoardMapper.selectCommentByCommentNo(commentNo);
-		return content;
+		return auctionBoardMapper.selectCommentByCommentNo(commentNo);
 	}
 
 	@Override
 	public int deleteAuctionBoardPost(long postNo) {
 		return auctionBoardMapper.deleteAuctionBoardPost(postNo);
 	}
+
+	public void updateComment(AuctionBoardCommentVO commentVO) {
+		auctionBoardMapper.updateComment(commentVO);
+	}
+
+	@Override
+	public void addToWishlist(AuctionBoardLikesVO likesVO) {
+		auctionBoardMapper.addToWishlist(likesVO);
+	}
+
+
 }
