@@ -63,8 +63,6 @@ public class MemberController {
 	public String ajaxIdCheck(String id) {
 		String message = null;
 		int result = memberService.checkId(id);
-		System.out.println(result);
-		
 		if(result == 1) {
 			message = "중복되는 아이디입니다 아이디를 변경해주세요";
 		}else {
