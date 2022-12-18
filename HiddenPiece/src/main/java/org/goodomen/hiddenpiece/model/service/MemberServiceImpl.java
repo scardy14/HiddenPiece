@@ -36,4 +36,10 @@ public class MemberServiceImpl implements MemberService {
 		ArrayList<AuctionBoardPostVO> list = memberMapper.selectMyWishlist(id);
 		return list;
 	}
+
+	@Override
+	public void deleteFromWishlist(long postNo) {
+		memberMapper.deleteFromWishlist(postNo);
+		
+	}
 }

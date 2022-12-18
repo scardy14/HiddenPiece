@@ -90,15 +90,19 @@
                                 <img class="img-fluid w-100" th:src="@{/img/}+ ${group.photo}" alt="">
                                 <div class="product-action">
                                 <th:block th:if="${session.mvo}">
+                                <th:block>
                                  	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlist([[${group.postNo}]], [[${session.mvo.id}]]);" href=""   >
-                                 		<i class="far fa-heart" th:id="'emptyHeart'+${group.postNo}"></i>
-                                 		<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
+	                                 	<th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
+	                                 		<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
+	                                	</th:block>
+	                                	<th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
+	                                 		<i class="far fa-heart" th:id="'emptyHeart'+${group.postNo}"></i><!-- 찜 안눌렀으면 빈하트 -->
+	                                	</th:block>
                                     </a>
-                         
                                 </th:block>
                                 <th:block th:if="${session.mvo==null}">
                                 	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlistNoSession([[${group.postNo}]]);" href=""   >
-                                 		<i class="far fa-heart" ></i>
+                                 		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
                                     </a>
                                 </th:block>
                                    
@@ -140,9 +144,6 @@
     <!-- Shop End -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
-$(function() {
-		
-})
 
     function addToWishlist(postNo, id){
     	let heart=$("#heart");

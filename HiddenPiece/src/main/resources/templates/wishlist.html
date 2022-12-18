@@ -28,14 +28,10 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <div layout:fragment="content">
-
-
-
-
     <!-- Cart Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
-            <div class="col-lg-10 table-responsive mb-5" style="padding-left:250px; ">
+            <div class="col-lg-10 table-responsive mb-5" style="padding-left:250px;">
                 <table class="table table-light table-borderless table-hover text-center mb-0" style="width:100%; text-align: center; align-content: text;" >
                     <thead class="thead-dark">
                         <tr>
@@ -49,12 +45,14 @@
                             <th>찜취소하기</th>
                         </tr>
                     </thead>
-                    <tbody class="align-middle">
+                    <tbody class="align-middle" th:each="wl:${mywishlist}">
                         <tr>
-                            <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;">글제목</td>
-                            <td class="align-middle">내가 입찰한 가격</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                        <th:block th:if="${wl.postStatus}!=0">
+                            <td style="cursor:pointer;" th:onclick="|location.href='@{/findAuctionBoardPostDetail(postNo=${wl.postNo})}'|"  class="align-middle"><img th:src="@{/img/}+ ${wl.photo}" style="width: 50px;" th:text="${wl.title}">글제목</td>
+                            <td class="align-middle" th:text="${wl.sellPrice}">내가 입찰한 가격</td>
+                            <td class="align-middle" th:text="${wl.nowId}">현재 입찰자
+                              
+                               <!--  <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-primary btn-minus" >
                                         <i class="fa fa-minus"></i>
@@ -68,107 +66,23 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle">$150</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-3.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                           <td class="align-middle">$150</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-4.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+                             -->
+                            <td class="align-middle" th:text="${wl.currentPrice}">$150</td>
+                            <td th:text="${wl.sellPrice}"></td>
+                            <td th:text="${wl.endDate}"></td>
+                            <th:block th:switch="${wl.postStatus}">
+                            <th:block th:case=1>
+                            	<td>진행중</td>
+                            </th:block>
+                            <th:block th:case=2>
+                            	<td>경매완료</td>
+                            </th:block>
+                            <th:block th:case=3>
+                            	<td>시간만료</td>
+                            </th:block>
+                            </th:block>
+                            <td class="align-middle"><button class="btn btn-sm btn-danger" id="deleteFromWishlistBtn" th:onclick="deleteFromWishlist([[${wl.postNo}]])"><i class="fa fa-times"></i></button></td>
+                            </th:block>
                         </tr>
                     </tbody>
                 </table>
@@ -176,9 +90,12 @@
         </div>
     </div>
     <!-- Cart End -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+	</script>
 
-
-
+	
+	
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
@@ -186,6 +103,24 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    	/* 찜 취소  */
+    	function deleteFromWishlist(postNo){
+    		let result = confirm("찜 목록에서 제외하시겠습니까?");
+    		if(result){
+	    		$.ajax({
+	    			type:"get",
+	    			url:"deleteFromWishlist",
+	    			data:{
+	    				"postNo":postNo
+	    			},
+	    			success:function(result){
+	    				location.reload();
+	    			}
+	    		})
+    		}
+    	}
+    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>

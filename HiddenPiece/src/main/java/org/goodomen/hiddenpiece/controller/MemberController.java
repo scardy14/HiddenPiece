@@ -44,4 +44,16 @@ public class MemberController {
 		memberService.registerMember(memberVO);
 		return "member/register-result";
 	}
+	
+	@RequestMapping("deleteFromWishlist")
+	public String deleteFromWishlist(long postNo) {
+		memberService.deleteFromWishlist(postNo);
+		return "redirect:deleteFromWishlistResult";
+	}
+	
+	@RequestMapping("deleteFromWishlistResult")
+	public String deleteFromWishlistResult() {
+		return "/wishlist";
+	}
+	
 }

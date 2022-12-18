@@ -1,5 +1,6 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +34,13 @@ public class IndexMoveController {
 	}
 	
 	@RequestMapping("auctionboard")
-	public String auctionBoardMove(Model model) {
+	public String auctionBoardMove(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		ArrayList<AuctionBoardPostVO> myWishlist = memberService.selectMyWishlist(memberVO.getId());
 		ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList();
 		model.addAttribute("postList", auctionBoardPostList);
+		model.addAttribute("myWishlist", myWishlist);
 		return "shop2";
 	}
 	
@@ -81,10 +86,12 @@ public class IndexMoveController {
 	
 	//찜 목록 페이지로 이동
 	@RequestMapping("wishlist")
-	public String wishlist(HttpServletRequest request, Model model) {
+	public String wishlist(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");
+		ArrayList<AuctionBoardPostVO> list = memberService.selectMyWishlist(memberVO.getId());
+		model.addAttribute("mywishlist", list);
 		return "/wishlist";
-	
-		
 	}
 	
 }

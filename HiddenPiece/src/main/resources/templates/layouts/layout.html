@@ -89,20 +89,26 @@
 					data-toggle="collapse" href="#navbar-vertical"
 					style="height: 65px; padding: 0 30px;">
 					<h6 class="text-dark m-0">
+						<th:block th:if="${session.mvo}">
 						<i class="fa fa-bars mr-2"></i>마이페이지
-					</h6> <i class="fa fa-angle-down text-dark"></i>
+						</th:block>
+					</h6>
+						 <i class="fa fa-angle-down text-dark"></i>
 				</a>
 				<nav
 					class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
 					id="navbar-vertical"
 					style="width: calc(100% - 30px); z-index: 999;">
 					<div class="navbar-nav w-100">
+					<th:block th:if="${session.mvo}">
 						<div class="nav-item dropdown dropright">
 							<a href="" class="dropdown-item">내정보</a>
-							 <a href="" th:href="@{/wishlist}" class="dropdown-item">찜목록</a> 
+							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
 							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
 							<a href="" class="dropdown-item">계좌로환전하기</a>
 						</div>
+					</th:block>
+					
 
 
 						<!--                         <a href="" class="nav-item nav-link">Swimwear</a>
@@ -129,11 +135,14 @@
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
 						<div class="navbar-nav mr-auto py-0">
-							<span class="nav-item nav-link active text-dark">HiddenPiece</span>
-							<span class="nav-item nav-link active ">입찰중인 상품</span> <span
-								class="nav-item nav-link active ">출품중인 상품</span> <span
-								class="nav-item nav-link active "><a href=""
-								th:href="@{/error}">경매종료 상품</a></span>
+						<span class="nav-item nav-link active text-dark">HiddenPiece</span>
+							<th:block th:if="${session.mvo}">
+								<span class="nav-item nav-link active ">입찰중인 상품</span>
+								 <span class="nav-item nav-link active ">출품중인 상품</span>
+								  <span class="nav-item nav-link active ">
+								  	<a href="" th:href="@{/error}">경매종료 상품</a>
+								  </span>
+							</th:block>
 							<div class="nav-item dropdown">
 								<!-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a> -->
 								<div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
@@ -236,6 +245,7 @@
 			$("#logoutBtn").click(function(){
 					$("#logoutForm").submit();
 			});
+			
 		});
 	</script>
 </body>

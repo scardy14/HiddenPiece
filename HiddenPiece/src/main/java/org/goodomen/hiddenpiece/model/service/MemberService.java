@@ -12,4 +12,6 @@ public interface MemberService {
 	MemberVO login(MemberVO memberVO);
 
 	ArrayList<AuctionBoardPostVO> selectMyWishlist(String id);
+
+	void deleteFromWishlist(long postNo);
 }

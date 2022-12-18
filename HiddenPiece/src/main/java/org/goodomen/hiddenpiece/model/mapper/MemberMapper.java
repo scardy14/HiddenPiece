@@ -18,4 +18,6 @@ public interface MemberMapper {
 	String findPassword(String id, String email, String name, String tel);
 
 	ArrayList<AuctionBoardPostVO> selectMyWishlist(String id);
+
+	void deleteFromWishlist(long postNo);
 }
