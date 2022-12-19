@@ -61,6 +61,16 @@
 						<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
 							<i class="fas fa-heart text-primary"></i> 찜하기
 						</button>
+						<th:block th:if="&{session.mvo!=null}">
+							<th:block th:if="&{session.mvo.id==postVO.id}">
+							<button class="btn px-3" th:="">
+								<i class="fas fa-heart text-primary"></i> 찜하기
+							</button>
+							<button class="btn px-3" th:="">
+								<i class="fas fa-heart text-primary"></i> 찜하기
+							</button>
+							</th:block>
+						</th:block>
 					</div>
 					<br>
 					<div class="nav nav-tabs mb-4">
