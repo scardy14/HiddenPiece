@@ -23,7 +23,13 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public void writePost(FreeBoardVO freeBoardVO) {
 		freeBoardMapper.writePost(freeBoardVO);
-
 	}
-	
+	@Override
+	public void updatePost(FreeBoardVO freeBoardVO) {
+		freeBoardMapper.updatePost(freeBoardVO);
+	}
+	@Override
+	public void deletePost(long postNo) {
+		freeBoardMapper.deletePost(postNo);
+	}
 }

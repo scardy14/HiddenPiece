@@ -27,3 +27,5 @@ insert into FREEBOARD values(
 	0,
 	1
 )
+
+select * from freeBoard where post_no=2;

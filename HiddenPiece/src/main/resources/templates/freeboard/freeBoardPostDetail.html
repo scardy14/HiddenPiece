@@ -8,6 +8,7 @@
 <div layout:fragment="content">
 	<div class="row pt-4">
 		<div class="col-sm-6 offset-sm-3" th:each="postVO:${postVO}">
+		
 			<div class="row">
 				<div class="col-12">
 					<span th:text="${postVO.title}"></span>
@@ -33,18 +34,13 @@
 				</div>
 			</div>
 		</div>
-
-
-		<div class="row">
-			<div class="col-12">
-				<a
-					class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-					href="#" th:href="@{/freeBoardUpdatePost}">수정</a> <a
-					class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-					href="#" th:href="@{/freeBoardUpdatePost}">삭제</a>
-			</div>
-		</div>
+	</div>
+	<br><br>
+	<div align="center">
+	<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}">수정</a>
+	<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}">삭제</a>
 	</div>
 </div>
+
 
 </html>
