@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>HiddenPiece</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<div layout:fragment="content">
+    <!-- Cart Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-lg-10 table-responsive mb-5" style="padding-left:250px;">
+                <table class="table table-light table-borderless table-hover text-center mb-0" style="width:100%; text-align: center; align-content: text;" >
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>글제목</th>
+                            <th>내가입찰한가격</th>
+                            <th>현재입찰자</th>
+                            <th>현재입찰가</th>
+                            <th>즉시구매가</th>
+                            <th>남은시간</th>
+                            <th>상품 현황</th>
+                            <th>찜취소하기</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle" th:each="wl:${mywishlist}">
+                        <tr>
+                        <th:block th:if="${wl.postStatus}!=0">
+                            <td style="cursor:pointer;" th:onclick="|location.href='@{/findAuctionBoardPostDetail(postNo=${wl.postNo})}'|"  class="align-middle"><img th:src="@{/img/}+ ${wl.photo}" style="width: 50px;" th:text="${wl.title}">글제목</td>
+                            <td class="align-middle" th:text="${wl.sellPrice}">내가 입찰한 가격</td>
+                            <td class="align-middle" th:text="${wl.nowId}">현재 입찰자
+                              
+                               <!--  <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-minus" >
+                                        <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                             -->
+                            <td class="align-middle" th:text="${wl.currentPrice}">$150</td>
+                            <td th:text="${wl.sellPrice}"></td>
+                            <td th:text="${wl.endDate}"></td>
+                            <th:block th:switch="${wl.postStatus}">
+                            <th:block th:case=1>
+                            	<td>진행중</td>
+                            </th:block>
+                            <th:block th:case=2>
+                            	<td>경매완료</td>
+                            </th:block>
+                            <th:block th:case=3>
+                            	<td>시간만료</td>
+                            </th:block>
+                            </th:block>
+                            <td class="align-middle"><button class="btn btn-sm btn-danger" id="deleteFromWishlistBtn" th:onclick="deleteFromWishlist([[${wl.postNo}]], [[${session.mvo.id}]])"><i class="fa fa-times"></i></button></td>
+                            </th:block>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Cart End -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+	</script>
+
+	
+	
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+    	/* 찜 취소  */
+    	function deleteFromWishlist(postNo, id){
+    		let result = confirm("찜 목록에서 제외하시겠습니까?");
+    		if(result){
+	    		$.ajax({
+	    			type:"get",
+	    			url:"deleteFromWishlist",
+	    			data:{
+	    				"postNo":postNo,
+	    				"id":id
+	    			},
+	    			success:function(result){
+	    				location.reload();
+	    			}
+	    		})
+    		}
+    	}
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</div>
+</html>
