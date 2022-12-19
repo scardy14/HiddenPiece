@@ -1,6 +1,5 @@
 package org.goodomen.hiddenpiece.controller;
 
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,7 +88,7 @@ public class IndexMoveController {
 	public String loginForm() {
 		return "member/login-form";
 	}
-	
+
 	//찜 목록 페이지로 이동
 	@RequestMapping("wishlist")
 	public String wishlist(Model model, HttpServletRequest request) {
@@ -100,5 +99,11 @@ public class IndexMoveController {
 		return "/wishlist";
 	}
 	
+
+	@RequestMapping("myInfo")
+	public String myInfo() {
+		return "mypage/myInfo";		
+	}
+
 }
 

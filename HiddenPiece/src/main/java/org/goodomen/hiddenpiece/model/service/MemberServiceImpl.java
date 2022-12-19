@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,11 @@ public class MemberServiceImpl implements MemberService {
 	public int registerMember(MemberVO memberVO) {
 		return memberMapper.registerMember(memberVO);
 	}
-	
-	/*
+
 	@Override
-	public MemberVO login(MemberVO memberVO, HttpServletRequest request) {
-		return memberMapper.login(memberVO);
+	public String findPassword(String id, String address, String name, String tel) {
+		return memberMapper.findPassword(id, address, name, tel);
 	}
-	*/
 	
 	@Override
 	public MemberVO login(MemberVO memberVO) {
@@ -48,4 +47,31 @@ public class MemberServiceImpl implements MemberService {
 		long result = memberMapper.checkWishlist(likesVO);
 		return result;
 	}
+
+	@Override
+	public void deleteMember(String id) {
+		memberMapper.deleteMember(id);
+	}
+	
+	@Override
+	public int checkId(String id) {
+		return memberMapper.checkId(id);
+	}
+
+	@Override
+	public MemberVO findMemberByAccount(String accountNo) {
+		return memberMapper.findMemberByAccount(accountNo);
+	}
+
+	@Override
+	public AccountVO findAccountInfoByAccountNo(String accountNo) {
+		return memberMapper.findAccountInfoByAccountNo(accountNo);
+	}
+
+	@Override
+	public String findId(String email, String address, String name, String tel) {
+		return null;
+	}
+
 }
+

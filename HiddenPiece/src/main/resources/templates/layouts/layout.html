@@ -102,10 +102,17 @@
 					<div class="navbar-nav w-100">
 					<th:block th:if="${session.mvo}">
 						<div class="nav-item dropdown dropright">
+<<<<<<< HEAD
 							<a href="" class="dropdown-item">내정보</a>
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
+=======
+							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
+							<a href="" class="dropdown-item">찜목록</a> 
+							<a href="" class="dropdown-item">장바구니</a> 
+>>>>>>> refs/heads/main
 							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
 							<a href="" class="dropdown-item">계좌로환전하기</a>
+							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
 						</div>
 					</th:block>
 					
@@ -221,7 +228,35 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
+	
 		$(function() {
+			
+			
+			let checkId = $("input[name=id]");
+			checkId.keyup(function(){
+				$.ajax({
+					type:"get",
+					url:"ajaxIdCheck",
+					data:"id="+checkId.val(),
+					success:function(result){
+						$("#ajaxId").text(result);
+					}
+				});
+			});
+			
+			let checkAccount = $("input[name=accountNo]");
+			checkAccount.keyup(function(){
+				$.ajax({
+					type:"get",
+					url:"ajaxAccountCheck",
+					data:"accountNo="+checkAccount.val(),
+					success:function(result){
+						$("#ajaxAccount").text(result);
+					}
+				});
+			});
+			
+			
 			$("#writeAuctionBoardPostForm").submit(function() {
 				let result = confirm("경매글을 등록하시겠습니까?");
 				if(!result) {

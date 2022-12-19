@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.goodomen.hiddenpiece.model.mapper.MemberMapper">
-
-	
-
 	<select id="login" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
-		select * from HP_Member where id=#{id} and password=#{password}
+		select * from HP_Member where id=#{id} and password=#{password} and status=1
 	</select>
 
 	<insert id="registerMember" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO">
@@ -39,4 +36,19 @@
 		SELECT count(*) FROM AuctionBoard_Likes WHERE post_no=#{postNo} AND id=#{id}
 	</select>
 	
+	<update id="deleteMember">
+			Update HP_Member set status = 0 where id =#{id}
+	</update>
+	
+	<select id="checkId" resultType="int">
+	Select count(*) from HP_Member where id = #{id}	
+	</select>
+	
+	<select id="findMemberByAccount" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
+	Select * from HP_member where account_no = #{accountNo}
+	</select>
+	
+	<select id="findAccountInfoByAccountNo" resultType="org.goodomen.hiddenpiece.model.vo.AccountVO">
+	Select * from ACCOUNT_INFO where account_no =#{accountNo}
+	</select>
 </mapper>
