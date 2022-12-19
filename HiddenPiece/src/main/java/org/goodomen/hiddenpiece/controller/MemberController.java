@@ -34,8 +34,8 @@ public class MemberController {
 
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
-		MemberVO vo = memberService.login(memberVO);
-		if (vo == null) {
+		memberVO = memberService.login(memberVO);
+		if (memberVO == null) {
 			memberVO = memberService.login(memberVO);
 			return "member/login-fail";
 		}
