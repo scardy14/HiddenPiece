@@ -38,7 +38,6 @@ public class AuctionBoardController {
 				postVO.setLike(true);
 			}
 		}
-		System.out.println(postVO);
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);

@@ -57,12 +57,13 @@
 						<th:block th:if="${session.mvo}">
 							<th:block th:if="${postVO.like}">
 								<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-									<i class="fas fa-heart text-primary"></i> 찜하기
+									<i class="far fa-heart"> 찜하기</i>
 								</button>
 							</th:block>
 							<th:block th:unless="${postVO.like}">
 								<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-									<i class="far fa-heart"> 찜하기</i>
+									<i class="fas fa-heart text-primary"></i> 찜하기
+									
 								</button>
 							</th:block>
 						</th:block>
@@ -107,15 +108,6 @@
 	                    </div>
 								<span class="comment_info_date" th:id="'timePosted'+${cList.commentNo}" th:text="${cList.timePosted}"></span>
 								
-								
-								
-								
-								
-								
-								
-								
-								
-								
 								<th:block th:if="${session.mvo} and ${session.mvo.id==cList.id}">
 									<button type="button" th:id="'updateBtn'+${cList.commentNo}" th:onclick="updateCommentForm([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
 									<button type="button" th:id="'changeCommentStatusBtn'+${cList.commentNo}" th:onclick="changeCommentStatus([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
@@ -126,14 +118,7 @@
 										<button name="commentupdatebtn_no" id="commentupdatebtn_no" class="btn btn-warning" th:onclick="commentUpdateZoneHide([[${cList.commentNo}]])" style=" color: white; background-color: #ef7b35; border-color: #ef7b35;">취소</button>
 									</div>
 		                            <hr style="width:65vw">
-		                           
 								</th:block>
-								
-								
-								
-								
-								
-								
 	                     </div>
                     	</div>   	
                     </div>
