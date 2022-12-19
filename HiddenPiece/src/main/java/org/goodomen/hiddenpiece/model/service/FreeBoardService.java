@@ -12,8 +12,7 @@ public interface FreeBoardService {
 
 	void writePost(FreeBoardVO freeBoardVO);
 
-	
+	void updatePost(FreeBoardVO freeBoardVO);
 
-	
-
+	void deletePost(long postNo);
 }

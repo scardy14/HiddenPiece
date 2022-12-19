@@ -13,6 +13,14 @@ public interface FreeBoardMapper {
 	public FreeBoardVO findFreeBoardPostDetail(long postNo);
 
 	public void writePost(FreeBoardVO freeBoardVO);
+	
+	public FreeBoardVO findTitleAndContent(long postNo);
+	
+	public void updatePost(FreeBoardVO freeBoardVO);
+
+	public void deletePost(long postNo);
+
+	
 
 	
 }

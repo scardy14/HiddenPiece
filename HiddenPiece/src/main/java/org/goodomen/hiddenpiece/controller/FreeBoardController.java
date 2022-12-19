@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.controller;
 
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
+import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,54 @@ public class FreeBoardController {
 	}
 	@RequestMapping("writePost")
 	public String writePost(FreeBoardVO freeBoardVO) {
-		/*HttpSession session = request.getSession();
-		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");*/
-		
 		freeBoardService.writePost(freeBoardVO);
 		System.out.println(freeBoardVO);
 		return "freeboard/writePost-ok";
 	}	
+	/*
+	@RequestMapping("freeBoardUpdatePostForm")
+	public String moveFreeBoardPostUpdateForm(long postNo, Model model) {
+		model.addAttribute("postVO", freeBoardService.findFreeBoardPostDetail(postNo));
+		return "freeboard/freeBoardUpdatePostForm";
+	}
+	@RequestMapping("updatePost")
+	public String updatePost(long postNo,FreeBoardVO freeBoardVO) {
+		System.out.println(postNo);
+		freeBoardService.updatePost(freeBoardVO);
+		return 
+	
+	@RequestMapping("updatePost")
+	public String updatePost(long postNo,FreeBoardVO freeBoardVO) {
+		System.out.println(postNo);
+		freeBoardService.updatePost(freeBoardVO);
+		return "redirect:updatePostResult";
+	}	
+	
+	@RequestMapping("updatePostResult")
+	public String updatePostResult(Model model) {
+		return "freeboard/updatePost-ok";
+	}
+	*/
+	
+	@RequestMapping("freeBoardUpdatePostForm")
+	public String moveFreeBoardPostUpdateForm(long postNo, Model model) {
+		model.addAttribute("postVO", freeBoardService.findFreeBoardPostDetail(postNo));
+		return "freeboard/freeBoardUpdatePostForm";
+	}
+	@RequestMapping("updatePost")
+	public String updatePost(FreeBoardVO freeBoardVO) {
+		freeBoardService.updatePost(freeBoardVO);
+		return "redirect:freeBoardPostList";
+	}	
+	
+	@RequestMapping("freeBoardDeletePostForm")
+	public String moveFreeBoardPostDeleteForm() {
+		return "freeboard/freeBoardDeletePostForm";
+	}
+	@RequestMapping("deletePost")
+	public String deletePost(long postNo) {
+		freeBoardService.deletePost(postNo);
+		return "redirect:freeBoardPostList";
+	}	
+	
 }

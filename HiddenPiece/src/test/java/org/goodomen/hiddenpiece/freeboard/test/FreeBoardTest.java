@@ -35,5 +35,17 @@ public class FreeBoardTest {
 		FreeBoardVO freeBoardVO=new FreeBoardVO(3L, "왜안되", "2022-12-19", "뭐가문제", 0, 1, "hunjin");
 		freeBoardMapper.writePost(freeBoardVO);
 	}
+
+	@Test
+	void updatePost() {
+		FreeBoardVO freeBoardVO=new FreeBoardVO(2, "글", "2022-12-19", "글수정", 0, 1, "hunjin");
+		freeBoardMapper.updatePost(freeBoardVO);
+	}
+	@Test 
+	void deletePost() {
+		long postNo=48;
+		freeBoardMapper.deletePost(postNo);
+		
+	}
 	
 }

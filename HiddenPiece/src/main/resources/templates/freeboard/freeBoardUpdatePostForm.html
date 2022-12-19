@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+	<div class="row pt-4">
+		<div class="col-sm-6 offset-sm-3">
+			<form method="post" action="" th:action="@{/updatePost}">
+				      <input name="id" th:value="${session.mvo.id}" type = "hidden">
+				      <input name="postNo" th:value="${param.postNo}" type = "hidden" >
+			<table class="table">		
+				<tr>
+					<td><input type="text" name="title" required="required" th:value="${postVO.title}"></td>
+				</tr>
+				<tr>
+					<td><textarea rows="20" class="form-control" name="contend" required="required" th:value="${postVO.contend}">[[${postVO.contend}]]</textarea></td>
+				</tr>
+			</table>
+			<div class="text-center">
+				<button type="submit" class="btn btn-success">수정</button>
+				<br><br>
+				<a href="" th:href="freeBoardPostList">자유게시판으로</a>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>
