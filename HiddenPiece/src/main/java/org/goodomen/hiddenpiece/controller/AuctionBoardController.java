@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class AuctionBoardController {
 	private final AuctionBoardService auctionBoardService;
 	private final MemberService memberService;
+	
 	// 경매게시판 상세보기
 	@RequestMapping("findAuctionBoardPostDetail")
 	public String findAuctionBoardPostDetail(long postNo, Model model, HttpServletRequest request) {
@@ -29,14 +30,15 @@ public class AuctionBoardController {
 		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-			ArrayList<AuctionBoardPostVO> selectComparedMyWishlist = memberService.selectComparedMyWishlist(memberVO.getId());//내가 찜한 리스트와 총 게시물 리스트를 비교해 setLike된 리스트
-			for(int i=0; i<selectComparedMyWishlist.size(); i++) {
-				if (selectComparedMyWishlist.get(i).getPostNo()==postNo) {
-						postVO.setLike(true);
-						break;
-				}
+			AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(memberVO.getId(), postNo);
+			if(memberService.checkWishlist(likesVO)>0) {
+				postVO.setLike(false);
+			}
+			else {
+				postVO.setLike(true);
 			}
 		}
+		System.out.println(postVO);
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);

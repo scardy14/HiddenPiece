@@ -39,6 +39,7 @@ public class IndexMoveController {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 			ArrayList<AuctionBoardPostVO> selectComparedMyWishlist = memberService.selectComparedMyWishlist(memberVO.getId());//내가 찜한 리스트와 총 게시물 리스트를 비교해 setLike된 리스트 
 			model.addAttribute("postList", selectComparedMyWishlist);
+			System.out.println(selectComparedMyWishlist);
 		}
 		else {
 			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList(); //전체 리스트 
