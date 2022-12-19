@@ -17,10 +17,6 @@
 	<select id="findPassword" resultType="String">
 		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel} and status = 1
 	</select>
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/heads/main
 
 	<update id="updateMember">
          Update HP_Member set email=#{email},address=#{address},name=#{name},
@@ -64,8 +60,5 @@
 	<select id="findAccountInfoByAccountNo" resultType="org.goodomen.hiddenpiece.model.vo.AccountVO">
 	Select * from ACCOUNT_INFO where account_no =#{accountNo}
 	</select>
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/heads/main
 </mapper>
