@@ -14,4 +14,8 @@ public interface MemberService {
 	MemberVO login(MemberVO memberVO);
 
 
+	void updateMember(MemberVO memberVO);
+
+
+
 }

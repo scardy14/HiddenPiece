@@ -13,5 +13,9 @@ public interface MemberMapper {
 	String findId(String email, String address, String name, String tel);
 
 	String findPassword(String id, String email, String name, String tel);
+
+	void updateMember(MemberVO memberVO);
+
+	Object findMemberById(String id);
 	
 }

@@ -44,4 +44,7 @@ public class HiddenPieceTest {
 		String password = memberMapper.findPassword(id,email,name,tel);
 		System.out.println(password);
 	}
+
+	
+
 }

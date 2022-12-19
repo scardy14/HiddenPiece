@@ -27,6 +27,8 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',11
 
 
 
+
+
 CREATE TABLE HP_Member(
 	id VARCHAR2(100) NOT NULL,
 	tel NUMBER NOT NULL,
@@ -47,12 +49,17 @@ INSERT INTO ACCOUNT_INFO values('144322', '국민', 5000);
 INSERT INTO HP_Member VALUES('yerin0110','yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','99150201', 'a', 01093124050, 1);
 INSERT INTO HP_Member VALUES('java','java@naver.com','오리',5000,'김자바','쏘해피자바','144322', 'a', 01081085855, 1);
 
-<<<<<<< HEAD
-=======
+
+
 select * from HP_Member where id='yerin0110';
 INSERT INTO HP_Member VALUES('scardy',01063462516,'jyhong20@naver.com','상일동',1414141414,'홍주영','코스타짱돌','회원',333308)
 INSERT INTO HP_Member VALUES('yerin0110',01093124050,'yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','회원',99150201)
->>>>>>> refs/heads/main
+
+--회원 정보 수정
+select * from HP_Member
+update HP_Member set password='c',email='dkakaksl',tel='01038291023',address='수원',nickName='봉태시기',name='문쭈노' where id='jaja';
+		
+update spring_member set password='b',name='아이유2',address='종로' where id='java' ;	
 
 
 CREATE TABLE AuctionBoard(

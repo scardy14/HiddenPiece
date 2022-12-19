@@ -20,4 +20,12 @@
 		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel}
 	</select>
 
+	<update id="updateMember">
+         Update HP_Member set email=#{email},address=#{address},name=#{name},
+         nickname=#{nickName},password=#{password},tel=#{tel} where id = #{id}
+   </update>
+   <select id="findMemberById" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
+      select * from HP_member where id =#{id}
+   </select>
+	
 </mapper>

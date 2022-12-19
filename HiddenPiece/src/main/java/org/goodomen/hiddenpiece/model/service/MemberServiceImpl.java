@@ -28,10 +28,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 
-
 	@Override
 	public MemberVO login(MemberVO memberVO) {
 		return memberMapper.login(memberVO);
+	}
+
+
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		memberMapper.updateMember(memberVO);
+		
 	}
 
 }
