@@ -65,8 +65,8 @@
 							</button>
 						</th:block>
 						<th:block th:unless="${session.mvo}">
-							<button class="btn px-3" id="noSessionWishlistBtn" onclick="noSessionWishlist()" >
-								<i class="fas fa-heart text-primary" ></i> 찜하기
+							<button class="btn px-3" id="noSessionWishlistBtn" onclick="noSessionWishlist();" >
+								<i class="far fa-heart"> 찜하기</i>
 							</button>
 						</th:block>
 						<th:block th:if="${session.mvo!=null}">
@@ -175,11 +175,11 @@
 <script type="text/javascript" th:inline="javascript">
 	
 	/* 세션 없을때 찜하기 버튼 누를시 */
-	$(document).ready(function(){
+	/* $(document).ready(function(){ */
 		function noSessionWishlist(){
 			 alert("찜하기는 회원만 가능합니다.");
 		}
-	});
+/* 	}); */
 
 	
 	/* 찜하기확인  */

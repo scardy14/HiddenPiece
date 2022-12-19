@@ -17,32 +17,122 @@
 				</h5>
 				<div class="bg-light p-30 mb-5">
 					<div style="text-align: center;">
-						<form action="" th:action="@{/registerMember}" method="post">
+						<form action="" th:action="@{/registerMember}" method="post"  id="registerForm">
 							<label>ID</label><br>
-							<input name="id" class="form-control1" type="text" placeholder="hiddenpiece" id="id"><br><span id="ajaxId"></span>
+							<input name="id" class="form-control1" type="text" placeholder="아이디는 4자 이상 입력해주세요." id="id"><br><span id="ajaxId"></span>
 							<br>
-							<label>Password</label><br>
-							<input name="password" class="form-control1" type="text" placeholder="Password"><br>
+							<br>
+							<label>비밀번호</label><br>
+							<input name="password" class="form-control1" type="password" placeholder="비밀번호는 4자 이상 입력해주세요." id="password"><br><br>
+							<br>
+							<label>비밀번호 확인</label><br>
+							<input name="passwordCheck" class="form-control1" type="password" id="passwordCheck" placeholder="비밀번호와 일치하게 입력해주세요."><br><br>
 							<br>
 							<label>전화번호</label><br>
-							<input name = "tel" class="form-control1" type="text" placeholder="999 999 999"><br>
+							<input name = "tel" class="form-control1" type="text" placeholder="010-0000-0000 형식으로 입력해주세요." id="tel"><br><br>
 							<br>
 							<label>e-mail</label><br>
-							<input name="email" class="form-control1" type="text" placeholder="example@email.com"><br> <br>
+							<input name="email" class="form-control1" type="text" placeholder="example@email.com 형식으로 입력해주세요." id="email"><br> <br><br>
 							<label>주소</label><br>
-							<input name="address" class="form-control1" type="text" placeholder="123 Street"><br>
+							<input name="address" class="form-control1" type="text" placeholder="123 Street"><br><br>
 							<br>
 							<label>이름</label><br>
-							<input name="name" class="form-control1" type="text" placeholder="홍주영"><br> <br>
+							<input name="name" class="form-control1" type="text" placeholder="이름"><br> <br><br>
 							<label>닉네임</label><br>
-							<input name="nickName" class="form-control1"	type="text" placeholder="Kosta"><br> <br>
+							<input name="nickName" class="form-control1"	type="text" placeholder="Kosta"><br> <br><br>
 							<label>계좌번호</label><br>
-							<input name="accountNo" class="form-control1" type="text" placeholder="******"><br><span id="ajaxAccount"></span>
+							<input name="accountNo" class="form-control1" type="text" placeholder="자신의 계좌번호를 입력해주세요."><br><span id="ajaxAccount"></span><br>
 							<br>
 							<br>
-							<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;">회원가입하기</button>
+							<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;" id="checkBtn">회원가입하기</button>
 						</form>
+<script type="text/javascript" th:inline="javascript">
 
+	
+$(function() {
+	
+	let checkIdFlag = "";
+	let checkAccountFlag="";
+	
+	$("#registerForm").submit(function(){
+		if(checkIdFlag=="" || checkAccountFlag==""){ //중복돼서 안넘어가야된다
+			return false;
+		}
+	});
+	
+	let checkId = $("input[name=id]");
+	let id = $("#id").val();
+	checkId.keyup(function(){
+		checkIdFlag = "";
+		checkId = $("input[name=id]");
+		id = $("#id").val();
+		
+		$.ajax({
+			type:"get",
+			url:"ajaxIdCheck",
+			data:"id="+checkId.val(),
+			success:function(result){
+				if(result ==1){
+					$("#ajaxId").text("중복됩니다");
+				}
+				else if(result==0 && id.length>4){
+					$("#ajaxId").text("중복안됩니다");
+					checkIdFlag=checkId.val();
+				}
+				else if(id.length<4){
+					$("#ajaxId").text("아이디는 4자 이상 입력해주세요.");
+				}
+			}
+		});
+	});
+	
+	let checkAccount = $("input[name=accountNo]");
+	checkAccount.keyup(function(){
+		checkAccountFlag = "";
+		
+		$.ajax({
+			type:"get",
+			url:"ajaxAccountCheck",
+			data:"accountNo="+checkAccount.val(),
+			success:function(result){
+				if(result==1){
+					$("#ajaxAccount").text("사용 가능");	
+					checkAccountFlag=checkAccount.val();
+				}else if(result==2){
+					$("#ajaxAccount").text("이미 등록된 계좌입니다.");
+				}else{
+					$("#ajaxAccount").text("존재하지 않는 계좌입니다.");
+				}
+			}
+		});
+	});
+	
+	$("#checkBtn").click(function() {
+		let password = $("#password").val();
+		let passwordCheck = $("#passwordCheck").val();
+		let email = $("#email").val();
+		let tel =$("#tel").val();
+		
+		if(password!==passwordCheck){
+			alert("비밀번호가 일치하지 않습니다");
+			return false;
+		}
+		if(!(password.length>=4)){
+			alert("비밀번호는 4자 이상 입력해주세요.");
+			return false;
+		}
+		if(email.indexOf(".com")==-1 || email.indexOf("@")==-1){
+			alert("올바른 이메일 형식이 아닙니다.");
+			return false;
+		}
+		if(tel.length!=13){
+			alert("전화번호는 11자 000-0000-0000 형식으로 입력해주세요.");
+			return false;
+		}
+	})
+	
+});
+</script>
 						
 					</div>
 				</div>

@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuctionBoardController {
 	private final AuctionBoardService auctionBoardService;
+	private final MemberService memberService;
 	
 	// 경매게시판 상세보기
 	@RequestMapping("findAuctionBoardPostDetail")

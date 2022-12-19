@@ -19,7 +19,7 @@
 					<div style="text-align: center;">
 						<div>
 							<label>이메일</label><br>
-							<input class="form-control1" type="text" name="email" placeholder="000@000.com"><br> 
+							<input class="form-control1" type="text" name="email" id="email" placeholder="000@000.com"><br> 
 							<br>
 						</div>
 						<div>
@@ -34,15 +34,33 @@
 						</div>
 						<div>
 							<label>전화번호</label><br>
-							<input class="form-control1" type="text" name="tel" placeholder="000-0000-0000"><br>
+							<input class="form-control1" type="text" name="tel" id="tel" placeholder="000-0000-0000"><br>
 							<br>
 						</div>
 						<br>
-						<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;">아이디 찾기</button>
+						<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;" id="checkBtn">아이디 찾기</button>
 					</div>
 				</div>
 				</div>
 				</div>
 				</div>
 	</form>
+					<script type="text/javascript" th:inline="javascript">
+$(function() {
+	$("#checkBtn").click(function() {
+		let email = $("#email").val();
+		let tel =$("#tel").val();
+		
+		
+		if(email.indexOf(".com")==-1 || email.indexOf("@")==-1){
+			alert("올바른 이메일 형식이 아닙니다.");
+			return false;
+		}
+		if(tel.length!=13){
+			alert("전화번호는 11자 000-0000-0000 형식으로 입력해주세요.");
+			return false;
+		}
+	});
+});
+</script>
 </div>

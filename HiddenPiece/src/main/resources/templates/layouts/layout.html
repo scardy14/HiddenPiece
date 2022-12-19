@@ -7,6 +7,17 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
+	
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+	<!-- Contact Javascript File -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -102,13 +113,9 @@
 						<div class="nav-item dropdown dropright">
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
-<<<<<<< HEAD
-=======
-							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
+
 							<a href="" th:href="@{/updateMemberForm}" class="dropdown-item">회원정보수정</a>
-							<a href="" class="dropdown-item">찜목록</a> 
-							<a href="" class="dropdown-item">장바구니</a> 
->>>>>>> refs/heads/main
+
 							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
 							<a href="" class="dropdown-item">계좌로환전하기</a>
 							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
@@ -212,48 +219,12 @@
 		class="fa fa-angle-double-up"></i></a>
 
 
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-	<!-- Contact Javascript File -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
 	
 		$(function() {
-			
-			
-			let checkId = $("input[name=id]");
-			checkId.keyup(function(){
-				$.ajax({
-					type:"get",
-					url:"ajaxIdCheck",
-					data:"id="+checkId.val(),
-					success:function(result){
-						$("#ajaxId").text(result);
-					}
-				});
-			});
-			
-			let checkAccount = $("input[name=accountNo]");
-			checkAccount.keyup(function(){
-				$.ajax({
-					type:"get",
-					url:"ajaxAccountCheck",
-					data:"accountNo="+checkAccount.val(),
-					success:function(result){
-						$("#ajaxAccount").text(result);
-					}
-				});
-			});
-			
 			
 			$("#writeAuctionBoardPostForm").submit(function() {
 				let result = confirm("경매글을 등록하시겠습니까?");
