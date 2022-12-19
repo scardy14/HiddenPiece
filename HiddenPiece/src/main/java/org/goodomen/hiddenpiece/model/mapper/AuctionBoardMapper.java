@@ -30,4 +30,6 @@ public interface AuctionBoardMapper {
 
 	public int deleteAuctionBoardPost(long postNo);
 
+	public int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
 }

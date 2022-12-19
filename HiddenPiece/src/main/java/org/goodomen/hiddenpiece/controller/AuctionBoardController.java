@@ -94,5 +94,13 @@ public class AuctionBoardController {
 	public String moveAuctionBoardPostDelete(long postNo) {
 		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
 		return "auctionboard/delete-ok";
-	}	
+	}
+	//경매게시판 글 수정
+	@PostMapping("updateAuctionBoardPost")
+	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		System.out.println(auctionBoardPostVO);
+		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
+		
+		return "auctionboard/update-ok";
+	}
 }

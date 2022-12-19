@@ -63,4 +63,8 @@
 	<update id="deleteAuctionBoardPost" parameterType="long" >
 		UPDATE AuctionBoard SET status = 0 WEHRE postNo=#{value}
 	</update>
+	<!-- 글수정 -->
+	<update id="updateAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		UPDATE AuctionBoard SET title = #{title}, content=#{content}, end_date=#{endDate} WHERE post_no=#{postNo} 
+	</update>
 </mapper>
