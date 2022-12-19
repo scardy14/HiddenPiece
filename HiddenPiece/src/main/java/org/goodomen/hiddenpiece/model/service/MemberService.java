@@ -34,4 +34,6 @@ public interface MemberService {
 	void deleteFromWishlist(AuctionBoardLikesVO likesVO);
 
 	int checkWishlist(AuctionBoardLikesVO likesVO);
+
+	ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id);
 }
