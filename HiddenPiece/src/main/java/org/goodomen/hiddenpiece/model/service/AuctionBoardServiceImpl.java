@@ -62,6 +62,12 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		auctionBoardMapper.addToWishlist(likesVO);
 	}
 
+	@Override
+	public int deleteAuctionBoardPost(long postNo) {
+		return auctionBoardMapper.deleteAuctionBoardPost(postNo);
+		
+	}
+
 
 
 }

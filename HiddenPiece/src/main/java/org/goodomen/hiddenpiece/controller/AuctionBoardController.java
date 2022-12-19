@@ -7,6 +7,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -79,4 +80,17 @@ public class AuctionBoardController {
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 	}
+	//경매게시판 글 수정 폼으로 이동
+	@RequestMapping("moveAuctionBoardPostUpdateForm")
+	public String moveAuctionBoardPostUpdateForm(Model model, long postNo) {
+		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		model.addAttribute("postVO", postVO);
+		return "auctionboard/update-form";
+	}
+	//경매게시판 글 삭제
+	@PostMapping("moveAuctionBoardPostDelete")
+	public String moveAuctionBoardPostDelete(long postNo) {
+		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
+		return "auctionboard/delete-ok";
+	}	
 }

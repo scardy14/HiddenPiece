@@ -59,4 +59,8 @@
 	<insert id="addToWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO">
 		INSERT INTO AuctionBoard_Likes VALUES(#{postNo}, #{id})
 	</insert>
+	<!-- 글삭제 -->
+	<update id="deleteAuctionBoardPost" parameterType="long" >
+		UPDATE AuctionBoard SET status = 0 WEHRE postNo=#{value}
+	</update>
 </mapper>

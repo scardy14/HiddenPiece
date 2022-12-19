@@ -28,4 +28,6 @@ public interface AuctionBoardMapper {
 
 	public void addToWishlist(AuctionBoardLikesVO likesVO);
 
+	public int deleteAuctionBoardPost(long postNo);
+
 }

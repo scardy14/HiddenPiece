@@ -27,4 +27,6 @@ public interface AuctionBoardService {
 	void updateComment(AuctionBoardCommentVO commentVO);
 
 	void addToWishlist(AuctionBoardLikesVO auctionBoardLikesVO);
+
+	int deleteAuctionBoardPost(long postNo);
 }
