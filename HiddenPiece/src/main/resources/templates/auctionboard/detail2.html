@@ -69,6 +69,18 @@
 								<i class="fas fa-heart text-primary" ></i> 찜하기
 							</button>
 						</th:block>
+						<th:block th:if="${session.mvo!=null}">
+							<th:block th:if="${session.mvo.id==postVO.id}">
+								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}" >
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button type = "submit">수정하기</button>
+								</form>  &nbsp;
+								<form id = "moveAuctionBoardPostDelete" th:action="@{/moveAuctionBoardPostDelete}">
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button  type = "submit">삭제하기</button> 
+								</form>
+							</th:block>
+						</th:block>
 					</div>
 					<br>
 					<div class="nav nav-tabs mb-4">
