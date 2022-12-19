@@ -11,4 +11,10 @@
 	<insert id="writePost" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
 		insert into freeboard(post_no,contend,time_posted,title,id) values(freeboard_seq.nextval,#{contend},sysdate,#{title},#{id})
 	</insert>
+	<update id="updatePost" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
+		update freeboard set title=#{title}, contend=#{contend} where post_no=#{postNo}
+	</update>
+	<delete id="deletePost" parameterType="long">
+		delete from freeboard where post_no=#{value}
+	</delete>
 </mapper>

@@ -70,9 +70,10 @@ public class MemberController {
 		return "member/register-result";
 	}
 	
-
+	@ResponseBody
 	@RequestMapping("deleteFromWishlist")
 	public String deleteFromWishlist(AuctionBoardLikesVO likesVO) {
+		System.out.println(likesVO+"여기");
 		memberService.deleteFromWishlist(likesVO);
 		return "redirect:deleteFromWishlistResult";
 	}
@@ -127,15 +128,17 @@ public class MemberController {
 	}
 
 	// 찜 목록에 있는지 확인
+	@ResponseBody
 	@RequestMapping("checkToWishlist")
-	public long checkToWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println(likesVO);
-		long result = memberService.checkWishlist(likesVO);
+	public int checkToWishlist(AuctionBoardLikesVO likesVO) {
+		System.out.println(likesVO+"check");
+		int result = memberService.checkWishlist(likesVO);
 		System.out.println(result);
 		return result;
 	}
 	
 	// 찜목록에서 삭제
+	@ResponseBody
 	@RequestMapping("findIdresult")
 	public String findIdresult(String id,Model model) {
 		model.addAttribute("id", id);

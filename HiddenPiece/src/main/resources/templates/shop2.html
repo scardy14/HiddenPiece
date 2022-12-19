@@ -101,8 +101,8 @@
 		                                	</th:block>
 	                                    </a>
 	                                </th:block>
-	                                
-	                                <th:block th:if="${session.mvo==null}">
+	                           </th:block>
+	                                <th:block th:unless="${session.mvo}">
 	                                	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlistNoSession([[${group.postNo}]]);" href=""   >
 	                                 		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
 	                                    </a>

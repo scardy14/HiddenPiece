@@ -79,5 +79,4 @@ public class AuctionBoardController {
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 	}
-
 }

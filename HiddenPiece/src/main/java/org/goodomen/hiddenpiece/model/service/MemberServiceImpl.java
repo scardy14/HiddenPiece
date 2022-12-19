@@ -8,6 +8,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,10 +50,10 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteFromWishlist(likesVO);
 	}
 
+	@ResponseBody
 	@Override
-	public long checkWishlist(AuctionBoardLikesVO likesVO) {
-		long result = memberMapper.checkWishlist(likesVO);
-		return result;
+	public int checkWishlist(AuctionBoardLikesVO likesVO) {
+		return memberMapper.checkWishlist(likesVO);
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findId(String email, String address, String name, String tel) {
-		return null;
+		return memberMapper.findId(email, address, name, tel);
 	}
 
 }
