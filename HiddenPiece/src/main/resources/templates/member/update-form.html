@@ -25,17 +25,22 @@
 						</div>
 						<div>
 							<label>비밀번호</label><br>
-							<input class="form-control1" type="text" name="password" th:value="${session.mvo.password}" placeholder="비밀번호"><br>
+							<input class="form-control1" type="text" name="password" id="password" placeholder="비밀번호"><br>
 							<br>
-						</div>
+						</div>	
+						<div>
+						<label>비밀번호 확인</label><br>
+							<input class="form-control1" type="text" name="password" id="passwordCheck" placeholder="비밀번호"><br>
+							<br>
+							</div>
 						<div>
 							<label>이메일</label><br>
-							<input class="form-control1" type="text" name="email" th:value="${session.mvo.email}" placeholder="이메일"><br> 
+							<input class="form-control1" type="text" name="email" th:value="${session.mvo.email}" id="email" placeholder="이메일"><br> 
 							<br>
 						</div>
 						<div>
 							<label>전화번호</label><br>
-							<input class="form-control1" type="text" name="tel" th:value="${session.mvo.tel}"  placeholder="전화번호"><br> 
+							<input class="form-control1" type="text" name="tel" th:value="${session.mvo.tel}" id="tel" placeholder="전화번호"><br> 
 							<br>
 						</div>
 						<div>
@@ -56,11 +61,39 @@
 						</div>
 						
 						<br>
-						<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;">회원정보 수정</button>
+						<button style="width: 30%; border: none; background-color: #FFD333; height: 50px; color: #495057;" id="checkBtn">회원정보 수정</button>
 					</div>
 				</div>
 				</form>
 				</div>
 				</div>
 				</div>
+				<script type="text/javascript" th:inline="javascript">
+$(function() {
+	$("#checkBtn").click(function() {
+		let password = $("#password").val();
+		let passwordCheck = $("#passwordCheck").val();
+		let email = $("#email").val();
+		let tel =$("#tel").val();
+		
+		if(password!==passwordCheck){
+			alert("비밀번호가 일치하지 않습니다");
+			return false;
+		}
+		if(!(password.length>=4)){
+			alert("비밀번호는 4자 이상 입력해주세요.");
+			return false;
+		}
+		if(email.indexOf(".com")==-1 || email.indexOf("@")==-1){
+			alert("올바른 이메일 형식이 아닙니다.");
+			return false;
+		}
+		if(tel.length!=13){
+			alert("전화번호는 11자 000-0000-0000 형식으로 입력해주세요.");
+			return false;
+		}
+	})
+	
+});
+</script>
 </div>
