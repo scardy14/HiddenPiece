@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 
 @Mapper
@@ -16,6 +17,11 @@ public interface MemberMapper {
 
 	void deleteMember(String id);
 
-	
+	int checkId(String id);
+
+	MemberVO findMemberByAccount(String accountNo);
+
+	AccountVO findAccountInfoByAccountNo(String accountNo);
+
 	
 }

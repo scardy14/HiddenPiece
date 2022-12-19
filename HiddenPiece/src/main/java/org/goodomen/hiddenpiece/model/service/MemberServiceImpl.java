@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.model.service;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.registerMember(memberVO);
 	}
 
-
 	@Override
 	public String findId(String email, String address, String name, String tel) {
 		return memberMapper.findId(email, address, name, tel);
@@ -27,19 +27,29 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.findPassword(id, address, name, tel);
 	}
 	
-
-
 	@Override
 	public MemberVO login(MemberVO memberVO) {
 		return memberMapper.login(memberVO);
 	}
 
-
 	@Override
 	public void deleteMember(String id) {
 		memberMapper.deleteMember(id);
 	}
+	
+	@Override
+	public int checkId(String id) {
+		return memberMapper.checkId(id);
+	}
 
+	@Override
+	public MemberVO findMemberByAccount(String accountNo) {
+		return memberMapper.findMemberByAccount(accountNo);
+	}
 
+	@Override
+	public AccountVO findAccountInfoByAccountNo(String accountNo) {
+		return memberMapper.findAccountInfoByAccountNo(accountNo);
+	}
 
 }
