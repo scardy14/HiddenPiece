@@ -77,7 +77,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findId(String email, String address, String name, String tel) {
-		return null;
+		return memberMapper.findId(email, address, name, tel);
 	}
 
 }

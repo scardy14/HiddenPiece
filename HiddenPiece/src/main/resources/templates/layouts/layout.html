@@ -58,13 +58,11 @@
 				<th:block th:if="${session.mvo==null}">
 					
 						<a href="" th:href="@{/loginForm}" style="background-color:#FFD333; color: white;">로그인</a>
-					
-					
-						<a href="" th:href="@{/registerMemberForm}" style="background-color:#FFD333; color: white;">회원가입</a>
-					
+		
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
+					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span>
 					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
  					<a href="#" id="logoutBtn">로그아웃</a>
  						

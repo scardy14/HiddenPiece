@@ -34,7 +34,7 @@ public class MemberController {
 	public String login(MemberVO memberVO, HttpServletRequest request) {
 		memberVO = memberService.login(memberVO);
 		if (memberVO == null) {
-			memberVO = memberService.login(memberVO);
+			
 			return "member/login-fail";
 		}
 		else {
