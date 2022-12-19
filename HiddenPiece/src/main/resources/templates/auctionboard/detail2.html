@@ -71,7 +71,7 @@
 						</th:block>
 						<th:block th:if="${session.mvo!=null}">
 							<th:block th:if="${session.mvo.id==postVO.id}">
-								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}" >
+								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}">
 									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 									<button type = "submit">수정하기</button>
 								</form>  &nbsp;
@@ -337,6 +337,8 @@
  	}
 	  
 	}
+  	
+  	
    </script>
 					</div>
 				</div>
