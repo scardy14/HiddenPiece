@@ -39,7 +39,7 @@ public class AuctionBoardController {
 	// 경매게시판 글 작성
 	@RequestMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		System.out.println(auctionBoardPostVO);
+		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/write-ok";
 	}
@@ -90,7 +90,7 @@ public class AuctionBoardController {
 		return "auctionboard/update-form";
 	}
 	//경매게시판 글 삭제
-	@PostMapping("moveAuctionBoardPostDelete")
+	@PostMapping("AuctionBoardPostDelete")
 	public String moveAuctionBoardPostDelete(long postNo) {
 		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
 		return "auctionboard/delete-ok";
@@ -98,9 +98,9 @@ public class AuctionBoardController {
 	//경매게시판 글 수정
 	@PostMapping("updateAuctionBoardPost")
 	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
 		System.out.println(auctionBoardPostVO);
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
-		
 		return "auctionboard/update-ok";
 	}
 }

@@ -31,8 +31,8 @@
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
 					<h3 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h3>
-					<h3 class="font-weight-semi-bold mb-4" th:text="|입찰가 ${postVO.currentPrice}원|">입찰가: $130.00</h3>
-					<h5 class="font-weight-semi-bold mb-4" th:text="|즉시구매가 ${postVO.sellPrice}원|">즉시구매가: $150.00</h5>
+					<h3 class="font-weight-semi-bold mb-4" th:text="|입찰가 ${postVO.currentPrice}원|" >입찰가: $130.00</h3> <input type = "hidden" value = "value" th:value="${postVO.currentPrice}" id="currentPrice">
+					<h5 class="font-weight-semi-bold mb-4" th:text="|즉시구매가 ${postVO.sellPrice}원|" >즉시구매가: $150.00</h5><input type = "hidden" value = "value" th:value="${postVO.sellPrice}" id="sellPrice">
 					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰자 ${postVO.nowId}님|">현재입찰자: Kosta</h5>
 					<div class="d-flex align-items-center mb-4 pt-2">
 						<div class="input-group quantity mr-3" style="width: 200px;">
@@ -41,16 +41,25 @@
 									<i class="fa fa-minus"></i>
 								</button>
 							</div>
-							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${postVO.currentPrice}">
+							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${postVO.currentPrice}" id = "bidPrice">
 							<div class="input-group-btn">
 								<button class="btn btn-primary btn-plus">
 									<i class="fa fa-plus"></i>
 								</button>
 							</div>
 						</div>
-						<button class="btn px-3" style="border-color: gray;">
-							<i class="fa fa-shopping-cart mr-1"></i> 입찰하기
-						</button>&nbsp;&nbsp;&nbsp;&nbsp;
+						<th:block th:if="${session.mvo}">
+							<th:block th:if="${session.mvo.id!=null}">
+								<button class="btn px-3" style="border-color: gray;" onclick="bidok()">
+									<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
+								</button>&nbsp;&nbsp;&nbsp;&nbsp;
+							</th:block>
+							<th:block th:if="${session.mvo.id==null}">
+								<button class="btn px-3" style="border-color: gray;" onclick="bidfail()">
+									<i class="fa fa-shopping-cart mr-1"></i> 입찰하기
+								</button>&nbsp;&nbsp;&nbsp;&nbsp;
+							</th:block>
+						</th:block>
 						<button class="btn px-3" style="border-color: gray;">
 							<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
 						</button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -75,7 +84,7 @@
 									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 									<button type = "submit">수정하기</button>
 								</form>  &nbsp;
-								<form id = "moveAuctionBoardPostDelete" th:action="@{/moveAuctionBoardPostDelete}">
+								<form id = "moveAuctionBoardPostDelete" th:action="@{/AuctionBoardPostDelete}" method="post">
 									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 									<button  type = "submit">삭제하기</button> 
 								</form>
@@ -115,15 +124,6 @@
 								<p th:text="${cList.content}" th:id="'commentContentOne'+${cList.commentNo}"></p><br>
 	                    </div>
 								<span class="comment_info_date" th:id="'timePosted'+${cList.commentNo}" th:text="${cList.timePosted}"></span>
-								
-								
-								
-								
-								
-								
-								
-								
-								
 								
 								<th:block th:if="${session.mvo} and ${session.mvo.id==cList.id}">
 									<button type="button" th:id="'updateBtn'+${cList.commentNo}" th:onclick="updateCommentForm([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
@@ -173,14 +173,10 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
-	
 	/* 세션 없을때 찜하기 버튼 누를시 */
-	/* $(document).ready(function(){ */
-		function noSessionWishlist(){
-			 alert("찜하기는 회원만 가능합니다.");
-		}
-/* 	}); */
-
+	function noSessionWishlist(){
+		alert("찜하기는 회원만 가능합니다.");
+	}
 	
 	/* 찜하기확인  */
 	function checkToWishlist(postNo, id){
@@ -248,6 +244,7 @@
 			});
 		}
 	}
+    	
 	function commentUpdateZoneHide(commentNo){
 		$("#commentUpdateZone"+commentNo).hide();
 		$("#ms-3"+commentNo).show();
@@ -312,31 +309,67 @@
    }
    
   	function updateComment(commentNo){
-	  let content =  document.getElementById("comment_update_content"+commentNo).value;
+		let content =  document.getElementById("comment_update_content"+commentNo).value;
 	  
-	  if(content.trim().length>0){
-		  let result = confirm("수정하시겠습니까?");
-		  let commentContent = content.trim();
-		  if(result){
-				$.ajax({
-		   			type:"get",
-		   			url:"updateComment",
-		   			data: {
-		   				"content" : commentContent,
-		   				"commentNo":commentNo
-		   			},
-		   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
-		   				location.reload();
-		   			}
-				});
-		  }
+	  	if(content.trim().length>0){
+			  let result = confirm("수정하시겠습니까?");
+			  let commentContent = content.trim();
+			  if(result){
+					$.ajax({
+			   			type:"get",
+			   			url:"updateComment",
+			   			data: {
+			   				"content" : commentContent,
+			   				"commentNo":commentNo
+			   			},
+			   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+			   				location.reload();
+			   			}
+					});
+			  }
+		}
+		else{
+		  alert("공백 등록은 불가합니다.");
+		  event.preventDefault();
+	 	}
 	}
-	else{
-	  alert("공백 등록은 불가합니다.");
-	  event.preventDefault();
- 	}
-	  
-	}
+  	
+  	function bidfail() {
+  		alert("로그인 후 이용가능합니다");
+  	}
+  	function bidok() {
+  		let currentPrice = document.getElementById("currentPrice").value*1;
+  		let sellPrice = document.getElementById("sellPrice").value*1;
+  		let bidPrice = document.getElementById("bidPrice").value*1;
+  		alert("현재입찰가 " + currentPrice + "즉시구매가 " + sellPrice+ "입찰가 " + bidPrice  )
+  		if(bidPrice==sellPrice) {	// 001 만일 입찰할 금액이 즉구가와 같다면
+  			if(confirm("입찰할려는 금액이 즉시구매가와 동일합니다. 즉시구매하시겠습니까?")) {
+  				alert("즉시구매되었습니다");
+  			} else {
+  				alert("취소하였습니다");
+  			} 
+  		} else { // 001 만일 입찰할 금액이 즉구가와 다르다면
+  			if(bidPrice>sellPrice) {
+  				if(confirm("입찰할려는 금액이 즉시구매가를 초과합니다. 즉시구매가로 바로 구매하시겠습니까?")) {
+  					alert("구매하였습니다");
+  				} else {
+  					alert("취소하였습니다");
+  				}
+  			} else {
+  				if(bidPrice<currentPrice) {
+  					alert("입찰할려는 금액이 현재입찰가보다 낮습니다. 입찰금액을 올려주세요");
+  				} else {
+  					if(confirm("입찰하시겠습니까?")) {
+  						alert("입찰하였습니다");
+  					} else {
+  						alert("취소하였습니다");
+  					}
+  				}
+  			}
+  		}
+  		
+  	}
+  	
   	
   	
    </script>
@@ -350,4 +383,3 @@
 <!-- Products Start -->
 
 <!-- Products End -->
-</div>

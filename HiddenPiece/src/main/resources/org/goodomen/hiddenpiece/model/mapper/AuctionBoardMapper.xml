@@ -48,7 +48,7 @@
 	</select>
 
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		INSERT INTO AuctionBoard VALUES()
+		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,#{id},#{title},#{content},'photo',#{startPrice},#{startPrice},#{sellPrice},DEFAULT,DEFAULT,TO_Date(#{endDate},'YYYY-MM-DD HH24:MI'),' ',DEFAULT)
 	</insert>
 
 	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
@@ -61,10 +61,10 @@
 	</insert>
 	<!-- 글삭제 -->
 	<update id="deleteAuctionBoardPost" parameterType="long" >
-		UPDATE AuctionBoard SET status = 0 WEHRE postNo=#{value}
+		UPDATE AuctionBoard SET post_status = 0 WHERE post_no=#{value}
 	</update>
 	<!-- 글수정 -->
 	<update id="updateAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		UPDATE AuctionBoard SET title = #{title}, content=#{content}, end_date=#{endDate} WHERE post_no=#{postNo} 
+		UPDATE AuctionBoard SET title = #{title}, content=#{content}, end_date=TO_Date(#{endDate},'YYYY-MM-DD HH24:MI') WHERE post_no=#{postNo} 
 	</update>
 </mapper>
