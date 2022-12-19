@@ -19,6 +19,10 @@ public interface MemberMapper {
 
 	String findPassword(String id, String email, String name, String tel);
 
+	void updateMember(MemberVO memberVO);
+
+	Object findMemberById(String id);
+	
 	ArrayList<AuctionBoardPostVO> selectMyWishlist(String id);
 
 	void deleteFromWishlist(AuctionBoardLikesVO likesVO);
@@ -32,4 +36,5 @@ public interface MemberMapper {
 	MemberVO findMemberByAccount(String accountNo);
 
 	AccountVO findAccountInfoByAccountNo(String accountNo);
+
 }

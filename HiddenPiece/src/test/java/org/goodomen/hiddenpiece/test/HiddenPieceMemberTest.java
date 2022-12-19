@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class HiddenPieceMemberTest {
+	private Logger logger=LoggerFactory.getLogger(getClass());
 	private MemberMapper memberMapper;
-	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	public HiddenPieceMemberTest(MemberMapper memberMapper) {
@@ -45,12 +45,22 @@ public class HiddenPieceMemberTest {
 		String password = memberMapper.findPassword(id,email,name,tel);
 		System.out.println(password);
 	}
+	
 	@Test
-	public void registerMember() {
-		MemberVO memberVO=new MemberVO("jaja5","a","000@gamil.com","01083219231","111115","안양",0,"봉구","문주노","1");
+	 public void registerMember() {
+		MemberVO memberVO=new MemberVO("jaja5","b","000@gamil.com","01083219231","111115","안양",0,"봉구","문주노","1");
 		memberMapper.registerMember(memberVO);
 		System.out.println("회원가입완료");
 	}
+
+   @Test
+   public void updateMember() {
+      MemberVO memberVO = new MemberVO("jaja","aa","000@naver.com","01012341234","111111","수원",1000,"봉식","아이유","1");
+      logger.debug("수정전 member {}",memberMapper.findMemberById(memberVO.getId()));
+      memberMapper.updateMember(memberVO);
+      logger.debug("수정후 member {}",memberMapper.findMemberById(memberVO.getId()));
+   }
+
 	
 	@Test
 	public void deleteMember() {
@@ -78,13 +88,11 @@ public class HiddenPieceMemberTest {
 
 	}
 	
-
 	@Test
 	public void checkAccountInfo() {
 		String accountNo = "111113";
 		AccountVO accountVO = memberMapper.findAccountInfoByAccountNo(accountNo);
 		System.out.println(accountVO);
 	}
-	
 	
 }

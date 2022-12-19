@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 
-
+import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 
@@ -26,8 +26,6 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
-
-	//private final MemberMapper memberMapper;
 
 	private final MemberMapper memberMapper;
 	private final MemberService memberService;
@@ -163,6 +161,23 @@ public class MemberController {
 	public String findPasswordresult(String password,Model model) {
 		model.addAttribute("password", password);
 		return "member/findPassword-result";
+	}
+
+	@RequestMapping("updateMemberForm")
+	public String updatememberForm() {
+		return "member/update-form";		
+	}
+	@PostMapping("updateMember")
+	public String updateMember(MemberVO memberVO,HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		memberService.updateMember(memberVO);
+		session.setAttribute("mvo",memberVO);
+		return "redirect:updateMemberResult";		
+	}
+	
+	@RequestMapping("updateMemberResult")
+	public String updateMemberResult() {
+		return "member/update-result";
 	}
 	
 	@RequestMapping("deleteMemberForm")

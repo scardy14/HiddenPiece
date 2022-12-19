@@ -1,6 +1,8 @@
 package org.goodomen.hiddenpiece;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,6 +15,4 @@ public class HiddenPieceTest {
 		super();
 		this.memberMapper = memberMapper;
 	}
-
-
 }

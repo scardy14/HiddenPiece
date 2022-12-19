@@ -11,12 +11,22 @@
 	</insert>
 
 	<select id="findId" resultType="String">
-		Select id from HP_Member where email=#{email} and address=#{address} and name=#{name} and tel=#{tel}
+		Select id from HP_Member where email=#{email} and address=#{address} and name=#{name} and tel=#{tel} and status = 1
 	</select>
 	
 	<select id="findPassword" resultType="String">
-		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel}
+		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel} and status = 1
 	</select>
+
+
+	<update id="updateMember">
+         Update HP_Member set email=#{email},address=#{address},name=#{name},
+         nickname=#{nickName},password=#{password},tel=#{tel} where id = #{id}
+   </update>
+   <select id="findMemberById" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
+      select * from HP_member where id =#{id}
+   </select>
+	
 	
 	<!-- 찜 목록 -->
 	<select id="selectMyWishlist" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" parameterType="String">
@@ -51,4 +61,5 @@
 	<select id="findAccountInfoByAccountNo" resultType="org.goodomen.hiddenpiece.model.vo.AccountVO">
 	Select * from ACCOUNT_INFO where account_no =#{accountNo}
 	</select>
+
 </mapper>

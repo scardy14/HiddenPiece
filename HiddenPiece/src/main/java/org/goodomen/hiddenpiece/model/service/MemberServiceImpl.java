@@ -26,10 +26,17 @@ public class MemberServiceImpl implements MemberService {
 	public String findPassword(String id, String address, String name, String tel) {
 		return memberMapper.findPassword(id, address, name, tel);
 	}
-	
+
 	@Override
 	public MemberVO login(MemberVO memberVO) {
 		return memberMapper.login(memberVO);
+	}
+
+
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		memberMapper.updateMember(memberVO);
+		
 	}
 
 	@Override
@@ -71,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findId(String email, String address, String name, String tel) {
-		return null;
+		return memberMapper.findId(email, address, name, tel);
 	}
 
 }

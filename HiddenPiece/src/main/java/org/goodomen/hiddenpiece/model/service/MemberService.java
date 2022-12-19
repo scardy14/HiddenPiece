@@ -17,6 +17,10 @@ public interface MemberService {
 
 	MemberVO login(MemberVO memberVO);
 
+
+	void updateMember(MemberVO memberVO);
+
+
 	void deleteMember(String id);
 
 	int checkId(String id);

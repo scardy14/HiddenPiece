@@ -58,13 +58,11 @@
 				<th:block th:if="${session.mvo==null}">
 					
 						<a href="" th:href="@{/loginForm}" style="background-color:#FFD333; color: white;">로그인</a>
-					
-					
-						<a href="" th:href="@{/registerMemberForm}" style="background-color:#FFD333; color: white;">회원가입</a>
-					
+		
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
+					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span>
 					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
  					<a href="#" id="logoutBtn">로그아웃</a>
  						
@@ -72,7 +70,7 @@
  						
 					<br>
 					<br>
-					<a href="" th:href="@{/updateMemberForm}">회원정보수정</a>
+					
 				</th:block>
 			</div>
 		</div>
@@ -104,13 +102,19 @@
 						<div class="nav-item dropdown dropright">
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
+<<<<<<< HEAD
+=======
+							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
+							<a href="" th:href="@{/updateMemberForm}" class="dropdown-item">회원정보수정</a>
+							<a href="" class="dropdown-item">찜목록</a> 
+							<a href="" class="dropdown-item">장바구니</a> 
+>>>>>>> refs/heads/main
 							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
 							<a href="" class="dropdown-item">계좌로환전하기</a>
 							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
 						</div>
 					</th:block>
 					
-
 
 						<!--                         <a href="" class="nav-item nav-link">Swimwear</a>
                         <a href="" class="nav-item nav-link">Sleepwear</a>
