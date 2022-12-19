@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.model.service;
 import java.util.ArrayList;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void deleteFromWishlist(long postNo) {
-		memberMapper.deleteFromWishlist(postNo);
-		
+	public void deleteFromWishlist(AuctionBoardLikesVO likesVO) {
+		memberMapper.deleteFromWishlist(likesVO);
+	}
+
+	@Override
+	public long checkWishlist(AuctionBoardLikesVO likesVO) {
+		long result = memberMapper.checkWishlist(likesVO);
+		return result;
 	}
 }

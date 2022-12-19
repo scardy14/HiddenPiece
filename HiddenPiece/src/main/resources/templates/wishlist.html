@@ -81,7 +81,7 @@
                             	<td>시간만료</td>
                             </th:block>
                             </th:block>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger" id="deleteFromWishlistBtn" th:onclick="deleteFromWishlist([[${wl.postNo}]])"><i class="fa fa-times"></i></button></td>
+                            <td class="align-middle"><button class="btn btn-sm btn-danger" id="deleteFromWishlistBtn" th:onclick="deleteFromWishlist([[${wl.postNo}]], [[${session.mvo.id}]])"><i class="fa fa-times"></i></button></td>
                             </th:block>
                         </tr>
                     </tbody>
@@ -105,14 +105,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
     	/* 찜 취소  */
-    	function deleteFromWishlist(postNo){
+    	function deleteFromWishlist(postNo, id){
     		let result = confirm("찜 목록에서 제외하시겠습니까?");
     		if(result){
 	    		$.ajax({
 	    			type:"get",
 	    			url:"deleteFromWishlist",
 	    			data:{
-	    				"postNo":postNo
+	    				"postNo":postNo,
+	    				"id":id
 	    			},
 	    			success:function(result){
 	    				location.reload();

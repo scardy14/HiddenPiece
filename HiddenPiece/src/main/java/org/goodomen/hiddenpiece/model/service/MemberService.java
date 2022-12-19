@@ -2,6 +2,7 @@ package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
 
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 
@@ -13,5 +14,7 @@ public interface MemberService {
 
 	ArrayList<AuctionBoardPostVO> selectMyWishlist(String id);
 
-	void deleteFromWishlist(long postNo);
+	void deleteFromWishlist(AuctionBoardLikesVO likesVO);
+
+	long checkWishlist(AuctionBoardLikesVO likesVO);
 }

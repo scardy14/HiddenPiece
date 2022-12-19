@@ -30,8 +30,13 @@
 	</select>
 	
 	<!-- 찜목록에서 삭제 -->
-	<delete id="deleteFromWishlist" parameterType="long">
-		DELETE FROM AuctionBoard_Likes WHERE post_no=#{postNo}
+	<delete id="deleteFromWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO">
+		DELETE FROM AuctionBoard_Likes WHERE post_no=#{postNo} AND id=#{id}
 	</delete>
+	
+	<!-- 찜 목록에 존재하는지 확인 -->
+	<select id="checkWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO" resultType="long">
+		SELECT count(*) FROM AuctionBoard_Likes WHERE post_no=#{postNo} AND id=#{id}
+	</select>
 	
 </mapper>

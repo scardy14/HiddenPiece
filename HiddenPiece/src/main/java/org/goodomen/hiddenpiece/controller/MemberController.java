@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.MemberService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,8 +46,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping("deleteFromWishlist")
-	public String deleteFromWishlist(long postNo) {
-		memberService.deleteFromWishlist(postNo);
+	public String deleteFromWishlist(AuctionBoardLikesVO likesVO) {
+		memberService.deleteFromWishlist(likesVO);
 		return "redirect:deleteFromWishlistResult";
 	}
 	
@@ -55,5 +55,16 @@ public class MemberController {
 	public String deleteFromWishlistResult() {
 		return "/wishlist";
 	}
+	
+	// 찜 목록에 있는지 확인
+	@RequestMapping("checkToWishlist")
+	public long checkToWishlist(AuctionBoardLikesVO likesVO) {
+		System.out.println(likesVO);
+		long result = memberService.checkWishlist(likesVO);
+		System.out.println(result);
+		return result;
+	}
+	
+	// 찜목록에서 삭제
 	
 }

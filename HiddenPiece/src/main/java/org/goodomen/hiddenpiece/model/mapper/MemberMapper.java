@@ -3,6 +3,7 @@ package org.goodomen.hiddenpiece.model.mapper;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 
@@ -19,5 +20,7 @@ public interface MemberMapper {
 
 	ArrayList<AuctionBoardPostVO> selectMyWishlist(String id);
 
-	void deleteFromWishlist(long postNo);
+	void deleteFromWishlist(AuctionBoardLikesVO likesVO);
+
+	int checkWishlist(AuctionBoardLikesVO likesVO);
 }

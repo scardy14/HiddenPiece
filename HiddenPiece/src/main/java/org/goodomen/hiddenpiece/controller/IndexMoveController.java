@@ -36,11 +36,17 @@ public class IndexMoveController {
 	@RequestMapping("auctionboard")
 	public String auctionBoardMove(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-		ArrayList<AuctionBoardPostVO> myWishlist = memberService.selectMyWishlist(memberVO.getId());
-		ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList();
-		model.addAttribute("postList", auctionBoardPostList);
-		model.addAttribute("myWishlist", myWishlist);
+		if(session!=null) {
+			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+			ArrayList<AuctionBoardPostVO> myWishlist = memberService.selectMyWishlist(memberVO.getId());
+			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList();
+			model.addAttribute("postList", auctionBoardPostList);
+			model.addAttribute("myWishlist", myWishlist);
+		}
+		else {
+			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList();
+			model.addAttribute("postList", auctionBoardPostList);
+		}
 		return "shop2";
 	}
 	

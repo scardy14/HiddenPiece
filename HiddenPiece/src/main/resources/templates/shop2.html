@@ -92,19 +92,35 @@
                                 <th:block th:if="${session.mvo}">
                                 <th:block>
                                  	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlist([[${group.postNo}]], [[${session.mvo.id}]]);" href=""   >
-	                                 	<th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
+                                 	
+	                                 	<th:block th:if="${!#lists.contains('${myWishlist}',group)}">
+		                                 		<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
+		                                	</th:block>
+		                                	<th:block th:if="${#lists.contains('${emptyHeartList}',group)}">
+		                                 		<i class="far fa-heart" th:id="'emptyHeart'+${group.postNo}"></i><!-- 찜 안눌렀으면 빈하트 -->
+		                                	</th:block>
+	                                    </a>
+	                                </th:block>
+	                                
+	                                <th:block th:if="${session.mvo==null}">
+	                                	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlistNoSession([[${group.postNo}]]);" href=""   >
+	                                 		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
+	                                    </a>
+	                                </th:block>
+	                                 	<!-- <th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
 	                                 		<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
 	                                	</th:block>
 	                                	<th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
-	                                 		<i class="far fa-heart" th:id="'emptyHeart'+${group.postNo}"></i><!-- 찜 안눌렀으면 빈하트 -->
+	                                 		<i class="far fa-heart" th:id="'emptyHeart'+${group.postNo}"></i>찜 안눌렀으면 빈하트
 	                                	</th:block>
                                     </a>
                                 </th:block>
+                                
                                 <th:block th:if="${session.mvo==null}">
                                 	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlistNoSession([[${group.postNo}]]);" href=""   >
-                                 		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
+                                 		<i class="far fa-heart" ></i>세션 없을때 빈하트 나오도록 
                                     </a>
-                                </th:block>
+                                </th:block> -->
                                    
                                     	
                                     <a class="btn btn-outline-dark btn-square" href="" th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}"><i class="fa fa-search"></i></a>
@@ -159,10 +175,7 @@
     		}
     	});
     	
-    	let result = confirm("찜 목록으로 이동하시겠습니까?");
-    	if(result){
-    		 location.href = '${pageContext.request.contextPath}/wishlist';
-    	}
+
    	}
 
     	
