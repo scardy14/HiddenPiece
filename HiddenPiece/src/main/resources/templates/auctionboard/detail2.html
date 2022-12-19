@@ -54,14 +54,14 @@
 						<button class="btn px-3" style="border-color: gray;">
 							<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
 						</button>&nbsp;&nbsp;&nbsp;&nbsp;
-						<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-							<i class="fas fa-heart text-primary"></i> 찜하기
-						</button> -->
 						
 						<th:block th:if="${session.mvo}">
 							<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])"> -->
 							<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
 								<i class="fas fa-heart text-primary"></i> 찜하기
+							</button>
+							<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
+								<i class="far fa-heart"> 찜하기</i>
 							</button>
 						</th:block>
 						<th:block th:unless="${session.mvo}">
@@ -152,7 +152,7 @@
                               	  <div style="margin: 10px 50px 20px;">
 	                               		<textarea class="form-control" id="commentContent" rows="3" placeholder="회원만 댓글을 달 수 있습니다."></textarea><br>
 	                               		<div class="form-group mb-0">
-										<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button>
+										<!-- <button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button> -->
 										</div>
 										<input name="memberId" id="memberId" type="hidden" value="" />
 	                           		</div>
