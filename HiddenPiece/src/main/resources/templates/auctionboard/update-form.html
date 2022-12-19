@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+> <!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+<!-- Contact Start -->
+    <div class="container-fluid" style="text-align: center;">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">경매글 수정</span></h2>
+        <div>
+            <div style="width: 100%; text-align: center;">
+                <div class="contact-form bg-light p-30">
+                    <form id="updateAuctionBoardPostForm" action="updateAuctionBoardPost" method="post">
+                        <input 	  name="postNo" 		th:value="${postVO.postNo}" type = "hidden"> 
+                        <input 	  name="title"      th:value="${postVO.title}" type="text"  placeholder="제목" required="required" data-validation-required-message="Please enter your name" style="width: 56%; height: 40px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
+                        <input 	  name="endDate" 	th:value="${postVO.endDate}" type="datetime-local"><p class="help-block text-danger"></p>                   
+                        <input 	  name="startPrice" th:value="${postVO.startPrice}" type = "number"  placeholder="시작가" required="required">
+                        <input 	  name="sellPrice"  th:value="${postVO.sellPrice}" type = "number"  placeholder="즉시구매가" required="required"><p class="help-block text-danger"></p>                 
+                        <textarea name="content" 	th:text="${postVO.content}" rows="8" placeholder="Message" required="required" data-validation-required-message="Please enter your message" style="width: 70%; height: 400px;"></textarea><p class="help-block text-danger"></p>
+                        <!-- <input    name = "photo" type="file" required="required" accept="image/png, image/jpeg"><p class="help-block text-danger"></p>		 -->					
+                        <button class="btn btn-primary py-2 px-4" type="submit">수정하기</button><button class="btn btn-primary py-2 px-4" type="button" id="cancle">취소</button>
+                        <script type="text/javascript">
+                        	$("#updateAuctionBoardPostForm").submit(function() {
+                        		if(!confirm("수정하시겠습니까?")) {
+                        			return false;
+                        		}
+                        	})
+                        	$("#cancle").click(function() {
+                        		if(confirm("취소하시겠습니까?")) {
+                        			location.href="home";
+                        		}
+                        	})
+                        </script>                      
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+</div>
