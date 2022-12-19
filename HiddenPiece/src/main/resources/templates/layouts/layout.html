@@ -7,6 +7,17 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
+	
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+	<!-- Contact Javascript File -->
+	<script src="mail/jqBootstrapValidation.min.js"></script>
+	<script src="mail/contact.js"></script>
 
 <!-- Favicon -->
 <link href="img/favicon.ico" rel="icon">
@@ -206,48 +217,12 @@
 		class="fa fa-angle-double-up"></i></a>
 
 
-	<!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-	<!-- Contact Javascript File -->
-	<script src="mail/jqBootstrapValidation.min.js"></script>
-	<script src="mail/contact.js"></script>
 
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
 	
 		$(function() {
-			
-			
-			let checkId = $("input[name=id]");
-			checkId.keyup(function(){
-				$.ajax({
-					type:"get",
-					url:"ajaxIdCheck",
-					data:"id="+checkId.val(),
-					success:function(result){
-						$("#ajaxId").text(result);
-					}
-				});
-			});
-			
-			let checkAccount = $("input[name=accountNo]");
-			checkAccount.keyup(function(){
-				$.ajax({
-					type:"get",
-					url:"ajaxAccountCheck",
-					data:"accountNo="+checkAccount.val(),
-					success:function(result){
-						$("#ajaxAccount").text(result);
-					}
-				});
-			});
-			
 			
 			$("#writeAuctionBoardPostForm").submit(function() {
 				let result = confirm("경매글을 등록하시겠습니까?");

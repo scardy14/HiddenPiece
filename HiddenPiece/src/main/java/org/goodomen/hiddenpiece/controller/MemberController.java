@@ -78,32 +78,26 @@ public class MemberController {
 
 	@ResponseBody
 	@RequestMapping("ajaxIdCheck")
-	public String ajaxIdCheck(String id) {
-		String message = null;
+	public int ajaxIdCheck(String id) {
 		int result = memberService.checkId(id);
-		if(result == 1) {
-			message = "중복되는 아이디입니다 아이디를 변경해주세요";
-		}else {
-			message = "사용가능한 아이디입니다";
-		}
-		return message;
+		return result;
 	}
 	
 	@SuppressWarnings("unused")
 	@ResponseBody
 	@RequestMapping("ajaxAccountCheck")
-	public String ajaxAccountCheck(String accountNo) {
-		String message = null;
+	public int ajaxAccountCheck(String accountNo) {
+		int result = 0;
 		AccountVO accountVO = memberService.findAccountInfoByAccountNo(accountNo);
 		MemberVO memberVO = memberService.findMemberByAccount(accountNo);
 		if(memberVO != null && accountVO!=null) {
-			message = " 이미 사용중인 계좌번호입니다";
+			result = 2; //계좌가 이미 등록되어있음
 		}else if(memberVO == null && accountVO!=null) {
-			message = "사용 가능한 계좌번호입니다 ";
+			result = 1; //사용 가능
 		}else if(accountVO == null){
-			message = "일치하는 계좌번호가 없습니다";
+			result = 0; // 사용 불가 계좌 없음
 		}
-		return message;
+		return result;
 	}
 	
 
