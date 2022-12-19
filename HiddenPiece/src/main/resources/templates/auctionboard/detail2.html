@@ -28,7 +28,6 @@
 				<form>
 				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
 			</form>
-
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
 					<h3 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h3>
@@ -58,9 +57,18 @@
 						<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
 							<i class="fas fa-heart text-primary"></i> 찜하기
 						</button> -->
-						<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-							<i class="fas fa-heart text-primary"></i> 찜하기
-						</button>
+						
+						<th:block th:if="${session.mvo}">
+							<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])"> -->
+							<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
+								<i class="fas fa-heart text-primary"></i> 찜하기
+							</button>
+						</th:block>
+						<th:block th:unless="${session.mvo}">
+							<button class="btn px-3" id="noSessionWishlistBtn" onclick="noSessionWishlist()" >
+								<i class="fas fa-heart text-primary" ></i> 찜하기
+							</button>
+						</th:block>
 					</div>
 					<br>
 					<div class="nav nav-tabs mb-4">
@@ -95,6 +103,16 @@
 								<p th:text="${cList.content}" th:id="'commentContentOne'+${cList.commentNo}"></p><br>
 	                    </div>
 								<span class="comment_info_date" th:id="'timePosted'+${cList.commentNo}" th:text="${cList.timePosted}"></span>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 								<th:block th:if="${session.mvo} and ${session.mvo.id==cList.id}">
 									<button type="button" th:id="'updateBtn'+${cList.commentNo}" th:onclick="updateCommentForm([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글 수정</button>
 									<button type="button" th:id="'changeCommentStatusBtn'+${cList.commentNo}" th:onclick="changeCommentStatus([[${cList.commentNo}]])" style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">댓글 삭제</button>
@@ -107,29 +125,54 @@
 		                            <hr style="width:65vw">
 		                           
 								</th:block>
+								
+								
+								
+								
+								
+								
 	                     </div>
                     	</div>   	
                     </div>
                		</th:block>
               <hr>
                               	 <!-- Comment form-->
-                              	 <div style="margin: 10px 50px 20px;">
-                               		<em class="comment_inbox_name" id="comment_inbox_name" th:text="${session.mvo.id}" >현재로그인된회원이름</em>
-                               		<textarea class="form-control" id="commentContent" rows="3" placeholder="댓글을 등록하세요!"></textarea><br>
-                               		<div class="form-group mb-0">
-									<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button>
-								</div>
-								<input name="memberId" id="memberId" type="hidden" value="" />
-                           </div>
+                               <th:block th:if="${session.mvo}">
+                              	  <div style="margin: 10px 50px 20px;">
+	                               		<em class="comment_inbox_name" id="comment_inbox_name" th:text="${session.mvo.id}" >현재로그인된회원이름</em>
+	                               		<textarea class="form-control" id="commentContent" rows="3" placeholder="댓글을 등록하세요!"></textarea><br>
+	                               		<div class="form-group mb-0">
+										<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button>
+										</div>
+										<input name="memberId" id="memberId" type="hidden" value="" />
+	                           		</div>
+                              	 </th:block>
+                              	 
+                              	  <th:block th:unless="${session.mvo}">
+                              	  <div style="margin: 10px 50px 20px;">
+	                               		<textarea class="form-control" id="commentContent" rows="3" placeholder="회원만 댓글을 달 수 있습니다."></textarea><br>
+	                               		<div class="form-group mb-0">
+										<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button>
+										</div>
+										<input name="memberId" id="memberId" type="hidden" value="" />
+	                           		</div>
+                              	 </th:block> 
                            
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
+	
+	/* 세션 없을때 찜하기 버튼 누를시 */
+	$(document).ready(function(){
+		function noSessionWishlist(){
+			 alert("찜하기는 회원만 가능합니다.");
+		}
+	});
 
+	
 	/* 찜하기확인  */
 	function checkToWishlist(postNo, id){
 		$.ajax({
-			
 			type:"get",
 			url:"checkToWishlist",
 			data:{
@@ -137,7 +180,6 @@
 				"id":id
 			},
 			success:function(result){
-				alert(result);
 				if(result<1){
 					addToWishlist(postNo, id);	
 				}
@@ -146,12 +188,10 @@
 				}
 			}
 		});
-	
-	}
+	} 
 	
 	/* 찜하기  */
 	function addToWishlist(postNo, id){
-		let heart=$("#heart");
 		$.ajax({
 			type:"get",
 			url:"addToWishlist",
@@ -166,11 +206,12 @@
 	}
 	
 	/* 찜취소 */
-	function deleteFromWishlist(postNo){
+	function deleteFromWishlist(postNo,id){
     	$.ajax({
    			type:"get",
    			url:"deleteFromWishlist",
    			data:{
+   				"id":id,
    				"postNo":postNo
    			},
    			success:function(result){

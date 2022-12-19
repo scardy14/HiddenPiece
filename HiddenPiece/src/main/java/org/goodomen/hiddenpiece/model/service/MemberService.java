@@ -29,5 +29,5 @@ public interface MemberService {
 
 	void deleteFromWishlist(AuctionBoardLikesVO likesVO);
 
-	long checkWishlist(AuctionBoardLikesVO likesVO);
+	int checkWishlist(AuctionBoardLikesVO likesVO);
 }

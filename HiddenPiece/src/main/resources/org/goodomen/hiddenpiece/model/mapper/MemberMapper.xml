@@ -32,7 +32,7 @@
 	</delete>
 	
 	<!-- 찜 목록에 존재하는지 확인 -->
-	<select id="checkWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO" resultType="long">
+	<select id="checkWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO" resultType="int">
 		SELECT count(*) FROM AuctionBoard_Likes WHERE post_no=#{postNo} AND id=#{id}
 	</select>
 	

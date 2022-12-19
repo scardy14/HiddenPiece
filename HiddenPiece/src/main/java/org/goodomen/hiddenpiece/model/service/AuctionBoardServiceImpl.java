@@ -7,6 +7,7 @@ import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,9 +54,11 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public void updateComment(AuctionBoardCommentVO commentVO) {
 		auctionBoardMapper.updateComment(commentVO);
 	}
-
+	
+	@ResponseBody
 	@Override
 	public void addToWishlist(AuctionBoardLikesVO likesVO) {
+		System.out.println("addto");
 		auctionBoardMapper.addToWishlist(likesVO);
 	}
 
