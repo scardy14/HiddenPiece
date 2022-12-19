@@ -2,10 +2,11 @@ package org.goodomen.hiddenpiece.controller;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
+import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class IndexMoveController {
 	private final AuctionBoardService auctionBoardService;
+	private final FreeBoardService freeBoardService;
 	
 	@RequestMapping(value={"/","index","home","//"})
 	public String indexMove(Model model) {
@@ -68,5 +70,19 @@ public class IndexMoveController {
 	public String myInfo() {
 		return "mypage/myInfo";		
 	}
+	
+	@RequestMapping("freeBoardPostList")
+	public String freeboard(Model model) {
+		MemberVO memberVO=new MemberVO();
+		ArrayList<FreeBoardVO> list = freeBoardService.findFreeBoardPostList();
+		model.addAttribute("memberVO",memberVO);
+		model.addAttribute("list", list);
+		return "freeboard/freeBoardPostList";
+	}
+	@RequestMapping("freeboarddetail")
+	public String freeBoardDetailMove() {
+		return "freeBoardPostDetail";
+	}
+	
 }
 
