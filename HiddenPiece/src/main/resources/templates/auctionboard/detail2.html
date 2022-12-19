@@ -54,9 +54,6 @@
 						<button class="btn px-3" style="border-color: gray;">
 							<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
 						</button>&nbsp;&nbsp;&nbsp;&nbsp;
-						<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-							<i class="fas fa-heart text-primary"></i> 찜하기
-						</button> -->
 						<th:block th:if="${session.mvo}">
 							<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])"> -->
 							<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
