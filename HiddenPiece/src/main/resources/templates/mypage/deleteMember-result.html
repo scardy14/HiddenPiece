@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>login-fail</title>
+  <title>spring boot project</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -12,10 +12,19 @@
 </head>
 <body>
 <div class="container pt-3">
-<script type="text/javascript">
-	alert("잘못된 아이디나 비밀번호입니다 혹은 존재하지 않는 회원입니다");
-	location.href="/HiddenPiece/loginForm";
+<!-- html 주석 -->
+<!--/*   
+          thymeleaf 주석
+          Spring Boot에서 추천하는 템플릿 엔진 타임리프는 
+          src/main/resources/templates 아래에 html 확장자로 개발한다 
+*/-->
+<script type="text/javascript" th:inline="javascript">
+
+	alert("회원탈퇴가 완료되었습니다");
+	location.href="home";
 </script>
+
+
 </div>
 </body>
 </html>

@@ -24,7 +24,8 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values(111118,'코스타은�
 insert into ACCOUNT_INFO(account_no, bank, balance) values(111119,'제민은행',7804000);
 insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',111200);
 
-
+-- 회원 조회
+SELECT * FROM Account_Info
 
 
 CREATE TABLE HP_Member(
@@ -47,13 +48,10 @@ INSERT INTO ACCOUNT_INFO values('144322', '국민', 5000);
 INSERT INTO HP_Member VALUES('yerin0110','yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','99150201', 'a', 01093124050, 1);
 INSERT INTO HP_Member VALUES('java','java@naver.com','오리',5000,'김자바','쏘해피자바','144322', 'a', 01081085855, 1);
 
-<<<<<<< HEAD
-=======
+
 select * from HP_Member where id='yerin0110';
 INSERT INTO HP_Member VALUES('scardy',01063462516,'jyhong20@naver.com','상일동',1414141414,'홍주영','코스타짱돌','회원',333308)
 INSERT INTO HP_Member VALUES('yerin0110',01093124050,'yerin0110@naver.com','봉명동',1000000,'김예린','해피예리니','회원',99150201)
->>>>>>> refs/heads/main
-
 
 CREATE TABLE AuctionBoard(
 	post_no NUMBER NOT NULL,
@@ -80,7 +78,7 @@ INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','역사깊�
 INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','녹지않는눈사람모형','폭염이와도 녹지않는 눈사람입니다. 아이들 장난감으로 좋아요 겨울 놀이 해보셔요 ','녹지않는눈사람.PNG',7000,9000,15000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT)
 
 --경매게시판 게시물 리스트
-SELECT * FROM AuctionBoard
+SELECT * FROM AuctionBoard WHERE post_status=1 order by post_no desc 
 
 -- 경매게시판 댓글 등록
 INSERT INTO AuctionBoard_Comment VALUES(AuctionBoard_Comment_seq.nextval, 1, 'yerin0110', '이거 어디서 사셨나요',sysdate, 1)
@@ -95,3 +93,6 @@ UPDATE AuctionBoard_Comment SET comment_status=0 WHERE comment_no=23
 
 --경매게시판 댓글 조회
 SELECT * FROM AuctionBoard_Comment WHERE comment_no=22
+
+-- 찜한 목록 조회
+SELECT * FROM AuctionBoard_Likes WHERE id='yerin0110';

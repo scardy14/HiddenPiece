@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+<div class="container-fluid">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">회원탈퇴</span></h2>
+        <div class="row px-xl-5">
+            <div class="col-lg-7 mb-5">
+                <div class="contact-form bg-light p-30">
+                    <div id="success"></div>
+                    <form  th:action="@{/deleteMember}" novalidate="novalidate">
+                        <div class="control-group">비밀번호를 입력하세요<br><br>
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password"
+                                required="required" data-validation-required-message="비밀번호를 입력하세요" />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                         <div>
+                            <button class="btn btn-primary py-2 px-4" type="submit" >탈퇴하기
+                                </button>
+                        </div>
+                        </form>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+</div>

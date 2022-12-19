@@ -27,39 +27,27 @@ commit
 
 
 
->>>>>>> refs/heads/main
 --회원정보
 CREATE TABLE HP_Member(
-<<<<<<< HEAD
-	id VARCHAR2(100) NOT NULL,	
-=======
 	id VARCHAR2(100) NOT NULL,
->>>>>>> refs/heads/main
 	email VARCHAR2(100) NOT NULL,
 	address VARCHAR2(100) NOT NULL,
 	point NUMBER NOT NULL,
 	name VARCHAR2(100) NOT NULL,
-<<<<<<< HEAD
 	nickname VARCHAR2(100) NOT NULL,
 	account_no VARCHAR2(100) NOT NULL,	
 	password VARCHAR2(100) NOT NULL,
 	tel VARCHAR2(100) NOT NULL,	
 	status NUMBER NOT NULL,
-=======
-	nickname VARCHAR2(100) NOT NULL,	
-	account_no NUMBER NOT NULL,
-	tel VARCHAR2(100) NOT NULL,
-	status	NUMBER NOT NULL,
->>>>>>> refs/heads/main
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
 
 select * from HP_MEMBER
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/heads/main
+
+
+
 --회원권한
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,
@@ -102,7 +90,7 @@ CREATE TABLE AuctionBoard_Comment (
 	CONSTRAINT FK_AuctionBoard_Comment_PostNo FOREIGN KEY (post_no) REFERENCES AuctionBoard(post_no) ON DELETE CASCADE,
 	CONSTRAINT FK_AuctionBoard_Comment_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
---경매게시판좋아요
+--경매게시판 찜하기
 CREATE TABLE AuctionBoard_Likes (
 	post_no NUMBER NOT NULL,
 	id VARCHAR2(100) NOT NULL,
@@ -110,6 +98,9 @@ CREATE TABLE AuctionBoard_Likes (
 	CONSTRAINT FK_AuctionBoard_Likes_PostNo FOREIGN KEY (post_No) REFERENCES AuctionBoard(post_No) ON DELETE CASCADE,
 	CONSTRAINT FK_AuctionBoard_Likes_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+-- 경매게시판 찜하기 목록
+SELECT * FROM AuctionBoard_Likes
+
 --경매게시판경매참여물품
 CREATE TABLE AuctionBoard_Entry (
 	post_no NUMBER NOT NULL,
@@ -160,3 +151,5 @@ CREATE TABLE FreeBoard_Comment(
 	CONSTRAINT FK_FreeBoard_Comment_id FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE	
 )
 ----------------------------------------------------------------------
+
+)
