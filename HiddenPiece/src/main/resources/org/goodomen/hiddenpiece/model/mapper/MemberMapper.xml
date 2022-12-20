@@ -60,5 +60,8 @@
 	<select id="findAccountInfoByAccountNo" resultType="org.goodomen.hiddenpiece.model.vo.AccountVO">
 	Select * from ACCOUNT_INFO where account_no =#{accountNo}
 	</select>
+	<select id="findPoint" parameterType="string" resultType="long">
+		SELECT point FROM HP_Member WHERE id=#{value}
+	</select>
 
 </mapper>

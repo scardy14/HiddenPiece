@@ -37,6 +37,12 @@ public interface AuctionBoardMapper {
 	public void updateMemberPoint(AuctionBoardPostVO auctionBoardPostVO);
 
 	public void reverseBidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public String findAuctionBoardPostNowId(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void updateMemberPointbuy(AuctionBoardPostVO auctionBoardPostVO);
 	
 
 }

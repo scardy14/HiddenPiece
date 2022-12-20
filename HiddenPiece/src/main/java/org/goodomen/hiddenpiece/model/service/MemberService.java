@@ -36,4 +36,6 @@ public interface MemberService {
 	int checkWishlist(AuctionBoardLikesVO likesVO);
 
 	ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id);
+
+	long findPoint(String id);
 }

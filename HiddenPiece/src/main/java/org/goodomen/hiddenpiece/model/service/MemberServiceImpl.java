@@ -95,5 +95,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.findId(email, address, name, tel);
 	}
 
+	@Override
+	public long findPoint(String id) {
+		return memberMapper.findPoint(id);
+	}
+
 }
 

@@ -37,4 +37,6 @@ public interface MemberMapper {
 
 	AccountVO findAccountInfoByAccountNo(String accountNo);
 
+	long findPoint(String id);
+
 }

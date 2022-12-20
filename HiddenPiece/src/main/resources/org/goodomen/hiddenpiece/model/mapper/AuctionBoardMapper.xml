@@ -76,6 +76,14 @@
 	<update id="reverseBidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point + (SELECT current_price FROM AuctionBoard WHERE post_no = #{postNo})
 		 WHERE id = (SELECT now_id FROM AuctionBoard WHERE post_no = #{postNo})
-	
+	</update>
+	<select id="findAuctionBoardPostNowId" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" resultType="string">
+		SELECT now_id FROM AuctionBoard WHERE post_no=#{postNo}
+	</select>
+	<update id="buyAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		UPDATE AuctionBoard SET post_status = 2, now_id=#{id}, current_price=sell_price WHERE post_no=#{postNo}
+	</update>
+	<update id="updateMemberPointbuy" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		UPDATE HP_Member SET point = point- #{sellPrice} WHERE id=#{id}
 	</update>
 </mapper>
