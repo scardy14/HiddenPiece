@@ -203,16 +203,11 @@ public class MemberController {
 		HttpSession session=request.getSession(false);
 		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");		
 		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
-		System.out.println(balance+" "+ accountNo+" "+bank+" "+name);
-		System.out.println(accountVO+" "+memberVO);
 		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank)	&& accountVO.getBalance()>=balance) {
-		System.out.println(memberVO);
-		System.out.println(accountVO);
-		memberService.withdrawPoint(balance, accountNo ,bank);
-		memberService.exchangePoint(balance,name);
-		System.out.println(memberVO);
-		System.out.println(accountVO);
-		
+		memberService.depositPoint(balance, memberVO.getAccountNo(), bank);
+		memberService.exchangePoint(balance, name);
+		long newPoint = memberService.findPointbyId(memberVO.getId());
+		memberVO.setPoint(newPoint);	
 		viewPath="redirect:exchangePointResult";		
 		}else {
 		viewPath="mypage/exchangePoint-fail";
