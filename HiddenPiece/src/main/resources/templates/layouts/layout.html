@@ -54,11 +54,11 @@
 				</a>
 			</div>
 			<div class="col-lg-4 col-6 text-left">
-				<form action="">
+				<form action="" onsubmit="searchByKeyword();" id="searchByKeyword">
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="">
+						<input id="searchKeyword" type="text" class="form-control" placeholder="">
 						<div class="input-group-append">
-							<span class="input-group-text bg-transparent text-primary">
+							<span class="input-group-text bg-transparent text-primary" id="searchByKeywordBtn" onclick="searchByKeyword()">
 								<i class="fa fa-search"></i>
 							</span>
 						</div>
@@ -220,10 +220,22 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
+		function searchByKeyword(){
+			let keyword = $("#searchKeyword").val();
+			if(keyword==""){
+				alert("검색어를 입력하세요.");
+				return;
+			}
+			$.ajax({
+				type:"get",
+				url:"searchPostByKeyword/"+keyword,
+				success:function(data){
+					location.href="";
+				}
+			})
+		}
 	
 		$(function() {
-			
-			
 			$("#writeAuctionBoardPostForm").submit(function() {
 				let result = confirm("경매글을 등록하시겠습니까?");
 				if(!result) {

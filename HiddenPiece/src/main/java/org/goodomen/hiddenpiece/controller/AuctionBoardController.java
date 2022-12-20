@@ -9,9 +9,14 @@ import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.Paging;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -132,4 +137,16 @@ public class AuctionBoardController {
 		return "auctionboard/bid-ok";
 	}
 	
+	/* //경매게시판 내에서 검색
+	@GetMapping("/searchPostByKeyword/{keyword}")
+	public ResponseEntity<AuctionBoardPostVO> searchPostByKeyword(@PathVariable String keyword, HttpServletRequest request, Criteria cri){
+		//키워드가 들어간 전체 글 개수를 구한다.
+		int auctionBoardListCnt = auctionBoardService.auctionBoardListCnt();
+		Paging paging = new Paging();
+		paging.setCri(cri);
+		paging.setTotalCount(auctionBoardListCnt);
+		HttpSession session = request.getSession(false);
+		AuctionBoardPostVO postVO=auctionBoardService.searchPostByKeyword(keyword, session, cri);
+	}
+	*/
 }

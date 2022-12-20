@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
@@ -40,4 +42,6 @@ public interface AuctionBoardService {
 	int auctionBoardListCnt();
 
 	List<Map<String, Object>> boardList(Criteria cri);
+
+	List<Map<String, Object>> searchPostByKeyword(String keyword, HttpSession session);
 }
