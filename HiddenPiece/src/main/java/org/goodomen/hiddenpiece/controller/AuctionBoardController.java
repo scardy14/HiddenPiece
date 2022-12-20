@@ -32,14 +32,12 @@ public class AuctionBoardController {
 		AuctionBoardPostVO postVO = null;
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-			/*
 			ArrayList<Long> auctionBoardList = (ArrayList<Long>) session.getAttribute("auctionBoardList");
 			if(auctionBoardList.size()==0||!auctionBoardList.contains(postNo)) {
 				auctionBoardService.addHits(postNo);
 				auctionBoardList.add(postNo);
 				session.setAttribute("auctionBoardPostList", auctionBoardList);
-			}*/
-			auctionBoardService.addHits(postNo);
+			}
 			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
 			AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(memberVO.getId(), postNo);
 			if(memberService.checkWishlist(likesVO)>0) {
