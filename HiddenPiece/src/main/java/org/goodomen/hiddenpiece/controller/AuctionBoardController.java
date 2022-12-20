@@ -2,10 +2,14 @@ package org.goodomen.hiddenpiece.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +26,19 @@ public class AuctionBoardController {
 	
 	// 경매게시판 상세보기
 	@RequestMapping("findAuctionBoardPostDetail")
-	public String findAuctionBoardPostDetail(long postNo, Model model) {
+	public String findAuctionBoardPostDetail(long postNo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
 		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		if(session!=null) {
+			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+			AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(memberVO.getId(), postNo);
+			if(memberService.checkWishlist(likesVO)>0) {
+				postVO.setLike(false);
+			}
+			else {
+				postVO.setLike(true);
+			}
+		}
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);
@@ -78,7 +93,9 @@ public class AuctionBoardController {
 	// 찜하기 버튼 눌르기
 	@ResponseBody
 	@RequestMapping("addToWishlist")
-	public void addToWishlist(String id,long postNo) {
+	public void addToWishlist(String id,long postNo, AuctionBoardPostVO postVO) {
+		postVO.setLike(true);
+		System.out.println(postVO);
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 	}

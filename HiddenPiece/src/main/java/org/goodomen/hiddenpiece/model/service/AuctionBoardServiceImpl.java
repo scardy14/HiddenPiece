@@ -59,7 +59,6 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@ResponseBody
 	@Override
 	public void addToWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println("addto");
 		auctionBoardMapper.addToWishlist(likesVO);
 	}
 

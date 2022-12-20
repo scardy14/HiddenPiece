@@ -65,7 +65,6 @@ public class MemberController {
 
 	@PostMapping("registerMember")
 	public String register(MemberVO memberVO) {
-		System.out.println(memberVO);
 		memberService.registerMember(memberVO);
 		return "member/register-result";
 	}
@@ -73,7 +72,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("deleteFromWishlist")
 	public String deleteFromWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println(likesVO+"여기");
 		memberService.deleteFromWishlist(likesVO);
 		return "redirect:deleteFromWishlistResult";
 	}
@@ -111,7 +109,7 @@ public class MemberController {
 	@PostMapping("findId")
 	public String findId(String email,String name,String address,String tel) {
 		String viewName = null;
-				String id = memberService.findId(email, address, name, tel);
+		String id = memberService.findId(email, address, name, tel);
 		System.out.println(id);
 		if(id==null) {
 			viewName = "member/findId-fail";
@@ -125,9 +123,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("checkToWishlist")
 	public int checkToWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println(likesVO+"check");
 		int result = memberService.checkWishlist(likesVO);
-		System.out.println(result);
 		return result;
 	}
 	

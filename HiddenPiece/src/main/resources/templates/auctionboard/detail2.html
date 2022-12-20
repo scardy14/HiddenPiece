@@ -24,7 +24,6 @@
 
 			<div class="col-lg-7 h-auto mb-30">
 				<div class="h-100 bg-light p-30">
-
 				<form>
 				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
 			</form>
@@ -65,14 +64,19 @@
 						</button>&nbsp;&nbsp;&nbsp;&nbsp;
 						
 						<th:block th:if="${session.mvo}">
-							<!-- <button class="btn px-3" th:onclick="addToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])"> -->
-							<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-								<i class="fas fa-heart text-primary"></i> 찜하기
-							</button>
-							<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
-								<i class="far fa-heart"> 찜하기</i>
-							</button>
+							<th:block th:if="${postVO.like}">
+								<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
+									<i class="far fa-heart"> 찜하기</i>
+								</button>
+							</th:block>
+							<th:block th:unless="${postVO.like}">
+								<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
+									<i class="fas fa-heart text-primary"></i> 찜하기
+									
+								</button>
+							</th:block>
 						</th:block>
+						
 						<th:block th:unless="${session.mvo}">
 							<button class="btn px-3" id="noSessionWishlistBtn" onclick="noSessionWishlist();" >
 								<i class="far fa-heart"> 찜하기</i>
@@ -137,14 +141,7 @@
 										<button name="commentupdatebtn_no" id="commentupdatebtn_no" class="btn btn-warning" th:onclick="commentUpdateZoneHide([[${cList.commentNo}]])" style=" color: white; background-color: #ef7b35; border-color: #ef7b35;">취소</button>
 									</div>
 		                            <hr style="width:65vw">
-		                           
 								</th:block>
-								
-								
-								
-								
-								
-								
 	                     </div>
                     	</div>   	
                     </div>
@@ -176,8 +173,10 @@
 <script type="text/javascript" th:inline="javascript">
 	/* 세션 없을때 찜하기 버튼 누를시 */
 	function noSessionWishlist(){
-		alert("찜하기는 회원만 가능합니다.");
+
+			 alert("찜하기는 회원만 가능합니다.");
 	}
+
 	
 	/* 찜하기확인  */
 	function checkToWishlist(postNo, id){
