@@ -100,11 +100,7 @@ public class IndexMoveController {
 		return "mypage/exchangePointForm";
 	}
 	
-	@RequestMapping("exchangePointResult")
-	public String exchangePointResult() {
-		return "mypage/exchangePoint-result";
-	}
-	
+
 	@RequestMapping("testCheckOut")
 	public String testCheckOut() {
 		return "checkout2";

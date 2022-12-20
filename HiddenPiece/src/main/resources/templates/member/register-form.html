@@ -72,15 +72,12 @@ $(function() {
 			url:"ajaxIdCheck",
 			data:"id="+checkId.val(),
 			success:function(result){
-				if(result ==1){
-					$("#ajaxId").text("중복됩니다");
+				if(result ==1||id.length<4){
+					$("#ajaxId").text("사용불가능한 아이디입니다");
 				}
 				else if(result==0 && id.length>4){
-					$("#ajaxId").text("중복안됩니다");
+					$("#ajaxId").text("사용가능한 아이디입니다");
 					checkIdFlag=checkId.val();
-				}
-				else if(id.length<4){
-					$("#ajaxId").text("아이디는 4자 이상 입력해주세요.");
 				}
 			}
 		});

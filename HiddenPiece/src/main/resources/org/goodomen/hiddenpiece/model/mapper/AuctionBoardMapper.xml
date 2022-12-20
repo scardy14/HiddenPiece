@@ -43,6 +43,11 @@
 		SELECT * FROM AuctionBoard WHERE post_no=#{value}
 	</select>
 
+	<!-- 경매 게시판 게시물 리스트 조회 -->
+	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		<include refid="selectAuctionBoardPostList"></include> WHERE post_status=1 or post_status=2 or post_status=3 order by post_no desc 
+	</select>
+
 	<!-- 경매 게시판 상세 게시물의 댓글 리스트 조회  -->
 	<select id="findAuctionBoardCommentListByPostNo" parameterType="Long" resultType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
 	 	SELECT *
@@ -63,7 +68,7 @@
 	</select>
 
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,#{id},#{title},#{content},'photo',#{startPrice},#{startPrice},#{sellPrice},DEFAULT,DEFAULT,TO_Date(#{endDate},'YYYY-MM-DD HH24:MI'),' ',DEFAULT)
+		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,#{id},#{title},#{content},#{photo},#{startPrice},#{startPrice},#{sellPrice},DEFAULT,DEFAULT,TO_Date(#{endDate},'YYYY-MM-DD HH24:MI'),' ',DEFAULT)
 	</insert>
 
 	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
@@ -96,6 +101,17 @@
 	<update id="reverseBidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point + (SELECT current_price FROM AuctionBoard WHERE post_no = #{postNo})
 		 WHERE id = (SELECT now_id FROM AuctionBoard WHERE post_no = #{postNo})
-	
+	</update>
+	<select id="findAuctionBoardPostNowId" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" resultType="string">
+		SELECT now_id FROM AuctionBoard WHERE post_no=#{postNo}
+	</select>
+	<update id="buyAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		UPDATE AuctionBoard SET post_status = 2, now_id=#{id}, current_price=sell_price WHERE post_no=#{postNo}
+	</update>
+	<update id="updateMemberPointbuy" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		UPDATE HP_Member SET point = point- #{sellPrice} WHERE id=#{id}
+	</update>
+	<update id="addHits" parameterType="long">
+		UPDATE AuctionBoard SET hits = hits+1 WHERE post_no = #{value}
 	</update>
 </mapper>

@@ -36,5 +36,20 @@ public interface MemberService {
 
 	int checkWishlist(AuctionBoardLikesVO likesVO);
 
+	void exchangePoint(long balance, String name);
+
 	List<Map<String, Object>> selectComparedMyWishlist(String id, Criteria cri);
+
+	void depositPoint(long balance, String accountNo, String bank);
+
+	ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id);
+
+	void depositAccount(long point, String accountNo, String bank);
+
+	void withdrawPoint(long point, String name, String id);
+
+	long findPointbyId(String id);
+
+	long findPoint(String id);
+
 }

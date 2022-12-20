@@ -17,4 +17,7 @@
 	<delete id="deletePost" parameterType="long">
 		delete from freeboard where post_no=#{value}
 	</delete>
+	<update id="updateHits" parameterType="long">
+		update freeboard set hits=hits+1 where post_no=#{value}
+	</update>
 </mapper>

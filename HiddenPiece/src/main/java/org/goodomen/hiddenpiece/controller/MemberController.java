@@ -1,24 +1,19 @@
 package org.goodomen.hiddenpiece.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
-
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
-import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.service.MemberServiceImpl;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
-
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -33,12 +28,16 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
 		memberVO = memberService.login(memberVO);
+		ArrayList<Long> freeBoardList = new ArrayList<>();
+		ArrayList<Long> auctionBoardList = new ArrayList<>();
 		if (memberVO == null) {
 			return "member/login-fail";
 		}
 		else {
 			HttpSession session = request.getSession();
 			session.setAttribute("mvo", memberVO);
+			session.setAttribute("freeBoardList", freeBoardList);
+			session.setAttribute("auctionBoardList", auctionBoardList);
 			return "redirect:/";
 		}
 	}
@@ -192,4 +191,66 @@ public class MemberController {
 		}	
 		return viewPath;
 	}
+	
+	@RequestMapping("exchangePointForm")
+	public String exchangePointForm() {
+		return "mypage/exchangePointForm";		
+	}
+	
+	@PostMapping("exchangePoint")
+	public String exchangePoint(long balance,String accountNo,String bank,String name,HttpServletRequest request) {		
+		String viewPath=null;
+		HttpSession session=request.getSession(false);
+		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");		
+		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank)	&& accountVO.getBalance()>=balance) {
+		memberService.depositPoint(balance, memberVO.getAccountNo(), bank);
+		memberService.exchangePoint(balance, name);
+		long newPoint = memberService.findPointbyId(memberVO.getId());
+		memberVO.setPoint(newPoint);	
+		viewPath="redirect:exchangePointResult";		
+		}else {
+		viewPath="mypage/exchangePoint-fail";
+		}
+		return viewPath;
+	}
+	
+	@RequestMapping("exchangePointResult")
+	public String exchangePointResult() {
+		return "mypage/exchangePoint-result";
+	}
+
+	@RequestMapping("transferAccountForm")
+	public String transferAccountForm() {
+		return "mypage/transferToAccount-Form";
+	}
+	
+	@PostMapping("transferToAccount")
+	public String transferToAccount(HttpServletRequest request, long point, String name, String accountNo, String bank) {
+		String viewPath = null;
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && memberVO.getPoint()>=point) {
+			memberService.withdrawPoint(point, name, memberVO.getId());
+			memberService.depositAccount(point, accountNo, bank);
+			long newPoint = memberService.findPointbyId(memberVO.getId());
+			memberVO.setPoint(newPoint);	
+			viewPath = "redirect:transferToAccountResult";			
+		}else {	
+			viewPath = "mypage/transferToAccount-fail";
+		}	
+		return viewPath;
+	}
+	
+	@RequestMapping("transferToAccountResult")
+	public String transferToAccountResult(HttpServletRequest request) {
+		return "mypage/transferToAccount-result";
+	}
+
 }
+
+
+
+	
+	
+

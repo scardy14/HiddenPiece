@@ -11,6 +11,7 @@ CREATE TABLE Account_Info(
 	balance NUMBER NOT NULL,
 	CONSTRAINT PK_Account_Info PRIMARY KEY (account_no)
 )
+
 INSERT INTO Account_Info VALUES(333308,'카카오뱅크','124124124')
 INSERT INTO Account_Info VALUES(99150201,'국민','70000000')
 insert into ACCOUNT_INFO(account_no, bank, balance) values(111111,'국한은행',763000);
@@ -27,9 +28,7 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',11
 -- 회원 조회
 SELECT * FROM Account_Info
 
-
-
-
+SELECT * FROM HP_Member
 CREATE TABLE HP_Member(
 	id VARCHAR2(100) NOT NULL,
 	tel NUMBER NOT NULL,
@@ -43,6 +42,7 @@ CREATE TABLE HP_Member(
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
+
 -- 계좌 생성하기
 INSERT INTO ACCOUNT_INFO values('99150201', '국민', 50000);
 INSERT INTO ACCOUNT_INFO values('144322', '국민', 5000);
@@ -59,6 +59,14 @@ select * from HP_Member
 update HP_Member set password='c',email='dkakaksl',tel='01038291023',address='수원',nickName='봉태시기',name='문쭈노' where id='jaja';
 		
 update spring_member set password='b',name='아이유2',address='종로' where id='java' ;	
+
+
+--포인트 충전 
+update HP_Member set point=point+ ? where id='jaja5' name = ? 
+
+update Account_Info set balance=balance- ?  where account_No=? and bank =?
+
+
 
 
 CREATE TABLE AuctionBoard(
@@ -78,6 +86,8 @@ CREATE TABLE AuctionBoard(
 	CONSTRAINT PK_AuctionBoard PRIMARY KEY (post_no),
 	CONSTRAINT FK_AuctionBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+
+
 -- 경매게시판 게시물 등록
 INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'scardy','고양이보고가세요','꾸깃콘 많이 사랑해주세요','꾸깃.PNG',1000,1500,2500,sysdate,DEFAULT,sysdate,'scardy',DEFAULT);
 INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','개 목줄 팝니다','우리 강아지 하네스로 갈아탔습니다 목줄 튼튼해요 최대 5미터 이고요 합법적으로 2미터 까지만 사용하세요', 'puppy.PNG',500,500,3000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT);

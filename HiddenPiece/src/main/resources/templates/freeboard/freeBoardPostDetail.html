@@ -6,8 +6,8 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<div class="row pt-4">
-		<div class="col-sm-6 offset-sm-3" th:each="postVO:${postVO}">
+	<div class="row pt-4" th:each="postVO:${postVO}">
+		<div class="col-sm-6 offset-sm-3">
 		
 			<div class="row">
 				<div class="col-12">
@@ -36,10 +36,14 @@
 		</div>
 	</div>
 	<br><br>
+	<th:block th:if="${session.mvo}">
+	<th:block th:if=${session.mvo.id==postVO.id}>
 	<div align="center">
-	<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}">수정</a>
-	<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}">삭제</a>
+			<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}">수정</a>
+			<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}">삭제</a>
 	</div>
+	</th:block>
+	</th:block>
 </div>
 
 

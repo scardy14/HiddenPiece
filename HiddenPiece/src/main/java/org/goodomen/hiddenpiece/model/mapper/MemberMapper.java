@@ -37,4 +37,20 @@ public interface MemberMapper {
 
 	AccountVO findAccountInfoByAccountNo(String accountNo);
 
+
+	AccountVO findAccountInfobyAccountNo(AccountVO accountVO);
+
+	void depositPoint(long balance, String accountNo, String bank);
+
+	void exchangePoint(long balance, String name);
+
+	void depositAccount(long point, String accountNo, String bank);
+
+	void withdrawPoint(long point, String name, String id);
+
+	long findPointbyId(String id);
+
+	long findPoint(String id);
+
+
 }

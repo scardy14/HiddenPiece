@@ -94,5 +94,36 @@ public class HiddenPieceMemberTest {
 		AccountVO accountVO = memberMapper.findAccountInfoByAccountNo(accountNo);
 		System.out.println(accountVO);
 	}
-	
+	@Test
+	public void exchangePoint() {
+			String id="java1";
+			String name="퇴근중";
+			long balance=10000;
+			String accountNo="111113";
+			String bank="코스타은행";
+			memberMapper.withdrawPoint(balance,accountNo,bank);
+			memberMapper.exchangePoint(balance,name);
+			System.out.println("계좌에서 포인트로 환전되었습니다");
+			
+	}
+	@Test
+	public void exchangeToAccount() {
+		String accountNo = "144322";
+		String bank = "국민";
+		long point = 10000;
+		String name = "김자바";
+		String id = "java";
+		memberMapper.withdrawPoint(point,name,id);
+		System.out.println("포인트 출금완료");
+		memberMapper.depositAccount(point,accountNo,bank);
+		System.out.println("입금완료");
+		MemberVO memberVO = (MemberVO) memberMapper.findMemberById(id);
+		System.out.println(memberVO);
+	}
+	@Test
+	public void findPointbyId() {
+		String id = "java";
+		long point = memberMapper.findPointbyId(id);
+		System.out.println(point+"원");
+	}
 }

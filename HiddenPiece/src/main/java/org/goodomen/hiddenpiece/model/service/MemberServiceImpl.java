@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
@@ -96,6 +97,40 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String findId(String email, String address, String name, String tel) {
 		return memberMapper.findId(email, address, name, tel);
+	}
+
+	@Override
+	public void exchangePoint(long balance, String name) {
+		memberMapper.exchangePoint(balance, name);
+		System.out.println("MemberServiceImpl exchangePoint  ");
+	}
+
+	@Override
+	public void depositPoint(long balance, String accountNo, String bank) {
+		memberMapper.withdrawPoint(balance, accountNo, bank);	
+		System.out.println("MemberServiceImpl withdrawPoint ");
+		
+		
+	}
+	
+	@Override
+	public void depositAccount(long point, String accountNo, String bank) {
+		memberMapper.depositAccount(point, accountNo, bank);
+	}
+
+	@Override
+	public void withdrawPoint(long point, String name, String id) {
+		memberMapper.withdrawPoint(point, name, id);
+	}
+
+	@Override
+	public long findPointbyId(String id) {
+		return memberMapper.findPointbyId(id);
+	}
+	@Override
+	public long findPoint(String id) {
+		return memberMapper.findPoint(id);
+
 	}
 
 }

@@ -44,4 +44,8 @@ public interface AuctionBoardService {
 	List<Map<String, Object>> boardList(Criteria cri);
 
 	List<Map<String, Object>> searchPostByKeyword(String keyword, HttpSession session);
+
+	int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	void addHits(long postNo);
 }

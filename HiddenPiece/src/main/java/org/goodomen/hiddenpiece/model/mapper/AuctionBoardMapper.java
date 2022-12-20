@@ -45,5 +45,13 @@ public interface AuctionBoardMapper {
 
 	public List<Map<String, Object>> boardList(Criteria cri);
 	
+	public String findAuctionBoardPostNowId(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void updateMemberPointbuy(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void addHits(long postNo);
+	
 
 }

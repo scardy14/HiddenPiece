@@ -1,5 +1,7 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,12 +34,20 @@ public class AuctionBoardController {
 	private final MemberService memberService;
 	
 	// 경매게시판 상세보기
+	@SuppressWarnings("unchecked")
 	@RequestMapping("findAuctionBoardPostDetail")
 	public String findAuctionBoardPostDetail(long postNo, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		AuctionBoardPostVO postVO = null;
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+			ArrayList<Long> auctionBoardList = (ArrayList<Long>) session.getAttribute("auctionBoardList");
+			if(auctionBoardList.size()==0||!auctionBoardList.contains(postNo)) {
+				auctionBoardService.addHits(postNo);
+				auctionBoardList.add(postNo);
+				session.setAttribute("auctionBoardPostList", auctionBoardList);
+			}
+			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
 			AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(memberVO.getId(), postNo);
 			if(memberService.checkWishlist(likesVO)>0) {
 				postVO.setLike(false);
@@ -43,6 +55,8 @@ public class AuctionBoardController {
 			else {
 				postVO.setLike(true);
 			}
+		} else {
+			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
 		}
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
@@ -57,10 +71,30 @@ public class AuctionBoardController {
 	}
 	
 	// 경매게시판 글 작성
-	@RequestMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+	@PostMapping("writeAuctionBoardPost")
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,@RequestParam("image") MultipartFile file) {
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
+		auctionBoardPostVO.setPhoto(file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
+
+		//////////////////////////////////////////////////////////////////
+		System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    System.out.println("파일 크기 : " + file.getSize());
+
+	    try(
+	      // 윈도우일 경우
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPiece/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg" + file.getOriginalFilename());
+	      InputStream is = file.getInputStream();
+	    ){
+	      int readCount = 0;
+	      byte[] buffer = new byte[1024];
+	      while((readCount = is.read(buffer)) != -1){
+	      fos.write(buffer,0,readCount);
+	    }
+	    }catch(Exception ex){
+	      throw new RuntimeException("file Save Error");
+	    }
+	   ////////////////////////////////////////////////////////////////////
 		return "auctionboard/write-ok";
 	}
 	
@@ -125,16 +159,34 @@ public class AuctionBoardController {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}
-	@RequestMapping("bidMove")
-	public String bidMove(long postNo, String id, long bidPrice) {
-		return "redirect:bid?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
-	}
 	@RequestMapping("bid")
-	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice) {
+	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
 		auctionBoardPostVO.setCurrentPrice(bidPrice);
-		//int result = auctionBoardService.bidAuctionBoardPost(auctionBoardPostVO);
-		System.out.println(auctionBoardPostVO);
+		int result = auctionBoardService.bidAuctionBoardPost(auctionBoardPostVO);
+		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		memberVO.setPoint(newPoint);
+		session.setAttribute("mvo", memberVO);
+		return "redirect:bidMove";
+	}
+	@RequestMapping("bidMove")
+	public String bidMove() {
 		return "auctionboard/bid-ok";
+	}
+	@RequestMapping("buy")
+	public String buy(AuctionBoardPostVO auctionBoardPostVO, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		int result = auctionBoardService.buyAuctionBoardPost(auctionBoardPostVO);
+		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		memberVO.setPoint(newPoint);
+		session.setAttribute("mvo", memberVO);
+		return "redirect:buymove";
+	}
+	@RequestMapping("buymove")
+	public String buymove() {
+		return "auctionboard/buy-ok";
 	}
 	
 	/* //경매게시판 내에서 검색
@@ -149,4 +201,25 @@ public class AuctionBoardController {
 		AuctionBoardPostVO postVO=auctionBoardService.searchPostByKeyword(keyword, session, cri);
 	}
 	*/
+	 @PostMapping("/upload")
+	  public String upload(@RequestParam("photo") MultipartFile file) {
+
+	    System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    System.out.println("파일 크기 : " + file.getSize());
+
+	    try(
+	      // 윈도우일 경우
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      InputStream is = file.getInputStream();
+	    ){
+	      int readCount = 0;
+	      byte[] buffer = new byte[1024];
+	      while((readCount = is.read(buffer)) != -1){
+	      fos.write(buffer,0,readCount);
+	    }
+	    }catch(Exception ex){
+	      throw new RuntimeException("file Save Error");
+	    }
+	    return "index2";
+	  }
 }

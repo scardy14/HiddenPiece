@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import lombok.RequiredArgsConstructor;
+
 /*
  * 
  * **Thymeleaf Template Engine**
