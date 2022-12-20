@@ -37,4 +37,12 @@ public interface MemberMapper {
 
 	AccountVO findAccountInfoByAccountNo(String accountNo);
 
+	void depositAccount(long point, String accountNo, String bank);
+
+	void withdrawPoint(long point, String name, String id);
+
+	long findPointbyId(String id);
+
+
+
 }

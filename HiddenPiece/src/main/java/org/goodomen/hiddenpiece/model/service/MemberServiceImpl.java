@@ -95,5 +95,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.findId(email, address, name, tel);
 	}
 
+	@Override
+	public void depositAccount(long point, String accountNo, String bank) {
+		memberMapper.depositAccount(point, accountNo, bank);
+	}
+
+	@Override
+	public void withdrawPoint(long point, String name, String id) {
+		memberMapper.withdrawPoint(point, name, id);
+	}
+
+	@Override
+	public long findPointbyId(String id) {
+		return memberMapper.findPointbyId(id);
+	}
+
 }
 

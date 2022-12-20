@@ -192,4 +192,32 @@ public class MemberController {
 		}	
 		return viewPath;
 	}
+	
+	@RequestMapping("transferAccountForm")
+	public String transferAccountForm() {
+		return "mypage/transferToAccount-Form";
+	}
+	
+	@PostMapping("transferToAccount")
+	public String transferToAccount(HttpServletRequest request, long point, String name, String accountNo, String bank) {
+		String viewPath = null;
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && memberVO.getPoint()>=point) {
+			memberService.withdrawPoint(point, name, memberVO.getId());
+			memberService.depositAccount(point, accountNo, bank);
+			long newPoint = memberService.findPointbyId(memberVO.getId());
+			memberVO.setPoint(newPoint);	
+			viewPath = "redirect:transferToAccountResult";			
+		}else {	
+			viewPath = "mypage/transferToAccount-fail";
+		}	
+		return viewPath;
+	}
+	
+	@RequestMapping("transferToAccountResult")
+	public String transferToAccountResult(HttpServletRequest request) {
+		return "mypage/transferToAccount-result";
+	}
+	
 }

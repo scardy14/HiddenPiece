@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+
+
+	<!-- Checkout Start -->
+						<form action="" th:action="@{/transferToAccount}" id="transferAccount" method = "post">
+	<div class="container-fluid">
+		<div class="row px-xl-5">
+			<div class="col-lg-8">
+				<h5 class="section-title position-relative text-uppercase mb-3">
+					<span class="bg-secondary pr-3">계좌로 환전하기</span>
+				</h5>
+				<div class="bg-light p-30 mb-5">
+					<div class="row">
+						<div class="col-md-6 form-group">
+							<label>이름</label> <input class="form-control" type="text"
+								th:value="${session.mvo.name}" id = "name" name = "name">
+						</div>
+						<div class="col-md-6 form-group">
+							<label>환전할 포인트</label> <input class="form-control" type="number"
+							 value = "0" name="point">
+						</div>
+						<div class="col-md-6 form-group">
+							<label>은행명</label> <input class="form-control" type="text"
+								id = "bank" name="bank">
+						</div>
+						<div class="col-md-6 form-group">
+							<label>계좌번호</label> <input class="form-control" type="text"
+								id = "accountNo" name="accountNo" th:value="${session.mvo.accountNo}">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row px-xl-5">
+			<div class="col-lg-8">
+
+				<div class="bg-light p-30 mb-5">
+					<div class="border-bottom">
+						<h6 class="mb-3">계좌환전</h6>
+						<p></p>
+					</div>
+					<div class="border-bottom pt-3 pb-2">
+						<div class="d-flex justify-content-between mb-3">
+							<h6>환전할 포인트</h6>
+							<h6><span id="point"></span>원</h6>
+						</div>
+					</div>
+					<div class="pt-2">
+						<div class="d-flex justify-content-between mt-2">
+							<h5>총계</h5>
+							<h5><span id="ajaxPoint"></span>원</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row px-xl-5">
+				<div class="col-lg-8">
+					<h5 class="section-title position-relative text-uppercase mb-3">
+						<span class="bg-secondary pr-3">결제</span>
+					</h5>
+					<div class="bg-light p-30">
+							<button class="btn btn-block btn-primary font-weight-bold py-3">환전하기</button>
+					</div>
+				</div>
+		
+
+			</div>
+
+		</div>
+	</div>
+						</form>
+     <script type="text/javascript" th:inline="javascript">
+         $(function(){
+            let pointKeyUp = $("input[name=point]")
+            	pointKeyUp.keyup(function(){
+					let point = pointKeyUp.val();
+				$("#point").text(point);
+                 $("#ajaxPoint").text(point);
+                 
+         });
+         })
+      </script>		
+						<!-- 	$(function(){
+				let pointKeyUp = $("input[name=point]")
+				pointKeyUp.keyup(function(){
+					$.ajax({
+						type:"get",
+						url:"spanPoint",
+						data:"point="+pointKeyUp.val(),
+						success:function(result){
+							$("#ajaxPoint").text(result);
+						}
+				});
+			}); -->		
+						
+						
+	<!-- Checkout End -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
