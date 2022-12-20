@@ -29,6 +29,7 @@ public class MemberController {
 	public String login(MemberVO memberVO, HttpServletRequest request) {
 		memberVO = memberService.login(memberVO);
 		ArrayList<Long> freeBoardList = new ArrayList<>();
+		ArrayList<Long> auctionBoardList = new ArrayList<>();
 		if (memberVO == null) {
 			return "member/login-fail";
 		}
@@ -36,6 +37,7 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mvo", memberVO);
 			session.setAttribute("freeBoardList", freeBoardList);
+			session.setAttribute("auctionBoardList", auctionBoardList);
 			return "redirect:/";
 		}
 	}
