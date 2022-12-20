@@ -95,6 +95,12 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		return 0;
 	}
 
+	@Override
+	public void addHits(long postNo) {
+		auctionBoardMapper.addHits(postNo);
+		
+	}
+
 
 
 }

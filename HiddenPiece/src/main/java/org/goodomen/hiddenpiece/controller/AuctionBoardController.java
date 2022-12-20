@@ -25,12 +25,22 @@ public class AuctionBoardController {
 	private final MemberService memberService;
 	
 	// 경매게시판 상세보기
+	@SuppressWarnings("unchecked")
 	@RequestMapping("findAuctionBoardPostDetail")
 	public String findAuctionBoardPostDetail(long postNo, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		AuctionBoardPostVO postVO = null;
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+			/*
+			ArrayList<Long> auctionBoardList = (ArrayList<Long>) session.getAttribute("auctionBoardList");
+			if(auctionBoardList.size()==0||!auctionBoardList.contains(postNo)) {
+				auctionBoardService.addHits(postNo);
+				auctionBoardList.add(postNo);
+				session.setAttribute("auctionBoardPostList", auctionBoardList);
+			}*/
+			auctionBoardService.addHits(postNo);
+			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
 			AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(memberVO.getId(), postNo);
 			if(memberService.checkWishlist(likesVO)>0) {
 				postVO.setLike(false);
@@ -38,6 +48,8 @@ public class AuctionBoardController {
 			else {
 				postVO.setLike(true);
 			}
+		} else {
+			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
 		}
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
@@ -138,7 +150,6 @@ public class AuctionBoardController {
 	@RequestMapping("buy")
 	public String buy(AuctionBoardPostVO auctionBoardPostVO, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		
 		int result = auctionBoardService.buyAuctionBoardPost(auctionBoardPostVO);
 		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");

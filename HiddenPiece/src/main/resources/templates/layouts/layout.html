@@ -224,12 +224,6 @@
 	
 		$(function() {
 			
-			$("#writeAuctionBoardPostForm").submit(function() {
-				let result = confirm("경매글을 등록하시겠습니까?");
-				if(!result) {
-					return false;
-				}
-			});
 			
 			$("#moveAuctionBoardPostUpdateForm").submit(function() {
 				if(!confirm("수정하시겠습니까?")) {

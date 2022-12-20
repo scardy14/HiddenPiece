@@ -24,7 +24,7 @@
 
 	<!-- 경매 게시판 게시물 리스트 조회 -->
 	<select id="findAuctionBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		<include refid="selectAuctionBoardPostList"></include> WHERE post_status=1 order by post_no desc 
+		<include refid="selectAuctionBoardPostList"></include> WHERE post_status=1 or post_status=2 or post_status=3 order by post_no desc 
 	</select>
 
 	
@@ -85,5 +85,8 @@
 	</update>
 	<update id="updateMemberPointbuy" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point- #{sellPrice} WHERE id=#{id}
+	</update>
+	<update id="addHits" parameterType="long">
+		UPDATE AuctionBoard SET hits = hits+1 WHERE post_no = #{value}
 	</update>
 </mapper>
