@@ -1,15 +1,24 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,9 +29,30 @@ public class AuctionBoardController {
 	private final MemberService memberService;
 	
 	// 경매게시판 상세보기
+	@SuppressWarnings("unchecked")
 	@RequestMapping("findAuctionBoardPostDetail")
-	public String findAuctionBoardPostDetail(long postNo, Model model) {
-		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+	public String findAuctionBoardPostDetail(long postNo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		AuctionBoardPostVO postVO = null;
+		if(session!=null) {
+			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+			ArrayList<Long> auctionBoardList = (ArrayList<Long>) session.getAttribute("auctionBoardList");
+			if(auctionBoardList.size()==0||!auctionBoardList.contains(postNo)) {
+				auctionBoardService.addHits(postNo);
+				auctionBoardList.add(postNo);
+				session.setAttribute("auctionBoardPostList", auctionBoardList);
+			}
+			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+			AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(memberVO.getId(), postNo);
+			if(memberService.checkWishlist(likesVO)>0) {
+				postVO.setLike(false);
+			}
+			else {
+				postVO.setLike(true);
+			}
+		} else {
+			postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		}
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);
@@ -36,10 +66,30 @@ public class AuctionBoardController {
 	}
 	
 	// 경매게시판 글 작성
-	@RequestMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		System.out.println(auctionBoardPostVO);
+	@PostMapping("writeAuctionBoardPost")
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,@RequestParam("image") MultipartFile file) {
+		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
+		auctionBoardPostVO.setPhoto(file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
+
+		//////////////////////////////////////////////////////////////////
+		System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    System.out.println("파일 크기 : " + file.getSize());
+
+	    try(
+	      // 윈도우일 경우
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      InputStream is = file.getInputStream();
+	    ){
+	      int readCount = 0;
+	      byte[] buffer = new byte[1024];
+	      while((readCount = is.read(buffer)) != -1){
+	      fos.write(buffer,0,readCount);
+	    }
+	    }catch(Exception ex){
+	      throw new RuntimeException("file Save Error");
+	    }
+	   ////////////////////////////////////////////////////////////////////
 		return "auctionboard/write-ok";
 	}
 	
@@ -77,8 +127,82 @@ public class AuctionBoardController {
 	// 찜하기 버튼 눌르기
 	@ResponseBody
 	@RequestMapping("addToWishlist")
-	public void addToWishlist(String id,long postNo) {
+	public void addToWishlist(String id,long postNo, AuctionBoardPostVO postVO) {
+		postVO.setLike(true);
+		System.out.println(postVO);
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 	}
+	//경매게시판 글 수정 폼으로 이동
+	@RequestMapping("moveAuctionBoardPostUpdateForm")
+	public String moveAuctionBoardPostUpdateForm(Model model, long postNo) {
+		AuctionBoardPostVO postVO = auctionBoardService.findAuctionBoardPostDetail(postNo);
+		model.addAttribute("postVO", postVO);
+		return "auctionboard/update-form";
+	}
+	//경매게시판 글 삭제
+	@PostMapping("AuctionBoardPostDelete")
+	public String moveAuctionBoardPostDelete(long postNo) {
+		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
+		return "auctionboard/delete-ok";
+	}
+	//경매게시판 글 수정
+	@PostMapping("updateAuctionBoardPost")
+	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
+		System.out.println(auctionBoardPostVO);
+		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
+		return "auctionboard/update-ok";
+	}
+	@RequestMapping("bid")
+	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		auctionBoardPostVO.setCurrentPrice(bidPrice);
+		int result = auctionBoardService.bidAuctionBoardPost(auctionBoardPostVO);
+		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		memberVO.setPoint(newPoint);
+		session.setAttribute("mvo", memberVO);
+		return "redirect:bidMove";
+	}
+	@RequestMapping("bidMove")
+	public String bidMove() {
+		return "auctionboard/bid-ok";
+	}
+	@RequestMapping("buy")
+	public String buy(AuctionBoardPostVO auctionBoardPostVO, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		int result = auctionBoardService.buyAuctionBoardPost(auctionBoardPostVO);
+		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		memberVO.setPoint(newPoint);
+		session.setAttribute("mvo", memberVO);
+		return "redirect:buymove";
+	}
+	@RequestMapping("buymove")
+	public String buymove() {
+		return "auctionboard/buy-ok";
+	}
+	
+	 @PostMapping("/upload")
+	  public String upload(@RequestParam("photo") MultipartFile file) {
+
+	    System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    System.out.println("파일 크기 : " + file.getSize());
+
+	    try(
+	      // 윈도우일 경우
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      InputStream is = file.getInputStream();
+	    ){
+	      int readCount = 0;
+	      byte[] buffer = new byte[1024];
+	      while((readCount = is.read(buffer)) != -1){
+	      fos.write(buffer,0,readCount);
+	    }
+	    }catch(Exception ex){
+	      throw new RuntimeException("file Save Error");
+	    }
+	    return "index2";
+	  }
 }

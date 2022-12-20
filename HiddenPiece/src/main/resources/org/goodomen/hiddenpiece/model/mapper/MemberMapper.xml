@@ -18,7 +18,6 @@
 		Select password from HP_Member where id=#{id} and email=#{email} and name=#{name} and tel=#{tel} and status = 1
 	</select>
 
-
 	<update id="updateMember">
          Update HP_Member set email=#{email},address=#{address},name=#{name},
          nickname=#{nickName},password=#{password},tel=#{tel} where id = #{id}
@@ -68,5 +67,19 @@
 	<update id="withdrawPoint">
 	update Account_Info set balance=balance-#{balance} where account_No=#{accountNo} and bank =#{bank}
 	</update>
+
+	<update id="depositAccount">
+	Update Account_info set balance = balance + #{point} where account_no = #{accountNo} and bank = #{bank}
+	</update>
+	<update id="withdrawPoint">
+	Update hp_member set point = point - #{point} where name = #{name} and id = #{id}
+	</update>
+	<select id="findPointbyId" resultType="long">
+	Select point from hp_member where id = #{id}
+	</select>
+
+	<select id="findPoint" parameterType="string" resultType="long">
+		SELECT point FROM HP_Member WHERE id=#{value}
+	</select>
 
 </mapper>

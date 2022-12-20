@@ -7,6 +7,7 @@ import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -58,8 +59,46 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@ResponseBody
 	@Override
 	public void addToWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println("addto");
 		auctionBoardMapper.addToWishlist(likesVO);
+	}
+
+	@Override
+	public int deleteAuctionBoardPost(long postNo) {
+		return auctionBoardMapper.deleteAuctionBoardPost(postNo);
+		
+	}
+
+	@Override
+	public int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		return auctionBoardMapper.updateAuctionBoardPost(auctionBoardPostVO);
+	}
+
+	@Override
+	@Transactional
+	public int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
+			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		}		
+		auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
+		auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);		
+		return 0;
+	}
+
+	@Override
+	public int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
+			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		}
+		auctionBoardMapper.buyAuctionBoardPost(auctionBoardPostVO);
+		System.out.println(auctionBoardPostVO);
+		auctionBoardMapper.updateMemberPointbuy(auctionBoardPostVO);
+		return 0;
+	}
+
+	@Override
+	public void addHits(long postNo) {
+		auctionBoardMapper.addHits(postNo);
+		
 	}
 
 

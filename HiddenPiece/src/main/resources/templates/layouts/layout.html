@@ -113,11 +113,9 @@
 						<div class="nav-item dropdown dropright">
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
-
 							<a href="" th:href="@{/updateMemberForm}" class="dropdown-item">회원정보수정</a>
-
 							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
-							<a href="" class="dropdown-item">계좌로환전하기</a>
+							<a href="" th:href="@{/transferAccountForm}" class="dropdown-item" >계좌로환전하기</a>
 							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
 						</div>
 					</th:block>
@@ -226,20 +224,12 @@
 	
 		$(function() {
 			
-			$("#writeAuctionBoardPostForm").submit(function() {
-				let result = confirm("경매글을 등록하시겠습니까?");
-				if(!result) {
-					return false;
-				}
-			});
 			
 			$("#moveAuctionBoardPostUpdateForm").submit(function() {
-				let updateformmove = confirm("수정하시겠습니까?");
-				if(updateformmove) {
-					location.href="moveAuctionBoardPostUpdateForm";
-				} else {
+				if(!confirm("수정하시겠습니까?")) {
 					return false;
-				}				
+				}
+						
 			});
 			
 			$("#moveAuctionBoardPostUpdateFormBtn").click(function() {
@@ -249,6 +239,11 @@
 			$("#logoutBtn").click(function(){
 					$("#logoutForm").submit();
 			});
+			$("#moveAuctionBoardPostDelete").submit(function() {
+				if(!confirm("삭제하시겠습니까?")) {
+					return false;
+				}
+			})
 			
 		});
 	</script>

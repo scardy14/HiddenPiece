@@ -2,6 +2,8 @@ package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
 
+
+import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 	private final MemberMapper memberMapper;	
+	private final AuctionBoardMapper auctionBoardMapper;
 	
 	@Override
 	public int registerMember(MemberVO memberVO) {
@@ -43,6 +46,18 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<AuctionBoardPostVO> selectMyWishlist(String id) {
 		ArrayList<AuctionBoardPostVO> list = memberMapper.selectMyWishlist(id);
 		return list;
+	}
+	
+	@Override
+	public ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id) {
+		ArrayList<AuctionBoardPostVO> myWishlist = memberMapper.selectMyWishlist(id);
+		ArrayList<AuctionBoardPostVO> auctionBoardPostList= auctionBoardMapper.findAuctionBoardPostList();
+		for(int i=0; i<auctionBoardPostList.size(); i++) {
+			if(myWishlist.contains(auctionBoardPostList.get(i))){
+				auctionBoardPostList.get(i).setLike(true);
+			}
+		}
+		return auctionBoardPostList;
 	}
 
 	@Override
@@ -88,14 +103,32 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void withdrawPoint(long balance, String accountNo, String bank) {
+	public void depositPoint(long balance, String accountNo, String bank) {
 		memberMapper.withdrawPoint(balance, accountNo, bank);	
 		System.out.println("MemberServiceImpl withdrawPoint ");
 		
 		
 	}
 	
-	
+	@Override
+	public void depositAccount(long point, String accountNo, String bank) {
+		memberMapper.depositAccount(point, accountNo, bank);
+	}
+
+	@Override
+	public void withdrawPoint(long point, String name, String id) {
+		memberMapper.withdrawPoint(point, name, id);
+	}
+
+	@Override
+	public long findPointbyId(String id) {
+		return memberMapper.findPointbyId(id);
+	}
+	@Override
+	public long findPoint(String id) {
+		return memberMapper.findPoint(id);
+
+	}
 
 }
 

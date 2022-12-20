@@ -1,5 +1,7 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -26,12 +28,16 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
 		memberVO = memberService.login(memberVO);
+		ArrayList<Long> freeBoardList = new ArrayList<>();
+		ArrayList<Long> auctionBoardList = new ArrayList<>();
 		if (memberVO == null) {
 			return "member/login-fail";
 		}
 		else {
 			HttpSession session = request.getSession();
 			session.setAttribute("mvo", memberVO);
+			session.setAttribute("freeBoardList", freeBoardList);
+			session.setAttribute("auctionBoardList", auctionBoardList);
 			return "redirect:/";
 		}
 	}
@@ -58,7 +64,6 @@ public class MemberController {
 
 	@PostMapping("registerMember")
 	public String register(MemberVO memberVO) {
-		System.out.println(memberVO);
 		memberService.registerMember(memberVO);
 		return "member/register-result";
 	}
@@ -66,7 +71,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("deleteFromWishlist")
 	public String deleteFromWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println(likesVO+"여기");
 		memberService.deleteFromWishlist(likesVO);
 		return "redirect:deleteFromWishlistResult";
 	}
@@ -104,7 +108,7 @@ public class MemberController {
 	@PostMapping("findId")
 	public String findId(String email,String name,String address,String tel) {
 		String viewName = null;
-				String id = memberService.findId(email, address, name, tel);
+		String id = memberService.findId(email, address, name, tel);
 		System.out.println(id);
 		if(id==null) {
 			viewName = "member/findId-fail";
@@ -118,9 +122,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("checkToWishlist")
 	public int checkToWishlist(AuctionBoardLikesVO likesVO) {
-		System.out.println(likesVO+"check");
 		int result = memberService.checkWishlist(likesVO);
-		System.out.println(result);
 		return result;
 	}
 	
@@ -222,6 +224,34 @@ public class MemberController {
 	public String exchangePointResult() {
 		return "mypage/exchangePoint-result";
 	}
+
+	@RequestMapping("transferAccountForm")
+	public String transferAccountForm() {
+		return "mypage/transferToAccount-Form";
+	}
+	
+	@PostMapping("transferToAccount")
+	public String transferToAccount(HttpServletRequest request, long point, String name, String accountNo, String bank) {
+		String viewPath = null;
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && memberVO.getPoint()>=point) {
+			memberService.withdrawPoint(point, name, memberVO.getId());
+			memberService.depositAccount(point, accountNo, bank);
+			long newPoint = memberService.findPointbyId(memberVO.getId());
+			memberVO.setPoint(newPoint);	
+			viewPath = "redirect:transferToAccountResult";			
+		}else {	
+			viewPath = "mypage/transferToAccount-fail";
+		}	
+		return viewPath;
+	}
+	
+	@RequestMapping("transferToAccountResult")
+	public String transferToAccountResult(HttpServletRequest request) {
+		return "mypage/transferToAccount-result";
+	}
+
 }
 
 

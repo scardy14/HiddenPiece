@@ -23,4 +23,5 @@ public class AuctionBoardPostVO {
 	private String endDate;
 	private String nowId;
 	private long postStatus;
+	private boolean like;
 }

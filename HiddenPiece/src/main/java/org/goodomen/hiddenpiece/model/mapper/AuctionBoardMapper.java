@@ -28,4 +28,23 @@ public interface AuctionBoardMapper {
 
 	public void addToWishlist(AuctionBoardLikesVO likesVO);
 
+	public int deleteAuctionBoardPost(long postNo);
+
+	public int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+	
+	public void updateMemberPoint(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void reverseBidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public String findAuctionBoardPostNowId(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void updateMemberPointbuy(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void addHits(long postNo);
+	
+
 }

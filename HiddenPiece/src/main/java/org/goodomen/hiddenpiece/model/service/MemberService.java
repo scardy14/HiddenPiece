@@ -37,7 +37,16 @@ public interface MemberService {
 
 	void exchangePoint(long balance, String name);
 
-	void withdrawPoint(long balance, String accountNo, String bank);
+	void depositPoint(long balance, String accountNo, String bank);
 
+	ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id);
+
+	void depositAccount(long point, String accountNo, String bank);
+
+	void withdrawPoint(long point, String name, String id);
+
+	long findPointbyId(String id);
+
+	long findPoint(String id);
 
 }

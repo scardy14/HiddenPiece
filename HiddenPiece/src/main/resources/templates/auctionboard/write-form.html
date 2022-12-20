@@ -14,18 +14,37 @@
         <div>
             <div style="width: 100%; text-align: center;">
                 <div class="contact-form bg-light p-30">
-                    <form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="get">
+                    <form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data">
                         <input name="id" th:value="${session.mvo.id}" type = "hidden"> 
                         <input name="title" type="text"  placeholder="제목" required="required" data-validation-required-message="Please enter your name" style="width: 56%; height: 40px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
-                        <input name="endDate" type="datetime-local"><p class="help-block text-danger"></p>                   
-                        <input name="startPrice" type = "number"  placeholder="시작가" required="required">     
-                        <input name="sellPrice" type = "number"  placeholder="즉시구매가" required="required"><p class="help-block text-danger"></p>                 
+                        <input name="endDate" id="endDate" type="datetime-local"><p class="help-block text-danger"></p>                   
+                        <input name="startPrice" id="startPrice1" type = "number"  placeholder="시작가" required="required">     
+                        <input name="sellPrice" id = "sellPrice1" type = "number"  placeholder="즉시구매가" required="required"><p class="help-block text-danger"></p>                 
                         <textarea name="content" rows="8" placeholder="Message" required="required" data-validation-required-message="Please enter your message" style="width: 70%; height: 400px;"></textarea>                        <p class="help-block text-danger"></p>
-                        <input name = "photo" type="file" required="required"><p class="help-block text-danger"></p>							
-                        <button class="btn btn-primary py-2 px-4" type="submit">판매글등록</button>                       
+						<input name = "image" type="file" required="required"><p class="help-block text-danger"></p>
+                        <button class="btn btn-primary py-2 px-4" type="submit"  >판매글등록</button>                       
+                    </form>
+                    <form method="post" action="upload" >
+                    	
+                    	<button type = "submit">사진등록테스트</button>
                     </form>
                 </div>
             </div>
+            <script type="text/javascript">
+            	function checkPrice(event) {
+            		let startPrice = document.getElementById("startPrice1").value*1;
+            		let sellPrice = document.getElementById("sellPrice1").value*1;
+            		let writeform = document.getElementById("writeAuctionBoardPostForm");
+            		if(startPrice<=sellPrice) {
+            			if(!confirm("등록하시겠습니까?")) {
+            				event.preventDefault();
+            			}
+            		} else {
+            			alert("즉시구매가는 시작가 이상이어야합니다");
+            			event.preventDefault();
+            		}
+            	}
+            </script>
         </div>
     </div>
     <!-- Contact End -->

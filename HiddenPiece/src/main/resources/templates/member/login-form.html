@@ -10,15 +10,15 @@
 	<!-- Checkout Start -->
 	<div class="container-fluid">
 		<div class="row px-xl-5">		
-			<div style= " width: 50%; text-align: center;" >
+			<div style= " width: 50%; ">
 				<h5 class="section-title position-relative text-uppercase mb-3">
-					<span class="bg-secondary pr-3">로그인</span>
+					<span class="bg-secondary pr-3"> 로그인 </span>
 				</h5>
 				<div class="bg-light p-30 mb-5">
 					<div style="text-align: center;">
 						<form action="" th:action="@{/login}" method="post">
- 							<input type="text" name="id" placeholder="아이디" required="required"><br>
- 							<input type="password" name="password" placeholder="패스워드" required="required"><br><br>
+ 							<input type="text" class="form-control" name="id" placeholder="아이디" required="required"><br>
+ 							<input type="password" name="password" class="form-control" placeholder="패스워드" required="required"><br><br>
  							<button type="submit" style="width: 20%; border: none; background-color: #FFD333; height: 50px; color: #495057;">로그인</button>
  						</form>
  						<br>

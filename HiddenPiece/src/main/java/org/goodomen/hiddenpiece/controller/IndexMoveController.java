@@ -37,13 +37,11 @@ public class IndexMoveController {
 		HttpSession session = request.getSession(false);
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-			ArrayList<AuctionBoardPostVO> myWishlist = memberService.selectMyWishlist(memberVO.getId());
-			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList();
-			model.addAttribute("postList", auctionBoardPostList);
-			model.addAttribute("myWishlist", myWishlist);
+			ArrayList<AuctionBoardPostVO> selectComparedMyWishlist = memberService.selectComparedMyWishlist(memberVO.getId());//내가 찜한 리스트와 총 게시물 리스트를 비교해 setLike된 리스트 
+			model.addAttribute("postList", selectComparedMyWishlist);
 		}
 		else {
-			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList();
+			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList(); //전체 리스트 
 			model.addAttribute("postList", auctionBoardPostList);
 		}
 		return "shop2";
