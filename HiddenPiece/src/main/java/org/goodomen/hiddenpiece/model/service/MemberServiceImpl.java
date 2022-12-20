@@ -81,5 +81,21 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.findId(email, address, name, tel);
 	}
 
+	@Override
+	public void exchangePoint(long balance, String name) {
+		memberMapper.exchangePoint(balance, name);
+		System.out.println("MemberServiceImpl exchangePoint  ");
+	}
+
+	@Override
+	public void withdrawPoint(long balance, String accountNo, String bank) {
+		memberMapper.withdrawPoint(balance, accountNo, bank);	
+		System.out.println("MemberServiceImpl withdrawPoint ");
+		
+		
+	}
+	
+	
+
 }
 

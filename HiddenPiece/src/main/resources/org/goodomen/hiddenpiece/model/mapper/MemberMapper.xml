@@ -61,5 +61,12 @@
 	<select id="findAccountInfoByAccountNo" resultType="org.goodomen.hiddenpiece.model.vo.AccountVO">
 	Select * from ACCOUNT_INFO where account_no =#{accountNo}
 	</select>
+	
+	<update id="exchangePoint">
+	update HP_Member set point=point + #{balance} where name =#{name} 
+	</update>
+	<update id="withdrawPoint">
+	update Account_Info set balance=balance-#{balance} where account_No=#{accountNo} and bank =#{bank}
+	</update>
 
 </mapper>

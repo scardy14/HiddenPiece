@@ -1,24 +1,17 @@
 package org.goodomen.hiddenpiece.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
-
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
-import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.service.MemberServiceImpl;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
-
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -196,4 +189,43 @@ public class MemberController {
 		}	
 		return viewPath;
 	}
+	
+	@RequestMapping("exchangePointForm")
+	public String exchangePointForm() {
+		return "mypage/exchangePointForm";		
+	}
+	
+	@PostMapping("exchangePoint")
+	public String exchangePoint(long balance,String accountNo,String bank,String name,HttpServletRequest request) {		
+		String viewPath=null;
+		HttpSession session=request.getSession(false);
+		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");		
+		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
+		System.out.println(balance+" "+ accountNo+" "+bank+" "+name);
+		System.out.println(accountVO+" "+memberVO);
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank)	&& accountVO.getBalance()>=balance) {
+		System.out.println(memberVO);
+		System.out.println(accountVO);
+		memberService.withdrawPoint(balance, accountNo ,bank);
+		memberService.exchangePoint(balance,name);
+		System.out.println(memberVO);
+		System.out.println(accountVO);
+		
+		viewPath="redirect:exchangePointResult";		
+		}else {
+		viewPath="mypage/exchangePoint-fail";
+		}
+		return viewPath;
+	}
+	
+	@RequestMapping("exchangePointResult")
+	public String exchangePointResult() {
+		return "mypage/exchangePoint-result";
+	}
 }
+
+
+
+	
+	
+

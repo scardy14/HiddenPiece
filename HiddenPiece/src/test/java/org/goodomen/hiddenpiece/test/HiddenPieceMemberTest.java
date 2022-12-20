@@ -94,5 +94,17 @@ public class HiddenPieceMemberTest {
 		AccountVO accountVO = memberMapper.findAccountInfoByAccountNo(accountNo);
 		System.out.println(accountVO);
 	}
+	@Test
+	public void exchangePoint() {
+			String id="java1";
+			String name="퇴근중";
+			long balance=10000;
+			String accountNo="111113";
+			String bank="코스타은행";
+			memberMapper.withdrawPoint(balance,accountNo,bank);
+			memberMapper.exchangePoint(balance,name);
+			System.out.println("계좌에서 포인트로 환전되었습니다");
+			
+	}
 	
 }

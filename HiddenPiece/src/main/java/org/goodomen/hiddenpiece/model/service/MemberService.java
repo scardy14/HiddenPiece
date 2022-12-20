@@ -34,4 +34,10 @@ public interface MemberService {
 	void deleteFromWishlist(AuctionBoardLikesVO likesVO);
 
 	int checkWishlist(AuctionBoardLikesVO likesVO);
+
+	void exchangePoint(long balance, String name);
+
+	void withdrawPoint(long balance, String accountNo, String bank);
+
+
 }
