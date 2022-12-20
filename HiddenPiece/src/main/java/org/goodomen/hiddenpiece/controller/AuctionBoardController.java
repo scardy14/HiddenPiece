@@ -1,5 +1,7 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,10 +66,30 @@ public class AuctionBoardController {
 	}
 	
 	// 경매게시판 글 작성
-	@RequestMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+	@PostMapping("writeAuctionBoardPost")
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,@RequestParam("image") MultipartFile file) {
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
+		auctionBoardPostVO.setPhoto(file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
+
+		//////////////////////////////////////////////////////////////////
+		System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    System.out.println("파일 크기 : " + file.getSize());
+
+	    try(
+	      // 윈도우일 경우
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      InputStream is = file.getInputStream();
+	    ){
+	      int readCount = 0;
+	      byte[] buffer = new byte[1024];
+	      while((readCount = is.read(buffer)) != -1){
+	      fos.write(buffer,0,readCount);
+	    }
+	    }catch(Exception ex){
+	      throw new RuntimeException("file Save Error");
+	    }
+	   ////////////////////////////////////////////////////////////////////
 		return "auctionboard/write-ok";
 	}
 	
@@ -160,4 +184,25 @@ public class AuctionBoardController {
 		return "auctionboard/buy-ok";
 	}
 	
+	 @PostMapping("/upload")
+	  public String upload(@RequestParam("photo") MultipartFile file) {
+
+	    System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    System.out.println("파일 크기 : " + file.getSize());
+
+	    try(
+	      // 윈도우일 경우
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      InputStream is = file.getInputStream();
+	    ){
+	      int readCount = 0;
+	      byte[] buffer = new byte[1024];
+	      while((readCount = is.read(buffer)) != -1){
+	      fos.write(buffer,0,readCount);
+	    }
+	    }catch(Exception ex){
+	      throw new RuntimeException("file Save Error");
+	    }
+	    return "index2";
+	  }
 }

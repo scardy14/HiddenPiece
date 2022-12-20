@@ -8,7 +8,6 @@ CREATE TABLE Account_Info(
 )
 select * from ACCOUNT_INFO;
 
-
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111111','국한은행',763000);
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111112','신일은행',3000);
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111113','코스타은행',21);
@@ -21,8 +20,6 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values('111119','제민은�
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111120','KBK은행',111200);
 
 commit
-
-
 
 
 
@@ -73,6 +70,7 @@ CREATE TABLE AuctionBoard(
 )
 --경매게시판댓글
 select * from AUCTIONBOARD;
+UPDATE AuctionBoard SET photo = 'AGuReYo.jpg' WHERE post_no = 50
 CREATE SEQUENCE AuctionBoard_Comment_seq;
 CREATE TABLE AuctionBoard_Comment (
 	comment_no NUMBER NOT NULL,

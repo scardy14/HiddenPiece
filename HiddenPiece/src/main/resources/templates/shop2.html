@@ -87,7 +87,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1"  th:each="group:${postList}">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" th:src="@{/img/}+ ${group.photo}" alt="">
+                                <img class="img-fluid w-100" th:src="@{/auctionboardimg/}+ ${group.photo}" alt="">
                                 <div class="product-action">
                                 <th:block th:if="${session.mvo}">
                                  	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlist([[${group.postNo}]], [[${session.mvo.id}]]);" href=""   >
