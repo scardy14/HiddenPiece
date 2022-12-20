@@ -1,5 +1,8 @@
 package org.goodomen.hiddenpiece.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
