@@ -133,5 +133,10 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Override
+	public ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id) {
+		return null;
+	}
+
 }
 
