@@ -120,16 +120,35 @@ public class AuctionBoardController {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}
-	@RequestMapping("bidMove")
-	public String bidMove(long postNo, String id, long bidPrice) {
-		return "redirect:bid?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
-	}
 	@RequestMapping("bid")
-	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice) {
+	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
 		auctionBoardPostVO.setCurrentPrice(bidPrice);
-		//int result = auctionBoardService.bidAuctionBoardPost(auctionBoardPostVO);
-		System.out.println(auctionBoardPostVO);
+		int result = auctionBoardService.bidAuctionBoardPost(auctionBoardPostVO);
+		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		memberVO.setPoint(newPoint);
+		session.setAttribute("mvo", memberVO);
+		return "redirect:bidMove";
+	}
+	@RequestMapping("bidMove")
+	public String bidMove() {
 		return "auctionboard/bid-ok";
+	}
+	@RequestMapping("buy")
+	public String buy(AuctionBoardPostVO auctionBoardPostVO, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		
+		int result = auctionBoardService.buyAuctionBoardPost(auctionBoardPostVO);
+		long newPoint = memberService.findPoint(auctionBoardPostVO.getId());
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		memberVO.setPoint(newPoint);
+		session.setAttribute("mvo", memberVO);
+		return "redirect:buymove";
+	}
+	@RequestMapping("buymove")
+	public String buymove() {
+		return "auctionboard/buy-ok";
 	}
 	
 }
