@@ -103,4 +103,16 @@ public class AuctionBoardController {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}
+	@RequestMapping("bidMove")
+	public String bidMove(long postNo, String id, long bidPrice) {
+		return "redirect:bid?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
+	}
+	@RequestMapping("bid")
+	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice) {
+		auctionBoardPostVO.setCurrentPrice(bidPrice);
+		//int result = auctionBoardService.bidAuctionBoardPost(auctionBoardPostVO);
+		System.out.println(auctionBoardPostVO);
+		return "auctionboard/bid-ok";
+	}
+	
 }

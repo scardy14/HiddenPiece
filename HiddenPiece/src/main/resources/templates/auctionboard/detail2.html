@@ -88,6 +88,8 @@
 									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 									<button  type = "submit">삭제하기</button> 
 								</form>
+								<input type = "hidden" id = "point" th:value = "${session.mvo.point}">
+								<input type = "hidden" id = "id" th:value = "${session.mvo.id}">
 							</th:block>
 						</th:block>
 					</div>
@@ -169,7 +171,6 @@
 										<input name="memberId" id="memberId" type="hidden" value="" />
 	                           		</div>
                               	 </th:block> 
-                           
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
@@ -341,17 +342,29 @@
   		let currentPrice = document.getElementById("currentPrice").value*1;
   		let sellPrice = document.getElementById("sellPrice").value*1;
   		let bidPrice = document.getElementById("bidPrice").value*1;
-  		alert("현재입찰가 " + currentPrice + "즉시구매가 " + sellPrice+ "입찰가 " + bidPrice  )
+  		let point = document.getElementById("point").value*1;
+  		let minimumPrice = currentPrice*1.05
+  		let id = document.getElementById("id").value;
+  		let postNo = document.getElementById("articleNo").value
+  		/* alert("현재입찰가 " + currentPrice + "즉시구매가 " + sellPrice+ "입찰가 " + bidPrice  + "포인트 " + point + "최저입찰가 " + minimumPrice + "아이디 " + id + "글번호 " + postNo); */
   		if(bidPrice==sellPrice) {	// 001 만일 입찰할 금액이 즉구가와 같다면
   			if(confirm("입찰할려는 금액이 즉시구매가와 동일합니다. 즉시구매하시겠습니까?")) {
-  				alert("즉시구매되었습니다");
+  				if(point<sellPrice) {
+  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
+  				} else {
+  					alert("즉시구매되었습니다");
+  				}
   			} else {
   				alert("취소하였습니다");
   			} 
   		} else { // 001 만일 입찰할 금액이 즉구가와 다르다면
   			if(bidPrice>sellPrice) {
   				if(confirm("입찰할려는 금액이 즉시구매가를 초과합니다. 즉시구매가로 바로 구매하시겠습니까?")) {
-  					alert("구매하였습니다");
+  					if(point<sellPrice) {
+  	  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
+  	  				} else {
+  	  					alert("즉시구매되었습니다");
+  	  				}
   				} else {
   					alert("취소하였습니다");
   				}
@@ -360,7 +373,12 @@
   					alert("입찰할려는 금액이 현재입찰가보다 낮습니다. 입찰금액을 올려주세요");
   				} else {
   					if(confirm("입찰하시겠습니까?")) {
-  						alert("입찰하였습니다");
+  						if(point<bidPrice) {
+  		  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
+  		  				} else {
+  		  					alert("입찰하였습니다");
+  		  					location.href="bidMove?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
+  		  				}
   					} else {
   						alert("취소하였습니다");
   					}

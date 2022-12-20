@@ -32,4 +32,11 @@ public interface AuctionBoardMapper {
 
 	public int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
 
+	public void bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+	
+	public void updateMemberPoint(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void reverseBidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+	
+
 }

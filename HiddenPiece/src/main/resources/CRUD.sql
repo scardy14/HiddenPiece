@@ -104,3 +104,14 @@ SELECT * FROM AuctionBoard_Comment WHERE comment_no=22
 
 -- 찜한 목록 조회
 SELECT * FROM AuctionBoard_Likes WHERE id='yerin0110';
+
+이름 계좌번호 은행명 포인트 from
+UPDATE Account_Info 
+   SET Point += 5000
+ WHERE (SELECT a.account_no
+ 		  FROM HP_Member m, account_Info a
+ 		 WHERE m.account_no = a.account_no
+ 		   AND m.name = '홍주영'
+ 		   AND 
+ 
+ 		)

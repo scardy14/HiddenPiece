@@ -7,6 +7,7 @@ import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,15 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@Override
 	public int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		return auctionBoardMapper.updateAuctionBoardPost(auctionBoardPostVO);
+	}
+
+	@Override
+	@Transactional
+	public int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
+		auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);		
+		return 0;
 	}
 
 

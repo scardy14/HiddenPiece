@@ -31,4 +31,6 @@ public interface AuctionBoardService {
 	int deleteAuctionBoardPost(long postNo);
 
 	int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVOe);
 }
