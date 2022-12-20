@@ -64,7 +64,7 @@
 	<update id="exchangePoint">
 	update HP_Member set point=point + #{balance} where name =#{name} 
 	</update>
-	<update id="withdrawPoint">
+	<update id="depositPoint">
 	update Account_Info set balance=balance-#{balance} where account_No=#{accountNo} and bank =#{bank}
 	</update>
 

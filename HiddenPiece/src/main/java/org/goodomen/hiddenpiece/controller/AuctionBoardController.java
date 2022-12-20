@@ -78,7 +78,7 @@ public class AuctionBoardController {
 
 	    try(
 	      // 윈도우일 경우
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPiece/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg" + file.getOriginalFilename());
 	      InputStream is = file.getInputStream();
 	    ){
 	      int readCount = 0;
