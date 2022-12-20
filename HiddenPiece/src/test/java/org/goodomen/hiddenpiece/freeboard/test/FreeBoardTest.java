@@ -45,7 +45,11 @@ public class FreeBoardTest {
 	void deletePost() {
 		long postNo=48;
 		freeBoardMapper.deletePost(postNo);
-		
+	}
+	@Test
+	void updateHits() {
+		long postNo=49;
+		freeBoardMapper.updateHits(postNo);
 	}
 	
 }

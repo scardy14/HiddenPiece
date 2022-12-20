@@ -20,6 +20,8 @@ public interface FreeBoardMapper {
 
 	public void deletePost(long postNo);
 
+	public void updateHits(long postNo);
+
 	
 
 	

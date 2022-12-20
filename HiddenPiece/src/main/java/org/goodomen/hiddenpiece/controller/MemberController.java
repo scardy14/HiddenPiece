@@ -1,24 +1,19 @@
 package org.goodomen.hiddenpiece.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
-
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
-import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.service.MemberServiceImpl;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
-
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -33,12 +28,14 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(MemberVO memberVO, HttpServletRequest request) {
 		memberVO = memberService.login(memberVO);
+		ArrayList<Long> freeBoardList = new ArrayList<>();
 		if (memberVO == null) {
 			return "member/login-fail";
 		}
 		else {
 			HttpSession session = request.getSession();
 			session.setAttribute("mvo", memberVO);
+			session.setAttribute("freeBoardList", freeBoardList);
 			return "redirect:/";
 		}
 	}

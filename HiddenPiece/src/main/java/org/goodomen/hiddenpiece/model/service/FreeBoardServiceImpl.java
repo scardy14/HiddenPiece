@@ -32,4 +32,8 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	public void deletePost(long postNo) {
 		freeBoardMapper.deletePost(postNo);
 	}
+	@Override
+	public void updateHits(long postNo) {
+		freeBoardMapper.updateHits(postNo);
+	}
 }
