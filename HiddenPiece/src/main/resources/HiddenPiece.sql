@@ -43,7 +43,6 @@ CREATE TABLE HP_Member(
 )
 
 select * from HP_MEMBER
-
 --회원권한
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,

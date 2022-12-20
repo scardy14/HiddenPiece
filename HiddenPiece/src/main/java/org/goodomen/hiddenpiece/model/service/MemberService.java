@@ -42,4 +42,7 @@ public interface MemberService {
 	void withdrawPoint(long point, String name, String id);
 
 	long findPointbyId(String id);
+
+	long findPoint(String id);
+
 }

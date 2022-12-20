@@ -30,7 +30,8 @@
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span th:text="${postVO.endDate}">시각표시</span> </h5>
 					<h3 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h3>
-					<h3 class="font-weight-semi-bold mb-4" th:text="|입찰가 ${postVO.currentPrice}원|" >입찰가: $130.00</h3> <input type = "hidden" value = "value" th:value="${postVO.currentPrice}" id="currentPrice">
+					<h3 class="font-weight-semi-bold mb-4" th:text="|현재입찰가 ${postVO.currentPrice}원|" >현재입찰가</h3> <input type = "hidden" value = "value" th:value="${postVO.currentPrice}" id="currentPrice">
+					<h3 class="font-weight-semi-bold mb-4" th:text="|최소입찰가 ${#numbers.formatInteger(postVO.startPrice*0.05+postVO.currentPrice,1)}원|" >최소입찰가</h3> <input type = "hidden" value = "value" th:value="${#numbers.formatInteger(postVO.startPrice*0.05+postVO.currentPrice,1)}" id="minimumPrice">
 					<h5 class="font-weight-semi-bold mb-4" th:text="|즉시구매가 ${postVO.sellPrice}원|" >즉시구매가: $150.00</h5><input type = "hidden" value = "value" th:value="${postVO.sellPrice}" id="sellPrice">
 					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰자 ${postVO.nowId}님|">현재입찰자: Kosta</h5>
 					<div class="d-flex align-items-center mb-4 pt-2">
@@ -40,7 +41,7 @@
 									<i class="fa fa-minus"></i>
 								</button>
 							</div>
-							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${postVO.currentPrice}" id = "bidPrice">
+							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${#numbers.formatInteger(postVO.startPrice*0.05+postVO.currentPrice,1)}" id = "bidPrice">
 							<div class="input-group-btn">
 								<button class="btn btn-primary btn-plus">
 									<i class="fa fa-plus"></i>
@@ -48,20 +49,36 @@
 							</div>
 						</div>
 						<th:block th:if="${session.mvo}">
+							<input type = "hidden" id = "point" th:value = "${session.mvo.point}">
+							<input type = "hidden" id = "id" th:value = "${session.mvo.id}">
 							<th:block th:if="${session.mvo.id!=null}">
-								<button class="btn px-3" style="border-color: gray;" onclick="bidok()">
-									<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
-								</button>&nbsp;&nbsp;&nbsp;&nbsp;
-							</th:block>
-							<th:block th:if="${session.mvo.id==null}">
-								<button class="btn px-3" style="border-color: gray;" onclick="bidfail()">
-									<i class="fa fa-shopping-cart mr-1"></i> 입찰하기
-								</button>&nbsp;&nbsp;&nbsp;&nbsp;
-							</th:block>
+								<th:block th:if="${postVO.postStatus==1}">
+									<button class="btn px-3" style="border-color: gray;" onclick="bidok()">
+										<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
+									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+									<button class="btn px-3" style="border-color: gray;" onclick = "buyok()">
+										<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
+									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								</th:block>
+								<th:block th:if="${postVO.postStatus!=1}">
+									<button class="btn px-3" style="border-color: gray;" onclick="bidend()">
+										<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
+									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+									<button class="btn px-3" style="border-color: gray;" onclick = "buyend()">
+										<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
+									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								</th:block>
+							</th:block>					
 						</th:block>
-						<button class="btn px-3" style="border-color: gray;">
-							<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
-						</button>&nbsp;&nbsp;&nbsp;&nbsp;
+						<th:block th:if="${session.mvo==null}">
+							<button class="btn px-3" style="border-color: gray;" onclick="bidfail()">
+								<i class="fa fa-shopping-cart mr-1"></i> 입찰하기
+							</button>&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="btn px-3" style="border-color: gray;" onclick = "buyfail()">
+								<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
+							</button>&nbsp;&nbsp;&nbsp;&nbsp;
+						</th:block>
+						
 						
 						<th:block th:if="${session.mvo}">
 							<th:block th:if="${postVO.like}">
@@ -92,8 +109,6 @@
 									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 									<button  type = "submit">삭제하기</button> 
 								</form>
-								<input type = "hidden" id = "point" th:value = "${session.mvo.point}">
-								<input type = "hidden" id = "id" th:value = "${session.mvo.id}">
 							</th:block>
 						</th:block>
 					</div>
@@ -342,16 +357,16 @@
   		let sellPrice = document.getElementById("sellPrice").value*1;
   		let bidPrice = document.getElementById("bidPrice").value*1;
   		let point = document.getElementById("point").value*1;
-  		let minimumPrice = currentPrice*1.05
+  		let minimumPrice = document.getElementById("minimumPrice").value*1;
   		let id = document.getElementById("id").value;
-  		let postNo = document.getElementById("articleNo").value
-  		/* alert("현재입찰가 " + currentPrice + "즉시구매가 " + sellPrice+ "입찰가 " + bidPrice  + "포인트 " + point + "최저입찰가 " + minimumPrice + "아이디 " + id + "글번호 " + postNo); */
-  		if(bidPrice==sellPrice) {	// 001 만일 입찰할 금액이 즉구가와 같다면
+  		let postNo = document.getElementById("articleNo").value;
+  		 /* alert("현재입찰가 " + currentPrice + "즉시구매가 " + sellPrice+ "입찰가 " + bidPrice  + "포인트 " + point + "최저입찰가 " + minimumPrice + "아이디 " + id + "글번호 " + postNo);  */
+  		if(bidPrice==sellPrice) {	//001 만일 입찰할 금액이 즉구가와 같다면
   			if(confirm("입찰할려는 금액이 즉시구매가와 동일합니다. 즉시구매하시겠습니까?")) {
   				if(point<sellPrice) {
   					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
   				} else {
-  					alert("즉시구매되었습니다");
+  					location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
   				}
   			} else {
   				alert("취소하였습니다");
@@ -362,21 +377,20 @@
   					if(point<sellPrice) {
   	  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
   	  				} else {
-  	  					alert("즉시구매되었습니다");
+  	  					location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
   	  				}
   				} else {
   					alert("취소하였습니다");
   				}
   			} else {
-  				if(bidPrice<currentPrice) {
-  					alert("입찰할려는 금액이 현재입찰가보다 낮습니다. 입찰금액을 올려주세요");
+  				if(bidPrice<minimumPrice) {
+  					alert("입찰할려는 금액이 최소입찰가보다 낮습니다. 입찰금액을 올려주세요");
   				} else {
   					if(confirm("입찰하시겠습니까?")) {
   						if(point<bidPrice) {
   		  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
   		  				} else {
-  		  					alert("입찰하였습니다");
-  		  					location.href="bidMove?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
+  		  					location.href="bid?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
   		  				}
   					} else {
   						alert("취소하였습니다");
@@ -385,6 +399,31 @@
   			}
   		}
   		
+  	}
+  	function buyfail() {
+  		alert("로그인 후 이용가능합니다");
+  		let point = document.getElementById("point").value*1;
+  	}
+  	function buyok() {
+  		let postNo = document.getElementById("articleNo").value;
+  		let id = document.getElementById("id").value;
+  		let sellPrice = document.getElementById("sellPrice").value*1;
+  		let point = document.getElementById("point").value*1;
+  		if(confirm("즉시구매하시겠습니까?")) {
+  			if(point<sellPrice) {
+  				alert("포인트가 부족합니다");
+  			} else {
+  				location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
+  			}
+  		} else {
+  			alert("취소하였습니다");
+  		}
+  	}
+  	function bidend() {
+  		alert("경매가 종료되어 입찰할 수 없습니다");
+  	}
+  	function buyend() {
+  		alert("경매가 종료되어 구매할 수 없습니다");
   	}
   	
   	

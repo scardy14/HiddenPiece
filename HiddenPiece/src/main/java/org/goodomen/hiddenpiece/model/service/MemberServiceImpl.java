@@ -2,6 +2,7 @@ package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
 
+
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
@@ -108,6 +109,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public long findPointbyId(String id) {
 		return memberMapper.findPointbyId(id);
+	}
+	@Override
+	public long findPoint(String id) {
+		return memberMapper.findPoint(id);
+
 	}
 
 }

@@ -33,9 +33,13 @@
 				<!--  	-->
 				</tbody>
 			</table>
-			<div>
+			<th:block th:if="${session.mvo}">
+			<th:block th:if="${session.mvo.id != null}">
+			<div>		
 				<a style="background-color:  black; color: white; width: 80px; height: 30px;" href="" th:href="@{/moveFreeBoardPostWriteForm}">글작성</a>
 			</div>
+			</th:block>
+			</th:block>
 		</div>
 	</div>
 </div>

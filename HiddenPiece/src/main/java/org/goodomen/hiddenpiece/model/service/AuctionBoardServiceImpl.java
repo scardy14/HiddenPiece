@@ -76,10 +76,29 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@Override
 	@Transactional
 	public int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
+			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		}		
 		auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
 		auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);		
 		return 0;
+	}
+
+	@Override
+	public int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
+		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
+			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		}
+		auctionBoardMapper.buyAuctionBoardPost(auctionBoardPostVO);
+		System.out.println(auctionBoardPostVO);
+		auctionBoardMapper.updateMemberPointbuy(auctionBoardPostVO);
+		return 0;
+	}
+
+	@Override
+	public void addHits(long postNo) {
+		auctionBoardMapper.addHits(postNo);
+		
 	}
 
 

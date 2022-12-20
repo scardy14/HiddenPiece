@@ -43,6 +43,7 @@ public interface MemberMapper {
 
 	long findPointbyId(String id);
 
+	long findPoint(String id);
 
 
 }

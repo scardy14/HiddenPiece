@@ -60,6 +60,7 @@
 	<select id="findAccountInfoByAccountNo" resultType="org.goodomen.hiddenpiece.model.vo.AccountVO">
 	Select * from ACCOUNT_INFO where account_no =#{accountNo}
 	</select>
+
 	<update id="depositAccount">
 	Update Account_info set balance = balance + #{point} where account_no = #{accountNo} and bank = #{bank}
 	</update>
@@ -69,4 +70,9 @@
 	<select id="findPointbyId" resultType="long">
 	Select point from hp_member where id = #{id}
 	</select>
+
+	<select id="findPoint" parameterType="string" resultType="long">
+		SELECT point FROM HP_Member WHERE id=#{value}
+	</select>
+
 </mapper>
