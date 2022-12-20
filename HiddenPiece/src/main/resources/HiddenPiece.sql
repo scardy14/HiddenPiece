@@ -95,7 +95,7 @@ CREATE TABLE AuctionBoard_Likes (
 	CONSTRAINT FK_AuctionBoard_Likes_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
 -- 경매게시판 찜하기 목록
-SELECT * FROM AuctionBoard_Likes
+SELECT * FROM AuctionBoard_Likes 
 
 --경매게시판경매참여물품
 CREATE TABLE AuctionBoard_Entry (

@@ -87,10 +87,10 @@
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1"  th:each="group:${postList}">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" th:src="@{/img/}+ ${group.photo}" alt="">
+                                <img class="img-fluid w-100" th:src="@{/auctionboardimg/}+ ${group.photo}" alt="">
                                 <div class="product-action">
                                 <th:block th:if="${session.mvo}">
-                                 	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlist([[${group.postNo}]], [[${session.mvo.id}]]);" href=""   >
+                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]])" href=""   >
                                  		<th:block th:if="${group.like}">
                                  			<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
                                  		</th:block>
@@ -99,11 +99,11 @@
                                  		</th:block>	
                                     </a>
 	                           </th:block>
-	                                <th:block th:unless="${session.mvo}">
-	                                	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlistNoSession([[${group.postNo}]]);" href=""   >
-	                                 		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
-	                                    </a>
-	                                </th:block>
+                                <th:block th:unless="${session.mvo}">
+                                	<a class="btn btn-outline-dark btn-square" th:onclick="noSessionWishlist()" href=""   >
+                                 		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
+                                    </a>
+                                </th:block>
 	                                 	<!-- <th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
 	                                 		<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
 	                                	</th:block>
@@ -140,13 +140,25 @@
                     		</div>
                     	<!-- </th:block> -->
                     	<nav>
-	                        <ul class="pagination justify-content-center">
+                    		<ul class="pagination justify-content-center">
+							    <th:block th:if="${paging.prev}">
+							    	<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${paging.startPage-1})}">Pre</a></li>
+							    </th:block>
+							  	<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
+							         <li class="page-item"><a class="page-link" th:href="@{/auctionboard(page=${num})}" th:text="${num}"></a></li>
+							    </th:block>
+							   	<th:block th:if="${paging.next && paging.endPage>0}">
+							   		<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${paging.endPage+1})}">Next</a></li>
+							    </th:block>
+							</ul>
+                    		
+	                        <!-- <ul class="pagination justify-content-center">
 	                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
 	                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
 	                        <li class="page-item"><a class="page-link" href="#">2</a></li>
 	                        <li class="page-item"><a class="page-link" href="#" th:href="@{/testCheckOut}">3</a></li>
-	                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-	                    	</ul>
+	                        <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+	                    	</ul> 
 	                    </nav>
                     </div>
                 </div>
@@ -157,9 +169,63 @@
     <!-- Shop End -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
+/* 세션 없을때 찜하기 버튼 누를시 */
+function noSessionWishlist(){
+	 alert("찜하기는 회원만 가능합니다.");
+}
+
+/* 찜하기확인  */
+function checkToWishlist(postNo, id){
+	alert("ha");
+	$.ajax({
+		type:"get",
+		url:"checkToWishlist",
+		data:{
+			"postNo":postNo,
+			"id":id
+		},
+		success:function(result){
+			if(result<1){
+				addToWishlist(postNo, id);	
+			}
+			else{
+				deleteFromWishlist(postNo,id);
+			}
+		}
+	});
+} 
+/* 찜하기  */
+function addToWishlist(postNo, id){
+	$.ajax({
+		type:"get",
+		url:"addToWishlist",
+		data:{
+			"postNo":postNo,
+			"id":id
+		},
+		success:function(result){
+			location.reload();
+		}
+	});
+}
+
+/* 찜취소 */
+function deleteFromWishlist(postNo,id){
+	$.ajax({
+			type:"get",
+			url:"deleteFromWishlist",
+			data:{
+				"id":id,
+				"postNo":postNo
+			},
+			success:function(result){
+				location.reload();
+			}
+		})
+	}
+
 
     function addToWishlist(postNo, id){
-    	let heart=$("#heart");
     	$.ajax({
     		type:"get",
     		url:"addToWishlist",

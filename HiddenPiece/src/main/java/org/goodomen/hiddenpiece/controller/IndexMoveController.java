@@ -1,17 +1,24 @@
 package org.goodomen.hiddenpiece.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -32,6 +39,7 @@ public class IndexMoveController {
 		return "layout";
 	}
 	
+	/*
 	@RequestMapping("auctionboard")
 	public String auctionBoardMove(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
@@ -45,6 +53,36 @@ public class IndexMoveController {
 			model.addAttribute("postList", auctionBoardPostList);
 		}
 		return "shop2";
+	}
+	*/
+	
+	@RequestMapping("auctionboard")
+	public String auctionBoardMove(Criteria cri, Model model, HttpServletRequest request) {
+		//전체 글 개수
+		int auctionBoardListCnt = auctionBoardService.auctionBoardListCnt();
+		Paging paging = new Paging();
+		paging.setCri(cri);
+		paging.setTotalCount(auctionBoardListCnt);
+		
+		HttpSession session = request.getSession(false);
+		if(session!=null) {
+			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+			List<Map<String, Object>> selectComparedMyWishlist = memberService.selectComparedMyWishlist(memberVO.getId(), cri);//내가 찜한 리스트와 총 게시물 리스트를 비교해 setLike된 리스트 
+			model.addAttribute("postList", selectComparedMyWishlist);
+			model.addAttribute("paging", paging);
+		}
+		/* else {
+			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList(); //전체 리스트 
+			model.addAttribute("postList", auctionBoardPostList);
+		}*/
+		
+		else {
+			List<Map<String, Object>> list = auctionBoardService.boardList(cri);
+			model.addAttribute("postList", list);
+			model.addAttribute("paging", paging);
+		}
+		return "shop2";
+		
 	}
 	
 	@RequestMapping("auctionboarddetail")

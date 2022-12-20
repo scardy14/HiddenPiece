@@ -2,10 +2,13 @@ package org.goodomen.hiddenpiece.model.service;
 
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 
 
 public interface AuctionBoardService {
@@ -33,4 +36,8 @@ public interface AuctionBoardService {
 	int updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
 
 	int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVOe);
+
+	int auctionBoardListCnt();
+
+	List<Map<String, Object>> boardList(Criteria cri);
 }

@@ -1,11 +1,14 @@
 package org.goodomen.hiddenpiece.model.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 
 
 @Mapper
@@ -37,6 +40,10 @@ public interface AuctionBoardMapper {
 	public void updateMemberPoint(AuctionBoardPostVO auctionBoardPostVO);
 
 	public void reverseBidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
+
+	public int auctionBoardListCnt();
+
+	public List<Map<String, Object>> boardList(Criteria cri);
 	
 
 }

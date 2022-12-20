@@ -1,9 +1,12 @@
 package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 
@@ -17,9 +20,7 @@ public interface MemberService {
 
 	MemberVO login(MemberVO memberVO);
 
-
 	void updateMember(MemberVO memberVO);
-
 
 	void deleteMember(String id);
 
@@ -35,5 +36,5 @@ public interface MemberService {
 
 	int checkWishlist(AuctionBoardLikesVO likesVO);
 
-	ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id);
+	List<Map<String, Object>> selectComparedMyWishlist(String id, Criteria cri);
 }

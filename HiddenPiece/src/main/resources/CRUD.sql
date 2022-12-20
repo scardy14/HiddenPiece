@@ -79,14 +79,27 @@ CREATE TABLE AuctionBoard(
 	CONSTRAINT FK_AuctionBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
 -- 경매게시판 게시물 등록
-INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'scardy','고양이보고가세요','꾸깃콘 많이 사랑해주세요','꾸깃.PNG',1000,1500,2500,sysdate,DEFAULT,sysdate,'scardy',DEFAULT)
-INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','개 목줄 팝니다','우리 강아지 하네스로 갈아탔습니다 목줄 튼튼해요 최대 5미터 이고요 합법적으로 2미터 까지만 사용하세요', 'puppy.PNG',500,500,3000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT)
-INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'scardy','돌아다니는 접시','지혼자 돌아다니는 김밥천국 접시 팝니다 나쁘지않아요','접시.PNG',5000,6000,10000,sysdate,DEFAULT,sysdate,'yerin0110',DEFAULT)
-INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','역사깊은씨디','다합해서 싸게 넘깁니다 희소성 있어요 ','씨디.PNG',100000,150000,200000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT)
-INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','녹지않는눈사람모형','폭염이와도 녹지않는 눈사람입니다. 아이들 장난감으로 좋아요 겨울 놀이 해보셔요 ','녹지않는눈사람.PNG',7000,9000,15000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT)
+INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'scardy','고양이보고가세요','꾸깃콘 많이 사랑해주세요','꾸깃.PNG',1000,1500,2500,sysdate,DEFAULT,sysdate,'scardy',DEFAULT);
+INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','개 목줄 팝니다','우리 강아지 하네스로 갈아탔습니다 목줄 튼튼해요 최대 5미터 이고요 합법적으로 2미터 까지만 사용하세요', 'puppy.PNG',500,500,3000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT);
+INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'scardy','돌아다니는 접시','지혼자 돌아다니는 김밥천국 접시 팝니다 나쁘지않아요','접시.PNG',5000,6000,10000,sysdate,DEFAULT,sysdate,'yerin0110',DEFAULT);
+INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','역사깊은씨디','다합해서 싸게 넘깁니다 희소성 있어요 ','씨디.PNG',100000,150000,200000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT);
+INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','녹지않는눈사람모형','폭염이와도 녹지않는 눈사람입니다. 아이들 장난감으로 좋아요 겨울 놀이 해보셔요 ','녹지않는눈사람.PNG',7000,9000,15000,sysdate,DEFAULT,sysdate,'scardy',DEFAULT);
 
 --경매게시판 게시물 리스트
-SELECT * FROM AuctionBoard WHERE post_status=1 order by post_no desc 
+SELECT * FROM AuctionBoard WHERE post_status=1 or post_status=2 or post_status=3  order by post_no desc
+SELECT * FROM AuctionBoard WHERE post_no between 50 and 54 and (post_status=1 or post_status=2 or post_status=3)  order by post_no desc
+
+-- 경매게시판 페이지네이션
+SELECT * from 
+	(select ROWNUM rm, post_no,content, title, photo, start_price, sell_price, current_price, id, time_posted, hits, end_date, now_id, post_status from
+		(select post_no,content, title,photo,start_price, sell_price, current_price, hpm.id,time_posted, hits, end_date, now_id, post_status
+		from auctionboard ab
+		inner join hp_member hpm on hpm.id=ab.id
+		where post_status=1 or post_status=2 or post_status=3 
+		order by post_no desc))
+		where rm between 1 and 70
+)
+
 
 -- 경매게시판 댓글 등록
 INSERT INTO AuctionBoard_Comment VALUES(AuctionBoard_Comment_seq.nextval, 1, 'yerin0110', '이거 어디서 사셨나요',sysdate, 1)

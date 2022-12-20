@@ -1,12 +1,15 @@
 package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
-import org.goodomen.hiddenpiece.model.vo.AccountVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,12 +51,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id) {
+	public List<Map<String,Object>> selectComparedMyWishlist(String id, Criteria cri) {
 		ArrayList<AuctionBoardPostVO> myWishlist = memberMapper.selectMyWishlist(id);
-		ArrayList<AuctionBoardPostVO> auctionBoardPostList= auctionBoardMapper.findAuctionBoardPostList();
+		List<Map<String, Object>>  auctionBoardPostList= auctionBoardMapper.boardList(cri);
 		for(int i=0; i<auctionBoardPostList.size(); i++) {
 			if(myWishlist.contains(auctionBoardPostList.get(i))){
-				auctionBoardPostList.get(i).setLike(true);
+				((AuctionBoardPostVO) auctionBoardPostList.get(i)).setLike(true);
 			}
 		}
 		return auctionBoardPostList;

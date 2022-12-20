@@ -1,11 +1,14 @@
 package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,6 +83,16 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
 		auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);		
 		return 0;
+	}
+
+	@Override
+	public int auctionBoardListCnt() {
+		return auctionBoardMapper.auctionBoardListCnt();
+	}
+
+	@Override
+	public List<Map<String, Object>> boardList(Criteria cri) {
+		return auctionBoardMapper.boardList(cri);
 	}
 
 
