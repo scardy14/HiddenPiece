@@ -1,63 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
-<!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
-
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+> <!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
 <head>
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<!-- Shop Detail Start -->
-	<div class="container-fluid pb-5">
-		<div class="row px-xl-5">
-			<!-- <form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data" class = "row px-xl-5"> -->
-				<div class="col-lg-5 mb-30">
-					<div id="product-carousel" class="carousel slide"
-						data-ride="carousel">
-						<div class="carousel-inner bg-light">
-							<div class="carousel-item active">
-								<img class="w-100 h-100" alt="Image">
-							</div>
-						</div>
-					</div>
-					<input name = "image" type="file" required="required">
-				</div>
-				
-				<div class="col-lg-7 h-auto mb-30">
-					<div class="h-100 bg-light p-30">
-						<h3><input name="title" type="text" required="required" placeholder="제목" data-validation-required-message="제목을 입력해주세요" style="width: 80%; height: 40px; border: none;"/></h3><br>
-						<h5 class="font-weight-semi-bold mb-4">시작가: 	  <input name="startPrice" id="startPrice1" type = "number"  placeholder="시작가" required="required" style="border: none;"></h5>
-						<h5 class="font-weight-semi-bold mb-4">즉시구매가:   <input name="sellPrice" id = "sellPrice1" type = "number"  placeholder="즉시구매가" required="required" style="border: none;"></h5>
-						<h5 class="font-weight-semi-bold mb-4">경매종료시각: <input name="endDate" id="endDate" type="datetime-local" style="border: none;"	></h5>	
-						<br>
-						<div class="nav nav-tabs mb-4">
-							<a class="nav-item nav-link text-dark active" data-toggle="tab">상품설명</a>
-						</div>
-						<div class="tab-content">
-							<div class="tab-pane fade show active" id="tab-pane-1">
-								<textarea style="width: 900px; height: 200px;"></textarea>
-							</div>
-						</div>
-						<button class="btn btn-primary py-2 px-4" type="submit" >판매글등록</button>
-					</div>
-				</div>
-			<!-- </form> -->
-		</div>
-	</div>
-	<script type="text/javascript">
-		function checkPrice(event) {
-        	let startPrice = document.getElementById("startPrice1").value*1;
-            let sellPrice = document.getElementById("sellPrice1").value*1;
-            let writeform = document.getElementById("writeAuctionBoardPostForm");
-            if(startPrice<=sellPrice) {
-            	if(!confirm("등록하시겠습니까?")) {
-            		event.preventDefault();
+<!-- Contact Start -->
+    <div class="container-fluid" style="text-align: center;">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">경매글 등록</span></h2>
+        <div>
+            <div style="width: 100%; text-align: center;">
+                <div class="contact-form bg-light p-30">
+                    <form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data">
+                        <input name="id" th:value="${session.mvo.id}" type = "hidden"> 
+                        <input name="title" type="text"  placeholder="제목" required="required" data-validation-required-message="Please enter your name" style="width: 56%; height: 40px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
+                        <input name="endDate" id="endDate" type="datetime-local"><p class="help-block text-danger"></p>                   
+                        <input name="startPrice" id="startPrice1" type = "number"  placeholder="시작가" required="required">     
+                        <input name="sellPrice" id = "sellPrice1" type = "number"  placeholder="즉시구매가" required="required"><p class="help-block text-danger"></p>                 
+                        <textarea name="content" rows="8" placeholder="Message" required="required" data-validation-required-message="Please enter your message" style="width: 70%; height: 400px;"></textarea>                        <p class="help-block text-danger"></p>
+						<input name = "image" type="file" required="required"><p class="help-block text-danger"></p>
+                        <button class="btn btn-primary py-2 px-4" type="submit"  >판매글등록</button>                       
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">
+            	function checkPrice(event) {
+            		let startPrice = document.getElementById("startPrice1").value*1;
+            		let sellPrice = document.getElementById("sellPrice1").value*1;
+            		let writeform = document.getElementById("writeAuctionBoardPostForm");
+            		if(startPrice<=sellPrice) {
+            			if(!confirm("등록하시겠습니까?")) {
+            				event.preventDefault();
+            			}
+            		} else {
+            			alert("즉시구매가는 시작가 이상이어야합니다");
+            			event.preventDefault();
+            		}
             	}
-            } else {
-            	alert("즉시구매가는 시작가 이상이어야합니다");
-            	event.preventDefault();
-            }
-		}
-	</script>
+            </script>
+        </div>
+    </div>
+    <!-- Contact End -->
 </div>

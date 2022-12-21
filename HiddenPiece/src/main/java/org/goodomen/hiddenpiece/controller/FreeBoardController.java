@@ -40,7 +40,6 @@ public class FreeBoardController {
 	@RequestMapping("writePost")
 	public String writePost(FreeBoardVO freeBoardVO) {
 		freeBoardService.writePost(freeBoardVO);
-		System.out.println(freeBoardVO);
 		return "freeboard/writePost-ok";
 	}	
 	/*

@@ -63,7 +63,6 @@ public class IndexMoveController {
 		Paging paging = new Paging();
 		paging.setCri(cri);
 		paging.setTotalCount(auctionBoardListCnt);
-		
 		HttpSession session = request.getSession(false);
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");

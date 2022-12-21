@@ -69,29 +69,25 @@ public class AuctionBoardController {
 	public String moveAuctionBoardPostForm() {
 		return "auctionboard/write-form";
 	}
-	@RequestMapping("moveAuctionBoardPostForm2")
-	public String moveAuctionBoardPostForm2() {
-		return "auctionboard/write-form2";
-	}
 	
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,@RequestParam("image") MultipartFile file) {
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) {
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
 		auctionBoardPostVO.setPhoto(file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 
 		//////////////////////////////////////////////////////////////////
-		System.out.println("파일 이름 : " + file.getOriginalFilename());
-	    System.out.println("파일 크기 : " + file.getSize());
+		//System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    //System.out.println("파일 크기 : " + file.getSize());
 
 	    try(
 	      // 윈도우일 경우
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPiece/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg" + file.getOriginalFilename());
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
 	      InputStream is = file.getInputStream();
 	    ){
 	      int readCount = 0;
-	      byte[] buffer = new byte[1024];
+	      byte[] buffer = new byte[2048];
 	      while((readCount = is.read(buffer)) != -1){
 	      fos.write(buffer,0,readCount);
 	    }
