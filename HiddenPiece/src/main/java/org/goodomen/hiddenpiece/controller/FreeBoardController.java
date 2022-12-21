@@ -81,7 +81,6 @@ public class FreeBoardController {
 		@RequestMapping("writeFreeBoardComment")
 		public String writeComment(Model model, FreeBoardCommentVO commentVO) {
 			String result = "1";
-			System.out.println(commentVO);
 			freeBoardService.writeComment(commentVO);
 			return result;
 		}
