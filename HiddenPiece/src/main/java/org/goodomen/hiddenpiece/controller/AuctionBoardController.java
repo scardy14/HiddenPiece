@@ -2,7 +2,9 @@ package org.goodomen.hiddenpiece.controller;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,22 +74,24 @@ public class AuctionBoardController {
 	
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,@RequestParam("image") MultipartFile file) {
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) {
+		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
-		auctionBoardPostVO.setPhoto(file.getOriginalFilename());
+		auctionBoardPostVO.setPhoto(auctionBoardPostVO.getId()+nowTime.format(now)+file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 
 		//////////////////////////////////////////////////////////////////
-		System.out.println("파일 이름 : " + file.getOriginalFilename());
-	    System.out.println("파일 크기 : " + file.getSize());
+		//System.out.println("파일 이름 : " + file.getOriginalFilename());
+	    //System.out.println("파일 크기 : " + file.getSize());
 
 	    try(
 	      // 윈도우일 경우
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPiece/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg" + file.getOriginalFilename());
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" +auctionBoardPostVO.getId()+nowTime.format(now)+ file.getOriginalFilename());
 	      InputStream is = file.getInputStream();
 	    ){
 	      int readCount = 0;
-	      byte[] buffer = new byte[1024];
+	      byte[] buffer = new byte[2048];
 	      while((readCount = is.read(buffer)) != -1){
 	      fos.write(buffer,0,readCount);
 	    }
@@ -157,8 +161,6 @@ public class AuctionBoardController {
 	//경매게시판 글 수정
 	@PostMapping("updateAuctionBoardPost")
 	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
-		System.out.println(auctionBoardPostVO);
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}

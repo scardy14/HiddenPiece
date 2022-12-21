@@ -40,7 +40,11 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-</head>
+<meta charset="utf-8">
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
 
 <body>
 	<!-- Topbar Start -->
@@ -68,14 +72,14 @@
 			<div class="col-lg-4 col-6 text-right">
 				<th:block th:if="${session.mvo==null}">
 					
-						<a href="" th:href="@{/loginForm}" style="background-color:#FFD333; color: white;">로그인</a>
+						<a href="" th:href="@{/loginForm}"><font color ="blue">로그인</font></a>
 		
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
 					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span>
 					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
- 					<a href="#" id="logoutBtn">로그아웃</a>
+ 					<a href="#" id="logoutBtn"><font color="red">로그아웃</font></a>
  						
  						
  						
@@ -98,9 +102,9 @@
 					data-toggle="collapse" href="#navbar-vertical"
 					style="height: 65px; padding: 0 30px;">
 					<h6 class="text-dark m-0">
-						<th:block th:if="${session.mvo}">
-						<i class="fa fa-bars mr-2"></i>마이페이지
-						</th:block>
+						
+						<i class="fa fa-bars mr-2"></i>메뉴
+						
 					</h6>
 						 <i class="fa fa-angle-down text-dark"></i>
 				</a>
@@ -109,7 +113,35 @@
 					id="navbar-vertical"
 					style="width: calc(100% - 30px); z-index: 999;">
 					<div class="navbar-nav w-100">
-					<th:block th:if="${session.mvo}">
+					<div class="nav-item dropdown dropright">
+					<a class="dropdown-item" th:href="@{/auctionboard}">경매게시판</a> 
+					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
+					</div>
+					
+                      	<th:block th:if="${session.mvo!=null}">
+					<div class="nav-item dropdown dropright">
+                            <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true">마이페이지 <i class="fa fa-angle-right float-right mt-1"></i></a>
+						<div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
+							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
+							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
+							<a href="" th:href="@{/updateMemberForm}" class="dropdown-item">회원정보수정</a>
+							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
+							<a href="" th:href="@{/transferAccountForm}" class="dropdown-item" >계좌로환전하기</a>
+							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
+						</div>
+                        </div>
+                        
+                        <div class="nav-item dropdown dropright">
+                        <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true" >참여한 경매<i class="fa fa-angle-right float-right mt-1"></i></a>
+                        <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
+                    		  <a href="" th:href="@{/buyingMyPage}" class="dropdown-item"><font color ="black">입찰중인 상품</font></a>
+							<a href="" th:href="@{/sellingMyPage}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  
+							<a href="" th:href="@{/boughtMyPage}" class="dropdown-item"><font color ="black">경매종료 상품</font></a>					
+							</div>
+						</div>
+					</th:block>
+                        
+<!-- 					<th:block th:if="${session.mvo}">
 						<div class="nav-item dropdown dropright">
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
@@ -118,7 +150,7 @@
 							<a href="" th:href="@{/transferAccountForm}" class="dropdown-item" >계좌로환전하기</a>
 							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
 						</div>
-					</th:block>
+					</th:block> -->
 					
 
 						<!--                         <a href="" class="nav-item nav-link">Swimwear</a>
@@ -147,11 +179,7 @@
 						<div class="navbar-nav mr-auto py-0">
 						<span class="nav-item nav-link active text-dark">HiddenPiece</span>
 							<th:block th:if="${session.mvo}">
-								<span class="nav-item nav-link active ">입찰중인 상품</span>
-								 <span class="nav-item nav-link active ">출품중인 상품</span>
-								  <span class="nav-item nav-link active ">
-								  	<a href="" th:href="@{/error}">경매종료 상품</a>
-								  </span>
+								
 							</th:block>
 							<div class="nav-item dropdown">
 								<!-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a> -->
@@ -163,15 +191,14 @@
 							</div>
 
 						</div>
+						<th:block th:if="${session.mvo}">
 						<div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-							<a href="" class="btn px-0" id="heartBtn" >
+							<a href="" th:href="@{/wishlist}" class="btn px-0" id="heartBtn" >
 							 	<i class="fas fa-heart text-primary"></i> 
-								 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+								 <span class="badge text-secondary  border-secondary" style="padding-bottom: 2px;">찜목록</span>
 							</a> 
-							<a href="" class="btn px-0 ml-3" id="wishlistBtn">
-							 	<i class="fas fa-shopping-cart text-primary"></i>
-								<span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-							</a>
+
+							</th:block>
 						</div>
 					</div>
 				</nav>

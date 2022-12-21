@@ -12,9 +12,10 @@ import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.Paging;
+import org.goodomen.hiddenpiece.model.vo.Paging2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class IndexMoveController {
 	@RequestMapping(value={"/","index","home","//"})
 	public String indexMove(Model model) {
 		model.addAttribute("viewPage","index");
-		return "index2";
+		return "index3";
 	}
 	
 	@RequestMapping("layout")
@@ -63,7 +64,6 @@ public class IndexMoveController {
 		Paging paging = new Paging();
 		paging.setCri(cri);
 		paging.setTotalCount(auctionBoardListCnt);
-		
 		HttpSession session = request.getSession(false);
 		if(session!=null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
@@ -137,16 +137,34 @@ public class IndexMoveController {
 	}
 	
 	@RequestMapping("freeBoardPostList")
-	public String freeboard(Model model) {
-		MemberVO memberVO=new MemberVO();
-		ArrayList<FreeBoardVO> list = freeBoardService.findFreeBoardPostList();
-		model.addAttribute("memberVO",memberVO);
+	public String freeboard(FreeBoardCriteria fcri,Model model) {
+		int freeBoardListCnt = freeBoardService.freeBoardListCnt();
+		Paging2 paging = new Paging2();
+		paging.setCri(fcri);
+		paging.setTotalCount(freeBoardListCnt);
+		List<Map<String, Object>> list = freeBoardService.boardList(fcri);
+		System.out.println(list);
 		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
 		return "freeboard/freeBoardPostList";
 	}
+	
 	@RequestMapping("freeboarddetail")
 	public String freeBoardDetailMove() {
 		return "freeBoardPostDetail";
+	}
+	
+	@RequestMapping("buyingMyPage")
+	public String buyingMyPage() {
+		return "mypage/buying-Page";
+	}
+	@RequestMapping("sellingMyPage")
+	public String sellingMyPage() {
+		return "mypage/selling-Page";
+	}
+	@RequestMapping("boughtMyPage")
+	public String boughtMyPage() {
+		return "mypage/bought-Page";
 	}
 }
 

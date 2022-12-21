@@ -56,77 +56,17 @@ public class MemberController {
 		return "member/findId-form";		
 	}
 	
-	@RequestMapping("findPasswordForm")
-	public String findPasswordForm() {
-		return "member/findPassword-form";		
-	}
-
-
-	@PostMapping("registerMember")
-	public String register(MemberVO memberVO) {
-		memberService.registerMember(memberVO);
-		return "member/register-result";
-	}
-	
-	@ResponseBody
-	@RequestMapping("deleteFromWishlist")
-	public String deleteFromWishlist(AuctionBoardLikesVO likesVO) {
-		memberService.deleteFromWishlist(likesVO);
-		return "redirect:deleteFromWishlistResult";
-	}
-
-	@ResponseBody
-	@RequestMapping("ajaxIdCheck")
-	public int ajaxIdCheck(String id) {
-		int result = memberService.checkId(id);
-		return result;
-	}
-	
-	@SuppressWarnings("unused")
-	@ResponseBody
-	@RequestMapping("ajaxAccountCheck")
-	public int ajaxAccountCheck(String accountNo) {
-		int result = 0;
-		AccountVO accountVO = memberService.findAccountInfoByAccountNo(accountNo);
-		MemberVO memberVO = memberService.findMemberByAccount(accountNo);
-		if(memberVO != null && accountVO!=null) {
-			result = 2; //계좌가 이미 등록되어있음
-		}else if(memberVO == null && accountVO!=null) {
-			result = 1; //사용 가능
-		}else if(accountVO == null){
-			result = 0; // 사용 불가 계좌 없음
-		}
-		return result;
-	}
-	
-
-	@RequestMapping("deleteFromWishlistResult")
-	public String deleteFromWishlistResult() {
-		return "/wishlist";
-	}
-	
 	@PostMapping("findId")
-	public String findId(String email,String name,String address,String tel) {
-		String viewName = null;
+	public String findId(String email,String name,String address,String tel,Model model) {
 		String id = memberService.findId(email, address, name, tel);
-		System.out.println(id);
 		if(id==null) {
-			viewName = "member/findId-fail";
-		}else {		
-			viewName = "redirect:findIdresult?id="+id;
+			return "member/findId-fail";
+		}else {
+			model.addAttribute("id",id);
+			return "member/findId-result";
 		}
-		return viewName;
-	}
-
-	// 찜 목록에 있는지 확인
-	@ResponseBody
-	@RequestMapping("checkToWishlist")
-	public int checkToWishlist(AuctionBoardLikesVO likesVO) {
-		int result = memberService.checkWishlist(likesVO);
-		return result;
 	}
 	
-	// 찜목록에서 삭제
 	@ResponseBody
 	@RequestMapping("findIdresult")
 	public String findIdresult(String id,Model model) {
@@ -134,16 +74,20 @@ public class MemberController {
 		return "member/findId-result";
 	}
 	
+	
+	@RequestMapping("findPasswordForm")
+	public String findPasswordForm() {
+		return "member/findPassword-form";		
+	}
 	@PostMapping("findPassword")
-	public String findPassword(String id,String email,String name,String tel) {
-		String viewName = null;
+	public String findPassword(String id,String email,String name,String tel,Model model) {
 		String password = memberService.findPassword(id, email, name, tel);
 		if(password==null) {
-			viewName = "member/findPassword-fail";
+			return "member/findPassword-fail";
 		}else {
-			viewName = "redirect:findPasswordresult?password="+password;
+			model.addAttribute("password",password);
+			return "member/findPassword-result";
 		}
-		return viewName;
 	}
 	
 	@RequestMapping("findPasswordresult")
@@ -151,7 +95,13 @@ public class MemberController {
 		model.addAttribute("password", password);
 		return "member/findPassword-result";
 	}
-
+	
+	
+	@PostMapping("registerMember")
+	public String register(MemberVO memberVO) {
+		memberService.registerMember(memberVO);
+		return "member/register-result";
+	}
 	@RequestMapping("updateMemberForm")
 	public String updatememberForm() {
 		return "member/update-form";		
@@ -179,11 +129,8 @@ public class MemberController {
 		String viewPath = null;
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-		System.out.println(memberVO.getPassword());
-		System.out.println(password);
 		if(memberVO.getPassword().equals(password)) {
 			memberService.deleteMember(memberVO.getId());
-			System.out.println(memberVO);
 			session.invalidate();
 			viewPath = "mypage/deleteMember-result";
 		}else {
@@ -191,6 +138,56 @@ public class MemberController {
 		}	
 		return viewPath;
 	}
+	
+	@ResponseBody
+	@RequestMapping("deleteFromWishlist")
+	public String deleteFromWishlist(AuctionBoardLikesVO likesVO) {
+		memberService.deleteFromWishlist(likesVO);
+		return "redirect:deleteFromWishlistResult";
+	}
+
+	@ResponseBody
+	@RequestMapping("ajaxIdCheck")
+	public int ajaxIdCheck(String id) {
+		int result = memberService.checkId(id);
+		return result;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("ajaxAccountCheck")
+	public int ajaxAccountCheck(String accountNo) {
+		int result = 0;
+		AccountVO accountVO = memberService.findAccountInfoByAccountNo(accountNo);
+		MemberVO memberVO = memberService.findMemberByAccount(accountNo);
+		if(memberVO != null && accountVO!=null) {
+			result = 2; //계좌가 이미 등록되어있음
+		}else if(memberVO == null && accountVO!=null) {
+			result = 1; //사용 가능
+		}else if(accountVO == null){	
+			result = 0; // 사용 불가 계좌 없음
+		}
+		return result;
+	}
+	
+	
+	
+
+	@RequestMapping("deleteFromWishlistResult")
+	public String deleteFromWishlistResult() {
+		return "/wishlist";
+	}
+	
+	
+
+	// 찜 목록에 있는지 확인
+	@ResponseBody
+	@RequestMapping("checkToWishlist")
+	public int checkToWishlist(AuctionBoardLikesVO likesVO) {
+		int result = memberService.checkWishlist(likesVO);
+		return result;
+	}
+	
 	
 	@RequestMapping("exchangePointForm")
 	public String exchangePointForm() {

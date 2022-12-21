@@ -2,7 +2,9 @@ package org.goodomen.hiddenpiece.freeboard.test;
 
 import java.util.ArrayList;
 
+import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.mapper.FreeBoardMapper;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -52,4 +54,5 @@ public class FreeBoardTest {
 		freeBoardMapper.updateHits(postNo);
 	}
 	
+
 }
