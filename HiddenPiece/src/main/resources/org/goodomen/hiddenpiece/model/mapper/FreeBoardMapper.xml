@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="org.goodomen.hiddenpiece.model.mapper.FreeBoardMapper">
+	
+	<select id="boardList" resultType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO" parameterType="org.goodomen.hiddenpiece.model.vo.Criteria">
+			SELECT * from 
+	(select ROWNUM rm, post_no,contend, time_posted,title,hits,post_status,id from
+		(select post_no,contend, time_posted,title,hits, post_status, hpm.id
+		from freeboard fb
+		inner join hp_member hpm on hpm.id=fb.id
+		where post_status=1 or post_status=2 or post_status=3 
+		order by post_no desc))
+	<![CDATA[
+		where rm between #{pageStart} and #{perPageNum}*#{page}
+		]]>
+	</select>
+	<select id="freeBoardListCnt" resultType="int">
+		SELECT COUNT(*) FROM freeboard WHERE post_status=1 or post_status=2 or post_status=3
+	</select>
+	
 	<select id="findFreeBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
 		select * from freeboard where post_status=1 or post_status=2 or post_status=3 order by post_no desc
 	</select>
