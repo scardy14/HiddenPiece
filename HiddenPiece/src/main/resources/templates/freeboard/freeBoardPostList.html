@@ -23,7 +23,7 @@
 					
 					<tr th:each="list:${list}">	
 						<td><span th:text="${list.postNo}"></span></td>
-						<td><a href="" th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><span th:text="${list.title}"></span></a></td>
+						<td><a href="" th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><font color ="gray"><span th:text="${list.title}"></span></font></a></td>
 						<!--  -->
 					    <td><span th:text="${list.id}"></span></td>
 					    

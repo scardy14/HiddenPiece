@@ -6,7 +6,7 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<div class="row pt-4" th:each="postVO:${postVO}">
+<!-- 	<div class="row pt-4" th:each="postVO:${postVO}">
 		<div>
 			<form>
 				<input type="hidden" id="postNo" name="postNo"
@@ -40,17 +40,61 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<br> <br>
-	<th:block th:if="${session.mvo}">
+	</div> -->
+	
+	<div th:each="postVO:${postVO}">
+				<form>
+				<input type="hidden" id="postNo" name="postNo"
+					th:value="${postVO.postNo}">
+			</form>
+		<div style="margin: 10px 50px 20px;">
+	  <table class="table table-responsive-sm" >
+    <thead class="thead-light">
+      <tr>
+      		
+        <th colspan='3'>
+				제목 : <span th:text="${postVO.title}" id="postNo"></span>
+		</th>
+		<th>
+			<th:block th:if="${session.mvo}">
 		<th:block th:if=${session.mvo.id==postVO.id}>
-			<div align="center">
-				<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}">수정</a>
-				<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}">삭제</a>
+			<div align="right">
+				<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font color="gray">수정</font></a>
+				<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a>
 			</div>
 		</th:block>
 	</th:block>
-	<div class="card bg-light" style="width: 2500px" id="commentBody">
+		</th>
+        </tr>
+        <tr>
+        <th>글번호 : 
+				<span th:text="${postVO.postNo}"></span>
+		</th>
+        <th>작성자 : 
+				<span th:text="${postVO.id}"></span>
+		</th>
+        <th>작성일시 : 
+				<span th:text="${postVO.timePosted}"></span>
+		</th>
+        <th >조회수 : 
+				<span th:text="${postVO.hits}"></span>
+		</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+    	<th>
+    	<span th:text="${postVO.contend}"></span>
+    	</th>
+    	</tr>
+    </tbody>
+    </table>
+	</div>
+	</div>
+	
+	<br> <br>
+
+	<div class="card bg-light" style="margin: 10px 50px 20px;" id="commentBody">
 		<!-- cList.commentStatus가 1인것만 출력 -->
 		<th:block th:if="${cList.commentStatus}==1"
 			th:each="cList:${commentList}">
