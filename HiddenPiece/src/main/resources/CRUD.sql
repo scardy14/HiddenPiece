@@ -139,9 +139,49 @@ UPDATE Account_Info
  
  		)
 
+<<<<<<< HEAD
 CREATE OR REPLACE PROCEDURE Update_Post_Status_2 
+=======
+-- 페이징 처리된 게시물 리스트
+select * from (
+select ROWNUM rm, A.* 
+from (
+				select  	 post_no
+								,content
+								, title
+								,photo
+								,start_price
+								, sell_price
+								, current_price
+								, hpm.id
+								,time_posted
+								, hits
+								, end_date
+								, now_id
+								, post_status
+						from auctionboard ab , hp_member hpm
+						where post_status in (1,2,3)
+						and  hpm.id=ab.id
+						
+						order by post_no desc
+						) A
+						where  content LIKE '%요%' OR title LIKE '%요%' 
+						)
+								
+	
+select  *
+from auctionboard ab , hp_member hpm
+where post_status in (1,2,3) and  hpm.id=ab.id
+and (content LIKE '%요%' OR title LIKE '%요%')						
+
+CREATE OR REPLACE PROCEDURE Update_Post_Status_2 AS 
+>>>>>>> refs/heads/main
 BEGIN
+<<<<<<< HEAD
   UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' '
+=======
+UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' ';
+>>>>>>> refs/heads/main
 END Update_Post_Status_2; 
 
 
@@ -160,6 +200,7 @@ DBMS_SCHEDULER.CREATE_JOB (
  
  CREATE OR REPLACE PROCEDURE INCREASE_SALARY
 BEGIN
+<<<<<<< HEAD
   UPDATE employees SET salary = salary * 1.5
 END INCREASE_SALARY;
 
@@ -176,3 +217,13 @@ DBMS_SCHEDULER.CREATE_JOB (
             auto_drop => FALSE,
             comments => '봉급인상')
 END;
+=======
+    DBMS_SCHEDULER.CREATE_JOB
+    (
+    JOB_NAME => 'Update_Post_Status_2_Job',
+    JOB_TYPE => 'STORED_PROCEDURE',
+    JOB_ACTION => 'Update_Post_Status_2',
+    REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =1', --1분에 1번
+    COMMENTS => '잡객체 1'
+    );
+>>>>>>> refs/heads/main

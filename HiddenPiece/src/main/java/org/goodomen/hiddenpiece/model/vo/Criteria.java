@@ -7,10 +7,13 @@ public class Criteria {
 	private int perPageNum; // 페이지당 보여줄 게시글의 개수
 	private int totalCount;
 	
+	private String keyword;
+	private String loginId;
+	
 	public int getPageStart() {
 		// 특정 페이지의 범위를 정하는 구간, 현재 페이지의 게시글 시작 번호
 		// 0 ~ 10 , 10 ~ 20 이런식으로
-		return (this.page -1) * perPageNum+1;
+		return (this.page -1) * perPageNum+1; 
 	}
 
 	public int getTotalCount() {
@@ -20,7 +23,7 @@ public class Criteria {
 	public Criteria() {
 		// 기본 생성자 : 최초 게시판에 진입시 필요한 기본값
 		this.page = 1;
-		this.perPageNum = 3;
+		this.perPageNum = 12;
 	}
 
 	// 현재 페이지 번호 page : getter, setter
@@ -58,4 +61,22 @@ public class Criteria {
 	public String toString() {
 		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
 	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+	
+	
 }

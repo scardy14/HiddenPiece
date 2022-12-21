@@ -56,6 +56,5 @@ public interface AuctionBoardMapper {
 	public int checkBidList(AuctionBoardPostVO auctionBoardPostVO);
 
 	public void addBidList(AuctionBoardPostVO auctionBoardPostVO);
-	
 
 }

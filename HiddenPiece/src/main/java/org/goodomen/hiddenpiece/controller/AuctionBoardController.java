@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +16,9 @@ import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -138,6 +143,7 @@ public class AuctionBoardController {
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 	}
+	
 	//경매게시판 글 수정 폼으로 이동
 	@RequestMapping("moveAuctionBoardPostUpdateForm")
 	public String moveAuctionBoardPostUpdateForm(Model model, long postNo) {
@@ -145,12 +151,14 @@ public class AuctionBoardController {
 		model.addAttribute("postVO", postVO);
 		return "auctionboard/update-form";
 	}
+	
 	//경매게시판 글 삭제
 	@PostMapping("AuctionBoardPostDelete")
 	public String moveAuctionBoardPostDelete(long postNo) {
 		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
 		return "auctionboard/delete-ok";
 	}
+	
 	//경매게시판 글 수정
 	@PostMapping("updateAuctionBoardPost")
 	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
@@ -169,10 +177,12 @@ public class AuctionBoardController {
 		session.setAttribute("mvo", memberVO);
 		return "redirect:bidMove";
 	}
+	
 	@RequestMapping("bidMove")
 	public String bidMove() {
 		return "auctionboard/bid-ok";
 	}
+	
 	@RequestMapping("buy")
 	public String buy(AuctionBoardPostVO auctionBoardPostVO, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
@@ -183,21 +193,43 @@ public class AuctionBoardController {
 		session.setAttribute("mvo", memberVO);
 		return "redirect:buymove";
 	}
+	
 	@RequestMapping("buymove")
 	public String buymove() {
 		return "auctionboard/buy-ok";
 	}
 	
-	/* //경매게시판 내에서 검색
-	@GetMapping("/searchPostByKeyword/{keyword}")
-	public ResponseEntity<AuctionBoardPostVO> searchPostByKeyword(@PathVariable String keyword, HttpServletRequest request, Criteria cri){
-		//키워드가 들어간 전체 글 개수를 구한다.
-		int auctionBoardListCnt = auctionBoardService.auctionBoardListCnt();
-		Paging paging = new Paging();
-		paging.setCri(cri);
-		paging.setTotalCount(auctionBoardListCnt);
-		HttpSession session = request.getSession(false);
-		AuctionBoardPostVO postVO=auctionBoardService.searchPostByKeyword(keyword, session, cri);
+	 //경매게시판으로 이동
+	@RequestMapping("searchPostByKeyword")
+	public String searchPostByKeyword(@RequestParam HashMap<String, Object> mapList, Model model, HttpServletRequest request,Criteria cri){
+		if(!mapList.get("pageIndex").equals("")) { 
+			cri.setPage(Integer.valueOf((String)
+		 mapList.get("pageIndex"))); 
+			}
+		if(!mapList.containsKey("searchKeyword") || mapList.get("searchKeyword").equals("")) {
+			mapList.put("searchKeyword", "");
+		}
+		
+		if(mapList.containsKey("searchKeyword")) {
+			int auctionBoardListCnt = auctionBoardService.searchAuctionBoardListCnt(mapList.get("searchKeyword").toString());
+			Paging paging = new Paging();
+			paging.setCri(cri);
+			paging.setTotalCount(auctionBoardListCnt);
+			model.addAttribute("paging", paging);
+			HttpSession session = request.getSession(false);
+			
+			if(session!=null) {
+				MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+				String id = memberVO.getId();
+				cri.setKeyword(mapList.get("searchKeyword").toString());
+				cri.setLoginId(id);
+			}
+			List<Map<String,Object>> auctionBoardList =auctionBoardService.searchPostByKeyword(cri);
+			model.addAttribute("postList", auctionBoardList);
+		}
+		model.addAttribute("mapList", mapList);
+		
+		return "shop2";
 	}
-	*/
+	
 }
