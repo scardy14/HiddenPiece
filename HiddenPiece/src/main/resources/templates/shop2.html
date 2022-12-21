@@ -139,15 +139,15 @@
                     		</div>
                     	<!-- </th:block> -->
                     	<nav>
-                    		<ul class="pagination justify-content-center">
+                    		 <ul class="pagination justify-content-center">
 							    <th:block th:if="${paging.prev}">
-							    	<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${paging.startPage-1})}">Pre</a></li>
+							    	<li class="page-item active"><a class="page-link" th:onclick="searchByKeyword([[${paging.startPage}]]-1)">Pre</a></li>
 							    </th:block>
 							  	<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
-							         <li class="page-item"><a class="page-link" th:href="@{/auctionboard(page=${num})}" th:text="${num}"></a></li>
+							         <li class="page-item"><a class="page-link" th:onclick="searchByKeyword([[${num}]])" th:text="${num}"></a></li>
 							    </th:block>
 							   	<th:block th:if="${paging.next && paging.endPage>0}">
-							   		<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${paging.endPage+1})}">Next</a></li>
+							   		<li class="page-item active"><a class="page-link"  th:onclick="searchByKeyword([[${paging.endPage}]]+1)">Next</a></li>
 							    </th:block>
 							</ul>
                     		

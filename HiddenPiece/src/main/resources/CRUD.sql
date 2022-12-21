@@ -138,3 +138,35 @@ UPDATE Account_Info
  		   AND 
  
  		)
+
+-- 페이징 처리된 게시물 리스트
+select * from (
+select ROWNUM rm, A.* 
+from (
+				select  	 post_no
+								,content
+								, title
+								,photo
+								,start_price
+								, sell_price
+								, current_price
+								, hpm.id
+								,time_posted
+								, hits
+								, end_date
+								, now_id
+								, post_status
+						from auctionboard ab , hp_member hpm
+						where post_status in (1,2,3)
+						and  hpm.id=ab.id
+						
+						order by post_no desc
+						) A
+						where  content LIKE '%요%' OR title LIKE '%요%' 
+						)
+								
+	
+select  *
+from auctionboard ab , hp_member hpm
+where post_status in (1,2,3) and  hpm.id=ab.id
+and (content LIKE '%요%' OR title LIKE '%요%')						

@@ -41,11 +41,14 @@ public interface AuctionBoardService {
 
 	int auctionBoardListCnt();
 
-	List<Map<String, Object>> boardList(Criteria cri);
+	List<Map<String, Object>> boardList(Criteria cri); //dㅣ건뭐야? 니가한거아니지?
 
-	List<Map<String, Object>> searchPostByKeyword(String keyword, HttpSession session);
+	List<Map<String, Object>> searchPostByKeyword(Criteria cri);
 
 	int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO);
 
 	void addHits(long postNo);
+
+	int searchAuctionBoardListCnt(String keyword);
+
 }

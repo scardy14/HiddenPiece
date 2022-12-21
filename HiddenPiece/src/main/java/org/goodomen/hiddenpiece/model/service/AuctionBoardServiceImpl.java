@@ -98,7 +98,7 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public List<Map<String, Object>> boardList(Criteria cri) {
 		return auctionBoardMapper.boardList(cri);
 	}
-	
+	@Override
 	public int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
 			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
@@ -115,8 +115,13 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	}
 
 	@Override
-	public List<Map<String, Object>> searchPostByKeyword(String keyword, HttpSession session) {
-		return null;
+	public List<Map<String, Object>> searchPostByKeyword(Criteria cri) {
+		return auctionBoardMapper.searchPostByKeyword(cri);
+	}
+
+	@Override
+	public int searchAuctionBoardListCnt(String keyword) {
+		return auctionBoardMapper.searchAuctionBoardListCnt(keyword);
 	}
 
 

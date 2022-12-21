@@ -52,6 +52,10 @@ public interface AuctionBoardMapper {
 	public void updateMemberPointbuy(AuctionBoardPostVO auctionBoardPostVO);
 
 	public void addHits(long postNo);
+
+	public int searchAuctionBoardListCnt(String keyword);
+
+	public List<Map<String, Object>> searchPostByKeyword(Criteria cri);
 	
 
 }
