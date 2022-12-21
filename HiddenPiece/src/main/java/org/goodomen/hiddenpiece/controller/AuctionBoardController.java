@@ -157,6 +157,7 @@ public class AuctionBoardController {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}
+	//경매게치판 입찰
 	@RequestMapping("bid")
 	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);

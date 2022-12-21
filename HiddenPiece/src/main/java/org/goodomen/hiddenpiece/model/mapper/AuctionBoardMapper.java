@@ -52,6 +52,10 @@ public interface AuctionBoardMapper {
 	public void updateMemberPointbuy(AuctionBoardPostVO auctionBoardPostVO);
 
 	public void addHits(long postNo);
+
+	public int checkBidList(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void addBidList(AuctionBoardPostVO auctionBoardPostVO);
 	
 
 }

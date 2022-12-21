@@ -139,26 +139,40 @@ UPDATE Account_Info
  
  		)
 
-CREATE OR REPLACE PROCEDURE Update_Post_Status_2 AS 
+CREATE OR REPLACE PROCEDURE Update_Post_Status_2 
 BEGIN
-  UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' ';
+  UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' '
 END Update_Post_Status_2; 
+
 
 BEGIN
 DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"Update_Post_Status_2_Job',
+            job_name => 'Update_Post_Status_2_Job',
             job_type => 'STORED_PROCEDURE',
             job_action => 'Update_Post_Status_2',
             repeat_interval => 'FREQ=MINUTELY;INTERVAL=1',
-            comments => '경매게시판글2');
+            comments => '경매게시판글2'
+            )
+            DBMS_SCHEDULER.ENABLE('Update_Post_Status_2_Job')
+ END;
             
-            
+
+ 
+ CREATE OR REPLACE PROCEDURE INCREASE_SALARY
 BEGIN
-    DBMS_SCHEDULER.CREATE_JOB
-    (
-    JOB_NAME => 'Update_Post_Status_2_Job',
-    JOB_TYPE => 'STORED_PROCEDURE',
-    JOB_ACTION => 'Update_Post_Status_2',
-    REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =1', --1분에 1번
-    COMMENTS => '잡객체 1'
-    );
+  UPDATE employees SET salary = salary * 1.5
+END INCREASE_SALARY;
+
+BEGIN
+DBMS_SCHEDULER.CREATE_JOB (
+            job_name => '"HR"."JOB_INCREASE_SALARY"',
+            job_type => 'STORED_PROCEDURE',
+            job_action => 'HR.INCREASE_SALARY',
+            number_of_arguments => 0,
+            start_date => NULL,
+            repeat_interval => 'FREQ=MINUTELY;INTERVAL=1',
+            end_date => NULL,
+            enabled => FALSE,
+            auto_drop => FALSE,
+            comments => '봉급인상')
+END;

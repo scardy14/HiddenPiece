@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.goodomen.hiddenpiece.model.mapper.MyPageMapper">
+	<select id="findBiddingCountFromBidList" resultType="int">
+		SELET COUNT(*)
+		 FROM AuctionBoard a, Bid_List b
+		WHERE a.post_no = b.post_no
+		  		AND id = #{value}
+		  		AND a.post_status = 1
+	</select>
+	<!-- 
+	<select id="findBiddingListFromBidList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" parameterType="CriteriaAndIdVO">
+
+	</select>
+	 -->
+</mapper>
