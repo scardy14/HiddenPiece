@@ -6,12 +6,18 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<div class="row pt-4" th:each="postVO:${postVO}">
+<!-- 	<div class="row pt-4" th:each="postVO:${postVO}">
+		<div>
+			<form>
+				<input type="hidden" id="postNo" name="postNo"
+					th:value="${postVO.postNo}">
+			</form>
+		</div>
 		<div class="col-sm-6 offset-sm-3">
-		
+
 			<div class="row">
 				<div class="col-12">
-					<span th:text="${postVO.title}"></span>
+					<span th:text="${postVO.title}" id="postNo"></span>
 				</div>
 			</div>
 			<div class="row">
@@ -34,17 +40,272 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<br><br>
-	<th:block th:if="${session.mvo}">
-	<th:block th:if=${session.mvo.id==postVO.id}>
-	<div align="center">
-			<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}">수정</a>
-			<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}">삭제</a>
-	</div>
+	</div> -->
+	
+	<div th:each="postVO:${postVO}">
+				<form>
+				<input type="hidden" id="postNo" name="postNo"
+					th:value="${postVO.postNo}">
+			</form>
+		<div style="margin: 10px 50px 20px;">
+	  <table class="table table-responsive-sm" >
+    <thead class="thead-light">
+      <tr>
+      		
+        <th colspan='3'>
+				제목 : <span th:text="${postVO.title}" id="postNo"></span>
+		</th>
+		<th>
+			<th:block th:if="${session.mvo}">
+		<th:block th:if=${session.mvo.id==postVO.id}>
+			<div align="right">
+				<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font color="gray">수정</font></a>
+				<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a>
+			</div>
+		</th:block>
 	</th:block>
-	</th:block>
+		</th>
+        </tr>
+        <tr>
+        <th>글번호 : 
+				<span th:text="${postVO.postNo}"></span>
+		</th>
+        <th>작성자 : 
+				<span th:text="${postVO.id}"></span>
+		</th>
+        <th>작성일시 : 
+				<span th:text="${postVO.timePosted}"></span>
+		</th>
+        <th >조회수 : 
+				<span th:text="${postVO.hits}"></span>
+		</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+    	<th>
+    	<span th:text="${postVO.contend}"></span>
+    	</th>
+    	</tr>
+    </tbody>
+    </table>
+	</div>
+	</div>
+	
+	<br> <br>
+
+	<div class="card bg-light" style="margin: 10px 50px 20px;" id="commentBody">
+		<!-- cList.commentStatus가 1인것만 출력 -->
+		<th:block th:if="${cList.commentStatus}==1"
+			th:each="cList:${commentList}">
+			<div class="card-body" id="card"
+				style="background-color: white; margin: 10px 50px 20px;">
+
+				<div class="d-flex">
+					<div class="flex-shrink-0">
+						<img src="" alt="" style="width: 30px" />
+					</div>
+					<div>
+						<div class="ms-3" th:id="'ms-3'+${cList.commentNo}">
+							<div class="fw-bold">
+								<a href="#" role="button" class="comment_nickname"
+									id="comment_nickname" th:text=${cList.id}></a>
+							</div>
+							<form id="modifyCommentForm" action="UpdateCommentController.do"
+								method="post">
+								<input type="hidden" name="commentNo" id="commentNo"
+									th:value="${cList.commentNo}">
+							</form>
+							<form id="deleteCommentForm" action="DeleteCommentController.do"
+								method="post">
+								<input type="hidden" name="commentNo"
+									th:value="${cList.commentNo}">
+							</form>
+							<p th:text="${cList.content}"
+								th:id="'commentContentOne'+${cList.commentNo}"></p>
+							<br>
+						</div>
+						<span class="comment_info_date"
+							th:id="'timePosted'+${cList.commentNo}"
+							th:text="${cList.timePosted}"></span>
+
+						<th:block th:if="${session.mvo} and ${session.mvo.id==cList.id}">
+							<button type="button" th:id="'updateBtn'+${cList.commentNo}"
+								th:onclick="updateCommentForm([[${cList.commentNo}]])"
+								style="color: gray; background-color: white; border: 1px solid white; border-radius: 20px;">댓글
+								수정</button>
+							<button type="button"
+								th:id="'changeCommentStatusBtn'+${cList.commentNo}"
+								th:onclick="changeFreeBoardCommentStatus([[${cList.commentNo}]])"
+								style="color: gray; background-color: white; border: 2px solid white; border-radius: 20px;">
+								댓글 삭제</button>
+							<div th:id="'commentUpdateZone'+${cList.commentNo}">
+								<input type="hidden" th:id="'comment_No'+${cList.commentNo}"
+									value="${cList.commentNo}">
+								<textarea class=""
+									th:id="'comment_update_content'+${cList.commentNo}" rows="3"
+									style="width: 60vw" th:value="${cList.content}"
+									th:text="${cList.content}"></textarea>
+								<br>
+								<button name="commentupdatebtn" id="commentupdatebtn"
+									class="btn btn-warning"
+									th:onclick="updateFreeBoardComment([[${cList.commentNo}]])"
+									style="color: white; margin-left: 52vw; background-color: #ef7b35; border-color: #ef7b35;">수정</button>
+								<button name="commentupdatebtn_no" id="commentupdatebtn_no"
+									class="btn btn-warning"
+									th:onclick="commentUpdateZoneHide([[${cList.commentNo}]])"
+									style="color: white; background-color: #ef7b35; border-color: #ef7b35;">취소</button>
+							</div>
+							<hr style="width: 65vw">
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</th:block>
+		<hr>
+		<!-- Comment form-->
+		<th:block th:if="${session.mvo}">
+			<div style="margin: 10px 50px 20px;">
+				<em class="comment_inbox_name" id="comment_inbox_name"
+					th:text="${session.mvo.id}">현재로그인된회원이름</em>
+				<textarea class="form-control" id="commentContent" rows="3"
+					placeholder="댓글을 등록하세요!"></textarea>
+				<br>
+				<div class="form-group mb-0">
+					<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글
+						작성</button>
+				</div>
+				<input name="memberId" id="memberId" type="hidden" value="" />
+			</div>
+		</th:block>
+
+		<th:block th:unless="${session.mvo}">
+			<div style="margin: 10px 50px 20px;">
+				<textarea class="form-control" id="commentContent" rows="3"
+					placeholder="회원만 댓글을 달 수 있습니다."></textarea>
+				<br>
+				<div class="form-group mb-0">
+					<!-- <button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button> -->
+				</div>
+				<input name="memberId" id="memberId" type="hidden" value="" />
+			</div>
+		</th:block>
+	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		/* 댓글 삭제  : 댓글 상태 0으로 바꾸기*/
+		function changeFreeBoardCommentStatus(commentNo) {
+			let result = confirm("댓글을 삭제하시겠습니까?");
+			if (result) {
+				$.ajax({
+					type : "get",
+					url : "changeFreeBoardCommentStatus",
+					data : {
+						"commentNo" : commentNo
+					},
+					success : function(result) { //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+						location.reload();
+					}
+				});
+			}
+		}
+
+		function commentUpdateZoneHide(commentNo) {
+			$("#commentUpdateZone" + commentNo).hide();
+			$("#ms-3" + commentNo).show();
+			$("#updateBtn" + commentNo).show();
+			$("#changeCommentStatusBtn" + commentNo).show();
+		}
+
+		$(document).ready(
+			function() {
+				$("div[id^='commentUpdateZone']").hide();
+					/*댓글 작성 */
+					$("#commentbtn").click(
+						function() {
+							let content = $("#commentContent").val();
+							let postNo = document.getElementById("postNo").value;
+							let id = document.getElementById("comment_inbox_name").innerHTML;
+							if (content.trim() < 1) {
+								alert("공백 등록은 불가능합니다.");
+								event.preventDefault();
+							} else {
+								$.ajax({
+									type : "get",
+									url : "writeFreeBoardComment",
+									data : {
+												"content" : content,
+												"postNo" : postNo,
+												"id" : id
+											},
+									success : function(result) { //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+										//alert(result);			
+										$("#commentContent").val("");
+													location.reload();
+												}
+								});
+							}
+					});
+
+		})
+
+		/* 댓글 수정  */
+		function updateCommentForm(commentNo) {
+			$("#commentUpdateZone" + commentNo).show();
+			//	let content = $("#commentContentOne"+commentNo).text();
+			$("#ms-3" + commentNo).hide();
+			$("#updateBtn" + commentNo).hide();
+			$("#changeCommentStatusBtn" + commentNo).hide();
+			$("#timePosted" + commentNo).hide();
+
+			$.ajax({
+				type : "get",
+				url : "selectFreeBoardCommentByCommentNo",
+				data : {
+					"commentNo" : commentNo
+				},
+				success : function(result) { //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+					let content = result;
+					document.getElementById("comment_update_content"
+							+ commentNo).value = content;
+				}
+			});
+
+		}
+
+		function updateFreeBoardComment(commentNo) {
+			let content = document.getElementById("comment_update_content"
+					+ commentNo).value;
+
+			if (content.trim().length > 0) {
+				let result = confirm("수정하시겠습니까?");
+				let commentContent = content.trim();
+				if (result) {
+					$.ajax({
+						type : "get",
+						url : "updateFreeBoardComment",
+						data : {
+							"content" : commentContent,
+							"commentNo" : commentNo
+						},
+						success : function(result) { //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+							location.reload();
+						}
+					});
+				}
+			} else {
+				alert("공백 등록은 불가합니다.");
+				event.preventDefault();
+			}
+		}
+	</script>
+
 </div>
+<!-- Shop Detail End -->
 
 
+<!-- Products Start -->
+
+<!-- Products End -->
 </html>

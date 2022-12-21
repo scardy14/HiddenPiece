@@ -133,18 +133,25 @@
                     </div>
                     <!-- 이거 위에거 반복시키면 됨 -->
                     <div class="col-12">
-                    	<!-- <th:block th:if="${session.mvo.id!=null}"> -->
-                    		<div style="text-align: right;">
-                    			<a style="background-color:  #FFD333; color: white; width: 80px; height: 30px;" th:href="@{/moveAuctionBoardPostForm}">글작성</a>
-                    		</div>
-                    	<!-- </th:block> -->
+                    	<th:block th:if="${session.mvo}">
+                    		<th:block th:if="${session.mvo.id!=null}">
+	                    		<div style="text-align: right;">
+	                    			<a style="background-color:  #FFD333; color: white; width: 80px; height: 30px;" th:href="@{/moveAuctionBoardPostForm}">글작성</a>
+	                    		</div>
+	                    	</th:block>
+                    	</th:block>
                     	<nav>
                     		<ul class="pagination justify-content-center">
 							    <th:block th:if="${paging.prev}">
 							    	<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${paging.startPage-1})}">Pre</a></li>
 							    </th:block>
 							  	<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
-							         <li class="page-item"><a class="page-link" th:href="@{/auctionboard(page=${num})}" th:text="${num}"></a></li>
+							  		<th:block th:if="${paging.cri.page==num}">
+							        	<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${num})}" th:text="${num}"></a></li>
+							    	</th:block>
+							    	<th:block th:if="${paging.cri.page!=num}">
+							        	<li class="page-item"><a class="page-link" th:href="@{/auctionboard(page=${num})}" th:text="${num}"></a></li>
+							    	</th:block>
 							    </th:block>
 							   	<th:block th:if="${paging.next && paging.endPage>0}">
 							   		<li class="page-item active"><a class="page-link" th:href="@{/auctionboard(page=${paging.endPage+1})}">Next</a></li>

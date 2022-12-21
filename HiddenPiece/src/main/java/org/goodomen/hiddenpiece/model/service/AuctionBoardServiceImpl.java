@@ -98,7 +98,7 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public List<Map<String, Object>> boardList(Criteria cri) {
 		return auctionBoardMapper.boardList(cri);
 	}
-	
+	@Override
 	public int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
 			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
