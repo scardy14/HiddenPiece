@@ -68,17 +68,17 @@
                             </td>
                              -->
                             <td class="align-middle" th:text="${wl.currentPrice}">$150</td>
-                            <td th:text="${wl.sellPrice}"></td>
-                            <td th:text="${wl.endDate}"></td>
+                            <td class="align-middle" th:text="${wl.sellPrice}"></td>
+                            <td class="align-middle" th:text="${wl.endDate}"></td>
                             <th:block th:switch="${wl.postStatus}">
                             <th:block th:case=1>
-                            	<td>진행중</td>
+                            	<td class="align-middle">진행중</td>
                             </th:block>
                             <th:block th:case=2>
-                            	<td>경매완료</td>
+                            	<td class="align-middle">경매완료</td>
                             </th:block>
                             <th:block th:case=3>
-                            	<td>시간만료</td>
+                            	<td class="align-middle">시간만료</td>
                             </th:block>
                             </th:block>
                             <td class="align-middle"><button class="btn btn-sm btn-danger" id="deleteFromWishlistBtn" th:onclick="deleteFromWishlist([[${wl.postNo}]], [[${session.mvo.id}]])"><i class="fa fa-times"></i></button></td>
