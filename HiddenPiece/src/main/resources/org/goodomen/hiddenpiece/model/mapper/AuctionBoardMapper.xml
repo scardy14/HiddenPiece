@@ -87,7 +87,7 @@
 	
 	<!-- 글수정 -->
 	<update id="updateAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		UPDATE AuctionBoard SET title = #{title}, content=#{content}, end_date=TO_Date(#{endDate},'YYYY-MM-DD HH24:MI') WHERE post_no=#{postNo} 
+		UPDATE AuctionBoard SET title = #{title}, content=#{content} WHERE post_no=#{postNo} 
 	</update>
 	
 	<update id="bidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">

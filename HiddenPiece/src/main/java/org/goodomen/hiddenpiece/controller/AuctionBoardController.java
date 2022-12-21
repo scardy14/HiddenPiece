@@ -2,7 +2,9 @@ package org.goodomen.hiddenpiece.controller;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,14 +13,9 @@ import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
-import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
-import org.goodomen.hiddenpiece.model.vo.Paging;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,8 +70,10 @@ public class AuctionBoardController {
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) {
+		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
-		auctionBoardPostVO.setPhoto(file.getOriginalFilename());
+		auctionBoardPostVO.setPhoto(auctionBoardPostVO.getId()+nowTime.format(now)+file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 
 		//////////////////////////////////////////////////////////////////
@@ -83,7 +82,7 @@ public class AuctionBoardController {
 
 	    try(
 	      // 윈도우일 경우
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" +auctionBoardPostVO.getId()+nowTime.format(now)+ file.getOriginalFilename());
 	      InputStream is = file.getInputStream();
 	    ){
 	      int readCount = 0;
@@ -154,8 +153,6 @@ public class AuctionBoardController {
 	//경매게시판 글 수정
 	@PostMapping("updateAuctionBoardPost")
 	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " " +auctionBoardPostVO.getEndDate().substring(11, 16));
-		System.out.println(auctionBoardPostVO);
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}
