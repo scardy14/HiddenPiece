@@ -161,6 +161,8 @@ public class MemberController {
 		HttpSession session=request.getSession(false);
 		memberService.updateMember(memberVO);
 		session.setAttribute("mvo",memberVO);
+		long newPoint = memberService.findPointbyId(memberVO.getId());
+		memberVO.setPoint(newPoint);
 		return "redirect:updateMemberResult";		
 	}
 	
