@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
@@ -30,7 +29,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findPassword(String id, String address, String name, String tel) {
-		return memberMapper.findPassword(id, address, name, tel);
+		String password=memberMapper.findPassword(id, address, name, tel);
+		return password;
 	}
 
 	@Override
@@ -41,9 +41,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updateMember(MemberVO memberVO) {
+		long newPoint = memberMapper.findPointbyId(memberVO.getId());
+		memberVO.setPoint(newPoint);
 		memberMapper.updateMember(memberVO);
 		
 	}
+	
+	@Override
+	public void deleteMember(String id) {
+		memberMapper.deleteMember(id);
+	}
+	
 
 	@Override
 	public ArrayList<AuctionBoardPostVO> selectMyWishlist(String id) {
@@ -74,10 +82,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.checkWishlist(likesVO);
 	}
 
-	@Override
-	public void deleteMember(String id) {
-		memberMapper.deleteMember(id);
-	}
 	
 	@Override
 	public int checkId(String id) {
@@ -96,7 +100,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findId(String email, String address, String name, String tel) {
-		return memberMapper.findId(email, address, name, tel);
+		String id=memberMapper.findId(email, address, name, tel);
+		return id;		
 	}
 
 	@Override

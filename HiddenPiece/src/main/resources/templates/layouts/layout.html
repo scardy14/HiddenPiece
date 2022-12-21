@@ -40,7 +40,11 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-</head>
+<meta charset="utf-8">
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
 
 <body>
 	<!-- Topbar Start -->
@@ -114,9 +118,9 @@
 					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
 					</div>
 					
-                      	<th:block th:if="${session.mvo}">
+                      	<th:block th:if="${session.mvo!=null}">
 					<div class="nav-item dropdown dropright">
-                            <a href="#" class="dropdown-item" data-toggle="dropdown">마이페이지 <i class="fa fa-angle-right float-right mt-1"></i></a>
+                            <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true">마이페이지 <i class="fa fa-angle-right float-right mt-1"></i></a>
 						<div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
@@ -128,11 +132,11 @@
                         </div>
                         
                         <div class="nav-item dropdown dropright">
-                        <a href="#" class="dropdown-item" data-toggle="dropdown">참여한 경매<i class="fa fa-angle-right float-right mt-1"></i></a>
+                        <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true" >참여한 경매<i class="fa fa-angle-right float-right mt-1"></i></a>
                         <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                    		  <a href="" th:href="@{/error}" class="dropdown-item"><font color ="black">입찰중인 상품</font></a>
-							<a href="" th:href="@{/error}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  
-							<a href="" th:href="@{/error}" class="dropdown-item"><font color ="black">경매종료 상품</font></a>					
+                    		  <a href="" th:href="@{/buyingMyPage}" class="dropdown-item"><font color ="black">입찰중인 상품</font></a>
+							<a href="" th:href="@{/sellingMyPage}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  
+							<a href="" th:href="@{/boughtMyPage}" class="dropdown-item"><font color ="black">경매종료 상품</font></a>					
 							</div>
 						</div>
 					</th:block>
