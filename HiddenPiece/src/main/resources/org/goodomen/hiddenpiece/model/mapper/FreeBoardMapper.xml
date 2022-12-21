@@ -3,7 +3,7 @@
 <mapper
 	namespace="org.goodomen.hiddenpiece.model.mapper.FreeBoardMapper">
 	<select id="findFreeBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
-		select * from freeboard order by post_no desc
+		select * from freeboard where post_status=1 or post_status=2 or post_status=3 order by post_no desc
 	</select>
 	<select id="findFreeBoardPostDetail" parameterType="long" resultType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
 		select * from freeboard where post_no=#{value}
@@ -14,10 +14,28 @@
 	<update id="updatePost" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
 		update freeboard set title=#{title}, contend=#{contend} where post_no=#{postNo}
 	</update>
-	<delete id="deletePost" parameterType="long">
-		delete from freeboard where post_no=#{value}
-	</delete>
+	<update id="deletePost" parameterType="long">
+		update freeboard set post_status =0 where post_no=#{value}
+	</update>
 	<update id="updateHits" parameterType="long">
 		update freeboard set hits=hits+1 where post_no=#{value}
+	</update>
+	
+	<select id="findFreeBoardCommentListByPostNo" parameterType="Long" resultType="org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO">
+	 	SELECT *
+		FROM freeboard_Comment 
+		WHERE post_no=#{postNo}
+	</select>
+	<insert id="writeComment" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO">
+		INSERT INTO freeboard_Comment VALUES(#{postNo},FreeBoard_Comment_seq.nextval,#{id},sysdate,#{content}, 1)
+	</insert>
+	<select id="selectCommentByCommentNo" resultType="string" parameterType="long">
+		SELECT content FROM freeboard_Comment WHERE comment_no=#{value}
+	</select>
+	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO">
+		UPDATE freeboard_Comment SET content=#{content} WHERE comment_no=#{commentNo}
+	</update>
+	<update id="changeCommentStatus" parameterType="long">
+		UPDATE freeboard_Comment SET comment_status=0 WHERE comment_no=#{value}
 	</update>
 </mapper>

@@ -134,6 +134,7 @@ CREATE TABLE FreeBoard (
 	CONSTRAINT FK_FreeBoard_id FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
 --자유게시판댓글
+CREATE SEQUENCE FreeBoard_Comment_seq;
 CREATE TABLE FreeBoard_Comment(
 	post_no NUMBER NOT NULL,
 	comment_no NUMBER NOT NULL,
@@ -145,6 +146,10 @@ CREATE TABLE FreeBoard_Comment(
 	CONSTRAINT FK_FreeBoard_Comment_postno FOREIGN KEY (post_no) REFERENCES FreeBoard(post_no) ON DELETE CASCADE,
 	CONSTRAINT FK_FreeBoard_Comment_id FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE	
 )
+--자유게시판 댓글 조회
+SELECT * FROM FreeBoard_Comment
+-- 자유게시판 댓글 작성
+INSERT INTO freeboard_Comment VALUES(85,FreeBoard_Comment_seq.nextval,'scardy', sysdate, '내용', 1)
 ----------------------------------------------------------------------
 
 )
