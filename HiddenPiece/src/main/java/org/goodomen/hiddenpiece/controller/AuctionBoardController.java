@@ -16,6 +16,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +59,7 @@ public class AuctionBoardController {
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);
-		return "auctionboard/detail2";
+		return "auctionboard/detail";
 	}
 	
 	// 경매게시판 글 작성 폼 화면 이동
