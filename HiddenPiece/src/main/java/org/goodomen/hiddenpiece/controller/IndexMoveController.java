@@ -31,7 +31,7 @@ public class IndexMoveController {
 	@RequestMapping(value={"/","index","home","//"})
 	public String indexMove(Model model) {
 		model.addAttribute("viewPage","index");
-		return "index2";
+		return "index3";
 	}
 	
 	@RequestMapping("layout")
