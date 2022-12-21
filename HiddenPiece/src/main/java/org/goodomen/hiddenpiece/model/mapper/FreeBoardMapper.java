@@ -1,10 +1,12 @@
 package org.goodomen.hiddenpiece.model.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 
 @Mapper
@@ -33,6 +35,10 @@ public interface FreeBoardMapper {
 	public void updateComment(FreeBoardCommentVO commentVO);
 
 	public ArrayList<FreeBoardCommentVO> findFreeBoardCommentListByPostNo(long postNo);
+
+	public List<Map<String, Object>> boardList(FreeBoardCriteria fcri);
+
+	public int freeBoardListCnt();
 
 	
 

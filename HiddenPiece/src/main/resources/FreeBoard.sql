@@ -29,3 +29,13 @@ insert into FREEBOARD values(
 )
 
 select * from freeBoard where post_no=2;
+
+			SELECT * from 
+	(select ROWNUM rm, post_no,contend, time_posted,title,hits,post_status,id from
+		(select post_no,contend, time_posted,title,hits, post_status, hpm.id
+		from freeboard fb
+		inner join hp_member hpm on hpm.id=fb.id
+		where post_status=1 or post_status=2 or post_status=3 
+		order by post_no desc))
+
+		where rm between 	1 and 100

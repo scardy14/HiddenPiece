@@ -8,7 +8,7 @@
 <div layout:fragment="content">
 	<div class="row pt-4">
 		<div class="col-sm-6 offset-sm-3">
-		<h3>자유게시판</h3>
+			<h3>자유게시판</h3>
 			<table class="table">
 				<thead>
 					<tr>
@@ -20,26 +20,51 @@
 					</tr>
 				</thead>
 				<tbody>
-					
-					<tr th:each="list:${list}">	
+
+					<tr th:each="list:${list}">
 						<td><span th:text="${list.postNo}"></span></td>
-						<td><a href="" th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><span th:text="${list.title}"></span></a></td>
+						<td><a href=""
+							th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><span
+								th:text="${list.title}"></span></a></td>
 						<!--  -->
-					    <td><span th:text="${list.id}"></span></td>
-					    
+						<td><span th:text="${list.id}"></span></td>
+
 						<td><span th:text="${list.timePosted}"></span></td>
-						<td><span th:text="${list.hits}"></span></td>		
+						<td><span th:text="${list.hits}"></span></td>
 					</tr>
-				<!--  	-->
+					<!--  	-->
 				</tbody>
 			</table>
 			<th:block th:if="${session.mvo}">
-			<th:block th:if="${session.mvo.id != null}">
-			<div>		
-				<a style="background-color:  black; color: white; width: 80px; height: 30px;" href="" th:href="@{/moveFreeBoardPostWriteForm}">글작성</a>
-			</div>
+				<th:block th:if="${session.mvo.id != null}">
+					<div>
+						<a
+							href="" th:href="@{/moveFreeBoardPostWriteForm}"><font color="gray">글작성</font></a>
+					</div>
+				</th:block>
 			</th:block>
-			</th:block>
+			
+			<!-- 페이지네이션 -->
+			<nav>
+				<ul class="pagination justify-content-center">
+					<th:block th:if="${paging.prev}">
+						<li class="page-item active">
+							<a class="page-link" th:href="@{/freeBoardPostList(page=${paging.startPage-1})}">Pre</a>
+						</li>
+					</th:block>
+					<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
+						<li class="page-item">
+							<a class="page-link" th:href="@{/freeBoardPostList(page=${num})}" th:text="${num}"></a>
+						</li>
+					</th:block>
+					<th:block th:if="${paging.next && paging.endPage>0}">
+						<li class="page-item active">
+							<a class="page-link" th:href="@{/freeBoardPostList(page=${paging.endPage+1})}">Next</a>
+						</li>
+					</th:block>
+				</ul>
+			</nav>
+			<!-- 페이지네이션 종료 -->
 		</div>
 	</div>
 </div>
