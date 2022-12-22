@@ -9,7 +9,7 @@
 	<div class="row pt-4">
 		<div class="col-sm-6 offset-sm-3">
 			<h3>자유게시판</h3>
-			<table class="table">
+			<table class="table" style="table-layout: fixed;">
 				<thead>
 					<tr>
 						<th>글번호</th>
@@ -22,14 +22,14 @@
 				<tbody>
 
 					<tr th:each="list:${list}">
-						<td><span th:text="${list.postNo}"></span></td>
-						<td><a href="" th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><font color ="gray"><span th:text="${list.title}"></span></font></a></td>
+						<td style="width: 20%"><span th:text="${list.postNo}"></span></td>
+						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%"><a href="" th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><font color ="gray"><span th:text="${list.title}"></span></font></a></td>
 					
 						<!--  -->
-						<td><span th:text="${list.id}"></span></td>
+						<td style="width: 20%"><span th:text="${list.id}"></span></td>
 
-						<td><span th:text="${list.timePosted}"></span></td>
-						<td><span th:text="${list.hits}"></span></td>
+						<td style="width: 20%"><span th:text="${list.timePosted}"></span></td>
+						<td style="width: 20%"><span th:text="${list.hits}"></span></td>
 					</tr>
 					<!--  	-->
 				</tbody>
