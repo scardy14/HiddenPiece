@@ -69,7 +69,7 @@
 		SELECT *
 		  FROM AuctionBoard
 		 WHERE id = #{id}
-		 			AND post_status=#{postStatus}
+		 			AND post_status=#{tag}
 		 ORDER BY post_no DESC
 	</select>
 </mapper>
