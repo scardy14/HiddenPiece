@@ -6,10 +6,29 @@ public class Criteria {
 	private int page; // 현재 페이지 번호
 	private int perPageNum; // 페이지당 보여줄 게시글의 개수
 	private int totalCount;
-	
-	private String keyword;
+	private String searchKeyword;
 	private String loginId;
+	private int category;
+	private String status;
 	
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
+	}
+
 	public int getPageStart() {
 		// 특정 페이지의 범위를 정하는 구간, 현재 페이지의 게시글 시작 번호
 		// 0 ~ 10 , 10 ~ 20 이런식으로
@@ -62,12 +81,13 @@ public class Criteria {
 		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
 	}
 
-	public String getKeyword() {
-		return keyword;
+
+	public String getSearchKeyword() {
+		return searchKeyword;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
 	}
 
 	public String getLoginId() {

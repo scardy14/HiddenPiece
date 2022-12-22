@@ -138,9 +138,8 @@ UPDATE Account_Info
  
  		)
 
-<<<<<<< HEAD
 CREATE OR REPLACE PROCEDURE Update_Post_Status_2 
-=======
+
 -- 페이징 처리된 게시물 리스트
 select * from (
 select ROWNUM rm, A.* 
@@ -167,7 +166,27 @@ from (
 						where  content LIKE '%요%' OR title LIKE '%요%' 
 						)
 								
-	
+						
+-- 정렬이 '입찰중'인  페이징 처리된 게시물 리스트
+select  	 post_no
+				,content
+				, title
+				,photo
+				,start_price
+				, sell_price
+				, current_price
+				, hpm.id
+				,time_posted
+				, hits
+				, end_date
+				, now_id
+				, post_status
+		from auctionboard ab , hp_member hpm
+		where post_status=1
+		and  hpm.id=ab.id
+		order by post_no desc
+								
+						
 select  *
 from auctionboard ab , hp_member hpm
 where post_status in (1,2,3) and  hpm.id=ab.id
@@ -210,7 +229,6 @@ DBMS_SCHEDULER.CREATE_JOB (
             auto_drop => FALSE,
             comments => '봉급인상')
 END;
-=======
     DBMS_SCHEDULER.CREATE_JOB
     (
     JOB_NAME => 'Update_Post_Status_2_Job',
@@ -219,8 +237,46 @@ END;
     REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =1', --1분에 1번
     COMMENTS => '잡객체 1'
     );
->>>>>>> refs/heads/main
-SELECT COUNT(*)
+ select count(*) from (
+    	select  	*
+								from auctionboard ab , hp_member hpm
+								where post_status in (1,2,3)
+								and  hpm.id=ab.id
+								)
+									where 1=1
+								and post_status=2
+									
+									
+									
+select * from (
+		select ROWNUM rm, A.* 
+		from (
+						select  	 post_no
+										,content
+										, title
+										,photo
+										,start_price
+										, sell_price
+										, current_price
+										, hpm.id
+										,time_posted
+										, hits
+										, end_date
+										, now_id
+										, post_status
+								from auctionboard ab , hp_member hpm
+								where post_status in (1,2,3)
+								and  hpm.id=ab.id
+								
+								order by post_no desc
+								) A
+								where 1=1
+									and (content LIKE '%세요%' OR title LIKE '%세요%')
+										and post_status=1
+								)
+   
+
+    SELECT COUNT(*)
 		 FROM AuctionBoard a, Bid_List b
 		WHERE a.post_no = b.post_no
 		  		AND a.id = 'scardy'

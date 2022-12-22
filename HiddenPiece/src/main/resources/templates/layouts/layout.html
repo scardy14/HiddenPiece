@@ -54,8 +54,9 @@
 				</a>
 			</div>
 			<div class="col-lg-4 col-6 text-left">
-				<form id="searchByKeyword" method="post">
+				<form id="searchByKeywordForm" method="post">
 				<input type="hidden" name="pageIndex"  id="pageIndex">
+				<input type="hidden" name="status"  id="status">
 					<div class="input-group">
 					<th:block th:if="${mapList}">
 						<input type="text" class="form-control" name="searchKeyword" placeholder="" th:value="${mapList.searchKeyword}">
@@ -116,7 +117,7 @@
 					style="width: calc(100% - 30px); z-index: 999;">
 					<div class="navbar-nav w-100">
 					<div class="nav-item dropdown dropright">
-					<a class="dropdown-item" th:href="@{/auctionboard}">경매게시판</a> 
+					<a class="dropdown-item" th:onclick="searchByKeyword()">경매게시판</a> 
 					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
 					</div>
 					
@@ -228,14 +229,23 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
-		function searchByKeyword(num){
+	$(document).ready(function() {
+		
+		 $("#statusSelect").change(function(){
+			 searchByKeyword(1);
+         });
+	});
+		function searchByKeyword(num){ 
 			let keyword = $("#searchKeyword").val();
+			
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;
 			} 
+			$("#searchKeyword");
 			$("#pageIndex").val(num);
-			$("#searchByKeyword").attr("action","searchPostByKeyword").submit();
+			$("#status").val($("#statusSelect").val());
+			$("#searchByKeywordForm").attr("action","searchPostByKeyword").submit();
 			/* $.ajax({
 				type:"post",
 				dateType:"json",

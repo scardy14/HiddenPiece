@@ -41,7 +41,7 @@ public interface AuctionBoardService {
 
 	int auctionBoardListCnt();
 
-	List<Map<String, Object>> boardList(Criteria cri); //dㅣ건뭐야? 니가한거아니지?
+	List<Map<String, Object>> boardList(Criteria cri); 
 
 	List<Map<String, Object>> searchPostByKeyword(Criteria cri);
 
@@ -49,6 +49,6 @@ public interface AuctionBoardService {
 
 	void addHits(long postNo);
 
-	int searchAuctionBoardListCnt(String keyword);
+	int searchAuctionBoardListCnt(Criteria cri);
 
 }
