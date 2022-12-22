@@ -7,24 +7,24 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<form>
+	<form th:action="@{/adminSearchBoard}">
 		<h3 style="text-align: center">관리자 페이지</h3>
 		<hr>
 		<br>
 		<div align="center">
 			<font style="font-weight: bold; font-size: 18px;">사용자가 등록한 글 검색 :</font>
-			<select style="width:200px;height:30px;">
-				<option value="" style="text-align: center">--글 상태--</option>
-				<option value="" style="text-align: center">삭제한 글</option>
-				<option value="" style="text-align: center">현재 등록되어 있는 글</option>
+			<select style="width:200px;height:30px;" name="status">
+				<option value=""  th:value="0" style="text-align: center">--글 상태--</option>
+				<option value=""  th:value="1" style="text-align: center">삭제한 글</option>
+				<option value="" th:value="2" style="text-align: center">현재 등록되어 있는 글</option>
 			</select> 
-			<input style="width:200px;height:30px; text-align: center;" type="text" placeholder="작성자 아이디" required="required">
-			<select style="width:200px;height:30px;">
-				<option value="" style="text-align: center">--게시판 선택--</option>
-				<option value="" style="text-align: center">경매게시판</option>
-				<option value="" style="text-align: center">자유게시판</option>
+			<input style="width:200px;height:30px; text-align: center;" name="id" type="text" placeholder="작성자 아이디" id="id" required="required">
+			<select style="width:200px;height:30px;"name="board">
+				<option value="" th:value="no" style="text-align: center">--게시판 선택--</option>
+				<option value="" th:value="auction" style="text-align: center">경매게시판</option>
+				<option value="" th:value="free" style="text-align: center">자유게시판</option>
 			</select>
-			<button type="button" id="searchPostBtn" style="width:50px;height:30px; text-align: center;">찾기</button>
+			<button type="submit" id="searchPostBtn" style="width:50px;height:30px; text-align: center;">찾기</button>
 		</div>
 	</form>
 </div>
