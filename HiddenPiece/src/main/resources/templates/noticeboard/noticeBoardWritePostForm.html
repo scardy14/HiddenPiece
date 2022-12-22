@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+	<div class="row pt-4">
+		<div class="col-sm-6 offset-sm-3">
+			<form method="post" action="" th:action="@{/writeNoticeBoardPost}">
+				      <input name="id" th:value="${session.mvo.id}" type = "hidden">
+			<table class="table">
+				
+				
+				<tr>
+					<td><input type="text" name="title" placeholder="글제목" required="required" th:value="${title}"></td>
+				</tr>
+				<tr>
+					<td><textarea rows="20" class="form-control" name="contend" placeholder="본문내용" required="required" th:value="${contend}"></textarea></td>
+				</tr>
+			</table>
+			<div class="text-center">
+				<button type="submit" class="btn btn-success">등록</button>
+				<button type="reset" class="btn btn-success">취소</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>

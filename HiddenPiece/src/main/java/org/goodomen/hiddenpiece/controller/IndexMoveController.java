@@ -10,12 +10,15 @@ import javax.servlet.http.HttpSession;
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
+import org.goodomen.hiddenpiece.model.service.NoticeBoardService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.goodomen.hiddenpiece.model.vo.Paging2;
+import org.goodomen.hiddenpiece.model.vo.Paging3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class IndexMoveController {
 	private final AuctionBoardService auctionBoardService;
 	private final FreeBoardService freeBoardService;
+	private final NoticeBoardService noticeBoardService;
 	private final MemberService memberService;
 
 	@RequestMapping(value={"/","index","home","//"})
@@ -147,6 +151,45 @@ public class IndexMoveController {
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "freeboard/freeBoardPostList";
+	}
+	
+	@RequestMapping("freeboarddetail")
+	public String freeBoardDetailMove() {
+		return "freeBoardPostDetail";
+	}
+	
+	// 공지게시판 목록 보기
+	@RequestMapping("noticeBoardPostList")
+	public String noticeboard(NoticeBoardCriteria ncri,Model model) {
+		int noticeBoardListCnt = noticeBoardService.noticeBoardListCnt();
+		Paging3 paging = new Paging3();
+		paging.setCri(ncri);
+		paging.setTotalCount(noticeBoardListCnt);
+		List<Map<String, Object>> list = noticeBoardService.boardList(ncri);
+		System.out.println(list);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		return "noticeboard/noticeBoardPostList";
+	}
+	// 공지게시판 상세 글보기
+	@RequestMapping("noticeboarddetail")
+	public String noticeBoardDetailMove() {
+		return "noticeBoardPostDetail";
+	}
+	
+	@RequestMapping("buyingMyPage")
+	public String buyingMyPage() {
+		return "mypage/buying-Page";
+	}
+	
+	@RequestMapping("sellingMyPage")
+	public String sellingMyPage() {
+		return "mypage/selling-Page";
+	}
+	
+	@RequestMapping("endMyPage")
+	public String boughtMyPage() {
+		return "mypage/end-Page";
 	}
 }
 

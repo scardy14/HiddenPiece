@@ -30,7 +30,8 @@ public class MemberController {
 		memberVO = memberService.login(memberVO);
 		ArrayList<Long> freeBoardList = new ArrayList<>();
 		ArrayList<Long> auctionBoardList = new ArrayList<>();
-		if (memberVO == null) {
+		ArrayList<Long> noticeBoardList = new ArrayList<>();
+		if (memberVO == null ) {
 			return "member/login-fail";
 		}
 		else {
@@ -38,6 +39,7 @@ public class MemberController {
 			session.setAttribute("mvo", memberVO);
 			session.setAttribute("freeBoardList", freeBoardList);
 			session.setAttribute("auctionBoardList", auctionBoardList);
+			session.setAttribute("noticeBoardList", noticeBoardList);
 			return "redirect:/";
 		}
 	}
