@@ -1,11 +1,9 @@
 package org.goodomen.hiddenpiece.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.service.MyPageService;
-import org.goodomen.hiddenpiece.model.vo.CheckboxVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
@@ -21,19 +19,25 @@ public class MyPageController {
 	private final MyPageService mypageService;
 	
 	@RequestMapping("buyingMyPage")
-	public String BiddingProduct(CriteriaAndIdVO cri, Model model, String tag) {
-		if(tag==null) {
-			tag="0";
-		}
-		System.out.println("1");
-		int biddingCount = mypageService.findBiddingCountFromBidList(cri.getId());
+	public String BiddingProduct(CriteriaAndIdVO cri, Model model) {
 		PagingAndId paging = new PagingAndId();
+		int biddingCount;
+		List<Map<String, Object>> biddingList = null;
+		System.out.println(cri);
+		if(cri.getTag()==null||cri.getTag().equals("0")) {
+			cri.setTag("0");
+			biddingCount = mypageService.findBiddingCountFromBidList(cri.getId());
+			System.out.println("a "+biddingCount);
+		}else {
+			biddingCount = mypageService.findBiddingCountFromBidListTag(cri);
+			System.out.println("b "+biddingCount);
+		} 
 		paging.setCri(cri);
 		paging.setTotalCount(biddingCount);
-		List<Map<String, Object>> biddingList = mypageService.findBiddingListFromProductList(cri);
+		biddingList = mypageService.findBiddingListFromProductList(cri);
+		
 		model.addAttribute("biddingList", biddingList);
 		model.addAttribute("paging", paging);
-		model.addAttribute("tag",tag);
 		return "mypage/buying-Page";
 	}
 	@RequestMapping("sellingProduct")

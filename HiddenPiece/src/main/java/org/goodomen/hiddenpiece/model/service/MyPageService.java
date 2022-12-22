@@ -17,6 +17,8 @@ public interface MyPageService {
 
 	void findEndProductList(String id,Criteria cri, Model model);
 
+	int findBiddingCountFromBidListTag(CriteriaAndIdVO cri);
+
 	
 
 }

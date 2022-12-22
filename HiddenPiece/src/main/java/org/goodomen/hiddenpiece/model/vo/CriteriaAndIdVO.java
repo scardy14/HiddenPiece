@@ -10,7 +10,7 @@ public class CriteriaAndIdVO {
 	private int perPageNum; // 페이지당 보여줄 게시글의 개수
 	private int totalCount;
 	private String id;
-	
+	private String tag;
 	public int getPageStart() {
 		// 특정 페이지의 범위를 정하는 구간, 현재 페이지의 게시글 시작 번호
 		// 0 ~ 10 , 10 ~ 20 이런식으로

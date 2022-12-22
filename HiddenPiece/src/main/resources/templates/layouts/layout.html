@@ -137,31 +137,10 @@
                         <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true" >참여한 경매<i class="fa fa-angle-right float-right mt-1"></i></a>
                         <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
                     		  <a href="" th:href="@{/buyingMyPage?id=}+${session.mvo.id}" class="dropdown-item"><font color ="black">입찰중인 상품</font></a>
-							<a href="" th:href="@{/sellingMyPage}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  
-							<a href="" th:href="@{/endMyPage}" class="dropdown-item"><font color ="black">경매종료 상품</font></a>					
+							<a href="" th:href="@{/sellingMyPage}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  				
 							</div>
 						</div>
 					</th:block>
-                        
-<!-- 					<th:block th:if="${session.mvo}">
-						<div class="nav-item dropdown dropright">
-							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
-							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
-							<a href="" th:href="@{/updateMemberForm}" class="dropdown-item">회원정보수정</a>
-							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
-							<a href="" th:href="@{/transferAccountForm}" class="dropdown-item" >계좌로환전하기</a>
-							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
-						</div>
-					</th:block> -->
-					
-
-						<!--                         <a href="" class="nav-item nav-link">Swimwear</a>
-                        <a href="" class="nav-item nav-link">Sleepwear</a>
-                        <a href="" class="nav-item nav-link">Sportswear</a>
-                        <a href="" class="nav-item nav-link">Jumpsuits</a>
-                        <a href="" class="nav-item nav-link">Blazers</a>
-                        <a href="" class="nav-item nav-link">Jackets</a>
-                        <a href="" class="nav-item nav-link">Shoes</a> -->
 					</div>
 				</nav>
 			</div>
@@ -271,13 +250,6 @@
 		}
 	
 		$(function() {
-			$("#writeAuctionBoardPostForm").submit(function() {
-				let result = confirm("경매글을 등록하시겠습니까?");
-				if(!result) {
-					return false;
-				}
-			});
-			
 			$("#moveAuctionBoardPostUpdateForm").submit(function() {
 				if(!confirm("수정하시겠습니까?")) {
 					return false;

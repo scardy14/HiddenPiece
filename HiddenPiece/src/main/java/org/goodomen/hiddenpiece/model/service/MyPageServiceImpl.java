@@ -15,14 +15,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MyPageServiceImpl implements MyPageService{
 	private final MyPageMapper myPageMapper;
+	
 	@Override
 	public int findBiddingCountFromBidList(String id) {
 		return myPageMapper.findBiddingCountFromBidList(id);
 	}
+	
+	@Override
+	public int findBiddingCountFromBidListTag(CriteriaAndIdVO cri) {
+		return myPageMapper.findfindBiddingCountFromBidListTag(cri);
+	}
 
 	@Override
 	public List<Map<String, Object>> findBiddingListFromProductList(CriteriaAndIdVO cri) {
-		return myPageMapper.findBiddingListFromBidList(cri);
+		if(cri.getTag().equals("0")) {
+			return myPageMapper.findBiddingListFromBidList(cri);
+		} else {
+			return myPageMapper.findBiddingListFromBidListTag(cri);
+		}
+		
 	}
 
 	@Override
@@ -36,6 +47,8 @@ public class MyPageServiceImpl implements MyPageService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 	
 
