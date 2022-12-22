@@ -12,77 +12,95 @@
     <!-- Cart Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
-            <div class="col-lg-10 table-responsive mb-5" style="padding-left:250px;">
+            <div class="col-lg-15 table-responsive mb-5">
             	<h2>입찰중인 상품</h2><br>
+            	<th:block th:if="${paging.Cri.tag}==0">
+            		<input type = "checkbox" name = "tag" value = "0" onclick='checkOnlyOne(this); sendinfo(this)' checked>전체
+            		<input type = "checkbox" name = "tag" value = "1" onclick='checkOnlyOne(this); sendinfo(this)'>진행중
+            		<input type = "checkbox" name = "tag" value = "2" onclick='checkOnlyOne(this); sendinfo(this)'>완료
+            		<input type = "hidden" id = "checkedValue" value="0">
+            	</th:block>
+            	<th:block th:if="${paging.Cri.tag}==1">
+            		<input type = "checkbox" name = "tag" value = "0" onclick='checkOnlyOne(this); sendinfo(this)'>전체
+            		<input type = "checkbox" name = "tag" value = "1" onclick='checkOnlyOne(this); sendinfo(this)' checked>진행중
+            		<input type = "checkbox" name = "tag" value = "2" onclick='checkOnlyOne(this); sendinfo(this)'>완료
+            		<input type = "hidden" id = "checkedValue" value="1">
+            	</th:block>
+            	<th:block th:if="${paging.Cri.tag}==2">
+            		<input type = "checkbox" name = "tag" value = "0" onclick='checkOnlyOne(this); sendinfo(this)'>전체
+            		<input type = "checkbox" name = "tag" value = "1" onclick='checkOnlyOne(this); sendinfo(this)'>진행중
+            		<input type = "checkbox" name = "tag" value = "2" onclick='checkOnlyOne(this); sendinfo(this)' checked>완료
+            		<input type = "hidden" id = "checkedValue" value="2">
+            	</th:block>
+            	<input type = "hidden" id="id" th:value="${session.mvo.id}">
                 <table class="table table-light table-borderless table-hover text-center mb-0" style="width:100%; text-align: center; align-content: text;" >
                     <thead class="thead-dark">
                         <tr>
-                            <th>글제목</th>
-                            
+                            <th style="width: 40%;">글제목</th>
                             <th>현재입찰자</th>
                             <th>현재입찰가</th>
                             <th>즉시구매가</th>
                             <th>남은시간</th>
-                            <th>상품 현황</th>
-                            
+                            <th>경매 현황</th>              
                         </tr>
                     </thead>
-                    <tbody class="align-middle" th:each="wl:${mywishlist}">
+                    <tbody class="align-middle" th:each="post:${biddingList}">
                         <tr>
-                        <th:block th:if="${wl.postStatus}!=0">
-                            <td style="cursor:pointer;" th:onclick="|location.href='@{/findAuctionBoardPostDetail(postNo=${wl.postNo})}'|"  class="align-middle"><img th:src="@{/img/}+ ${wl.photo}" style="width: 50px;" th:text="${wl.title}"></td>
-                            
-                            <td class="align-middle" th:text="${wl.nowId}">현재 입찰자
-                              
-                               <!--  <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                             -->
-                            <td class="align-middle" th:text="${wl.currentPrice}">$150</td>
-                            <td class="align-middle" th:text="${wl.sellPrice}"></td>
-                            <td class="align-middle" th:text="${wl.endDate}"></td>
-                            <th:block th:switch="${wl.postStatus}">
-                            <th:block th:case=1>
-                            	<td class="align-middle">진행중</td>
-                            </th:block>
-                            <th:block th:case=2>
-                            	<td class="align-middle">경매완료</td>
-                            </th:block>
-                            <th:block th:case=3>
-                            	<td class="align-middle">시간만료</td>
-                            </th:block>
-
+                        	<td><a th:href="@{findAuctionBoardPostDetail?postNo=} + ${post.postNo}" th:text="${post.title}" onclick='checkOnlyOne(this); sendinfo()'>제목</a></td>
+                        	<td th:text="${post.nowId}">현재입찰자</td>
+                        	<td th:text="${post.currentPrice}">현재입찰가</td>
+                        	<td th:text="${post.sellPrice}">즉시구매가</td>
+                        	<td th:text="${post.endDate}">남은시간</td>
+                        	<th:block th:if="${post.postStatus==1}">
+                        	<td>진행중</td>
+                        	</th:block>
+                        	<th:block th:if="${post.postStatus==2}">
+                        	<td>완료</td>
+                        	</th:block>
+                        	<th:block th:if="${post.postStatus==3}">
+                        	<td>유찰</td>
+                        	</th:block>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="col-12">
+                    <nav>
+                    	<ul class="pagination justify-content-center">
+							<th:block th:if="${paging.prev}">
+								<li class="page-item active"><a class="page-link" th:onclick="sendinfoPagination([[${paging.startPage}]]-1)">Pre</a></li>
+							</th:block>
+							<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
+								<li class="page-item"><a class="page-link" th:onclick="sendinfoPagination([[${num}]])" th:text="${num}"></a></li>
+							 </th:block>
+							 <th:block th:if="${paging.next && paging.endPage>0}">
+							 	<li class="page-item active"><a class="page-link"  th:onclick="sendinfoPagination([[${paging.startPage}]]+1)">Next</a></li>
+							 </th:block>
+						</ul> 	
+					</nav>
+				</div>
     </div>
-    <!-- Cart End -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript">
+	function checkOnlyOne(element) {
+		const checkboxes = document.getElementsByName("tag");
+		checkboxes.forEach((cb) => {
+			cb.checked = false;
+		})
+		element.checked = true;
+	}
+	function sendinfo(element) {
+		let id = document.getElementById("id").value;
+		let tag = element.value;
+		location.href="buyingMyPage?tag="+tag+"&id="+id;
+	}
+	function sendinfoPagination(element) {
+		let tag = document.getElementById("checkedValue").value;
+		let id = document.getElementById("id").value;
+		location.href="buyingMyPage?tag="+tag+"&id="+id+"&page="+element;
+	}
 	</script>
-
-	
-	
-
-    <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-
-
 </div>
 </html>

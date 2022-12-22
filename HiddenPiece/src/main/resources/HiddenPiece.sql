@@ -150,5 +150,12 @@ SELECT * FROM FreeBoard_Comment
 -- 자유게시판 댓글 작성
 INSERT INTO freeboard_Comment VALUES(85,FreeBoard_Comment_seq.nextval,'scardy', sysdate, '내용', 1)
 ----------------------------------------------------------------------
-
+CREATE SEQUENCE Bid_List_seq
+CREATE TABLE Bid_List(
+	id VARCHAR2(100) NOT NULL,
+	bid_no NUMBER NOT NULL,
+	post_no NUMBER NOT NULL,
+	CONSTRAINT PK_Bid_List PRIMARY KEY (id,bid_no),
+	CONSTRAINT FK_Bid_List FOREIGN KEY(id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+SELECT * FROM Bid_List

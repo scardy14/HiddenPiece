@@ -21,6 +21,7 @@ import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,7 +64,7 @@ public class AuctionBoardController {
 		ArrayList<AuctionBoardCommentVO> commentList = auctionBoardService.findAuctionBoardCommentListByPostNo(postNo);
 		model.addAttribute("postVO", postVO);
 		model.addAttribute("commentList", commentList);
-		return "auctionboard/detail2";
+		return "auctionboard/detail";
 	}
 	
 	// 경매게시판 글 작성 폼 화면 이동
@@ -87,7 +88,7 @@ public class AuctionBoardController {
 
 	    try(
 	      // 윈도우일 경우
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" +auctionBoardPostVO.getId()+nowTime.format(now)+ file.getOriginalFilename());
+	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPiece/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" +auctionBoardPostVO.getId()+nowTime.format(now)+ file.getOriginalFilename());
 	      InputStream is = file.getInputStream();
 	    ){
 	      int readCount = 0;
@@ -164,7 +165,7 @@ public class AuctionBoardController {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
 		return "auctionboard/update-ok";
 	}
-	
+	//경매게치판 입찰
 	@RequestMapping("bid")
 	public String bid(AuctionBoardPostVO auctionBoardPostVO,long bidPrice, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
@@ -231,25 +232,4 @@ public class AuctionBoardController {
 		return "shop2";
 	}
 	
-	 @PostMapping("/upload")
-	  public String upload(@RequestParam("photo") MultipartFile file) {
-
-	    System.out.println("파일 이름 : " + file.getOriginalFilename());
-	    System.out.println("파일 크기 : " + file.getSize());
-
-	    try(
-	      // 윈도우일 경우
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/" + file.getOriginalFilename());
-	      InputStream is = file.getInputStream();
-	    ){
-	      int readCount = 0;
-	      byte[] buffer = new byte[1024];
-	      while((readCount = is.read(buffer)) != -1){
-	      fos.write(buffer,0,readCount);
-	    }
-	    }catch(Exception ex){
-	      throw new RuntimeException("file Save Error");
-	    }
-	    return "index2";
-	  }
 }

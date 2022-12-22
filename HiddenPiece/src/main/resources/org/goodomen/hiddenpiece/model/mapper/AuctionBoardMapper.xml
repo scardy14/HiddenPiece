@@ -179,4 +179,10 @@
 	<update id="addHits" parameterType="long">
 		UPDATE AuctionBoard SET hits = hits+1 WHERE post_no = #{value}
 	</update>
+	<select id="checkBidList" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" resultType="int">
+		SELECT COUNT(*) FROM Bid_List WHERE id = #{id} AND post_no=#{postNo}
+	</select>
+	<insert id="addBidList" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		INSERT INTO Bid_List VALUES(#{id},Bid_List_seq.nextval,#{postNo})
+	</insert>
 </mapper>

@@ -9,21 +9,23 @@
 <div layout:fragment="content">
 	<!-- Checkout Start -->
 	<div class="container-fluid">
-		<div class="row px-xl-5">		
-			<div style= " width: 50%; ">
-				<h5 class="section-title position-relative text-uppercase mb-3">
-					<span class="bg-secondary pr-3"> 로그인 </span>
+		<div align="center">		
+			<div style="width: 30%; height: 300px; border-style: solid; border-width: 1px; border-radius:10px; background-color: white;"><br>
+				<h5>
+					<span style="text-align: center; background-color: white;"> 로그인 </span>
 				</h5>
-				<div class="bg-light p-30 mb-5">
+				<div>
 					<div style="text-align: center;">
 						<form action="" th:action="@{/login}" method="post">
- 							<input type="text" class="form-control" name="id" placeholder="아이디" required="required"><br>
- 							<input type="password" name="password" class="form-control" placeholder="패스워드" required="required"><br><br>
- 							<button type="submit" style="width: 20%; border: none; background-color: #FFD333; height: 50px; color: #495057;">로그인</button>
+ 							<input type="text" style="width: 65%; height: 40px" name="id" placeholder="아이디" required="required"><br>
+ 							<input type="password" style="width: 65%; height: 40px" name="password" placeholder="패스워드" required="required"><br><br>
+ 							<button type="submit" style="width: 65%; border: none; background-color: #FFD333; height: 40px; color: #495057;">로그인</button>
  						</form>
  						<br>
  						<a href="" th:href="@{/registerForm}"><font color="gray">회원가입</font></a> 
+ 						|
  						<a href="" th:href="@{/findIdForm}" ><font color="gray">아이디 찾기</font></a> 
+ 						|
  						<a href="" th:href="@{/findPasswordForm}"><font color="gray">비밀번호 찾기</font></a>
 					</div>
 				</div>

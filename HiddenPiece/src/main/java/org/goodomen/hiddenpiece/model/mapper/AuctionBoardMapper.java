@@ -53,9 +53,12 @@ public interface AuctionBoardMapper {
 
 	public void addHits(long postNo);
 
+	public int checkBidList(AuctionBoardPostVO auctionBoardPostVO);
+
+	public void addBidList(AuctionBoardPostVO auctionBoardPostVO);
+	
 	public int searchAuctionBoardListCnt(String keyword);
 
 	public List<Map<String, Object>> searchPostByKeyword(Criteria cri);
-	
 
 }

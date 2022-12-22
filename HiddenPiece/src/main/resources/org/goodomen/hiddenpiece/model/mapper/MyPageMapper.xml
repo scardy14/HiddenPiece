@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.goodomen.hiddenpiece.model.mapper.MyPageMapper">
+	<select id="findBiddingCountFromBidList" resultType="int" parameterType="string">
+		SELECT COUNT(*)
+		 FROM AuctionBoard a, Bid_List b
+		WHERE a.post_no = b.post_no
+		  		AND b.id = #{id}
+	</select>
+	<select id="findfindBiddingCountFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM AuctionBoard a, Bid_List b
+		WHERE a.post_no = b.post_no
+		  		AND a.post_status = #{tag} 
+	</select>
+	<select id="findBiddingListFromBidList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO">
+		SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  			  FROM (
+		  						SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  				  			  FROM AuctionBoard a, Bid_List b
+	 				 			 WHERE a.post_no = b.post_no
+	   										AND b.id = #{id}
+	   										AND a.post_no = b.post_no
+	   				 			 ORDER BY b.bid_no DESC
+		  					)
+		  			
+		  		)
+		WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+	</select>
+	<select id="findBiddingListFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  			  FROM (
+		  						SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  				  			  FROM AuctionBoard a, Bid_List b
+	 				 			 WHERE a.post_no = b.post_no
+	   										AND b.id = #{id}
+	   										AND a.post_no = b.post_no
+	   										AND a.post_status=#{tag}
+	   				 			 ORDER BY b.bid_no DESC
+		  					)
+		  			
+		  		)
+		WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+	</select>
+	
+</mapper>
