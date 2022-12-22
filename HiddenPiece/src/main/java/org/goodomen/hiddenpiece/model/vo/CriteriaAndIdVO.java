@@ -24,12 +24,7 @@ public class CriteriaAndIdVO {
 	public CriteriaAndIdVO() {
 		// 기본 생성자 : 최초 게시판에 진입시 필요한 기본값
 		this.page = 1;
-		this.perPageNum = 3;
-	}
-
-	// 현재 페이지 번호 page : getter, setter
-	public int getPage() {
-		return page;
+		this.perPageNum = 10;
 	}
 
 	public void setPage(int page) {
@@ -41,11 +36,6 @@ public class CriteriaAndIdVO {
 		}	
 	}
 
-	
-	// 페이지당 보여줄 게시글의 개수 perPageNum : getter, setter
-	public int getPerPageNum() {
-		return perPageNum;
-	}
 
 	public void setPerPageNum(int perPageNum) {
 		int cnt = this.perPageNum;
@@ -56,10 +46,5 @@ public class CriteriaAndIdVO {
 			this.perPageNum = perPageNum;
 		}
 		
-	}
-	
-	@Override
-	public String toString() {
-		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
 	}
 }

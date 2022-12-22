@@ -148,23 +148,5 @@ public class IndexMoveController {
 		model.addAttribute("paging", paging);
 		return "freeboard/freeBoardPostList";
 	}
-	
-	@RequestMapping("freeboarddetail")
-	public String freeBoardDetailMove() {
-		return "freeBoardPostDetail";
-	}
-	
-	@RequestMapping("buyingMyPage")
-	public String buyingMyPage() {
-		return "mypage/buying-Page";
-	}
-	@RequestMapping("sellingMyPage")
-	public String sellingMyPage() {
-		return "mypage/selling-Page";
-	}
-	@RequestMapping("boughtMyPage")
-	public String boughtMyPage() {
-		return "mypage/bought-Page";
-	}
 }
 

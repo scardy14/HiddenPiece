@@ -19,16 +19,16 @@ import lombok.RequiredArgsConstructor;
 public class MyPageController {
 	private final MyPageService mypageService;
 	
-	@RequestMapping("biddingProduct")
+	@RequestMapping("buyingMyPage")
 	public String BiddingProduct(CriteriaAndIdVO cri, Model model) {
 		int biddingCount = mypageService.findBiddingCountFromBidList(cri.getId());
 		PagingAndId paging = new PagingAndId();
 		paging.setCri(cri);
 		paging.setTotalCount(biddingCount);
-		List<Map<String, Object>> list = mypageService.findBiddingListFromProductList(cri);
-		model.addAttribute("list", list);
+		List<Map<String, Object>> biddingList = mypageService.findBiddingListFromProductList(cri);
+		model.addAttribute("biddingList", biddingList);
 		model.addAttribute("paging", paging);
-		return "";
+		return "mypage/buying-Page";
 	}
 	@RequestMapping("sellingProduct")
 	public String SellingProduct(String id,Criteria cri, Model model) {

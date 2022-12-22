@@ -175,13 +175,8 @@ where post_status in (1,2,3) and  hpm.id=ab.id
 and (content LIKE '%요%' OR title LIKE '%요%')						
 
 CREATE OR REPLACE PROCEDURE Update_Post_Status_2 AS 
->>>>>>> refs/heads/main
 BEGIN
-<<<<<<< HEAD
-  UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' '
-=======
 UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' ';
->>>>>>> refs/heads/main
 END Update_Post_Status_2; 
 
 
@@ -200,7 +195,6 @@ DBMS_SCHEDULER.CREATE_JOB (
  
  CREATE OR REPLACE PROCEDURE INCREASE_SALARY
 BEGIN
-<<<<<<< HEAD
   UPDATE employees SET salary = salary * 1.5
 END INCREASE_SALARY;
 
@@ -227,3 +221,31 @@ END;
     COMMENTS => '잡객체 1'
     );
 >>>>>>> refs/heads/main
+SELECT COUNT(*)
+		 FROM AuctionBoard a, Bid_List b
+		WHERE a.post_no = b.post_no
+		  		AND a.id = 'scardy'
+		  		AND a.post_status = 1
+		  		
+SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+  FROM AuctionBoard a, Bid_List b
+ WHERE a.post_no = b.post_no
+   			AND a.id = 'scardy'
+   			AND b.id = 'scardy'
+   			AND a.post_no = b.post_no
+   			AND a.post_status = 1
+   			
+   
+    post_no NUMBER NOT NULL,
+	id VARCHAR2(100) NOT NULL,
+	title VARCHAR2(100) NOT NULL,
+	content clob NOT NULL,
+	photo VARCHAR2(100) NOT NULL,
+	start_price NUMBER NOT NULL,
+	current_price NUMBER NOT NULL,
+	sell_price NUMBER NOT NULL,
+	time_posted DATE DEFAULT sysdate NOT NULL,
+	hits NUMBER DEFAULT 0 NOT NULL ,
+	end_date DATE NOT NULL,
+	now_id VARCHAR2(100) NOT NULL,
+	post_status NUMBER DEFAULT 1 NOT NULL,
