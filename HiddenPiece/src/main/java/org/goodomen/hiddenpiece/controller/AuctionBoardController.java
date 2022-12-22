@@ -220,9 +220,9 @@ public class AuctionBoardController {
 			if(session!=null) {
 				MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 				String id = memberVO.getId();
-				cri.setKeyword(mapList.get("searchKeyword").toString());
 				cri.setLoginId(id);
 			}
+			cri.setKeyword(mapList.get("searchKeyword").toString());
 			List<Map<String,Object>> auctionBoardList =auctionBoardService.searchPostByKeyword(cri);
 			model.addAttribute("postList", auctionBoardList);
 		}

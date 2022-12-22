@@ -40,11 +40,7 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-<meta charset="utf-8">
-
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Free HTML Templates" name="keywords">
-<meta content="Free HTML Templates" name="description">
+</head>
 
 <body>
 	<!-- Topbar Start -->
@@ -58,9 +54,15 @@
 				</a>
 			</div>
 			<div class="col-lg-4 col-6 text-left">
-				<form action="" onsubmit="searchByKeyword();" id="searchByKeyword">
+				<form id="searchByKeyword" method="post">
+				<input type="hidden" name="pageIndex"  id="pageIndex">
 					<div class="input-group">
-						<input id="searchKeyword" type="text" class="form-control" placeholder="">
+					<th:block th:if="${mapList}">
+						<input type="text" class="form-control" name="searchKeyword" placeholder="" th:value="${mapList.searchKeyword}">
+					</th:block>
+					<th:block th:unless="${mapList}">
+						<input type="text" class="form-control" name="searchKeyword" placeholder="" >
+					</th:block>
 						<div class="input-group-append">
 							<span class="input-group-text bg-transparent text-primary" id="searchByKeywordBtn" onclick="searchByKeyword()">
 								<i class="fa fa-search"></i>
@@ -80,12 +82,8 @@
 					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span>
 					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
  					<a href="#" id="logoutBtn"><font color="red">로그아웃</font></a>
- 						
- 						
- 						
 					<br>
 					<br>
-					
 				</th:block>
 			</div>
 		</div>
@@ -247,19 +245,25 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
-		function searchByKeyword(){
+		function searchByKeyword(num){
 			let keyword = $("#searchKeyword").val();
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;
-			}
-			$.ajax({
-				type:"get",
-				url:"searchPostByKeyword/"+keyword,
-				success:function(data){
-					location.href="";
+			} 
+			$("#pageIndex").val(num);
+			$("#searchByKeyword").attr("action","searchPostByKeyword").submit();
+			/* $.ajax({
+				type:"post",
+				dateType:"json",
+				url:"searchPostByKeyword",
+				data:
+				{
+					"keyword":keyword,
+				},
+				success:function(result){
 				}
-			})
+			}) */
 		}
 	
 		$(function() {
