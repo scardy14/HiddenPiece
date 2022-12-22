@@ -79,8 +79,12 @@
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
-					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span>
-					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
+					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span><br>
+					<th:block th:if="${session.mvo.status=='2'}"> 
+						<a href="#" id="adminBtn" th:href="@{/adminForm}"><font color="orange">관리자페이지로</font></a>
+					</th:block>
+					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> 
+					</form>
  					<a href="#" id="logoutBtn"><font color="red">로그아웃</font></a>
 					<br>
 					<br>

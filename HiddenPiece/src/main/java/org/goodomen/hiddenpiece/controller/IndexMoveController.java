@@ -124,6 +124,7 @@ public class IndexMoveController {
 	public String loginForm() {
 		return "member/login-form";
 	}
+	
 
 	//찜 목록 페이지로 이동
 	@RequestMapping("wishlist")
@@ -138,6 +139,11 @@ public class IndexMoveController {
 	@RequestMapping("myInfo")
 	public String myInfo() {
 		return "mypage/myInfo";		
+	}
+	
+	@RequestMapping("adminForm")
+	public String adminForm() {
+		return "admin/admin-form";
 	}
 	
 	@RequestMapping("freeBoardPostList")
