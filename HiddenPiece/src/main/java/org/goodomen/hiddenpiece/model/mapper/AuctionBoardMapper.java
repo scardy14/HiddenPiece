@@ -53,7 +53,7 @@ public interface AuctionBoardMapper {
 
 	public void addHits(long postNo);
 
-	public int searchAuctionBoardListCnt(String keyword);
+	public int searchAuctionBoardListCnt(Criteria cri);
 
 	public List<Map<String, Object>> searchPostByKeyword(Criteria cri);
 	

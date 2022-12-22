@@ -120,10 +120,9 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	}
 
 	@Override
-	public int searchAuctionBoardListCnt(String keyword) {
-		return auctionBoardMapper.searchAuctionBoardListCnt(keyword);
+	public int searchAuctionBoardListCnt(Criteria cri) {
+		return auctionBoardMapper.searchAuctionBoardListCnt(cri);
 	}
-
 
 
 }

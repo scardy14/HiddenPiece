@@ -137,6 +137,7 @@ public class AuctionBoardController {
 	@ResponseBody
 	@RequestMapping("addToWishlist")
 	public void addToWishlist(String id,long postNo, AuctionBoardPostVO postVO) {
+		System.out.println("11111111111");
 		postVO.setLike(true);
 		System.out.println(postVO);
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
@@ -202,15 +203,16 @@ public class AuctionBoardController {
 	@RequestMapping("searchPostByKeyword")
 	public String searchPostByKeyword(@RequestParam HashMap<String, Object> mapList, Model model, HttpServletRequest request,Criteria cri){
 		if(!mapList.get("pageIndex").equals("")) { 
-			cri.setPage(Integer.valueOf((String)
-		 mapList.get("pageIndex"))); 
+			cri.setPage(Integer.valueOf((String)mapList.get("pageIndex"))); 
 			}
 		if(!mapList.containsKey("searchKeyword") || mapList.get("searchKeyword").equals("")) {
 			mapList.put("searchKeyword", "");
 		}
-		
-		if(mapList.containsKey("searchKeyword")) {
-			int auctionBoardListCnt = auctionBoardService.searchAuctionBoardListCnt(mapList.get("searchKeyword").toString());
+		if(mapList.containsKey("status")) {
+			String sstatusText =mapList.get("status").toString();
+
+			int auctionBoardListCnt = auctionBoardService.searchAuctionBoardListCnt(cri);
+			
 			Paging paging = new Paging();
 			paging.setCri(cri);
 			paging.setTotalCount(auctionBoardListCnt);
@@ -221,10 +223,22 @@ public class AuctionBoardController {
 				MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 				String id = memberVO.getId();
 				cri.setLoginId(id);
+				ArrayList<AuctionBoardPostVO> myWishlist = memberService.selectMyWishlist(id);
+				cri.setSearchKeyword(mapList.get("searchKeyword").toString());
+				List<Map<String,Object>> auctionBoardList =auctionBoardService.searchPostByKeyword(cri);
+				for(int i=0; i<auctionBoardList.size(); i++) {
+					if(myWishlist.contains(auctionBoardList.get(i))){
+						((AuctionBoardPostVO) auctionBoardList.get(i)).setLike(true);
+					}
+				}
+				model.addAttribute("postList", auctionBoardList);
 			}
-			cri.setKeyword(mapList.get("searchKeyword").toString());
-			List<Map<String,Object>> auctionBoardList =auctionBoardService.searchPostByKeyword(cri);
-			model.addAttribute("postList", auctionBoardList);
+			
+			else {
+				cri.setSearchKeyword(mapList.get("searchKeyword").toString());
+				List<Map<String,Object>> auctionBoardList =auctionBoardService.searchPostByKeyword(cri);
+				model.addAttribute("postList", auctionBoardList);
+			}
 		}
 		model.addAttribute("mapList", mapList);
 		

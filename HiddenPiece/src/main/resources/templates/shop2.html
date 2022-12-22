@@ -70,11 +70,20 @@
                     			<a th:href="@{/moveAuctionBoardPostForm}"><font color="gray">글쓰기&emsp;</font></a>
                     		</div>
                      			</th:block> 
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">정렬</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">입찰중</a>
-                                        <a class="dropdown-item" href="#">판매완료</a>
-                                    </div>
+                                <!-- <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" id="dropdownBtn">정렬</button> -->
+                              <!--   <select class="dropdown-menu dropdown-menu-right" id="toggleCategory">
+                                 <a class="dropdown-item category" th:onclick="searchByKeyword()" id="bidding">진행중</a>
+                                 <a class="dropdown-item category" th:onclick="searchByKeyword()" id="soldout">판매완료</a>
+                                 <a class="dropdown-item category" th:onclick="searchByKeyword()" id="failure">유찰</a>
+                                </sl> -->
+                                
+
+
+                                <select id="statusSelect" name="statusSelect"> 
+                                	<option th:value="1" th:text="진행중" th:selected="${mapList.status} ==1"></option>
+                                	<option th:value="2" th:text="판매완료" th:selected="${mapList.status}==2"></option>
+                                	<option th:value="3" th:text="유찰" th:selected="${mapList.status}==3"></option>
+                                </select>
                                 </div>
                             </div>
                         </div>
@@ -85,8 +94,9 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" th:src="@{/auctionboardimg/}+ ${group.photo}" alt="">
                                 <div class="product-action">
+                                
                                 <th:block th:if="${session.mvo}">
-                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]])" href=""   >
+                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]],[[${mapList.pageIndex}]], [[${mapList.searchKeyword}]])" href=""   >
                                  		<th:block th:if="${group.like}">
                                  			<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
                                  		</th:block>
@@ -132,7 +142,11 @@
                     <div class="col-12">
                     	
                     	<nav>
-                    		 <ul class="pagination justify-content-center">
+                    	<th:block th:if="${paging.totalCount}==0">
+                    	<p ></p>
+                    	</th:block>
+                    	<th:block th:if="${paging.totalCount}>0">
+                    	<ul class="pagination justify-content-center">
 							    <th:block th:if="${paging.prev}">
 							    	<li class="page-item active"><a class="page-link" th:onclick="searchByKeyword([[${paging.startPage}]]-1)">Pre</a></li>
 							    </th:block>
@@ -143,6 +157,7 @@
 							   		<li class="page-item active"><a class="page-link"  th:onclick="searchByKeyword([[${paging.startPage}]]+1)">Next</a></li>
 							    </th:block>
 							</ul> 
+                    		 
                     		
 	                        <!-- <ul class="pagination justify-content-center">
 	                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
@@ -161,32 +176,48 @@
     <!-- Shop End -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
+
+	$(document).ready(function() {
+		$(".dropdown-item>category").click(function() {
+			let item = $(".dropdown-item>category").text();
+			alert(item);
+		})
+	});
+/* function searchByCategory(num,status){
+	$("#pageIndex").val(num);
+	$("#postStatus").attr("action", "searchPostByKeyword").submit();
+	//$("#postStatus") 엉성하게 아니까 다틀리는겨 내가원래썼던부분이여기야ㅕ?
+} */
 /* 세션 없을때 찜하기 버튼 누를시 */
 function noSessionWishlist(){
 	 alert("찜하기는 회원만 가능합니다.");
 }
 
 /* 찜하기확인  */
-function checkToWishlist(postNo, id){
+function checkToWishlist(postNo, id, pageIndex, searchKeyword){//dlrjfjao이거라매ㅑ
 	$.ajax({
 		type:"get",
-		url:"checkToWishlist",
+		url:"checkToWishlist",//그럼여기부터가자나
 		data:{
 			"postNo":postNo,
-			"id":id
+			"id":id,
+			"pageIndex":pageIndex,
+			"searchKeyword":searchKeyword
 		},
 		success:function(result){
 			if(result<1){
-				addToWishlist(postNo, id);	
+				addToWishlist(postNo, id, pageIndex, searchKeyword);
 			}
 			else{
-				deleteFromWishlist(postNo,id);
+				deleteFromWishlist(postNo,id,pageIndex, searchKeyword);
 			}
 		}
 	});
 } 
 /* 찜하기  */
-function addToWishlist(postNo, id){
+function addToWishlist(postNo, id, pageIndex, searchKeyword){
+	alert(pageIndex),
+	alert(searchKeyword),
 	$.ajax({
 		type:"get",
 		url:"addToWishlist",
@@ -195,13 +226,15 @@ function addToWishlist(postNo, id){
 			"id":id
 		},
 		success:function(result){
-			location.reload();
+			searchPostByKeyword(pageIndex, searchKeyword);
+			//location.reload();
 		}
 	});
 }
 
 /* 찜취소 */
 function deleteFromWishlist(postNo,id){
+	alert(postNo, + " " + id);
 	$.ajax({
 			type:"get",
 			url:"deleteFromWishlist",
@@ -210,7 +243,8 @@ function deleteFromWishlist(postNo,id){
 				"postNo":postNo
 			},
 			success:function(result){
-				location.reload();
+				//location.reload();
+				searchPostByKeyword(pageIndex, searchKeyword);
 			}
 		})
 	}
@@ -225,7 +259,8 @@ function deleteFromWishlist(postNo,id){
     			"id":id
     		},
     		success:function(result){
-    			location.reload();
+    			//location.reload();
+    			searchPostByKeyword(pageIndex, searchKeyword); 
     		}
     	});
     	

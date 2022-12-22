@@ -165,7 +165,27 @@ from (
 						where  content LIKE '%요%' OR title LIKE '%요%' 
 						)
 								
-	
+						
+-- 정렬이 '입찰중'인  페이징 처리된 게시물 리스트
+select  	 post_no
+				,content
+				, title
+				,photo
+				,start_price
+				, sell_price
+				, current_price
+				, hpm.id
+				,time_posted
+				, hits
+				, end_date
+				, now_id
+				, post_status
+		from auctionboard ab , hp_member hpm
+		where post_status=1
+		and  hpm.id=ab.id
+		order by post_no desc
+								
+						
 select  *
 from auctionboard ab , hp_member hpm
 where post_status in (1,2,3) and  hpm.id=ab.id
@@ -194,3 +214,40 @@ BEGIN
     REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =1', --1분에 1번
     COMMENTS => '잡객체 1'
     );
+ select count(*) from (
+    	select  	*
+								from auctionboard ab , hp_member hpm
+								where post_status in (1,2,3)
+								and  hpm.id=ab.id
+								)
+									where 1=1
+								and post_status=2
+									
+									
+									
+select * from (
+		select ROWNUM rm, A.* 
+		from (
+						select  	 post_no
+										,content
+										, title
+										,photo
+										,start_price
+										, sell_price
+										, current_price
+										, hpm.id
+										,time_posted
+										, hits
+										, end_date
+										, now_id
+										, post_status
+								from auctionboard ab , hp_member hpm
+								where post_status in (1,2,3)
+								and  hpm.id=ab.id
+								
+								order by post_no desc
+								) A
+								where 1=1
+									and content LIKE '%부엉%' OR title LIKE '%부엉%'
+										and post_status=1
+								)

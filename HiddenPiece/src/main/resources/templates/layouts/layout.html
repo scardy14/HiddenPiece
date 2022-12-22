@@ -54,8 +54,9 @@
 				</a>
 			</div>
 			<div class="col-lg-4 col-6 text-left">
-				<form id="searchByKeyword" method="post">
+				<form id="searchByKeywordForm" method="post">
 				<input type="hidden" name="pageIndex"  id="pageIndex">
+				<input type="hidden" name="status"  id="status">
 					<div class="input-group">
 					<th:block th:if="${mapList}">
 						<input type="text" class="form-control" name="searchKeyword" placeholder="" th:value="${mapList.searchKeyword}">
@@ -245,14 +246,22 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
-		function searchByKeyword(num){
+	$(document).ready(function() {
+		
+		 $("#statusSelect").change(function(){
+			 searchByKeyword(1);
+         });
+	});
+		function searchByKeyword(num){ 
 			let keyword = $("#searchKeyword").val();
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;
 			} 
+			$("#searchKeyword");
 			$("#pageIndex").val(num);
-			$("#searchByKeyword").attr("action","searchPostByKeyword").submit();
+			$("#status").val($("#statusSelect").val());
+			$("#searchByKeywordForm").attr("action","searchPostByKeyword").submit();
 			/* $.ajax({
 				type:"post",
 				dateType:"json",
