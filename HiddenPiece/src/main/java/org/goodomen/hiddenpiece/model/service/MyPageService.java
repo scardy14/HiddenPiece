@@ -10,14 +10,16 @@ import org.springframework.ui.Model;
 public interface MyPageService {
 
 	int findBiddingCountFromBidList(String id);
+	
+	int findBiddingCountFromBidListTag(CriteriaAndIdVO cri);
 
 	List<Map<String, Object>> findBiddingListFromProductList(CriteriaAndIdVO cri);
 
-	void findSellingProductList(String id,Criteria cri, Model model);
+	int findSellingCountFromBidList(String id);
 
-	void findEndProductList(String id,Criteria cri, Model model);
+	int findSellingCountFromBidListTag(CriteriaAndIdVO cri);
 
-	int findBiddingCountFromBidListTag(CriteriaAndIdVO cri);
+	List<Map<String, Object>> findSellingListFromProductList(CriteriaAndIdVO cri);
 
 	
 

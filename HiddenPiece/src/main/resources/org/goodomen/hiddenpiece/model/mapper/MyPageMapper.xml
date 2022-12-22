@@ -47,5 +47,29 @@
 		  		)
 		WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
 	</select>
-	
+	<!-- ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ -->
+	<select id="findSellingCountFromBidList" resultType="int" parameterType="string">
+		SELECT COUNT(*)
+		 FROM AuctionBoard
+		WHERE id = #{id}
+	</select>
+	<select id="findSellingCountFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM AuctionBoard a, Bid_List b
+		WHERE a.post_no = b.post_no
+		  		AND a.post_status = #{tag} 
+	</select>
+	<select id="findSellingListFromBidList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO">
+		SELECT *
+		  FROM AuctionBoard
+		 WHERE id=#{id}
+		 ORDER BY post_no DESC
+	</select>
+	<select id="findSellingListFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		SELECT *
+		  FROM AuctionBoard
+		 WHERE id = #{id}
+		 			AND post_status=#{postStatus}
+		 ORDER BY post_no DESC
+	</select>
 </mapper>

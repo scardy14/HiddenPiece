@@ -37,15 +37,22 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 
 	@Override
-	public void findSellingProductList(String id,Criteria cri, Model model) {
-		// TODO Auto-generated method stub
-		
+	public int findSellingCountFromBidList(String id) {
+		return myPageMapper.findSellingCountFromBidList(id);
 	}
 
 	@Override
-	public void findEndProductList(String id,Criteria cri, Model model) {
-		// TODO Auto-generated method stub
-		
+	public int findSellingCountFromBidListTag(CriteriaAndIdVO cri) {
+		return myPageMapper.findSellingCountFromBidListTag(cri);
+	}
+
+	@Override
+	public List<Map<String, Object>> findSellingListFromProductList(CriteriaAndIdVO cri) {
+		if(cri.getTag().equals("0")) {
+			return myPageMapper.findSellingListFromBidList(cri);
+		} else {
+			return myPageMapper.findSellingListFromBidListTag(cri);
+		}
 	}
 
 	
