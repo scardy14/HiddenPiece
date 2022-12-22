@@ -16,6 +16,6 @@
 	   			AND a.id = #{id}
 	   			AND b.id = #{id}
 	   			AND a.post_no = b.post_no
-	   			AND a.post_status = 1
+	    ORDER BY b.bid_no DESC
 	</select>
 </mapper>

@@ -27,7 +27,6 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',11
 
 -- 회원 조회
 SELECT * FROM Account_Info
-
 SELECT * FROM HP_Member
 CREATE TABLE HP_Member(
 	id VARCHAR2(100) NOT NULL,
