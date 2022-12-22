@@ -115,8 +115,13 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	}
 
 	@Override
-	public List<Map<String, Object>> searchPostByKeyword(String keyword, HttpSession session) {
-		return null;
+	public List<Map<String, Object>> searchPostByKeyword(Criteria cri) {
+		return auctionBoardMapper.searchPostByKeyword(cri);
+	}
+
+	@Override
+	public int searchAuctionBoardListCnt(String keyword) {
+		return auctionBoardMapper.searchAuctionBoardListCnt(keyword);
 	}
 
 

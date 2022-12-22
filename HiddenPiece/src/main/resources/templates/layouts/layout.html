@@ -54,9 +54,15 @@
 				</a>
 			</div>
 			<div class="col-lg-4 col-6 text-left">
-				<form action="" onsubmit="searchByKeyword();" id="searchByKeyword">
+				<form id="searchByKeyword" method="post">
+				<input type="hidden" name="pageIndex"  id="pageIndex">
 					<div class="input-group">
-						<input id="searchKeyword" type="text" class="form-control" placeholder="">
+					<th:block th:if="${mapList}">
+						<input type="text" class="form-control" name="searchKeyword" placeholder="" th:value="${mapList.searchKeyword}">
+					</th:block>
+					<th:block th:unless="${mapList}">
+						<input type="text" class="form-control" name="searchKeyword" placeholder="" >
+					</th:block>
 						<div class="input-group-append">
 							<span class="input-group-text bg-transparent text-primary" id="searchByKeywordBtn" onclick="searchByKeyword()">
 								<i class="fa fa-search"></i>
@@ -76,12 +82,8 @@
 					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span>
 					<form id="logoutForm" action="logout" th:action="@{/logout}" method="post"> </form>
  					<a href="#" id="logoutBtn"><font color="red">로그아웃</font></a>
- 						
- 						
- 						
 					<br>
 					<br>
-					
 				</th:block>
 			</div>
 		</div>
@@ -114,9 +116,9 @@
 					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
 					</div>
 					
-                      	<th:block th:if="${session.mvo}">
+                      	<th:block th:if="${session.mvo!=null}">
 					<div class="nav-item dropdown dropright">
-                            <a href="#" class="dropdown-item" data-toggle="dropdown">마이페이지 <i class="fa fa-angle-right float-right mt-1"></i></a>
+                            <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true">마이페이지 <i class="fa fa-angle-right float-right mt-1"></i></a>
 						<div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
@@ -128,11 +130,11 @@
                         </div>
                         
                         <div class="nav-item dropdown dropright">
-                        <a href="#" class="dropdown-item" data-toggle="dropdown">참여한 경매<i class="fa fa-angle-right float-right mt-1"></i></a>
+                        <a href="#" class="dropdown-item" data-toggle="dropdown"  aria-expanded="true" >참여한 경매<i class="fa fa-angle-right float-right mt-1"></i></a>
                         <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                    		  <a href="" th:href="@{/error}" class="dropdown-item"><font color ="black">입찰중인 상품</font></a>
-							<a href="" th:href="@{/error}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  
-							<a href="" th:href="@{/error}" class="dropdown-item"><font color ="black">경매종료 상품</font></a>					
+                    		  <a href="" th:href="@{/buyingMyPage}" class="dropdown-item"><font color ="black">입찰중인 상품</font></a>
+							<a href="" th:href="@{/sellingMyPage}" class="dropdown-item"> <font color ="black">출품중인 상품</font></a>				  
+							<a href="" th:href="@{/boughtMyPage}" class="dropdown-item"><font color ="black">경매종료 상품</font></a>					
 							</div>
 						</div>
 					</th:block>
@@ -243,19 +245,25 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
-		function searchByKeyword(){
+		function searchByKeyword(num){
 			let keyword = $("#searchKeyword").val();
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;
-			}
-			$.ajax({
-				type:"get",
-				url:"searchPostByKeyword/"+keyword,
-				success:function(data){
-					location.href="";
+			} 
+			$("#pageIndex").val(num);
+			$("#searchByKeyword").attr("action","searchPostByKeyword").submit();
+			/* $.ajax({
+				type:"post",
+				dateType:"json",
+				url:"searchPostByKeyword",
+				data:
+				{
+					"keyword":keyword,
+				},
+				success:function(result){
 				}
-			})
+			}) */
 		}
 	
 		$(function() {

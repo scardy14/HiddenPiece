@@ -29,7 +29,7 @@
 			</form>
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span id = "endDate" th:text="${postVO.endDate}">시각표시</span> </h5>
-					<h5 class="font-weight-semi-bold mb-4" >남은시간: <span id = "remainTime">동작안함</span></h5>
+					<h5 class="font-weight-semi-bold mb-4" >남은시간: <span id = "remainTime">판매상태 여부</span></h5>
 					<h5 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h5>
 					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰가 ${postVO.currentPrice}원|" >현재입찰가</h5> <input type = "hidden" value = "value" th:value="${postVO.currentPrice}" id="currentPrice">
 					<th:block th:if="${postVO.postStatus==1}">
@@ -39,17 +39,7 @@
 					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰자 ${postVO.nowId}님|">현재입찰자: Kosta</h5>
 					<div class="d-flex align-items-center mb-4 pt-2">
 						<div class="input-group quantity mr-3" style="width: 200px;">
-							<div class="input-group-btn">
-								<button class="btn btn-primary btn-minus">
-									<i class="fa fa-minus"></i>
-								</button>
-							</div>
 							<input type="text" class="form-control bg-secondary border-0 text-center" th:value="${#numbers.formatInteger(postVO.startPrice*0.05+postVO.currentPrice,1)}" id = "bidPrice">
-							<div class="input-group-btn">
-								<button class="btn btn-primary btn-plus">
-									<i class="fa fa-plus"></i>
-								</button>
-							</div>
 						</div>
 						<th:block th:if="${session.mvo}">
 							<input type = "hidden" id = "point" th:value = "${session.mvo.point}">
@@ -92,27 +82,13 @@
 							<th:block th:unless="${postVO.like}">
 								<button class="btn px-3" th:onclick="checkToWishlist([[${postVO.postNo}]], [[${session.mvo.id}]])">
 									<i class="fas fa-heart text-primary"></i> 찜하기
-									
 								</button>
 							</th:block>
 						</th:block>
-						
 						<th:block th:unless="${session.mvo}">
 							<button class="btn px-3" id="noSessionWishlistBtn" onclick="noSessionWishlist();" >
 								<i class="far fa-heart"> 찜하기</i>
 							</button>
-						</th:block>
-						<th:block th:if="${session.mvo!=null}">
-							<th:block th:if="${session.mvo.id==postVO.id}">
-								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}">
-									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-									<button type = "submit">수정하기</button>
-								</form>  &nbsp;
-								<form id = "moveAuctionBoardPostDelete" th:action="@{/AuctionBoardPostDelete}" method="post">
-									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-									<button  type = "submit">삭제하기</button> 
-								</form>
-							</th:block>
 						</th:block>
 					</div>
 					<br>
@@ -123,9 +99,23 @@
 						<div class="tab-pane fade show active" id="tab-pane-1">
 							<p th:text="${postVO.content}">상품설명란</p>
 						</div>
+					</div>
+					<th:block th:if="${session.mvo!=null}">
+						<th:block th:if="${session.mvo.id==postVO.id}">
+							<div class="row px-xl-5">
+							<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}">
+								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+								<button type = "submit" style="border-color: gray; background-color: white;">수정하기</button>
+							</form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<form id = "moveAuctionBoardPostDelete" th:action="@{/AuctionBoardPostDelete}" method="post">
+								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+								<button  type = "submit" style="border-color: gray; background-color: white;">삭제하기</button> 
+							</form>
+							</div>
+						</th:block>
+					</th:block>
 				</div>
 			</div>
-		</div>
 		
 <div class="card bg-light" style="width:2500px" id="commentBody">
 <!-- cList.commentStatus가 1인것만 출력 -->
@@ -356,6 +346,7 @@
   		alert("로그인 후 이용가능합니다");
   	}
   	function bidok() {
+  		let remainTime = document.getElementById("remainTime").innerHTML;
   		let currentPrice = document.getElementById("currentPrice").value*1;
   		let sellPrice = document.getElementById("sellPrice").value*1;
   		let bidPrice = document.getElementById("bidPrice").value*1;
@@ -364,42 +355,46 @@
   		let id = document.getElementById("id").value;
   		let postNo = document.getElementById("articleNo").value;
   		 /* alert("현재입찰가 " + currentPrice + "즉시구매가 " + sellPrice+ "입찰가 " + bidPrice  + "포인트 " + point + "최저입찰가 " + minimumPrice + "아이디 " + id + "글번호 " + postNo);  */
-  		if(bidPrice==sellPrice) {	//001 만일 입찰할 금액이 즉구가와 같다면
-  			if(confirm("입찰할려는 금액이 즉시구매가와 동일합니다. 즉시구매하시겠습니까?")) {
-  				if(point<sellPrice) {
-  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
-  				} else {
-  					location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
-  				}
-  			} else {
-  				alert("취소하였습니다");
-  			} 
-  		} else { // 001 만일 입찰할 금액이 즉구가와 다르다면
-  			if(bidPrice>sellPrice) {
-  				if(confirm("입찰할려는 금액이 즉시구매가를 초과합니다. 즉시구매가로 바로 구매하시겠습니까?")) {
-  					if(point<sellPrice) {
+  		if(remainTime!='경매가 종료되었습니다') {
+  			if(bidPrice==sellPrice) {	//001 만일 입찰할 금액이 즉구가와 같다면
+  	  			if(confirm("입찰할려는 금액이 즉시구매가와 동일합니다. 즉시구매하시겠습니까?")) {
+  	  				if(point<sellPrice) {
   	  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
   	  				} else {
   	  					location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
   	  				}
-  				} else {
-  					alert("취소하였습니다");
-  				}
-  			} else {
-  				if(bidPrice<minimumPrice) {
-  					alert("입찰할려는 금액이 최소입찰가보다 낮습니다. 입찰금액을 올려주세요");
-  				} else {
-  					if(confirm("입찰하시겠습니까?")) {
-  						if(point<bidPrice) {
-  		  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
-  		  				} else {
-  		  					location.href="bid?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
-  		  				}
-  					} else {
-  						alert("취소하였습니다");
-  					}
-  				}
-  			}
+  	  			} else {
+  	  				alert("취소하였습니다");
+  	  			} 
+  	  		} else { // 001 만일 입찰할 금액이 즉구가와 다르다면
+  	  			if(bidPrice>sellPrice) {
+  	  				if(confirm("입찰할려는 금액이 즉시구매가를 초과합니다. 즉시구매가로 바로 구매하시겠습니까?")) {
+  	  					if(point<sellPrice) {
+  	  	  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
+  	  	  				} else {
+  	  	  					location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
+  	  	  				}
+  	  				} else {
+  	  					alert("취소하였습니다");
+  	  				}
+  	  			} else {
+  	  				if(bidPrice<minimumPrice) {
+  	  					alert("입찰할려는 금액이 최소입찰가보다 낮습니다. 입찰금액을 올려주세요");
+  	  				} else {
+  	  					if(confirm("입찰하시겠습니까?")) {
+  	  						if(point<bidPrice) {
+  	  		  					alert("포인트가 부족합니다. 포인트 충전 후 이용해주시기 바랍니다");
+  	  		  				} else {
+  	  		  					location.href="bid?postNo="+postNo+"&id="+id+"&bidPrice="+bidPrice;
+  	  		  				}
+  	  					} else {
+  	  						alert("취소하였습니다");
+  	  					}
+  	  				}
+  	  			}
+  	  		}
+  		} else {
+  			alert("종료된 경매입니다")
   		}
   		
   	}
@@ -408,19 +403,25 @@
   		let point = document.getElementById("point").value*1;
   	}
   	function buyok() {
+  		let remainTime = document.getElementById("remainTime").innerHTML;
   		let postNo = document.getElementById("articleNo").value;
   		let id = document.getElementById("id").value;
   		let sellPrice = document.getElementById("sellPrice").value*1;
   		let point = document.getElementById("point").value*1;
-  		if(confirm("즉시구매하시겠습니까?")) {
-  			if(point<sellPrice) {
-  				alert("포인트가 부족합니다");
-  			} else {
-  				location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
-  			}
+  		if(remainTime!='경매가 종료되었습니다') {
+  			if(confirm("즉시구매하시겠습니까?")) {
+  	  			if(point<sellPrice) {
+  	  				alert("포인트가 부족합니다");
+  	  			} else {
+  	  				location.href="buy?postNo="+postNo+"&id="+id+"&sellPrice="+sellPrice;
+  	  			}
+  	  		} else {
+  	  			alert("취소하였습니다");
+  	  		}
   		} else {
-  			alert("취소하였습니다");
+  			alert("종료된 경매입니다");
   		}
+  		
   	}
   	function bidend() {
   		alert("경매가 종료되어 입찰할 수 없습니다");
@@ -428,7 +429,8 @@
   	function buyend() {
   		alert("경매가 종료되어 구매할 수 없습니다");
   	}
-  
+  	remainTime();
+  	
   	function remainTime() {
   		let date = new Date();	  	
   		let endDate = document.getElementById("endDate").innerHTML;
@@ -447,13 +449,20 @@
   		if(remainHour<0) {remainDay-=1; remainHour+=24;}
   		if(remainDay<0) {remainMonth-=1; remainDay+=30;}
   		if(remainMonth<0) {remainYear-=1; remainMonth+=12;}
-  		if(remainYear==0&&remainMonth==0&&remainDay==0&&remainHour==0&&remainMinute==0&&remainSecond==0) {
-  			clearInterval(timeInterval);
-  		}
+  		
   		let resultText = remainYear+"년 "+remainMonth+"월 "+remainDay+"일 "+remainHour+"시 "+remainMinute+"분 "+remainSecond+"초" ;
+  		if(remainYear==0&&remainMonth==0&&remainDay==0&&remainHour==0&&remainMinute==0&&remainSecond==0) {
+  			resultText= "경매가 종료되었습니다"
+  			remainTime.innerText = resultText;
+  			clearInterval(timeInterval);  			
+  		} else if(remainYear<0) {
+  			resultText= "경매가 종료되었습니다"
+  			remainTime.innerText = resultText;
+  			clearInterval(timeInterval);  			
+  		}
+  		
   	  	remainTime.innerText = resultText;
   	}
-	remainTime();
   	let timeInterval = setInterval(remainTime, 1000);
   	
   	

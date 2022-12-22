@@ -52,6 +52,7 @@
             let sellPrice = document.getElementById("sellPrice1").value*1;
             let writeform = document.getElementById("writeAuctionBoardPostForm");
             if(startPrice<=sellPrice) {
+            	alert("게시물을 등록한 이후에는 제목과 상품설명만 수정가능합니다.");
             	if(!confirm("등록하시겠습니까?")) {
             		event.preventDefault();
             	}

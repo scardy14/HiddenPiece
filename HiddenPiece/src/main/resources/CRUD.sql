@@ -42,6 +42,7 @@ CREATE TABLE HP_Member(
 	CONSTRAINT PK_HP_Member PRIMARY KEY (id),
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
+SELECT * FROM HP_Member
 
 -- 계좌 생성하기
 INSERT INTO ACCOUNT_INFO values('99150201', '국민', 50000);
@@ -65,7 +66,6 @@ update spring_member set password='b',name='아이유2',address='종로' where i
 update HP_Member set point=point+ ? where id='jaja5' name = ? 
 
 update Account_Info set balance=balance- ?  where account_No=? and bank =?
-
 
 
 
@@ -138,3 +138,59 @@ UPDATE Account_Info
  		   AND 
  
  		)
+
+-- 페이징 처리된 게시물 리스트
+select * from (
+select ROWNUM rm, A.* 
+from (
+				select  	 post_no
+								,content
+								, title
+								,photo
+								,start_price
+								, sell_price
+								, current_price
+								, hpm.id
+								,time_posted
+								, hits
+								, end_date
+								, now_id
+								, post_status
+						from auctionboard ab , hp_member hpm
+						where post_status in (1,2,3)
+						and  hpm.id=ab.id
+						
+						order by post_no desc
+						) A
+						where  content LIKE '%요%' OR title LIKE '%요%' 
+						)
+								
+	
+select  *
+from auctionboard ab , hp_member hpm
+where post_status in (1,2,3) and  hpm.id=ab.id
+and (content LIKE '%요%' OR title LIKE '%요%')						
+
+CREATE OR REPLACE PROCEDURE Update_Post_Status_2 AS 
+BEGIN
+UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' ';
+END Update_Post_Status_2; 
+
+BEGIN
+DBMS_SCHEDULER.CREATE_JOB (
+            job_name => '"Update_Post_Status_2_Job',
+            job_type => 'STORED_PROCEDURE',
+            job_action => 'Update_Post_Status_2',
+            repeat_interval => 'FREQ=MINUTELY;INTERVAL=1',
+            comments => '경매게시판글2');
+            
+            
+BEGIN
+    DBMS_SCHEDULER.CREATE_JOB
+    (
+    JOB_NAME => 'Update_Post_Status_2_Job',
+    JOB_TYPE => 'STORED_PROCEDURE',
+    JOB_ACTION => 'Update_Post_Status_2',
+    REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =1', --1분에 1번
+    COMMENTS => '잡객체 1'
+    );
