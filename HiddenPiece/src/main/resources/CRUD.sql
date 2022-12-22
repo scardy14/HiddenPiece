@@ -271,10 +271,10 @@ select * from (
 								order by post_no desc
 								) A
 								where 1=1
-									and content LIKE '%부엉%' OR title LIKE '%부엉%'
+									and (content LIKE '%세요%' OR title LIKE '%세요%')
 										and post_status=1
 								)
-    );
+   
 
     SELECT COUNT(*)
 		 FROM AuctionBoard a, Bid_List b

@@ -117,7 +117,7 @@
 					style="width: calc(100% - 30px); z-index: 999;">
 					<div class="navbar-nav w-100">
 					<div class="nav-item dropdown dropright">
-					<a class="dropdown-item" th:href="@{/auctionboard}">경매게시판</a> 
+					<a class="dropdown-item" th:onclick="searchByKeyword()">경매게시판</a> 
 					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
 					</div>
 					
@@ -237,6 +237,7 @@
 	});
 		function searchByKeyword(num){ 
 			let keyword = $("#searchKeyword").val();
+			
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;

@@ -232,7 +232,9 @@ public class AuctionBoardController {
 						((AuctionBoardPostVO) auctionBoardList.get(i)).setLike(true);
 					}
 				}
+				System.out.println(mapList);
 				model.addAttribute("postList", auctionBoardList);
+				System.out.println(auctionBoardList.size());
 			}
 			
 			else {
