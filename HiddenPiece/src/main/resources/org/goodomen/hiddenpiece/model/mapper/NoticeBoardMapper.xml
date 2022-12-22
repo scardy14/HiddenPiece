@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.goodomen.hiddenpiece.model.mapper.NoticeBoardMapper">
+	<!-- 페이지네이션과 글목록 -->
+	<select id="boardList" resultType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria">
+			SELECT * from 
+	(select ROWNUM rm, post_no,contend, time_posted,title,hits,post_status,id from
+		(select post_no,contend, time_posted,title,hits, post_status, hpm.id
+		from noticeboard nb
+		inner join hp_member hpm on hpm.id=nb.id
+		where post_status=1
+		order by post_no desc))
+	<![CDATA[
+		where rm between #{pageStart} and #{perPageNum}*#{page}
+		]]>
+	</select>
+	
+	<!-- 글개수 -->
+	<select id="noticeBoardListCnt" resultType="int">
+		SELECT COUNT(*) FROM noticeboard WHERE post_status=1
+	</select>
+	
+	<!-- 페이지네이션을 적용하지 않은 글목록보기 -->
+	<select id="findNoticeBoardPostList" resultType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO">
+		select * from noticeboard where  post_status=1 order by post_no desc
+	</select>
+	<!-- 상세글보기  -->
+	<select id="findNoticeBoardPostDetail" parameterType="long" resultType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO">
+		select * from noticeboard where post_no=#{value}
+	</select>
+	<!-- 글쓰기 -->
+	<insert id="writePost" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO">
+		insert into noticeboard(post_no,contend,time_posted,title,id) values(noticeboard_seq.nextval,#{contend},sysdate,#{title},#{id})
+	</insert>
+	<!-- 글수정 -->
+	<update id="updatePost" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO">
+		update noticeboard set title=#{title}, contend=#{contend} where post_no=#{postNo}
+	</update>
+	<!-- 글삭제 -->
+	<update id="deletePost" parameterType="long">
+		update noticeboard set post_status =0 where post_no=#{value}
+	</update>
+	<update id="updateHits" parameterType="long">
+		update noticeboard set hits=hits+1 where post_no=#{value}
+	</update>
+
+</mapper>

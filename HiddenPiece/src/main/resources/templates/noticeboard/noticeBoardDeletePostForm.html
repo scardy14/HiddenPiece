@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+	<div class="row pt-4">
+		<div class="col-sm-6 offset-sm-3">
+			<form method="post" action="" th:action="@{/deleteNoticeBoardPost}">
+				<input name="postNo" th:value="${param.postNo}" type = "hidden">
+				<div class="text-center">
+					<button type="submit" class="btn btn-success">삭제</button>
+					<br><br>
+					<a href="" th:href="noticeBoardPostList">공지게시판으로</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>

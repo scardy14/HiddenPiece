@@ -15,3 +15,6 @@ CREATE TABLE NoticeBoard (
 )
 
 CREATE SEQUENCE NoticeBoard_seq;
+
+select status from HP_MEMBER where id='java1';
+select status from HP_MEMBER where id='hunjin';
