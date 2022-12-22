@@ -14,8 +14,22 @@
         <div class="row px-xl-5">
             <div class="col-lg-15 table-responsive mb-5">
             	<h2>입찰중인 상품</h2><br>
-            	<input type = "checkbox" name = "tag" value = "1">진행중
-            	<input type = "checkbox" name = "tag" value = "2">완료
+            	<th:block th:if="${tag}==0">
+            		<input type = "checkbox" name = "tag" value = "0" onclick='checkOnlyOne(this); sendinfo(this)' checked>전체
+            		<input type = "checkbox" name = "tag" value = "1" onclick='checkOnlyOne(this); sendinfo(this)'>진행중
+            		<input type = "checkbox" name = "tag" value = "2" onclick='checkOnlyOne(this); sendinfo(this)'>완료
+            	</th:block>
+            	<th:block th:if="${tag}==1">
+            		<input type = "checkbox" name = "tag" value = "0" onclick='checkOnlyOne(this); sendinfo(this)'>전체
+            		<input type = "checkbox" name = "tag" value = "1" onclick='checkOnlyOne(this); sendinfo(this)' checked>진행중
+            		<input type = "checkbox" name = "tag" value = "2" onclick='checkOnlyOne(this); sendinfo(this)'>완료
+            	</th:block>
+            	<th:block th:if="${tag}==2">
+            		<input type = "checkbox" name = "tag" value = "0" onclick='checkOnlyOne(this); sendinfo(this)'>전체
+            		<input type = "checkbox" name = "tag" value = "1" onclick='checkOnlyOne(this); sendinfo(this)'>진행중
+            		<input type = "checkbox" name = "tag" value = "2" onclick='checkOnlyOne(this); sendinfo(this)' checked>완료
+            	</th:block>
+            	<input type = "hidden" id="id" th:value="${session.mvo.id}">
                 <table class="table table-light table-borderless table-hover text-center mb-0" style="width:100%; text-align: center; align-content: text;" >
                     <thead class="thead-dark">
                         <tr>
@@ -29,7 +43,7 @@
                     </thead>
                     <tbody class="align-middle" th:each="post:${biddingList}">
                         <tr>
-                        	<td><a th:href="@{findAuctionBoardPostDetail?postNo=} + ${post.postNo}" th:text="${post.title}">제목</a></td>
+                        	<td><a th:href="@{findAuctionBoardPostDetail?postNo=} + ${post.postNo}" th:text="${post.title}" onclick='checkOnlyOne(this); sendinfo()'>제목</a></td>
                         	<td th:text="${post.nowId}">현재입찰자</td>
                         	<td th:text="${post.currentPrice}">현재입찰가</td>
                         	<td th:text="${post.sellPrice}">즉시구매가</td>
@@ -48,21 +62,38 @@
                 </table>
             </div>
         </div>
+        <div class="col-12">
+                    <nav>
+                    	<ul class="pagination justify-content-center">
+							<th:block th:if="${paging.prev}">
+								<li class="page-item active"><a class="page-link" th:onclick="searchByKeyword([[${paging.startPage}]]-1)">Pre</a></li>
+							</th:block>
+							<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
+								<li class="page-item"><a class="page-link" th:onclick="searchByKeyword([[${num}]])" th:text="${num}"></a></li>
+							 </th:block>
+							 <th:block th:if="${paging.next && paging.endPage>0}">
+							 	<li class="page-item active"><a class="page-link"  th:onclick="searchByKeyword([[${paging.startPage}]]+1)">Next</a></li>
+							 </th:block>
+						</ul> 	
+					</nav>
+				</div>
     </div>
-    <!-- Cart End -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript">
+	function checkOnlyOne(element) {
+		const checkboxes = document.getElementsByName("tag");
+		checkboxes.forEach((cb) => {
+			cb.checked = false;
+		})
+		element.checked = true;
+	}
+	function sendinfo(element) {
+		let id = document.getElementById("id");
+		let tag = element.value;
+		alert(tag);
+		location.href="buyingMyPage?tag="+element.value+"&id="+id;
+	}
 	</script>
-
-	
-	
-
-    <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-
-
 </div>
 </html>

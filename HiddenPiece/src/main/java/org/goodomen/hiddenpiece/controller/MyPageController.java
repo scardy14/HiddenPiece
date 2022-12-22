@@ -1,12 +1,13 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.service.MyPageService;
+import org.goodomen.hiddenpiece.model.vo.CheckboxVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
-import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,11 @@ public class MyPageController {
 	private final MyPageService mypageService;
 	
 	@RequestMapping("buyingMyPage")
-	public String BiddingProduct(CriteriaAndIdVO cri, Model model) {
+	public String BiddingProduct(CriteriaAndIdVO cri, Model model, String tag) {
+		if(tag==null) {
+			tag="0";
+		}
+		System.out.println("1");
 		int biddingCount = mypageService.findBiddingCountFromBidList(cri.getId());
 		PagingAndId paging = new PagingAndId();
 		paging.setCri(cri);
@@ -28,6 +33,7 @@ public class MyPageController {
 		List<Map<String, Object>> biddingList = mypageService.findBiddingListFromProductList(cri);
 		model.addAttribute("biddingList", biddingList);
 		model.addAttribute("paging", paging);
+		model.addAttribute("tag",tag);
 		return "mypage/buying-Page";
 	}
 	@RequestMapping("sellingProduct")

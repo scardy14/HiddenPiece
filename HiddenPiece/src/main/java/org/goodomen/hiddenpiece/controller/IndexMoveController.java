@@ -176,20 +176,5 @@ public class IndexMoveController {
 	public String noticeBoardDetailMove() {
 		return "noticeBoardPostDetail";
 	}
-	
-	@RequestMapping("buyingMyPage")
-	public String buyingMyPage() {
-		return "mypage/buying-Page";
-	}
-	
-	@RequestMapping("sellingMyPage")
-	public String sellingMyPage() {
-		return "mypage/selling-Page";
-	}
-	
-	@RequestMapping("endMyPage")
-	public String boughtMyPage() {
-		return "mypage/end-Page";
-	}
 }
 
