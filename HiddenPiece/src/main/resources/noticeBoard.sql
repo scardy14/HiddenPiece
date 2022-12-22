@@ -15,3 +15,31 @@ CREATE TABLE NoticeBoard (
 )
 
 CREATE SEQUENCE NoticeBoard_seq;
+
+select status from HP_MEMBER where id='java1';
+select status from HP_MEMBER where id='hunjin';
+
+		SELECT *
+		  FROM (
+		  			SELECT ROWNUM, a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  				  FROM AuctionBoard a, Bid_List b
+	 				 WHERE a.post_no = b.post_no
+	   							AND a.id = 'scardy'
+	   							AND b.id = 'scardy'
+	   							AND a.post_no = b.post_no
+	   				 ORDER BY b.bid_no ASC
+		  		)
+		WHERE ROWNUM BETWEEN 	1 and 2
+
+		SELECT * 
+		  FROM (
+		  		SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  			  FROM AuctionBoard a, Bid_List b
+	 			 WHERE a.post_no = b.post_no
+	   							AND a.id = 'scardy'
+	   							AND b.id = 'scardy'
+	   							AND a.post_no = b.post_no
+	   			ORDER BY ROWNUM DESC
+		  		)
+		  WHERE ROWNUM BETWEEN 1 AND 2
+	

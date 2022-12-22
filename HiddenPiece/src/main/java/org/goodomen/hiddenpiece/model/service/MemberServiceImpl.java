@@ -10,6 +10,7 @@ import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -141,6 +142,26 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<AuctionBoardPostVO> selectComparedMyWishlist(String id) {
 		return null;
+	}
+
+	@Override
+	public ArrayList<AuctionBoardPostVO> findAuctionBoardStatus1ById(String id) {
+		return memberMapper.findAuctionBoardStatus1ById(id);
+	}
+
+	@Override
+	public ArrayList<AuctionBoardPostVO> findAuctionBoardStatus0ById(String id) {
+		return memberMapper.findAuctionBoardStatus0ById(id);
+	}
+
+	@Override
+	public ArrayList<FreeBoardVO> findFreeBoardStatus0ById(String id) {
+		return memberMapper.findFreeBoardStatus0ById(id);
+	}
+
+	@Override
+	public ArrayList<FreeBoardVO> findFreeBoardStatus1ById(String id) {
+		return memberMapper.findFreeBoardStatus1ById(id);
 	}
 
 }

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
-import org.goodomen.hiddenpiece.model.vo.AccountVO;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 
 public interface MemberService {
@@ -51,5 +52,13 @@ public interface MemberService {
 	long findPointbyId(String id);
 
 	long findPoint(String id);
+
+	ArrayList<AuctionBoardPostVO> findAuctionBoardStatus1ById(String id);
+
+	ArrayList<AuctionBoardPostVO> findAuctionBoardStatus0ById(String id);
+
+	ArrayList<FreeBoardVO> findFreeBoardStatus0ById(String id);
+	
+	ArrayList<FreeBoardVO> findFreeBoardStatus1ById(String id);
 
 }

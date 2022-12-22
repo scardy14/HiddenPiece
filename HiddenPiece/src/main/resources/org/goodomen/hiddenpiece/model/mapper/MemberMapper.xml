@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.goodomen.hiddenpiece.model.mapper.MemberMapper">
 	<select id="login" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO" resultType="org.goodomen.hiddenpiece.model.vo.MemberVO">
-		select * from HP_Member where id=#{id} and password=#{password} and status=1
+		select * from HP_Member where id=#{id} and password=#{password} and status IN(1,2)
 	</select>
 
 	<insert id="registerMember" parameterType="org.goodomen.hiddenpiece.model.vo.MemberVO">
@@ -81,5 +81,26 @@
 	<select id="findPoint" parameterType="string" resultType="long">
 		SELECT point FROM HP_Member WHERE id=#{value}
 	</select>
-
+	
+	<select id="findAuctionBoardStatus1ById" resultType = "org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		Select *
+		from auctionboard ab, hp_member hpm
+		where post_status in (1,2,3) and hpm.id=ab.id
+	</select>
+	<select id="findAuctionBoardStatus0ById" resultType = "org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
+		Select *
+		from auctionboard ab, hp_member hpm
+		where post_status=0 and hpm.id=ab.id
+	</select>
+	<select id="findFreeBoardStatus0ById" resultType = "org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
+		Select *
+		from freeboard fb, hp_member hpm
+		where post_status=0 and hpm.id=fb.id
+	</select>
+	<select id="findFreeBoardStatus1ById" resultType = "org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
+		Select *
+		from freeboard fb, hp_member hpm
+		where post_status=1 and hpm.id=fb.id
+	</select>
+	
 </mapper>

@@ -27,7 +27,6 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values(111120,'KBK은행',11
 
 -- 회원 조회
 SELECT * FROM Account_Info
-
 SELECT * FROM HP_Member
 CREATE TABLE HP_Member(
 	id VARCHAR2(100) NOT NULL,
@@ -139,6 +138,8 @@ UPDATE Account_Info
  
  		)
 
+CREATE OR REPLACE PROCEDURE Update_Post_Status_2 
+
 -- 페이징 처리된 게시물 리스트
 select * from (
 select ROWNUM rm, A.* 
@@ -196,16 +197,38 @@ BEGIN
 UPDATE AuctionBoard SET post_status = 2 WHERE end_Date<=sysdate AND now_id!=' ';
 END Update_Post_Status_2; 
 
+
 BEGIN
 DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"Update_Post_Status_2_Job',
+            job_name => 'Update_Post_Status_2_Job',
             job_type => 'STORED_PROCEDURE',
             job_action => 'Update_Post_Status_2',
             repeat_interval => 'FREQ=MINUTELY;INTERVAL=1',
-            comments => '경매게시판글2');
+            comments => '경매게시판글2'
+            )
+            DBMS_SCHEDULER.ENABLE('Update_Post_Status_2_Job')
+ END;
             
-            
+
+ 
+ CREATE OR REPLACE PROCEDURE INCREASE_SALARY
 BEGIN
+  UPDATE employees SET salary = salary * 1.5
+END INCREASE_SALARY;
+
+BEGIN
+DBMS_SCHEDULER.CREATE_JOB (
+            job_name => '"HR"."JOB_INCREASE_SALARY"',
+            job_type => 'STORED_PROCEDURE',
+            job_action => 'HR.INCREASE_SALARY',
+            number_of_arguments => 0,
+            start_date => NULL,
+            repeat_interval => 'FREQ=MINUTELY;INTERVAL=1',
+            end_date => NULL,
+            enabled => FALSE,
+            auto_drop => FALSE,
+            comments => '봉급인상')
+END;
     DBMS_SCHEDULER.CREATE_JOB
     (
     JOB_NAME => 'Update_Post_Status_2_Job',
@@ -251,3 +274,57 @@ select * from (
 									and content LIKE '%부엉%' OR title LIKE '%부엉%'
 										and post_status=1
 								)
+    );
+
+    SELECT COUNT(*)
+		 FROM AuctionBoard a, Bid_List b
+		WHERE a.post_no = b.post_no
+		  		AND a.id = 'scardy'
+		  		AND a.post_status = 1
+		  		
+SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+  FROM AuctionBoard a, Bid_List b
+ WHERE a.post_no = b.post_no
+   			AND a.id = 'scardy'
+   			AND b.id = 'scardy'
+   			AND a.post_no = b.post_no
+   			AND a.post_status = 1
+   			
+   
+    post_no NUMBER NOT NULL,
+	id VARCHAR2(100) NOT NULL,
+	title VARCHAR2(100) NOT NULL,
+	content clob NOT NULL,
+	photo VARCHAR2(100) NOT NULL,
+	start_price NUMBER NOT NULL,
+	current_price NUMBER NOT NULL,
+	sell_price NUMBER NOT NULL,
+	time_posted DATE DEFAULT sysdate NOT NULL,
+	hits NUMBER DEFAULT 0 NOT NULL ,
+	end_date DATE NOT NULL,
+	now_id VARCHAR2(100) NOT NULL,
+	post_status NUMBER DEFAULT 1 NOT NULL,
+
+	SELECT * FROM Bid_List
+	
+	SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  				  FROM AuctionBoard a, Bid_List b
+	 				 WHERE a.post_no = b.post_no
+	   							AND b.id = 'scardy'
+	   							AND a.post_no = b.post_no
+	   				 ORDER BY b.bid_no DESC
+		  		)
+		WHERE rnum BETWEEN 5 and 10
+		
+	SELECT *
+		  FROM (
+		  			SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  				  FROM AuctionBoard a, Bid_List b
+	 				 WHERE a.post_no = b.post_no
+	   							AND b.id = 'scardy'
+	   							AND a.post_no = b.post_no
+	   				 ORDER BY ROWNUM DESC
+		  		)
+		WHERE ROWNUM BETWEEN 5 and 11

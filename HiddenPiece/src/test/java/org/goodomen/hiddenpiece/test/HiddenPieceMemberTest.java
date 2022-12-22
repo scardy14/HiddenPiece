@@ -1,7 +1,11 @@
 package org.goodomen.hiddenpiece.test;
 
+import java.util.ArrayList;
+
 import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
+import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -126,4 +130,35 @@ public class HiddenPieceMemberTest {
 		long point = memberMapper.findPointbyId(id);
 		System.out.println(point+"원");
 	}
+	
+	@Test
+	public void findAuctionBoardStatus1ById() {
+		String id = "scardy";
+		ArrayList<AuctionBoardPostVO> list = memberMapper.findAuctionBoardStatus1ById(id);
+		for(AuctionBoardPostVO vo:list)		
+			logger.debug("list:{}", vo);
+	}
+	
+	@Test
+	public void findAuctionBoardStatus0ById() {
+		String id = "scardy";
+		ArrayList<AuctionBoardPostVO> list = memberMapper.findAuctionBoardStatus0ById(id);
+		for(AuctionBoardPostVO vo:list)		
+			logger.debug("list:{}", vo);
+	}
+	@Test
+	public void findFreeBoardStatus0ById() {
+		String id = "scardy";
+		ArrayList<FreeBoardVO> list = memberMapper.findFreeBoardStatus0ById(id);
+		for(FreeBoardVO vo:list)		
+			logger.debug("list:{}", vo);
+	}
+	@Test
+	public void findFreeBoardStatus1ById() {
+		String id = "scardy";
+		ArrayList<FreeBoardVO> list = memberMapper.findFreeBoardStatus1ById(id);
+		for(FreeBoardVO vo:list)		
+			logger.debug("list:{}", vo);
+	}
+	
 }

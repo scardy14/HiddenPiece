@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>HiddenPiece</title>
+</head>
+
+<div layout:fragment="content">
+    <!-- Cart Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-lg-10 table-responsive mb-5" style="padding-left:250px;">
+            	<h2><span th:text="${param.id}">아이디</span>가 삭제한 자유게시판</h2><br>
+                <table class="table table-light table-borderless table-hover text-center " style="width:100%; height:75%; text-align: center; align-content: text;" >
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>글번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                            <th>조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle" th:each="fl:${freeList}">
+						<tr>
+						<td><span th:text="${fl.postNo}"></span></td>
+						<td style = "text-overflow:ellipsis; white-space:nowrap; overflow:hidden; ">
+						<a href="" th:href="@{/findFreeBoardPostDetail(postNo=${fl.postNo})}">
+						<font color ="gray"><span th:text="${fl.title}"></span></font></a></td>
+						<td><span th:text="${fl.id}"></span></td>
+						<td><span th:text="${fl.timePosted}"></span></td>
+						<td><span th:text="${fl.hits}"></span></td>
+					</tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Cart End -->
+
+
+	
+	
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+</div>
+</html>

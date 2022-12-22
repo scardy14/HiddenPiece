@@ -83,7 +83,10 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	public int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
 			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
-		}		
+		}
+		if(auctionBoardMapper.checkBidList(auctionBoardPostVO)!=1) {
+			auctionBoardMapper.addBidList(auctionBoardPostVO);
+		}
 		auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
 		auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);		
 		return 0;
@@ -99,6 +102,7 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		return auctionBoardMapper.boardList(cri);
 	}
 	@Override
+	@Transactional
 	public int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
 			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);

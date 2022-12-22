@@ -1,26 +1,32 @@
 package org.goodomen.hiddenpiece.freeboard.test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.mapper.FreeBoardMapper;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO;
+import org.goodomen.hiddenpiece.model.service.MyPageService;
+import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
+import org.goodomen.hiddenpiece.model.vo.PagingAndId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.ui.Model;
 
 import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 @Slf4j
 public class FreeBoardTest {
 	FreeBoardMapper freeBoardMapper;
+	MyPageService mypageService;
 	@Autowired
 	public FreeBoardTest(FreeBoardMapper freeBoardMapper) {
 		super();
 		this.freeBoardMapper = freeBoardMapper;
 	}
+	public 
 	@Test
 	void mapper() {
 		Assertions.assertNotNull(freeBoardMapper);
@@ -53,6 +59,5 @@ public class FreeBoardTest {
 		long postNo=49;
 		freeBoardMapper.updateHits(postNo);
 	}
-	
 
 }

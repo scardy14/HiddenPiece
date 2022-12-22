@@ -6,98 +6,56 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-<!-- 	<div class="row pt-4" th:each="postVO:${postVO}">
-		<div>
-			<form>
-				<input type="hidden" id="postNo" name="postNo"
-					th:value="${postVO.postNo}">
-			</form>
-		</div>
-		<div class="col-sm-6 offset-sm-3">
-
-			<div class="row">
-				<div class="col-12">
-					<span th:text="${postVO.title}" id="postNo"></span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-2" align="center">
-					<span th:text="${postVO.postNo}"></span>
-				</div>
-				<div class="col-2" align="center">
-					<span th:text="${postVO.id}"></span>
-				</div>
-				<div class="col-3" align="center">
-					<span th:text="${postVO.timePosted}"></span>
-				</div>
-				<div class="col-2" align="center">
-					<span th:text="${postVO.hits}"></span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<span th:text="${postVO.contend}"></span>
-				</div>
-			</div>
-		</div>
-	</div> -->
-	
-	<div th:each="postVO:${postVO}">
-				<form>
-				<input type="hidden" id="postNo" name="postNo"
-					th:value="${postVO.postNo}">
-			</form>
-		<div style="margin: 10px 50px 20px;">
-	  <table class="table table-responsive-sm" >
-    <thead class="thead-light">
-      <tr>
-      		
-        <th colspan='3'>
-				제목 : <span th:text="${postVO.title}" id="postNo"></span>
-		</th>
-		<th>
-			<th:block th:if="${session.mvo}">
+	<div align="center" >
+		<form>
+			<input type="hidden" id="postNo" name="postNo" th:value="${postVO.postNo}">
+		</form>
+		<div style="width: 70%; background-color: white;">
+	  <table class="table table-responsive-sm" style="table-layout: fixed">
+    		<thead >
+      			<tr>		
+        			<th>
+						제목 <br> <span th:text="${postVO.title}" id="postNo"></span>
+					</th>
+       			 </tr>
+        		<tr>
+        			<th>글번호 <br>
+						<span th:text="${postVO.postNo}"></span>
+					</th>
+        			<th>작성자 <br>
+						<span th:text="${postVO.id}"></span>
+					</th>
+       				 <th>작성일시<br>
+						<span th:text="${postVO.timePosted}"></span>
+					</th>
+        			<th>조회수 <br>
+						<span th:text="${postVO.hits}"></span>
+					</th>
+        		</tr>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td style="word-break:break-all" colspan="4">
+    					<span th:text="${postVO.contend}"></span>
+    				</td>
+    			</tr>
+    		</tbody>
+    </table>
+    <th:block th:if="${session.mvo}">
 		<th:block th:if=${session.mvo.id==postVO.id}>
-			<div align="right">
+			<div align="center">
 				<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font color="gray">수정</font></a>
 				<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a>
 			</div>
 		</th:block>
 	</th:block>
-		</th>
-        </tr>
-        <tr>
-        <th>글번호 : 
-				<span th:text="${postVO.postNo}"></span>
-		</th>
-        <th>작성자 : 
-				<span th:text="${postVO.id}"></span>
-		</th>
-        <th>작성일시 : 
-				<span th:text="${postVO.timePosted}"></span>
-		</th>
-        <th >조회수 : 
-				<span th:text="${postVO.hits}"></span>
-		</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-    	<th>
-    	<span th:text="${postVO.contend}"></span>
-    	</th>
-    	</tr>
-    </tbody>
-    </table>
 	</div>
 	</div>
 	
-	<br> <br>
-
-	<div class="card bg-light" style="margin: 10px 50px 20px;" id="commentBody">
+	<div align="center">
+	<div class="card bg-light" style="width: 70%;" id="commentBody">
 		<!-- cList.commentStatus가 1인것만 출력 -->
-		<th:block th:if="${cList.commentStatus}==1"
-			th:each="cList:${commentList}">
+		<th:block th:if="${cList.commentStatus}==1" th:each="cList:${commentList}">
 			<div class="card-body" id="card"
 				style="background-color: white; margin: 10px 50px 20px;">
 
@@ -190,6 +148,7 @@
 				<input name="memberId" id="memberId" type="hidden" value="" />
 			</div>
 		</th:block>
+	</div>
 	</div>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

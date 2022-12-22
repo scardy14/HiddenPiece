@@ -52,7 +52,7 @@ public class FreeBoardController {
 	@RequestMapping("writePost")
 	public String writePost(FreeBoardVO freeBoardVO) {
 		freeBoardService.writePost(freeBoardVO);
-		return "freeboard/writePost-ok";
+		return "redirect:freeBoardPostList";
 	}	
 	
 	@RequestMapping("freeBoardUpdatePostForm")

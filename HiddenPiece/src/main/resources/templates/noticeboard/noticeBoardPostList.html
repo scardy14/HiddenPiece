@@ -8,11 +8,11 @@
 <div layout:fragment="content">
 	<div class="row pt-4">
 		<div class="col-sm-6 offset-sm-3">
-			<h3>자유게시판</h3>
-			<table class="table" style="table-layout: fixed;">
+			<h3>공지게시판</h3>
+			<table class="table">
 				<thead>
 					<tr>
-						<th>글번호</th>
+						<th >글번호</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
@@ -22,23 +22,24 @@
 				<tbody>
 
 					<tr th:each="list:${list}">
-						<td style="width: 20%"><span th:text="${list.postNo}"></span></td>
-						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%"><a href="" th:href="@{/findFreeBoardPostDetail(postNo=${list.postNo})}"><font color ="gray"><span th:text="${list.title}"></span></font></a></td>
+						<td><span th:text="${list.postNo}"></span></td>
+						
+						<td><a href="" th:href="@{/findNoticeBoardPostDetail(postNo=${list.postNo})}"><font color ="gray"><span th:text="${list.title}"></span></font></a></td>
 					
 						<!--  -->
-						<td style="width: 20%"><span th:text="${list.id}"></span></td>
+						<td><span th:text="${list.id}"></span></td>
 
-						<td style="width: 20%"><span th:text="${list.timePosted}"></span></td>
-						<td style="width: 20%"><span th:text="${list.hits}"></span></td>
+						<td><span th:text="${list.timePosted}"></span></td>
+						<td><span th:text="${list.hits}"></span></td>
 					</tr>
 					<!--  	-->
 				</tbody>
 			</table>
 			<th:block th:if="${session.mvo}">
-				<th:block th:if="${session.mvo.id != null}">
+				<th:block th:if="${session.mvo.status == '2'}">
 					<div>
 						<a
-							href="" th:href="@{/moveFreeBoardPostWriteForm}"><font color="gray">글작성</font></a>
+							href="" th:href="@{/moveNoticeBoardPostWriteForm}"><font color="gray">글작성</font></a>
 					</div>
 				</th:block>
 			</th:block>
@@ -48,17 +49,17 @@
 				<ul class="pagination justify-content-center">
 					<th:block th:if="${paging.prev}">
 						<li class="page-item active">
-							<a class="page-link" th:href="@{/freeBoardPostList(page=${paging.startPage-1})}">Pre</a>
+							<a class="page-link" th:href="@{/noticeBoardPostList(page=${paging.startPage-1})}">Pre</a>
 						</li>
 					</th:block>
 					<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
 						<li class="page-item">
-							<a class="page-link" th:href="@{/freeBoardPostList(page=${num})}" th:text="${num}"></a>
+							<a class="page-link" th:href="@{/noticeBoardPostList(page=${num})}" th:text="${num}"></a>
 						</li>
 					</th:block>
 					<th:block th:if="${paging.next && paging.endPage>0}">
 						<li class="page-item active">
-							<a class="page-link" th:href="@{/freeBoardPostList(page=${paging.endPage+1})}">Next</a>
+							<a class="page-link" th:href="@{/noticeBoardPostList(page=${paging.endPage+1})}">Next</a>
 						</li>
 					</th:block>
 				</ul>
