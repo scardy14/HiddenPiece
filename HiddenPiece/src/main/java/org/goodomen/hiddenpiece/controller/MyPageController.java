@@ -3,6 +3,8 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.goodomen.hiddenpiece.model.service.MyPageService;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
@@ -23,14 +25,11 @@ public class MyPageController {
 		PagingAndId paging = new PagingAndId();
 		int biddingCount;
 		List<Map<String, Object>> biddingList = null;
-		System.out.println(cri);
 		if(cri.getTag()==null||cri.getTag().equals("0")) {
 			cri.setTag("0");
 			biddingCount = mypageService.findBiddingCountFromBidList(cri.getId());
-			System.out.println("a "+biddingCount);
 		}else {
 			biddingCount = mypageService.findBiddingCountFromBidListTag(cri);
-			System.out.println("b "+biddingCount);
 		} 
 		paging.setCri(cri);
 		paging.setTotalCount(biddingCount);
@@ -40,14 +39,26 @@ public class MyPageController {
 		model.addAttribute("paging", paging);
 		return "mypage/buying-Page";
 	}
-	@RequestMapping("sellingProduct")
-	public String SellingProduct(String id,Criteria cri, Model model) {
-		mypageService.findSellingProductList(id,cri,model);
-		return "";
-	}
-	@RequestMapping("endProduct")
-	public String EndProduct(String id,Criteria cri, Model model) {
-		mypageService.findEndProductList(id,cri,model);
-		return "";
+	
+	@RequestMapping("sellingMyPage")
+	public String SellingProduct(CriteriaAndIdVO cri, Model model) {
+		PagingAndId paging = new PagingAndId();
+		int sellingCount;
+		List<Map<String, Object>> sellingList = null;
+		if(cri.getTag()==null||cri.getTag().equals("0")) {
+			cri.setTag("0");
+			sellingCount = mypageService.findSellingCountFromBidList(cri.getId());
+		}else {
+			sellingCount = mypageService.findSellingCountFromBidListTag(cri);
+		} 
+		paging.setCri(cri);
+		paging.setTotalCount(sellingCount);
+		sellingList = mypageService.findSellingListFromProductList(cri);
+		
+		System.out.println(paging);
+		
+		model.addAttribute("sellingList", sellingList);
+		model.addAttribute("paging", paging);
+		return "mypage/selling-Page";
 	}
 }

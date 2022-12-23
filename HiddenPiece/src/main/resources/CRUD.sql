@@ -305,7 +305,8 @@ SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_pr
 	now_id VARCHAR2(100) NOT NULL,
 	post_status NUMBER DEFAULT 1 NOT NULL,
 
-	SELECT * FROM Bid_List
+	SELECT * FROM AuctionBoard WHERE id='scardy' ORDER BY time_posted
+	SELECT * FROM AuctionBoard WHERE title = '12'
 	
 	SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
 		  FROM (
@@ -336,3 +337,10 @@ select *
 from freeboard fb
 inner join hp_member hpm on  fb.id=hpm.id
 where fb.id='java1'
+
+SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM AuctionBoard
+		 WHERE id='scardy'
+		 			AND post_status=3
+		 ORDER BY post_no DESC
+>>>>>>> refs/heads/main

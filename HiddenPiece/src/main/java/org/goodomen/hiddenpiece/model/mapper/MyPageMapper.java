@@ -17,4 +17,12 @@ public interface MyPageMapper {
 
 	int findfindBiddingCountFromBidListTag(CriteriaAndIdVO cri);
 
+	int findSellingCountFromBidList(String id);
+
+	int findSellingCountFromBidListTag(CriteriaAndIdVO cri);
+
+	List<Map<String, Object>> findSellingListFromBidList(CriteriaAndIdVO cri);
+
+	List<Map<String, Object>> findSellingListFromBidListTag(CriteriaAndIdVO cri);
+
 }

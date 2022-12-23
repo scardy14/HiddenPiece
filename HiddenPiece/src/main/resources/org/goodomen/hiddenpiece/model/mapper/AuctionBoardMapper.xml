@@ -204,4 +204,10 @@
 	<insert id="addBidList" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		INSERT INTO Bid_List VALUES(#{id},Bid_List_seq.nextval,#{postNo})
 	</insert>
+	<update id="updatePostStatusTo2">
+		UPDATE AuctionBoard SET post_status = 2 WHERE sysdate>end_date AND now_id!=' ' 
+	</update>
+	<update id="updatePostStatusTo3">
+		UPDATE AuctionBoard SET post_status = 3 WHERE sysdate>end_date AND now_id=' '
+	</update>
 </mapper>
