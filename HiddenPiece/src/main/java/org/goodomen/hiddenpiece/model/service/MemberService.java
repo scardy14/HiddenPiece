@@ -61,4 +61,6 @@ public interface MemberService {
 	
 	ArrayList<FreeBoardVO> findFreeBoardStatus1ById(String id);
 
+	MemberVO findMemberById(String id);
+
 }

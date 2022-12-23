@@ -3,7 +3,7 @@
 -- AWS PW: tiger
 -- AWS TableName: xe
 
-SELECT * FROM AuctionBoard
+SELECT * FROM AuctionBoard where post_no=109;
 
 CREATE TABLE Account_Info(
 	account_no NUMBER NOT NULL,

@@ -160,5 +160,6 @@ public class HiddenPieceMemberTest {
 		for(FreeBoardVO vo:list)		
 			logger.debug("list:{}", vo);
 	}
+
 	
 }
