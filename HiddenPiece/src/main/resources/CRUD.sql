@@ -342,5 +342,9 @@ SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_
 		  FROM AuctionBoard
 		 WHERE id='scardy'
 		 			AND post_status=3
+<<<<<<< HEAD
+		 ORDER BY post_no DESC;
+=======
 		 ORDER BY post_no DESC
+>>>>>>> refs/heads/main
 >>>>>>> refs/heads/main

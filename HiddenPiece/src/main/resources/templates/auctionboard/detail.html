@@ -29,7 +29,12 @@
 			</form>
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span id = "endDate" th:text="${postVO.endDate}">시각표시</span> </h5>
-					<h5 class="font-weight-semi-bold mb-4" >남은시간: <span id = "remainTime">판매상태 여부</span></h5>
+					<th:block th:if="${postVO.postStatus==1}">
+						<h5 class="font-weight-semi-bold mb-4" >남은시간: <span id = "remainTime">판매상태 여부</span></h5>
+					</th:block>
+					<th:block th:if="${postVO.postStatus!=1}">
+						<h5 class="font-weight-semi-bold mb-4" >남은시간: 종료된 경매입니다.</h5>
+					</th:block>
 					<h5 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h5>
 					<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰가 ${postVO.currentPrice}원|" >현재입찰가</h5> <input type = "hidden" value = "value" th:value="${postVO.currentPrice}" id="currentPrice">
 					<th:block th:if="${postVO.postStatus==1}">
