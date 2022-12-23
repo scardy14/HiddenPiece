@@ -5,13 +5,22 @@ public class Criteria {
 	// 특정 페이지 조회를 위한 클래스
 	private int page; // 현재 페이지 번호
 	private int perPageNum; // 페이지당 보여줄 게시글의 개수
+	
 	private int totalCount;
 	private String searchKeyword;
 	private String loginId;
 	private int category;
 	private String status;
+	private String price;
 	
-	
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
 	public String getStatus() {
 		return status;
@@ -74,13 +83,9 @@ public class Criteria {
 			this.perPageNum = perPageNum;
 		}
 		
-	}
+}
 	
-	@Override
-	public String toString() {
-		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
-	}
-
+	
 
 	public String getSearchKeyword() {
 		return searchKeyword;
@@ -97,6 +102,15 @@ public class Criteria {
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
+
+	@Override
+	public String toString() {
+		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", totalCount=" + totalCount
+				+ ", searchKeyword=" + searchKeyword + ", loginId=" + loginId + ", category=" + category + ", status="
+				+ status + ", price=" + price + "]";
+	}
+	
+	
 	
 	
 }

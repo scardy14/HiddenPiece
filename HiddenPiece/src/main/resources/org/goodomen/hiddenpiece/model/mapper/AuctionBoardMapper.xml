@@ -24,11 +24,29 @@
 								)
 									where 1=1
 								<if test="searchKeyword!=null and searchKeyword!=''">
-										and content LIKE '%'||#{searchKeyword}||'%' OR title LIKE '%'||#{searchKeyword}||'%'
-									</if>
-										 <if test="status!=null and status!=''">
-										and post_status=#{status}
-									</if>
+							and (content LIKE '%'||#{searchKeyword}||'%' OR title LIKE '%'||#{searchKeyword}||'%')
+					</if>
+					 <if test="status!=null and status!='all'">
+							and post_status=#{status}
+					</if>
+					<choose>
+						<when test='price=="1"'>
+							and current_price between 0 and 100000
+						</when>
+						<when test='price=="2"'>
+							and current_price between 100000 and 500000
+						</when>
+						<when test='price=="3"'>
+							and current_price between 500000 and 1000000
+						</when>
+						<when test='price=="4"'>
+							and current_price between 1000000 and 5000000
+						</when>
+						<when test='price=="5"'>
+							and current_price > 5000000
+						</when>
+					</choose>
+					
 										
 										
 	</select>
@@ -106,9 +124,27 @@
 					<if test="searchKeyword!=null and searchKeyword!=''">
 							and (content LIKE '%'||#{searchKeyword}||'%' OR title LIKE '%'||#{searchKeyword}||'%')
 					</if>
-					 <if test="status!=null and status!=''">
+					 <if test="status!=null and status!='all'">
 							and post_status=#{status}
 					</if>
+					<choose>
+						<when test='price=="1"'>
+							and current_price between 0 and 100000
+						</when>
+						<when test='price=="2"'>
+							and current_price between 100000 and 500000
+						</when>
+						<when test='price=="3"'>
+							and current_price between 500000 and 1000000
+						</when>
+						<when test='price=="4"'>
+							and current_price between 1000000 and 5000000
+						</when>
+						<when test='price=="5"'>
+							and current_price > 5000000
+						</when>
+					</choose>
+					
 			<![CDATA[ 
 			)where rm between #{pageStart} and #{perPageNum}*#{page}
 			]]>
