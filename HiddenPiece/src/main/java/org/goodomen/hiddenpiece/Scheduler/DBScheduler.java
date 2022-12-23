@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class DBScheduler {
 	private final AuctionBoardService auctionBoardService;
 	
-	@Scheduled(cron = "*/10 * * * * *")//매 10초마다 실행함
+	@Scheduled(cron = "*/30 * * * * *")//매 10초마다 실행함
 	public void updateAuctionBoardPostStatus() {
 		/*
 		System.out.println("_____________________");

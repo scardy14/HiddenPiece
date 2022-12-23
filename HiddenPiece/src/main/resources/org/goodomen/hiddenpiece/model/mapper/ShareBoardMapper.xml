@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.goodomen.hiddenpiece.model.mapper.ShareBoardMapper">
+	<select id="findShareCount" resultType="int">
+		SELECT COUNT(*) FROM ShareBoard
+	</select>
+	<select id="findShareCountTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="int">
+		SELECT COUNT(*) FROM ShareBoard WHERE post_status = #{tag}
+	</select>
+	<select id="findShareList" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+		SELECT post_no,id,title,content,photo,time_posted,hits,post_status
+		  FROM (SELECT ROWNUM AS rnum, post_no,id,title,content,photo,time_posted,hits,post_status  FROM ShareBoard ORDER BY post_no DESC)
+		 WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+			
+	</select>
+	<select id="findShareListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+		SELECT post_no,id,title,content,photo,time_posted,hits,post_status
+		  FROM (SELECT ROWNUM AS rnum, post_no,id,title,content,photo,time_posted,hits,post_status  FROM ShareBoard WHERE post_status=#{tag} ORDER BY post_no DESC)
+		 WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+	</select>
+	<insert id="writeSharePost" parameterType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+		INSERT INTO ShareBoard VALUES(ShareBoard_seq.nextval,#{id},#{title},#{content},#{photo},sysdate,DEFAULT,DEFAULT)
+	</insert>
+</mapper>

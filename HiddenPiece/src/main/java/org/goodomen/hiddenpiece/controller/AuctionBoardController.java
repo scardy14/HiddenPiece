@@ -138,9 +138,7 @@ public class AuctionBoardController {
 	@ResponseBody
 	@RequestMapping("addToWishlist")
 	public void addToWishlist(String id,long postNo, AuctionBoardPostVO postVO) {
-		System.out.println("11111111111");
 		postVO.setLike(true);
-		System.out.println(postVO);
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 	}
