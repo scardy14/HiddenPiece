@@ -3,61 +3,41 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
-<title>HiddenPiece</title>
+<title>자유게시판</title>
 </head>
 <div layout:fragment="content">
 	<div align="center" >
 		<form>
 			<input type="hidden" id="postNo" name="postNo" th:value="${postVO.postNo}">
 		</form>
-		<div style="width: 70%; background-color: white;">
-	  <table class="table table-responsive-sm" style="table-layout: fixed">
-    		<thead >
+		<div style="width: 60%; background-color: white;">
+	  <table class="table table-bordered" style="width: 100%; table-layout: fixed;">
+    		
       			<tr>		
-        			<th>
-						제목 <br> <span th:text="${postVO.title}" id="postNo"></span>
-					</th>
-       			 </tr>
-        		<tr>
-        			<th>글번호 <br>
-						<span th:text="${postVO.postNo}"></span>
-					</th>
-        			<th>작성자 <br>
-						<span th:text="${postVO.id}"></span>
-					</th>
-       				 <th>작성일시<br>
-						<span th:text="${postVO.timePosted}"></span>
-					</th>
-        			<th>조회수 <br>
-						<span th:text="${postVO.hits}"></span>
-					</th>
-        		</tr>
-    		</thead>
-    		<tbody>
-    			<tr>
-    				<td style="word-break:break-all" colspan="4">
-    					<span th:text="${postVO.contend}"></span>
-    				</td>
-    			</tr>
-    		</tbody>
-    </table>
-    <th:block th:if="${session.mvo}">
-		<th:block th:if=${session.mvo.id==postVO.id}>
-			<div align="center">
-				<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font color="gray">수정</font></a>
-				<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a>
-			</div>
-		</th:block>
-	</th:block>
-	</div>
-	</div>
-	
-	<div align="center">
-	<div class="card bg-light" style="width: 70%;" id="commentBody">
+        			<td style="word-break:break-all; padding: 30px;" colspan="4">
+						<h3 th:text="${postVO.title}" id="postNo"></h3>
+						<span th:text="${postVO.id}"></span><br>
+						<span th:text="${postVO.timePosted}"></span> &nbsp
+						조회<span th:text="${postVO.hits}"></span>
+						<th:block th:if="${session.mvo}">
+							<th:block th:if=${session.mvo.id==postVO.id}>
+								<div align="right">
+									<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font color="gray">수정</font></a>
+									<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a>
+								</div>
+							</th:block>
+						</th:block>
+						<hr>
+						<div style="margin-top: 30px; margin-bottom: 100px; font-size: 17px;">
+							<span th:text="${postVO.contend}"></span>
+						</div>
+						<hr>
+						
+						<div style="width: 100%;" id="commentBody">
 		<!-- cList.commentStatus가 1인것만 출력 -->
 		<th:block th:if="${cList.commentStatus}==1" th:each="cList:${commentList}">
 			<div class="card-body" id="card"
-				style="background-color: white; margin: 10px 50px 20px;">
+				style="background-color: white; font-size: 13px;">
 
 				<div class="d-flex">
 					<div class="flex-shrink-0">
@@ -81,7 +61,7 @@
 							</form>
 							<p th:text="${cList.content}"
 								th:id="'commentContentOne'+${cList.commentNo}"></p>
-							<br>
+						
 						</div>
 						<span class="comment_info_date"
 							th:id="'timePosted'+${cList.commentNo}"
@@ -104,7 +84,7 @@
 									th:id="'comment_update_content'+${cList.commentNo}" rows="3"
 									style="width: 60vw" th:value="${cList.content}"
 									th:text="${cList.content}"></textarea>
-								<br>
+							
 								<button name="commentupdatebtn" id="commentupdatebtn"
 									class="btn btn-warning"
 									th:onclick="updateFreeBoardComment([[${cList.commentNo}]])"
@@ -114,7 +94,7 @@
 									th:onclick="commentUpdateZoneHide([[${cList.commentNo}]])"
 									style="color: white; background-color: #ef7b35; border-color: #ef7b35;">취소</button>
 							</div>
-							<hr style="width: 65vw">
+							<!-- <hr style="width: 65vw"> -->
 						</th:block>
 					</div>
 				</div>
@@ -129,7 +109,7 @@
 				<textarea class="form-control" id="commentContent" rows="3"
 					placeholder="댓글을 등록하세요!"></textarea>
 				<br>
-				<div class="form-group mb-0">
+				<div class="form-group mb-0" style="text-align: right">
 					<button type="button" class="btn btn-primary px-3" id="commentbtn">댓글
 						작성</button>
 				</div>
@@ -140,7 +120,7 @@
 		<th:block th:unless="${session.mvo}">
 			<div style="margin: 10px 50px 20px;">
 				<textarea class="form-control" id="commentContent" rows="3"
-					placeholder="회원만 댓글을 달 수 있습니다."></textarea>
+					placeholder="회원만 댓글을 달 수 있습니다." readonly="readonly"></textarea>
 				<br>
 				<div class="form-group mb-0">
 					<!-- <button type="button" class="btn btn-primary px-3" id="commentbtn">댓글 작성</button> -->
@@ -149,6 +129,15 @@
 			</div>
 		</th:block>
 	</div>
+					</td>
+       			 </tr> 		
+    </table>
+    
+	</div>
+	</div>
+	
+	<div align="center">
+	
 	</div>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

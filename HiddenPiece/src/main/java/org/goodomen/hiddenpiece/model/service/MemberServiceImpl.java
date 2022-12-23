@@ -164,5 +164,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.findFreeBoardStatus1ById(id);
 	}
 
+	@Override
+	public MemberVO findMemberById(String id) {
+		return (MemberVO) memberMapper.findMemberById(id);
+	}
+
 }
 

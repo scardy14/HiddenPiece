@@ -10,11 +10,11 @@
 <div layout:fragment="content">
     <!-- Shop Start -->
     <div class="container-fluid">
-        <div class="row px-xl-5">
+        <div >
             <!-- Shop Sidebar Start -->
-            <div class="col-lg-3 col-md-4">
-                <!-- Price Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+            <div>
+                <!-- <!-- Price Start -->
+               <!--  <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -48,14 +48,9 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Price End -->
-            </div>
-            <!-- Shop Sidebar End -->
-
-
-            <!-- Shop Product Start -->
-            <div class="col-lg-9 col-md-8">
+                <div>
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -89,14 +84,14 @@
                         </div>
                     </div>
                     <!-- 이거 아래거 반복시키면 됨 -->
-                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1"  th:each="group:${postList}">
+                    <div class="col-lg-3 col-md-3 col-sm-3"  th:each="group:${postList}">
                         <div class="product-item bg-light mb-4">
-                            <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" th:src="@{/auctionboardimg/}+ ${group.photo}" alt="">
+                            <div >
+                                <img width="100%" height="300px" th:src="@{/auctionboardimg/}+ ${group.photo}" alt="">
                                 <div class="product-action">
                                 
                                 <th:block th:if="${session.mvo}">
-                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]],[[${mapList.pageIndex}]], [[${mapList.searchKeyword}]])" href=""   >
+                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]],[[${mapList.pageIndex}]], [[${mapList.searchKeyword}]])" href="#"   >
                                  		<th:block th:if="${group.like}">
                                  			<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
                                  		</th:block>
@@ -106,7 +101,7 @@
                                     </a>
 	                           </th:block>
                                 <th:block th:unless="${session.mvo}">
-                                	<a class="btn btn-outline-dark btn-square" th:onclick="noSessionWishlist()" href=""   >
+                                	<a class="btn btn-outline-dark btn-square" th:onclick="noSessionWishlist()" href="#"   >
                                  		<i class="far fa-heart" ></i><!--세션 없을때 빈하트 나오도록  -->
                                     </a>
                                 </th:block>
@@ -171,6 +166,12 @@
                 </div>
             </div>
             <!-- Shop Product End -->
+            </div>
+            <!-- Shop Sidebar End -->
+
+
+            <!-- Shop Product Start -->
+            
         </div>
     </div>
     <!-- Shop End -->
@@ -191,6 +192,7 @@
 /* 세션 없을때 찜하기 버튼 누를시 */
 function noSessionWishlist(){
 	 alert("찜하기는 회원만 가능합니다.");
+	 return;
 }
 
 /* 찜하기확인  */
@@ -216,25 +218,23 @@ function checkToWishlist(postNo, id, pageIndex, searchKeyword){
 } 
 /* 찜하기  */
 function addToWishlist(postNo, id, pageIndex, searchKeyword){
-	alert(pageIndex),
-	alert(searchKeyword),
 	$.ajax({
 		type:"get",
 		url:"addToWishlist",
 		data:{
 			"postNo":postNo,
-			"id":id
+			"id":id,
+			"pageIndex":pageIndex,
+			"searchKeyword":searchKeyword
 		},
 		success:function(result){
-			searchPostByKeyword(pageIndex, searchKeyword);
-			//location.reload();
+			location.reload();
 		}
 	});
 }
 
 /* 찜취소 */
 function deleteFromWishlist(postNo,id){
-	alert(postNo, + " " + id);
 	$.ajax({
 			type:"get",
 			url:"deleteFromWishlist",
@@ -243,30 +243,10 @@ function deleteFromWishlist(postNo,id){
 				"postNo":postNo
 			},
 			success:function(result){
-				//location.reload();
-				searchPostByKeyword(pageIndex, searchKeyword);
+				location.reload();
 			}
 		})
 	}
 
-
-    function addToWishlist(postNo, id){
-    	$.ajax({
-    		type:"get",
-    		url:"addToWishlist",
-    		data:{
-    			"postNo":postNo,
-    			"id":id
-    		},
-    		success:function(result){
-    			//location.reload();
-    			searchPostByKeyword(pageIndex, searchKeyword); 
-    		}
-    	});
-    	
-
-   	}
-
-    	
     </script>
 </div>

@@ -137,10 +137,11 @@ public class AuctionBoardController {
 	// 찜하기 버튼 눌르기
 	@ResponseBody
 	@RequestMapping("addToWishlist")
-	public void addToWishlist(String id,long postNo, AuctionBoardPostVO postVO) {
+	public String addToWishlist(String id,long postNo, AuctionBoardPostVO postVO) {
 		postVO.setLike(true);
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
+		return "ok";
 	}
 	
 	//경매게시판 글 수정 폼으로 이동
@@ -230,9 +231,7 @@ public class AuctionBoardController {
 						((AuctionBoardPostVO) auctionBoardList.get(i)).setLike(true);
 					}
 				}
-				System.out.println(mapList);
 				model.addAttribute("postList", auctionBoardList);
-				System.out.println(auctionBoardList.size());
 			}
 			
 			else {
