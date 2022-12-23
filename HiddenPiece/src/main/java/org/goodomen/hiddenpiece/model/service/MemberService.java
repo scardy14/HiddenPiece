@@ -67,4 +67,6 @@ public interface MemberService {
 
 	void updateMemberStatus(String statusMember, String id);
 
+	int accountCheck(String accountNo);
+
 }

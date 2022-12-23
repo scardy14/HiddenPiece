@@ -159,17 +159,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("ajaxAccountCheck")
 	public int ajaxAccountCheck(String accountNo) {
-		int result = 0;
-		AccountVO accountVO = memberService.findAccountInfoByAccountNo(accountNo);
-		MemberVO memberVO = memberService.findMemberByAccount(accountNo);
-		if(memberVO != null && accountVO!=null) {
-			result = 2; //계좌가 이미 등록되어있음
-		}else if(memberVO == null && accountVO!=null) {
-			result = 1; //사용 가능
-		}else if(accountVO == null){	
-			result = 0; // 사용 불가 계좌 없음
-		}
-		return result;
+		return memberService.accountCheck(accountNo);
 	}
 	
 	
