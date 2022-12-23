@@ -16,7 +16,7 @@
 					<tr>
 						<td style="word-break:break-all; padding: 30px;" colspan='4'>
 							<h3 th:text="${postVO.title}" id="postNo"></h3>
-							<span th:text="${postVO.id}"></span>
+							<span th:text="${postVO.id}"></span><br>
 							<span th:text="${postVO.timePosted}"></span> &nbsp
 							조회<span th:text="${postVO.hits}"></span>
 							<th:block th:if="${session.mvo}">

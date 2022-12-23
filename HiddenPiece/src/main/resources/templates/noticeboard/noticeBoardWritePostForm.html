@@ -10,14 +10,15 @@
 		<div class="col-sm-6 offset-sm-3">
 			<form method="post" action="" th:action="@{/writeNoticeBoardPost}">
 				      <input name="id" th:value="${session.mvo.id}" type = "hidden">
-			<table class="table">
+			<a href="" th:href="noticeBoardPostList"><font color = "black" style="font-size: 25px">공지게시판</font></a>
+			<table class="table" style="width: 100%">
 				
 				
 				<tr>
-					<td><input type="text" name="title" placeholder="글제목" required="required" th:value="${title}"></td>
+					<td><input type="text" style="width: 100%; height: 40px;" name="title" placeholder="글제목" required="required" th:value="${title}"></td>
 				</tr>
 				<tr>
-					<td><textarea rows="20" class="form-control" name="contend" placeholder="본문내용" required="required" th:value="${contend}"></textarea></td>
+					<td><textarea rows="25" class="form-control" name="contend" placeholder="본문내용" required="required" th:value="${contend}"></textarea></td>
 				</tr>
 			</table>
 			<div class="text-center">
