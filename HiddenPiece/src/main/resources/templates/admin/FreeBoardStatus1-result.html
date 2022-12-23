@@ -21,18 +21,16 @@
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
-                            <th>조회수</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle" th:each="fl:${freeList}">
 						<tr>
-						<td><span th:text="${fl.postNo}"></span></td>
-						<td style = "text-overflow:ellipsis; white-space:nowrap; overflow:hidden; ">
+						<td style = "text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%; "><span th:text="${fl.postNo}"></span></td>
+						<td style = "text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%;">
 						<a href="" th:href="@{/findFreeBoardPostDetail(postNo=${fl.postNo})}">
 						<font color ="gray"><span th:text="${fl.title}"></span></font></a></td>
-						<td><span th:text="${fl.id}"></span></td>
-						<td><span th:text="${fl.timePosted}"></span></td>
-						<td><span th:text="${fl.hits}"></span></td>
+						<td style = "text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%; "><span th:text="${fl.id}"></span></td>
+						<td style = "text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%; "><span th:text="${fl.timePosted}"></span></td>
 					</tr>
                     </tbody>
                 </table>

@@ -159,17 +159,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping("ajaxAccountCheck")
 	public int ajaxAccountCheck(String accountNo) {
-		int result = 0;
-		AccountVO accountVO = memberService.findAccountInfoByAccountNo(accountNo);
-		MemberVO memberVO = memberService.findMemberByAccount(accountNo);
-		if(memberVO != null && accountVO!=null) {
-			result = 2; //계좌가 이미 등록되어있음
-		}else if(memberVO == null && accountVO!=null) {
-			result = 1; //사용 가능
-		}else if(accountVO == null){	
-			result = 0; // 사용 불가 계좌 없음
-		}
-		return result;
+		return memberService.accountCheck(accountNo);
 	}
 	
 	
@@ -229,7 +219,8 @@ public class MemberController {
 		String viewPath = null;
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && memberVO.getPoint()>=point) {
+		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank) && memberVO.getPoint()>=point) {
 			memberService.withdrawPoint(point, name, memberVO.getId());
 			memberService.depositAccount(point, accountNo, bank);
 			long newPoint = memberService.findPointbyId(memberVO.getId());

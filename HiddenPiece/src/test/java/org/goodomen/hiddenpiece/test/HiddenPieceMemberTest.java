@@ -160,6 +160,11 @@ public class HiddenPieceMemberTest {
 		for(FreeBoardVO vo:list)		
 			logger.debug("list:{}", vo);
 	}
-
+	@Test
+	public void totalCountMember() {
+		int result = memberMapper.totalCountMember();
+			System.out.println(result);
+		
+	}
 	
 }
