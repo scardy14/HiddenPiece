@@ -113,7 +113,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void depositPoint(long balance, String accountNo, String bank) {
-		memberMapper.withdrawPoint(balance, accountNo, bank);	
+		memberMapper.depositPoint(balance, accountNo, bank);	
 		System.out.println("MemberServiceImpl withdrawPoint ");
 		
 		
@@ -168,6 +168,17 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO findMemberById(String id) {
 		return (MemberVO) memberMapper.findMemberById(id);
 	}
+
+	@Override
+	public int totalCountMember() {
+		return memberMapper.totalCountMember();
+	}
+
+	@Override
+	public void updateMemberStatus(String statusMember, String id) {
+		memberMapper.updateMemberStatus(statusMember, id);
+	}
+
 
 }
 

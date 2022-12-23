@@ -25,10 +25,52 @@
 				<option value="" th:value="free" style="text-align: center">자유게시판</option>
 			</select>
 			<button type="submit" id="searchPostBtn" style="width:50px;height:30px; text-align: center;">찾기</button>
-		</div>
+			<br><br>
+	</div>
 	</form>
-</div>
-<script type="text/javascript">
+			<div align="center">
+			<form th:action="@{/adminSearchMember}">
+		<h5 style="text-align: center">회원수 : <span th:text = "${memberCount}"></span>명</h5>
+		<span>상태 0 : 탈퇴한 회원 / </span>
+		<span>상태 1 : 회원 / </span>
+		<span>상태 2 : 관리자</span><br><br>
+		<input style="width:200px;height:30px; text-align: center;" name="memberId" type="text" placeholder="아이디" id="Id" required="required">
+			<button type="button" id="searchMemberBtn" style="width:50px;height:30px; text-align: center;">찾기</button>
+				<select style="width:200px;height:30px;"name="statusMember">
+				<option value="" th:value="0" style="text-align: center">탈퇴한 회원</option>
+				<option value="" th:value="1" style="text-align: center">회원</option>
+				<option value="" th:value="2" style="text-align: center">관리자</option>
+			</select>
+			<button type="submit" id="changeStatusMemberBtn" style="width:50px;height:30px; text-align: center;">변경</button>
+			</form>
+			<br><br>
+		<span id="ajaxMember"></span>
+		</div>
 	
+	
+
+<script type="text/javascript" th:inline="javascript">
+	$(function(){
+		let checkIdFlag = "";
+			let checkId = $("input[name=memberId]");
+			let id = $("#memberId").val();
+		$("#searchMemberBtn").click(function() {
+			$.ajax({
+				type:"get",
+				url:"ajaxFindMemberVO",
+				data:"memberId="+checkId.val(),
+				success:function(member){
+						// $("#ajaxMember").text(result);
+						// alert("member Json result "+member);						
+								$("#ajaxMember").text("상태 : " + member.status);
+					
+				},
+				error:function(xhr){
+					$("#ajaxMember").text(xhr.responseText);
+				}
+			});
+		});
+	
+	});
 </script>
-</html>
+</div>

@@ -142,7 +142,9 @@ public class IndexMoveController {
 	}
 	
 	@RequestMapping("adminForm")
-	public String adminForm() {
+	public String adminForm(Model model) {
+		int result = memberService.totalCountMember();
+		model.addAttribute("memberCount", result);
 		return "admin/admin-form";
 	}
 	

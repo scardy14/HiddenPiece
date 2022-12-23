@@ -106,6 +106,10 @@
 		inner join hp_member hpm on fb.id=hpm.id
 		where post_status=1 and fb.id=#{id} 
 	</select>
-
-	
+	<select id="totalCountMember" resultType="int">
+		Select count(*) from hp_member where status in (1,2)
+	</select>
+	<update id ="updateMemberStatus">
+		Update HP_Member set status=#{status} where id = #{id}
+	</update>
 </mapper>
