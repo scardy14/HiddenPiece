@@ -61,4 +61,12 @@ public interface MemberService {
 	
 	ArrayList<FreeBoardVO> findFreeBoardStatus1ById(String id);
 
+	MemberVO findMemberById(String id);
+
+	int totalCountMember();
+
+	void updateMemberStatus(String statusMember, String id);
+
+	int accountCheck(String accountNo);
+
 }

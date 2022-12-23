@@ -71,7 +71,6 @@ CREATE TABLE AuctionBoard(
 )
 --경매게시판댓글
 select * from AUCTIONBOARD;
-UPDATE AuctionBoard SET photo = 'AGuReYo.jpg' WHERE post_no = 50
 CREATE SEQUENCE AuctionBoard_Comment_seq;
 CREATE TABLE AuctionBoard_Comment (
 	comment_no NUMBER NOT NULL,
@@ -159,3 +158,33 @@ CREATE TABLE Bid_List(
 	CONSTRAINT FK_Bid_List FOREIGN KEY(id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
 SELECT * FROM Bid_List
+-----------------------------------------------------------------
+-----------------------------나눔게시판-------------------------------
+CREATE SEQUENCE ShareBoard_seq;
+CREATE TABLE ShareBoard(
+	post_no NUMBER NOT NULL,
+	id VARCHAR2(100) NOT NULL,
+	title VARCHAR2(100) NOT NULL,
+	content clob NOT NULL,
+	photo VARCHAR2(100) NOT NULL,
+	time_posted DATE DEFAULT sysdate NOT NULL,
+	hits NUMBER DEFAULT 0 NOT NULL ,
+	post_status NUMBER DEFAULT 1 NOT NULL,
+	CONSTRAINT PK_ShareBoard PRIMARY KEY (post_no),
+	CONSTRAINT FK_ShareBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
+)
+--나눔게시판댓글
+select * from ShareBoard;
+SELECT * FROM  ShareBoard_Comment
+CREATE TABLE ShareBoard_Comment (
+	comment_no NUMBER NOT NULL,
+	post_no NUMBER NOT NULL,	
+	id VARCHAR2(100) NOT NULL,
+	content clob NOT NULL,
+	time_posted DATE DEFAULT sysdate NOT NULL,
+	comment_status NUMBER DEFAULT 1 NOT NULL,
+	CONSTRAINT PK_ShareBoard_Comment PRIMARY KEY (comment_no, post_no),
+	CONSTRAINT FK_ShareBoard_Comment_PostNo FOREIGN KEY (post_no) REFERENCES AuctionBoard(post_no) ON DELETE CASCADE,
+	CONSTRAINT FK_ShareBoard_Comment_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
+)
+COMMIT

@@ -8,7 +8,7 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<form id="writeAuctionBoardPostForm" action="writeAuctionBoardPost" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data" class = "row px-xl-5">
+	<form id="writeAuctionBoardPostForm" action="writeShareBoard" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data" class = "row px-xl-5">
 	<!-- Shop Detail Start -->
 	<div class="container-fluid pb-5">
 		<div class="row px-xl-5">
@@ -28,16 +28,12 @@
 					<div class="h-100 bg-light p-30">
 						<input name="id" th:value="${session.mvo.id}" type = "hidden"> 
 						<h3><input name="title" type="text" required="required" placeholder="제목" data-validation-required-message="제목을 입력해주세요" style="width: 80%; height: 40px; border: none;"/></h3><br>
-						<h5 class="font-weight-semi-bold mb-4">시작가: 	  <input name="startPrice" id="startPrice1" type = "number"  placeholder="시작가" required="required" style="border: none;"></h5>
-						<h5 class="font-weight-semi-bold mb-4">즉시구매가:   <input name="sellPrice" id = "sellPrice1" type = "number"  placeholder="즉시구매가" required="required" style="border: none;"></h5>
-						<h5 class="font-weight-semi-bold mb-4">경매종료시각: <input name="endDate" id="endDate" type="datetime-local" style="border: none;"	></h5>	
-						<br>
 						<div class="nav nav-tabs mb-4">
 							<a class="nav-item nav-link text-dark active" data-toggle="tab">상품설명</a>
 						</div>
 						<div class="tab-content">
 							<div class="tab-pane fade show active" id="tab-pane-1">
-								<textarea name="content" style="width: 100%; height: 100%;"></textarea>
+								<textarea name="content" style="width: 100%; height: 200px;"></textarea>
 							</div>
 						</div>
 						<button class="btn btn-primary py-2 px-4" type="submit" >판매글등록</button>
@@ -47,19 +43,5 @@
 	</div>
 	</form>
 	<script type="text/javascript">
-		function checkPrice(event) {
-        	let startPrice = document.getElementById("startPrice1").value*1;
-            let sellPrice = document.getElementById("sellPrice1").value*1;
-            let writeform = document.getElementById("writeAuctionBoardPostForm");
-            if(startPrice<=sellPrice) {
-            	alert("게시물을 등록한 이후에는 제목과 상품설명만 수정가능합니다.");
-            	if(!confirm("등록하시겠습니까?")) {
-            		event.preventDefault();
-            	}
-            } else {
-            	alert("즉시구매가는 시작가 이상이어야합니다");
-            	event.preventDefault();
-            }
-		}
 	</script>
 </div>

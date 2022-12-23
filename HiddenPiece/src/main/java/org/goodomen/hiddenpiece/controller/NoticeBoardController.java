@@ -25,9 +25,6 @@ public class NoticeBoardController {
 		NoticeBoardVO postVO=null;
 		if(session!=null) {
 			ArrayList<Long> noticeBoardList = (ArrayList<Long>) session.getAttribute("noticeBoardList"); //세션의 읽은목록리스트를 가지고옴
-			for(int i=0;i<noticeBoardList.size();i++) {
-				System.out.println(noticeBoardList);
-			}
 			if(noticeBoardList.size()==0 || !noticeBoardList.contains(postNo)) { //만약 읽은목록리스트의 크기가 0이거나 freeBoardList가 postNo를 포함하고있다면
 				noticeBoardService.updateHits(postNo);//조회수 증가하고
 				noticeBoardList.add(postNo);//읽은목록리스트에 글번호 추가하고

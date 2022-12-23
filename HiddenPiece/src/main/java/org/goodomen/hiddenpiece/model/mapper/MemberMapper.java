@@ -61,5 +61,7 @@ public interface MemberMapper {
 
 	ArrayList<FreeBoardVO> findFreeBoardStatus1ById(String id);
 
+	int totalCountMember();
 
+	void updateMemberStatus(String status, String id);
 }

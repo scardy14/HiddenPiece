@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+	<form id="updateAuctionBoardPost" action="updateAuctionBoardPost" method="post" onsubmit="checkPrice(event)" class = "row px-xl-5">
+	<!-- Shop Detail Start -->
+	<div class="container-fluid pb-5">
+		<div class="row px-xl-5">
+				<div class="col-lg-5 mb-30">
+					<div id="product-carousel" class="carousel slide"
+						data-ride="carousel">
+						<div class="carousel-inner bg-light">
+							<div class="carousel-item active">
+								<img class="w-100 h-100" alt="Image" th:src="@{/auctionboardimg/}+ ${postVO.photo}">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-7 h-auto mb-30">
+					<div class="h-100 bg-light p-30">
+						<input name="postNo" th:value="${postVO.postNo}" type = "hidden"> 
+						<h3>제목: <input name="title" th:value="${postVO.title}" type="text" required="required" placeholder="제목" data-validation-required-message="제목을 입력해주세요" style="width: 80%; height: 40px;"/></h3><br>
+						<h5 class="font-weight-semi-bold mb-4">시작가: <span th:text="${postVO.startPrice}">시작가격표시</span></h5>
+						<h5 class="font-weight-semi-bold mb-4" th:text="|현재입찰가 ${postVO.currentPrice}원|" >현재입찰가</h5> <input type = "hidden" value = "value" th:value="${postVO.currentPrice}" id="currentPrice">
+						<h5 class="font-weight-semi-bold mb-4" th:text="|즉시구매가 ${postVO.sellPrice}원|" >즉시구매가: $150.00</h5><input type = "hidden" value = "value" th:value="${postVO.sellPrice}" id="sellPrice">
+						<h5 class="font-weight-semi-bold mb-4" >경매종료시각: <span id = "endDate" th:text="${postVO.endDate}">시각표시</span> </h5>	
+						<br>
+						<div class="nav nav-tabs mb-4">
+							<a class="nav-item nav-link text-dark active" data-toggle="tab">상품설명</a>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane fade show active" id="tab-pane-1">
+								<textarea name="content" style="width: 100%; height: 300px;" required="required"></textarea>
+							</div>
+						</div>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-primary py-2 px-4" type="submit">수정</button>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="btn12 py-2 px-4" type="submit">취소</button>
+					</div>
+				</div>
+		</div>
+	</div>
+	</form>
+	<script type="text/javascript">
+		function checkPrice(event) {
+            if(startPrice<=sellPrice) {
+            	if(!confirm("수정하시겠습니까??")) {
+            		event.preventDefault();
+            	}
+            } else {
+            	alert("즉시구매가는 시작가 이상이어야합니다");
+            	event.preventDefault();
+            }
+		}
+	</script>
+</div>

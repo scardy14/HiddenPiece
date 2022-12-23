@@ -55,8 +55,6 @@ public class MyPageController {
 		paging.setTotalCount(sellingCount);
 		sellingList = mypageService.findSellingListFromProductList(cri);
 		
-		System.out.println(paging);
-		
 		model.addAttribute("sellingList", sellingList);
 		model.addAttribute("paging", paging);
 		return "mypage/selling-Page";

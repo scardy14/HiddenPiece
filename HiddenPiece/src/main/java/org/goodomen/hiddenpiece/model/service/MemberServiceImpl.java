@@ -113,7 +113,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void depositPoint(long balance, String accountNo, String bank) {
-		memberMapper.withdrawPoint(balance, accountNo, bank);	
+		memberMapper.depositPoint(balance, accountNo, bank);	
 		System.out.println("MemberServiceImpl withdrawPoint ");
 		
 		
@@ -163,6 +163,35 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<FreeBoardVO> findFreeBoardStatus1ById(String id) {
 		return memberMapper.findFreeBoardStatus1ById(id);
 	}
+
+	@Override
+	public MemberVO findMemberById(String id) {
+		return (MemberVO) memberMapper.findMemberById(id);
+	}
+
+	@Override
+	public int totalCountMember() {
+		return memberMapper.totalCountMember();
+	}
+
+	@Override
+	public void updateMemberStatus(String statusMember, String id) {
+		memberMapper.updateMemberStatus(statusMember, id);
+	}
+	   @Override
+	   public int accountCheck(String accountNo) {
+	      int result = 0;
+	      AccountVO accountVO = memberMapper.findAccountInfoByAccountNo(accountNo);
+	      MemberVO memberVO = memberMapper.findMemberByAccount(accountNo);
+	      if(memberVO != null && accountVO!=null) {
+	         result = 2; //계좌가 이미 등록되어있음
+	      }else if(memberVO == null && accountVO!=null) {
+	         result = 1; //사용 가능
+	      }else if(accountVO == null){   
+	         result = 0; // 사용 불가 계좌 없음
+	      }
+	     return result;
+	   }
 
 }
 
