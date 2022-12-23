@@ -177,6 +177,7 @@ public class IndexMoveController {
 		model.addAttribute("paging", paging);
 		return "noticeboard/noticeBoardPostList";
 	}
+	
 	// 공지게시판 상세 글보기
 	@RequestMapping("noticeboarddetail")
 	public String noticeBoardDetailMove() {
