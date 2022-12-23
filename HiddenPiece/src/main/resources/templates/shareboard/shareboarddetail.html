@@ -24,9 +24,6 @@
 
 			<div class="col-lg-7 h-auto mb-30">
 				<div class="h-100 bg-light p-30">
-				<form>
-				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
-			</form>
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
 					<br>
 					<div class="nav nav-tabs mb-4">
@@ -44,7 +41,7 @@
 									<button type = "submit" style="border-color: gray; background-color: white;">종료하기</button>
 								</form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<div class="row px-xl-5">
-									<form id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardUpdate}" method="post">
+									<form id = "moveAuctionBoardPostDelete" th:action="@{/moveShareboardUpdate}" method="post">
 										<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 										<button  type = "submit" style="border-color: gray; background-color: white;">수정하기</button> 
 									</form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

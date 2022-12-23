@@ -79,4 +79,11 @@ public class ShareBoardController {
 		model.addAttribute("postVO",shareboardVO);
 		return "shareboard/shareboarddetail";
 	}
+	
+	@RequestMapping("moveShareboardUpdate")
+	public String shareboardUpdate(String postNo,Model model) {
+		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
+		model.addAttribute("postVO",shareboardVO);
+		return null;
+	}
 }
