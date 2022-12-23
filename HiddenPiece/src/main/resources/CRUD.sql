@@ -328,3 +328,11 @@ SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_pr
 	   				 ORDER BY ROWNUM DESC
 		  		)
 		WHERE ROWNUM BETWEEN 5 and 11
+		
+select * from freeboard fb, hp_member hpm
+where fb.id=hpm.id
+
+select * 
+from freeboard fb
+inner join hp_member hpm on  fb.id=hpm.id
+where fb.id='java1'

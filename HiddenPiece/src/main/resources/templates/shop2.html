@@ -96,7 +96,7 @@
                                 <div class="product-action">
                                 
                                 <th:block th:if="${session.mvo}">
-                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]],[[${mapList.pageIndex}]], [[${mapList.searchKeyword}]])" href=""   >
+                                 	<a class="btn btn-outline-dark btn-square" th:onclick="checkToWishlist([[${group.postNo}]], [[${session.mvo.id}]],[[${mapList.pageIndex}]], [[${mapList.searchKeyword}]])" href="#"   >
                                  		<th:block th:if="${group.like}">
                                  			<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
                                  		</th:block>
@@ -191,6 +191,7 @@
 /* 세션 없을때 찜하기 버튼 누를시 */
 function noSessionWishlist(){
 	 alert("찜하기는 회원만 가능합니다.");
+	 return;
 }
 
 /* 찜하기확인  */
@@ -216,25 +217,23 @@ function checkToWishlist(postNo, id, pageIndex, searchKeyword){
 } 
 /* 찜하기  */
 function addToWishlist(postNo, id, pageIndex, searchKeyword){
-	alert(pageIndex),
-	alert(searchKeyword),
 	$.ajax({
 		type:"get",
 		url:"addToWishlist",
 		data:{
 			"postNo":postNo,
-			"id":id
+			"id":id,
+			"pageIndex":pageIndex,
+			"searchKeyword":searchKeyword
 		},
 		success:function(result){
-			searchPostByKeyword(pageIndex, searchKeyword);
-			//location.reload();
+			location.reload();
 		}
 	});
 }
 
 /* 찜취소 */
 function deleteFromWishlist(postNo,id){
-	alert(postNo, + " " + id);
 	$.ajax({
 			type:"get",
 			url:"deleteFromWishlist",
@@ -243,30 +242,10 @@ function deleteFromWishlist(postNo,id){
 				"postNo":postNo
 			},
 			success:function(result){
-				//location.reload();
-				searchPostByKeyword(pageIndex, searchKeyword);
+				location.reload();
 			}
 		})
 	}
 
-
-    function addToWishlist(postNo, id){
-    	$.ajax({
-    		type:"get",
-    		url:"addToWishlist",
-    		data:{
-    			"postNo":postNo,
-    			"id":id
-    		},
-    		success:function(result){
-    			//location.reload();
-    			searchPostByKeyword(pageIndex, searchKeyword); 
-    		}
-    	});
-    	
-
-   	}
-
-    	
     </script>
 </div>
