@@ -219,7 +219,8 @@ public class MemberController {
 		String viewPath = null;
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && memberVO.getPoint()>=point) {
+		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
+		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank) && memberVO.getPoint()>=point) {
 			memberService.withdrawPoint(point, name, memberVO.getId());
 			memberService.depositAccount(point, accountNo, bank);
 			long newPoint = memberService.findPointbyId(memberVO.getId());
