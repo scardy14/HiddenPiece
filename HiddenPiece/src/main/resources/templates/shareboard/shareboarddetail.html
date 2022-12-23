@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<!--/* 위 선언은 타임리프 레이아웃을 사용하기 위한 설정   */-->
+
+<head>
+<title>HiddenPiece</title>
+</head>
+<div layout:fragment="content">
+	<!-- Shop Detail Start -->
+	<div class="container-fluid pb-5">
+		<div class="row px-xl-5">
+			<div class="col-lg-5 mb-30">
+				<div id="product-carousel" class="carousel slide"
+					data-ride="carousel">
+					<div class="carousel-inner bg-light">
+						<div class="carousel-item active">
+							<img class="w-100 h-100" th:src="@{/shareboardimg/}+ ${postVO.photo}" alt="Image">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-7 h-auto mb-30">
+				<div class="h-100 bg-light p-30">
+				<form>
+				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
+			</form>
+					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
+					<br>
+					<div class="nav nav-tabs mb-4">
+						<a class="nav-item nav-link text-dark active" data-toggle="tab">상품설명</a>
+					</div>
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="tab-pane-1">
+							<p th:text="${postVO.content}" style="width: 100%; height: 300px;">상품설명란</p>
+						</div>
+					</div>
+					<th:block th:if="${session.mvo!=null}">
+						<th:block th:if="${session.mvo.id==postVO.id}" >
+								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/ShareboardEnd}" method="post">
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button type = "submit" style="border-color: gray; background-color: white;">종료하기</button>
+								</form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<div class="row px-xl-5">
+									<form id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardUpdate}" method="post">
+										<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+										<button  type = "submit" style="border-color: gray; background-color: white;">수정하기</button> 
+									</form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<form id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardDelete}" method="post">
+										<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+										<button  type = "submit" style="border-color: gray; background-color: white;">삭제하기</button> 
+									</form>
+								</div>
+						</th:block>
+					</th:block>
+				</div>
+			</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	/* 댓글 삭제  : 댓글 상태 0으로 바꾸기*/
+	function changeCommentStatus(commentNo){
+		let result = confirm("댓글을 삭제하시겠습니까?");
+		if(result){
+			$.ajax({
+	   			type:"get",
+	   			url:"changeCommentStatus",
+	   			data: {
+	   				"commentNo":commentNo
+	   			},
+	   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+	   				location.reload();
+	   			}
+			});
+		}
+	}
+    	
+	function commentUpdateZoneHide(commentNo){
+		$("#commentUpdateZone"+commentNo).hide();
+		$("#ms-3"+commentNo).show();
+	  	$("#updateBtn"+commentNo).show();
+	  	$("#changeCommentStatusBtn"+commentNo).show();
+	}
+	
+   $(document).ready(function() {
+	   $("div[id^='commentUpdateZone']").hide();
+	   
+   		/*댓글 작성 */
+   		$("#commentbtn").click(function() {
+			let content=$("#commentContent").val();
+			let postNo = document.getElementById("articleNo").value;
+			let id =  document.getElementById("comment_inbox_name").innerHTML;
+			if(content.trim()<1){
+				alert("공백 등록은 불가능합니다.");
+				event.preventDefault();
+			}
+			else{
+	       		$.ajax({
+	       			type:"get",
+	       			url:"writeComment",
+	       			data: {
+	       				"content":content,
+	       				"postNo":postNo,
+	       				"id":id
+	       			},
+	       			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+	       				$("#commentContent").val("");
+	       				location.reload();
+	       			}
+	       		});
+      		}
+      	});
+   
+   })
+	                 
+                        	   
+   /* 댓글 수정  */
+   function updateCommentForm(commentNo) {
+	  	$("#commentUpdateZone"+commentNo).show();
+	  //	let content = $("#commentContentOne"+commentNo).text();
+	  	$("#ms-3"+commentNo).hide();
+	  	$("#updateBtn"+commentNo).hide();
+	  	$("#changeCommentStatusBtn"+commentNo).hide();
+	  	$("#timePosted"+commentNo).hide();
+	  	
+	  	$.ajax({
+   			type:"get",
+   			url:"selectCommentByCommentNo",
+   			data: {
+   				"commentNo":commentNo
+   			},
+   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+   				let content=result;
+   				document.getElementById("comment_update_content"+commentNo).value=content;
+   			}
+		});
+	  	
+	  	
+   }
+   
+  	function updateComment(commentNo){
+		let content =  document.getElementById("comment_update_content"+commentNo).value;
+	  
+	  	if(content.trim().length>0){
+			  let result = confirm("수정하시겠습니까?");
+			  let commentContent = content.trim();
+			  if(result){
+					$.ajax({
+			   			type:"get",
+			   			url:"updateComment",
+			   			data: {
+			   				"content" : commentContent,
+			   				"commentNo":commentNo
+			   			},
+			   			success:function(result){ //thymeleaf 방식 ajax 응답은 필요한 html 요소를 생성해 응답하므로 직접 loop를 수행해서 요소를 생성하는 부담을 덜 수 있다는 장점이 있다.
+			   				location.reload();
+			   			}
+					});
+			  }
+		}
+		else{
+		  alert("공백 등록은 불가합니다.");
+		  event.preventDefault();
+	 	}
+	}
+   </script>
+					</div>
+				</div>
+			</div>
+
+<!-- Shop Detail End -->
+
+
+<!-- Products Start -->
+
+<!-- Products End -->

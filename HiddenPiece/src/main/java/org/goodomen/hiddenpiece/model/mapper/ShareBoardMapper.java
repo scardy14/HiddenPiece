@@ -19,4 +19,6 @@ public interface ShareBoardMapper {
 
 	void writeSharePost(ShareBoardVO shareboardVO);
 
+	ShareBoardVO findShareBoardDetail(String postNo);
+
 }

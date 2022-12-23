@@ -61,11 +61,11 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img width="100%" height="300px" alt="" th:src="@{/shareboardimg/}+ ${group.photo}"> <!-- th:src="@{/auctionboardimg/}+ ${group.photo}"  -->
                                 <div class="product-action"> 
-                                    <a class="btn btn-outline-dark btn-square" href="" ><i class="fa fa-search"></i></a> <!-- th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}" -->
+                                    <a class="btn btn-outline-dark btn-square" th:href="@{/findShareBoardDetail(postNo=${group.postNo})}"><i class="fa fa-search"></i></a> <!-- th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}" -->
                                 </div>
                             </div>
                             <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href="" th:text="${group.title}">title</a><!--th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}"   -->
+                                <a class="h6 text-decoration-none text-truncate" th:href="@{/findShareBoardDetail(postNo=${group.postNo})}" th:text="${group.title}">title</a><!--th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}"   -->
                             </div>
                         </div>
                         

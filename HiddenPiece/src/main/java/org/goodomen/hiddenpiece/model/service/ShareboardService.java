@@ -16,4 +16,6 @@ public interface ShareboardService {
 
 	void writeSharePost(ShareBoardVO shareboardVO);
 
+	ShareBoardVO findShareBoardDetail(String postNo);
+
 }

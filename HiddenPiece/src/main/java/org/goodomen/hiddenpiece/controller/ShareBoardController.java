@@ -72,4 +72,11 @@ public class ShareBoardController {
 	   ////////////////////////////////////////////////////////////////////
 		return "redirect:ShareBoardPostList";
 	}
+	
+	@RequestMapping("findShareBoardDetail")
+	public String findShareBoardDetail(String postNo,Model model) {
+		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
+		model.addAttribute("postVO",shareboardVO);
+		return "shareboard/shareboarddetail";
+	}
 }

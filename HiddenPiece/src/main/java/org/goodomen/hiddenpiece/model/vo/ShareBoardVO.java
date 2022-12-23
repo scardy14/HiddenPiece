@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShareBoardVO {
-	private int post_no;
+	private int postNo;
 	private String id;
 	private String title;
 	private String content;
 	private String photo;
-	private String time_posted;
+	private String timePosted;
 	private int hits;
-	private String post_status;
+	private String postStatus;
 }

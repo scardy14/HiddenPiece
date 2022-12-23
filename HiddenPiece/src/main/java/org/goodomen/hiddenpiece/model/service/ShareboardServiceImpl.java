@@ -38,4 +38,9 @@ public class ShareboardServiceImpl implements ShareboardService{
 		shareboardMapper.writeSharePost(shareboardVO);
 	}
 
+	@Override
+	public ShareBoardVO findShareBoardDetail(String postNo) {
+		return shareboardMapper.findShareBoardDetail(postNo);
+	}
+
 }
