@@ -39,8 +39,10 @@
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div>   
+                            <div>
+                            	<th:block th:if="${session.mvo}">
 					            	<input type = "hidden" id="id" th:value="${session.mvo.id}">
+					            </th:block>
                             </div>
                             <div class="ml-2">
                                 <div class="btn-group">
