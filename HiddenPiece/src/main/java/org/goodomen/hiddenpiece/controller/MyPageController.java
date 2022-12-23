@@ -51,10 +51,11 @@ public class MyPageController {
 		}else {
 			sellingCount = mypageService.findSellingCountFromBidListTag(cri);
 		} 
-		System.out.println(cri);
 		paging.setCri(cri);
 		paging.setTotalCount(sellingCount);
 		sellingList = mypageService.findSellingListFromProductList(cri);
+		
+		System.out.println(paging);
 		
 		model.addAttribute("sellingList", sellingList);
 		model.addAttribute("paging", paging);

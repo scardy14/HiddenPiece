@@ -128,5 +128,15 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		return auctionBoardMapper.searchAuctionBoardListCnt(cri);
 	}
 
+	@Override
+	public void updatePostStatusTo2() {
+		auctionBoardMapper.updatePostStatusTo2();		
+	}
+
+	@Override
+	public void updatePostStatusTo3() {
+		auctionBoardMapper.updatePostStatusTo3();
+	}
+
 
 }

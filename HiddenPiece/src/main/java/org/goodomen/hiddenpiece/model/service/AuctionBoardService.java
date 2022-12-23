@@ -51,4 +51,10 @@ public interface AuctionBoardService {
 
 	int searchAuctionBoardListCnt(Criteria cri);
 
+	void updatePostStatusTo2();
+	
+	void updatePostStatusTo3();
+
+	
+
 }

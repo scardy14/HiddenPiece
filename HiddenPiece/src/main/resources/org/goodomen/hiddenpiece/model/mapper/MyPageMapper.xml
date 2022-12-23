@@ -52,6 +52,7 @@
 		SELECT COUNT(*)
 		 FROM AuctionBoard
 		WHERE id = #{id}
+					AND post_status!=0
 	</select>
 	<select id="findSellingCountFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="int">
 		SELECT COUNT(*)
@@ -60,16 +61,27 @@
 		  		AND a.post_status = #{tag} 
 	</select>
 	<select id="findSellingListFromBidList" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO">
-		SELECT *
-		  FROM AuctionBoard
-		 WHERE id=#{id}
-		 ORDER BY post_no DESC
+		SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+			  		  FROM AuctionBoard
+					 WHERE id=#{id}
+					 		AND post_status!=0
+			 		 ORDER BY post_no DESC		
+		  		)
+		  WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+		  
+			
 	</select>
 	<select id="findSellingListFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
-		SELECT *
-		  FROM AuctionBoard
-		 WHERE id = #{id}
-		 			AND post_status=#{tag}
-		 ORDER BY post_no DESC
+		SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+			  		  FROM AuctionBoard
+					 WHERE id=#{id}
+					 			AND post_status=#{tag}
+			 		 ORDER BY post_no DESC		
+		  		)
+		  WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
 	</select>
 </mapper>

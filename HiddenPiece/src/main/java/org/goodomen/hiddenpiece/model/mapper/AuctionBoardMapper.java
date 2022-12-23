@@ -63,4 +63,8 @@ public interface AuctionBoardMapper {
 
 	public List<Map<String, Object>> searchPostByKeyword(Criteria cri);
 
+	public void updatePostStatusTo2();
+
+	public void updatePostStatusTo3();
+
 }
