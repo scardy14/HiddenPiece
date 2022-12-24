@@ -125,7 +125,10 @@ UPDATE AuctionBoard_Comment SET comment_status=0 WHERE comment_no=23
 SELECT * FROM AuctionBoard_Comment WHERE comment_no=22
 
 -- 찜한 목록 조회
-SELECT * FROM AuctionBoard_Likes WHERE id='yerin0110';
+SELECT ab.post_no, ab.id, ab.title, ab.content, ab.photo, ab.start_price, ab.current_price, ab.sell_price, ab.time_posted, ab.hits, ab.end_date, ab.now_id, ab.post_status, abl.post_no
+		FROM AuctionBoard ab
+		INNER JOIN AuctionBoard_Likes abl ON ab.post_no=abl.post_no
+		WHERE abl.id='java1'
 
 이름 계좌번호 은행명 포인트 from
 UPDATE Account_Info 
@@ -166,7 +169,30 @@ from (
 						where  content LIKE '%요%' OR title LIKE '%요%' 
 						)
 								
+select * from (
+select ROWNUM rm, A.* 
+from (
+				select  	 post_no
+								,content
+								, title
+								,photo
+								,start_price
+								, sell_price
+								, current_price
+								, hpm.id
+								,time_posted
+								, hits
+								, end_date
+								, now_id
+								, post_status
+						from auctionboard ab , hp_member hpm
+						where post_status in (1,2,3)
+						and  hpm.id=ab.id
 						
+						order by post_no desc
+						) A
+						where  (content LIKE '%요%' OR title LIKE '%요%') and post_status=2 and current_price between 100000 and 500000
+						)				
 -- 정렬이 '입찰중'인  페이징 처리된 게시물 리스트
 select  	 post_no
 				,content
@@ -271,8 +297,8 @@ select * from (
 								order by post_no desc
 								) A
 								where 1=1
-									and (content LIKE '%세요%' OR title LIKE '%세요%')
-										and post_status=1
+									and (content LIKE '%요%' OR title LIKE '%요%')
+										and post_status=1 
 								)
    
 
@@ -342,9 +368,4 @@ SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_
 		  FROM AuctionBoard
 		 WHERE id='scardy'
 		 			AND post_status=3
-<<<<<<< HEAD
 		 ORDER BY post_no DESC;
-=======
-		 ORDER BY post_no DESC
->>>>>>> refs/heads/main
->>>>>>> refs/heads/main
