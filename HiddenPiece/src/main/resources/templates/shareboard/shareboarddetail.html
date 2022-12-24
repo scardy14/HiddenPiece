@@ -16,45 +16,56 @@
 					data-ride="carousel">
 					<div class="carousel-inner bg-light">
 						<div class="carousel-item active">
-							<img class="w-100 h-100" th:src="@{/shareboardimg/}+ ${postVO.photo}" alt="Image">
+							<img width="100%" height="600" th:src="@{/shareboardimg/}+ ${postVO.photo}" alt="Image">
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="col-lg-7 h-auto mb-30">
-				<div class="h-100 bg-light p-30">
+				<div style="height: 800; background-color: white; padding: 30px;">
 				<form>
 				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
 			</form>
-					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p style="text-align: right;">조회수: <span th:text="${postVO.hits}">조회수</span></p>
-					<br>
+					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p>조회수: <span th:text="${postVO.hits}">조회수</span></p>
+			
+					<th:block th:if="${session.mvo!=null}">
+						<th:block th:if="${session.mvo.id==postVO.id}" >
+								<div align="right">
+									<a th:href="@{/ShareboardUpdate(postNo=${postVO.postNo})}"><font color="gray">수정</font></a> 
+									<a th:href="@{/ShareboardDelete(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a> 
+								</div>
+								<!-- <form style="width: 20; float: right;" id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardUpdate}" method="post">
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button  type = "submit" style="border-color: gray; background-color: white;">수정하기</button> 
+								</form>
+								<form style="width: 20; float: right;" id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardDelete}" method="post">
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button  type = "submit" style="border-color: gray; background-color: white;">삭제하기</button>
+								</form> -->				
+						</th:block>
+					</th:block>
 					<div class="nav nav-tabs mb-4">
 						<a class="nav-item nav-link text-dark active" data-toggle="tab">상품설명</a>
 					</div>
 					<div class="tab-content">
 						<div class="tab-pane fade show active" id="tab-pane-1">
-							<p th:text="${postVO.content}" style="width: 100%; height: 300px;">상품설명란</p>
+							<p th:text="${postVO.content}" style="width: 100%; height: 300px; margin: 10px;">상품설명란</p>
 						</div>
 					</div>
+					<div>
 					<th:block th:if="${session.mvo!=null}">
 						<th:block th:if="${session.mvo.id==postVO.id}" >
 								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/ShareboardEnd}" method="post">
 									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-									<button type = "submit" style="border-color: gray; background-color: white;">종료하기</button>
-								</form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<div class="row px-xl-5">
-									<form id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardUpdate}" method="post">
-										<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-										<button  type = "submit" style="border-color: gray; background-color: white;">수정하기</button> 
-									</form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<form id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardDelete}" method="post">
-										<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-										<button  type = "submit" style="border-color: gray; background-color: white;">삭제하기</button> 
-									</form>
-								</div>
+									<div align="center">
+										<button type = "submit" class="btn btn-primary px-3" style="width: 90%;">종료하기</button>
+									</div>
+								</form> <br>
+								
 						</th:block>
 					</th:block>
+					</div>
 				</div>
 			</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
