@@ -23,42 +23,42 @@
 							<input type="radio" class="custom-control-input" th:checked="${mapList.price == 'all'}"
 								id="price-all" name="price" th:value="all"> <label class="custom-control-label"
 								for="price-all">All Price</label> <span
-								class="badge border font-weight-normal">1000</span>
+								class="badge border font-weight-normal"></span>
 						</div>
 						<div
 							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
 							<input type="radio" class="custom-control-input"  th:checked="${mapList.price == '1'}"
 							 id="price-1"  name="price" th:value="1">
 							<label class="custom-control-label" for="price-1">0 -
-								100000</label> <span class="badge border font-weight-normal">150</span>
+								100000</label> <span class="badge border font-weight-normal"></span>
 						</div>
 						<div
 							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
 							<input type="radio" class="custom-control-input"  th:checked="${mapList.price =='2'}"
 							id="price-2"  name="price" th:value="2">
 							<label class="custom-control-label" for="price-2">100000 
-								- 500000</label> <span class="badge border font-weight-normal">295</span>
+								- 500000</label> <span class="badge border font-weight-normal"></span>
 						</div>
 						<div
 							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
 							<input type="radio" class="custom-control-input"  th:checked="${mapList.price == '3'}"
 							id="price-3" name="price" th:value="3">
 							<label class="custom-control-label" for="price-3">500000 - 1000000
-								</label> <span class="badge border font-weight-normal">246</span>
+								</label> <span class="badge border font-weight-normal"></span>
 						</div>
 						<div
 							class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
 							<input type="radio" class="custom-control-input"  th:checked="${mapList.price== '4'}"
 							 id="price-4" name="price" th:value="4">
 							<label class="custom-control-label" for="price-4">1000000 - 5000000
-								</label> <span class="badge border font-weight-normal">145</span>
+								</label> <span class="badge border font-weight-normal"></span>
 						</div>
 						<div
 							class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
 							<input type="radio" class="custom-control-input"   th:checked="${mapList.price == '5'}"
 							id="price-5" name="price" value="5">
 							<label class="custom-control-label" for="price-5">5000000 -
-								</label> <span class="badge border font-weight-normal">168</span>
+								</label> <span class="badge border font-weight-normal"></span>
 						</div>
 					</form>
 				</div>
@@ -83,14 +83,6 @@
 												color="gray">글쓰기&emsp;</font></a>
 										</div>
 									</th:block>
-									<!-- <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" id="dropdownBtn">정렬</button> -->
-									<!--   <select class="dropdown-menu dropdown-menu-right" id="toggleCategory">
-                                 <a class="dropdown-item category" th:onclick="searchByKeyword()" id="bidding">진행중</a>
-                                 <a class="dropdown-item category" th:onclick="searchByKeyword()" id="soldout">판매완료</a>
-                                 <a class="dropdown-item category" th:onclick="searchByKeyword()" id="failure">유찰</a>
-                                </sl> -->
-
-
 
 									<select id="statusSelect" name="statusSelect">
 										<option th:value="all" th:text="전체"
@@ -114,7 +106,7 @@
 						<div class="product-item bg-light mb-4">
 							<div class="product-img position-relative overflow-hidden"
 								style="width: 100%; height: 100%;">
-								<img class="img-fluid w-100"
+								<img width="100%" height="300px"
 									th:src="@{/auctionboardimg/}+ ${group.photo}" alt="">
 								<div class="product-action">
 
@@ -136,22 +128,6 @@
 										<!--세션 없을때 빈하트 나오도록  -->
 										</a>
 									</th:block>
-									<!-- <th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
-	                                 		<i class="fas fa-heart" th:id="'fullHeart'+${group.postNo}"></i>
-	                                	</th:block>
-	                                	<th:block th:if="${#lists.contains('${myWishlist}', '${group}')}">
-	                                 		<i class="far fa-heart" th:id="'emptyHeart'+${group.postNo}"></i>찜 안눌렀으면 빈하트
-	                                	</th:block>
-                                    </a>
-                                </th:block>
-                                
-                                <th:block th:if="${session.mvo==null}">
-                                	<a class="btn btn-outline-dark btn-square" th:onclick="addToWishlistNoSession([[${group.postNo}]]);" href=""   >
-                                 		<i class="far fa-heart" ></i>세션 없을때 빈하트 나오도록 
-                                    </a>
-                                </th:block> -->
-
-
 									<a class="btn btn-outline-dark btn-square" href=""
 										th:href="@{/findAuctionBoardPostDetail(postNo=${group.postNo})}"><i
 										class="fa fa-search"></i></a>
@@ -163,8 +139,8 @@
 									th:text="${group.title}">${group.title}</a>
 								<div
 									class="d-flex align-items-center justify-content-center mt-2">
-									<h5 th:text="|${group.currentPrice}원|">${group.currentPrice}</h5>
-									<h6 class="text-muted ml-2" th:text="|${group.startPrice}원|">
+										<h5 th:text="|${#numbers.formatInteger(group.currentPrice, 0, 'COMMA')}원|"></h5>
+										<h6 class="text-muted ml-2" th:text="|${#numbers.formatInteger(group.startPrice, 0, 'COMMA')}원|">
 										<del>${group.startPrice}</del>
 									</h6>
 								</div>
@@ -233,6 +209,14 @@
 		 $("#postStatus").attr("action", "searchPostByKeyword").submit();
 		 //$("#postStatus") 
 		 } */
+		 
+		 function numberWithCommas(x) {
+			  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+		 
+		 function numberWithCommas2(x) {
+			  return 123;
+		}
 		/* 세션 없을때 찜하기 버튼 누를시 */
 		function noSessionWishlist() {
 			alert("찜하기는 회원만 가능합니다.");
