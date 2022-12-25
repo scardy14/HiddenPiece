@@ -81,7 +81,7 @@
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
-					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span><br>
+					<span th:text="|보유포인트 : ${session.mvo.point}원|"></span><br>
 					<th:block th:if="${session.mvo.status=='2'}"> 
 						<a href="#" id="adminBtn" th:href="@{/adminForm}"><font color="orange">관리자페이지로</font></a>
 					</th:block>
@@ -233,7 +233,7 @@
 	$(document).ready(function() {
 		
 		 $("#statusSelect").change(function(){
-			 searchByKeyword(1); /* 이거 그거자나 그 셀레ㄱ박스 누를때마다 리프레쉬되는거 */
+			 searchByKeyword(1); /* 셀렉트박스 누를때마다 리프레쉬되는거 */
          });
 		 $("[id^='price']").click(function(){
 			 searchByKeyword(1);	
@@ -242,12 +242,6 @@
 		function searchByKeyword(num){ //5누르면 5날라오고
 			let keyword = $("#searchKeyword").val();
 		
-			/* if($("#price").val()==null || $("#price").val()==""){
-				$("#price").val("all");
-			}
-			else{
-				$("#price").val();
-			} */
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;

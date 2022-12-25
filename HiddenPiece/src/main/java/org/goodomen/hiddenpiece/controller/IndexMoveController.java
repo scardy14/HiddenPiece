@@ -33,6 +33,7 @@ public class IndexMoveController {
 	private final NoticeBoardService noticeBoardService;
 	private final MemberService memberService;
 
+	// 홈으로 이동 
 	@RequestMapping(value={"/","index","home","//"})
 	public String indexMove(Model model) {
 		model.addAttribute("viewPage","index");
@@ -61,6 +62,7 @@ public class IndexMoveController {
 	}
 	*/
 	
+	// 경매게시판 
 	@RequestMapping("auctionboard")
 	public String auctionBoardMove(Criteria cri, Model model, HttpServletRequest request) {
 		//전체 글 개수
@@ -89,37 +91,43 @@ public class IndexMoveController {
 		
 	}
 	
+	// 경매게시판 상세조회
 	@RequestMapping("auctionboarddetail")
 	public String auctionBoardDetailMove() {
 		return "detail2";
 	}
 	
+	// 경매게시판 게시글 작성
 	@RequestMapping("auctionboardwrite")
 	public String auctionBoardWriteMove() {
 		return "auctionwriteform2";
 	}
 	
+	// 
 	@RequestMapping("exchangePoint")
 	public String exchangePoint() {
 		return "mypage/exchangePointForm";
 	}
 	
-
+	//
 	@RequestMapping("testCheckOut")
 	public String testCheckOut() {
 		return "checkout2";
 	}
 	
+	//
 	@RequestMapping("registerForm")
 	public String registerForm() {
 		return "member/register-form";
 	}
 	
+	//
 	@RequestMapping("registerMember")
 	public String registerMember() {
 		return "member/register-result";
 	}
 	
+	//
 	@RequestMapping("loginForm")
 	public String loginForm() {
 		return "member/login-form";
@@ -136,11 +144,13 @@ public class IndexMoveController {
 		return "/wishlist";
 	}
 	
+	//
 	@RequestMapping("myInfo")
 	public String myInfo() {
 		return "mypage/myInfo";		
 	}
 	
+	//
 	@RequestMapping("adminForm")
 	public String adminForm(Model model) {
 		int result = memberService.totalCountMember();
@@ -148,6 +158,7 @@ public class IndexMoveController {
 		return "admin/admin-form";
 	}
 	
+	//
 	@RequestMapping("freeBoardPostList")
 	public String freeboard(FreeBoardCriteria fcri,Model model) {
 		int freeBoardListCnt = freeBoardService.freeBoardListCnt();
@@ -155,12 +166,12 @@ public class IndexMoveController {
 		paging.setCri(fcri);
 		paging.setTotalCount(freeBoardListCnt);
 		List<Map<String, Object>> list = freeBoardService.boardList(fcri);
-		System.out.println(list);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "freeboard/freeBoardPostList";
 	}
 	
+	//
 	@RequestMapping("freeboarddetail")
 	public String freeBoardDetailMove() {
 		return "freeBoardPostDetail";
@@ -174,7 +185,6 @@ public class IndexMoveController {
 		paging.setCri(ncri);
 		paging.setTotalCount(noticeBoardListCnt);
 		List<Map<String, Object>> list = noticeBoardService.boardList(ncri);
-		System.out.println(list);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "noticeboard/noticeBoardPostList";

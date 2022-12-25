@@ -1,9 +1,11 @@
+--
 insert into ACCOUNT_INFO values(
 	'110-486-552153',
 	'신한',
 	700000
 )
 
+--
 insert into HP_MEMBER values(
 	'hunjin',
 	'seltise@naver.com',
@@ -17,7 +19,7 @@ insert into HP_MEMBER values(
 	1
 )
 
-
+--
 insert into FREEBOARD values(
 	freeboard_seq.nextval,
 	'hunjin',
@@ -28,8 +30,10 @@ insert into FREEBOARD values(
 	1
 )
 
+--
 select * from freeBoard where post_no=2;
 
+--
 			SELECT * from 
 	(select ROWNUM rm, post_no,contend, time_posted,title,hits,post_status,id from
 		(select post_no,contend, time_posted,title,hits, post_status, hpm.id

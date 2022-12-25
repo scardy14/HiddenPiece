@@ -205,9 +205,6 @@ public class AuctionBoardController {
 	// 경매게시판으로 이동
 	@RequestMapping("searchPostByKeyword")
 	public String searchPostByKeyword(@RequestParam HashMap<String, Object> mapList, Model model, HttpServletRequest request, Criteria cri) {
-		System.out.println("하하");
-		System.out.println(mapList);
-
 		if (!mapList.get("pageIndex").equals("")) {
 			cri.setPage(Integer.valueOf((String) mapList.get("pageIndex")));
 		}
@@ -229,33 +226,26 @@ public class AuctionBoardController {
 		// }
 		int auctionBoardListCnt = auctionBoardService.searchAuctionBoardListCnt(cri);
 
-		System.out.println(auctionBoardListCnt);
-
 		Paging paging = new Paging();
 		paging.setCri(cri);
 		paging.setTotalCount(auctionBoardListCnt);
 		model.addAttribute("paging", paging);
 		HttpSession session = request.getSession(false);
 
-		System.out.println(paging); // 여기까지 출력하는데
-
 		if (session != null) {
 			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 			String id = memberVO.getId();
 			cri.setLoginId(id);
 			ArrayList<AuctionBoardPostVO> myWishlist = memberService.selectMyWishlist(id);
-			cri.setSearchKeyword(mapList.get("searchKeyword").toString()); //이거 왜하는거야??에러나자ㅏ나
+			cri.setSearchKeyword(mapList.get("searchKeyword").toString()); 
 			cri.setPrice(mapList.get("price").toString());
 			List<Map<String, Object>> auctionBoardList = auctionBoardService.searchPostByKeyword(cri);
-			System.out.println(auctionBoardList);
-			
 			
 			for (int i = 0; i < auctionBoardList.size(); i++) {
 				if (myWishlist.contains(auctionBoardList.get(i))) {
 					((AuctionBoardPostVO) auctionBoardList.get(i)).setLike(true);
 				}
 			}
-			System.out.println(auctionBoardList);
 			model.addAttribute("postList", auctionBoardList);
 		}
 
@@ -266,9 +256,7 @@ public class AuctionBoardController {
 			model.addAttribute("postList", auctionBoardList);
 		}
 
-		System.out.println(cri);
 		model.addAttribute("mapList", mapList);
-		System.out.println();
 		return "shop2";
 	}
 

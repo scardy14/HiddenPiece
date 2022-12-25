@@ -1,7 +1,6 @@
 ----------------------------------------------------------------------
 --------------------------공지게시판-------------------------------------
---공지게시판
-
+--공지게시판 테이블 생성
 CREATE TABLE NoticeBoard (
 	post_no NUMBER NOT NULL,
 	id VARCHAR2(100) NOT NULL,
@@ -14,11 +13,14 @@ CREATE TABLE NoticeBoard (
 	CONSTRAINT FK_NoticeBoard_id FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
 
+-- 공지게시판 시퀀스 생성
 CREATE SEQUENCE NoticeBoard_seq;
 
+-- 회원 정보 상태 조회
 select status from HP_MEMBER where id='java1';
 select status from HP_MEMBER where id='hunjin';
 
+--
 		SELECT *
 		  FROM (
 		  			SELECT ROWNUM, a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
@@ -31,6 +33,7 @@ select status from HP_MEMBER where id='hunjin';
 		  		)
 		WHERE ROWNUM BETWEEN 	1 and 2
 
+--
 		SELECT * 
 		  FROM (
 		  		SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
