@@ -25,7 +25,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>충전할 포인트</label> <input class="form-control" type="number" name="balance"
-								value="0" >
+								value="" >
 						</div>
 						<div class="col-md-6 form-group">
 							<label>은행명</label> <input class="form-control" type="text" name="bank"
@@ -88,6 +88,7 @@
 		</div>
 </form>
 	<script type="text/javascript">
+	
 	$(function(){
 		let checkPointFlag="";
 		
@@ -110,8 +111,8 @@
 				data:"accountNo="+accountNo,
 				success:function(result){
 					if(result>=point){
-						
-						$("#ajaxPoint").text(result-point+"원");
+						let balance = numberWithCommas(result-point)
+						$("#ajaxPoint").text(balance+"원");
 						checkPointFlag =pointKeyUp.val();
 					}
 					else {
@@ -120,12 +121,18 @@
 				}
 			});
 		});
+		
     	pointKeyUp.keyup(function(){
 			let point = pointKeyUp.val();
-		$("#point1").text(point+"원");
-        $("#ajaxPoint1").text(point+"원");
+			let Rechargeable = numberWithCommas(point);
+			$("#point1").text(Rechargeable+"원");
+     	   	$("#ajaxPoint1").text(Rechargeable+"원");
     	});
 		
+    	
+    	function numberWithCommas(val) {
+    		return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	}
 	});
 	</script>
 

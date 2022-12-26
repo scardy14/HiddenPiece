@@ -26,7 +26,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>환전할 포인트</label> <input class="form-control" type="number"
-							 value = "0" name="point" id="point">
+							 value = "" name="point" id="point">
 						</div>
 						<div class="col-md-6 form-group">
 							<label>은행명</label> <input class="form-control" type="text"
@@ -111,7 +111,7 @@
     				success:function(result){
     					if(result>=point){
     						
-    						$("#ajaxPoint1").text(result-point+"원");
+    						$("#ajaxPoint1").text(numberWithCommas(result-point).replace(/(^0+)/, "")+"원");
     						checkPointFlag=pointKeyUp.val();
     					}
     					else {
@@ -124,10 +124,14 @@
         	 
             	pointKeyUp.keyup(function(){
 					let point = pointKeyUp.val();
-				$("#point1").text(point+"원");
-                 $("#ajaxPoint").text(point+"원");
+				$("#point1").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
+                 $("#ajaxPoint").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
                  
         	 });
+            	
+           	function numberWithCommas(val) {
+           		return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+           	}
          });
       </script>		
 						
