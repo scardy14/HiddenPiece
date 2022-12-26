@@ -88,7 +88,7 @@
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
-					<span th:text="|보유포인트 : ${session.mvo.point}원|"></span><br>
+					<span th:text="|보유포인트 : ${#numbers.formatInteger(session.mvo.point, 0, 'COMMA')}원|"></span><br>
 					<th:block th:if="${session.mvo.status=='2'}"> 
 						<a href="#" id="adminBtn" th:href="@{/adminForm}"><font color="orange">관리자페이지로</font></a>
 					</th:block>

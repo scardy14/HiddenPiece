@@ -5,8 +5,8 @@
 	<!-- 페이지네이션과 글목록 -->
 	<select id="boardList" resultType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria">
 			SELECT * from 
-	(select ROWNUM rm, post_no,contend, time_posted,title,hits,post_status,id from
-		(select post_no,contend, time_posted,title,hits, post_status, hpm.id
+	(select ROWNUM rm, post_no,content, time_posted,title,hits,post_status,id from
+		(select post_no,content, time_posted,title,hits, post_status, hpm.id
 		from noticeboard nb
 		inner join hp_member hpm on hpm.id=nb.id
 		where post_status=1
@@ -31,11 +31,11 @@
 	</select>
 	<!-- 글쓰기 -->
 	<insert id="writePost" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO">
-		insert into noticeboard(post_no,contend,time_posted,title,id) values(noticeboard_seq.nextval,#{contend},sysdate,#{title},#{id})
+		insert into noticeboard(post_no,content,time_posted,title,id) values(noticeboard_seq.nextval,#{content},sysdate,#{title},#{id})
 	</insert>
 	<!-- 글수정 -->
 	<update id="updatePost" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO">
-		update noticeboard set title=#{title}, contend=#{contend} where post_no=#{postNo}
+		update noticeboard set title=#{title}, content=#{content} where post_no=#{postNo}
 	</update>
 	<!-- 글삭제 -->
 	<update id="deletePost" parameterType="long">
