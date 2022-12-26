@@ -19,7 +19,7 @@ public interface ShareBoardMapper {
 
 	int writeSharePost(ShareBoardVO shareboardVO);
 
-	ShareBoardVO findShareBoardDetail(String postNo);
+	ShareBoardVO findShareBoardDetail(long postNo);
 
 	int updateShareboardVO(ShareBoardVO shareboardVO);
 
@@ -27,6 +27,6 @@ public interface ShareBoardMapper {
 
 	int finishShare(long postNo);
 
-	void addHits(String postNo);
+	void addHits(long postNo);
 
 }

@@ -3,7 +3,7 @@
 <mapper
 	namespace="org.goodomen.hiddenpiece.model.mapper.ShareBoardMapper">
 	<select id="findShareCount" resultType="int">
-		SELECT COUNT(*) FROM ShareBoard
+		SELECT COUNT(*) FROM ShareBoard WHERE post_status!=0
 	</select>
 	<select id="findShareCountTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="int">
 		SELECT COUNT(*) FROM ShareBoard WHERE post_status = #{tag}
@@ -22,7 +22,7 @@
 	<insert id="writeSharePost" parameterType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
 		INSERT INTO ShareBoard VALUES(ShareBoard_seq.nextval,#{id},#{title},#{content},#{photo},sysdate,DEFAULT,DEFAULT)
 	</insert>
-	<select id="findShareBoardDetail" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+	<select id="findShareBoardDetail" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO" parameterType="long">
 		SELECT * FROM ShareBoard WHERE post_no = #{value}
 	</select>
 	<update id="updateShareboardVO" parameterType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
@@ -34,7 +34,7 @@
 	<update id="finishShare" parameterType="long">
 		UPDATE ShareBoard SET post_status = 2 WHERE post_no = #{value}
 	</update>
-	<update id="addHits" parameterType="String">
+	<update id="addHits" parameterType="long">
 		UPDATE ShareBoard SET hits = hits+1 WHERE post_no = #{value}
 	</update>
 </mapper>
