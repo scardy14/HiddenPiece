@@ -22,7 +22,7 @@ public interface FreeBoardMapper {
 	
 	public void updatePost(FreeBoardVO freeBoardVO);
 
-	public void deletePost(long postNo);
+	public int deletePost(long postNo);
 
 	public void updateHits(long postNo);
 

@@ -6,10 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
-import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
-import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,9 +73,15 @@ public class FreeBoardController {
 	
 	@RequestMapping("deletePost")
 	public String deletePost(long postNo) {
-		freeBoardService.deletePost(postNo);
-		return "redirect:freeBoardPostList";
-	}		
+		int result=freeBoardService.deletePost(postNo);
+		if(result==1) {
+			return "redirect:freeBoardPostList";
+		} else {
+			return "redirect:freeBoardDelete-fail";
+		}	
+	}
+
+	
 	
 	// 자유게시판 댓글 작성
 		@ResponseBody
