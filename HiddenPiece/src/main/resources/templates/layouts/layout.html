@@ -4,6 +4,13 @@
 <head>
 <meta charset="utf-8">
 <title>HiddenPiece</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<style>
+	*{
+	font-family: 'Nanum Gothic', sans-serif;
+	}
+</style>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
@@ -57,6 +64,7 @@
 				<form id="searchByKeywordForm" method="post">
 				<input type="hidden" name="pageIndex"  id="pageIndex">
 				<input type="hidden" name="status"  id="status">
+				<input type="hidden" name="price"  id="price">
 					<div class="input-group">
 					<th:block th:if="${mapList}">
 						<input type="text" class="form-control" name="searchKeyword" placeholder="" th:value="${mapList.searchKeyword}">
@@ -80,7 +88,7 @@
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
-					<span th:text="|보유잔액 : ${session.mvo.point}원|"></span><br>
+					<span th:text="|보유포인트 : ${session.mvo.point}원|"></span><br>
 					<th:block th:if="${session.mvo.status=='2'}"> 
 						<a href="#" id="adminBtn" th:href="@{/adminForm}"><font color="orange">관리자페이지로</font></a>
 					</th:block>
@@ -117,7 +125,7 @@
 					style="width: calc(100% - 30px); z-index: 999;">
 					<div class="navbar-nav w-100">
 					<div class="nav-item dropdown dropright">
-					<a class="dropdown-item" th:onclick="searchByKeyword()">경매게시판</a> 
+					<a class="dropdown-item" th:onclick="searchByKeyword2()">경매게시판</a> 
 					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
 					</div>
 					
@@ -232,31 +240,31 @@
 	$(document).ready(function() {
 		
 		 $("#statusSelect").change(function(){
-			 searchByKeyword(1);
+			 searchByKeyword(1); /* 셀렉트박스 누를때마다 리프레쉬되는거 */
          });
+		 $("[id^='price']").click(function(){
+			 searchByKeyword(1);	
+	     });
 	});
-		function searchByKeyword(num){ 
+		function searchByKeyword(num){ //5누르면 5날라오고
 			let keyword = $("#searchKeyword").val();
-			
+		
 			if(keyword==""){
 				alert("검색어를 입력하세요.");
 				return;
 			} 
-			$("#searchKeyword");
-			$("#pageIndex").val(num);
+			$("#price").val($("input:radio[name='price']:checked").val());
+			$("#pageIndex").val(num); //
 			$("#status").val($("#statusSelect").val());
 			$("#searchByKeywordForm").attr("action","searchPostByKeyword").submit();
-			/* $.ajax({
-				type:"post",
-				dateType:"json",
-				url:"searchPostByKeyword",
-				data:
-				{
-					"keyword":keyword,
-				},
-				success:function(result){
-				}
-			}) */
+		}
+	
+		function searchByKeyword2(){ //5누르면 5날라오고
+			$("#searchKeyword").val("");
+			$("#pageIndex").val(1); //
+			$("#status").val("all");
+			$("#price").val("all");
+			$("#searchByKeywordForm").attr("action","searchPostByKeyword").submit();
 		}
 	
 		$(function() {

@@ -45,10 +45,12 @@ public class FreeBoardController {
 		model.addAttribute("commentList", commentList);
 		return "freeboard/freeBoardPostDetail";
 	}
+	
 	@RequestMapping("moveFreeBoardPostWriteForm")
 	public String moveFreeBoardPostWriteForm() {
 		return "freeboard/freeBoardWritePostForm";
 	}
+	
 	@RequestMapping("writePost")
 	public String writePost(FreeBoardVO freeBoardVO) {
 		freeBoardService.writePost(freeBoardVO);
@@ -70,6 +72,7 @@ public class FreeBoardController {
 	public String moveFreeBoardPostDeleteForm() {
 		return "freeboard/freeBoardDeletePostForm";
 	}
+	
 	@RequestMapping("deletePost")
 	public String deletePost(long postNo) {
 		freeBoardService.deletePost(postNo);

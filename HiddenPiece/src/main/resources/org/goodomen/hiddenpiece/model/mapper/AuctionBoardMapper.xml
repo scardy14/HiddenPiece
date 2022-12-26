@@ -24,11 +24,29 @@
 								)
 									where 1=1
 								<if test="searchKeyword!=null and searchKeyword!=''">
-										and content LIKE '%'||#{searchKeyword}||'%' OR title LIKE '%'||#{searchKeyword}||'%'
-									</if>
-										 <if test="status!=null and status!=''">
-										and post_status=#{status}
-									</if>
+							and (content LIKE '%'||#{searchKeyword}||'%' OR title LIKE '%'||#{searchKeyword}||'%')
+					</if>
+					 <if test="status!=null and status!='all'">
+							and post_status=#{status}
+					</if>
+					<choose>
+						<when test='price=="1"'>
+							and current_price between 0 and 99999
+						</when>
+						<when test='price=="2"'>
+							and current_price between 100000 and 499999
+						</when>
+						<when test='price=="3"'>
+							and current_price between 500000 and 999999
+						</when>
+						<when test='price=="4"'>
+							and current_price between 1000000 and 4999999
+						</when>
+						<when test='price=="5"'>
+							and current_price > 5000000
+						</when>
+					</choose>
+					
 										
 										
 	</select>
@@ -106,17 +124,36 @@
 					<if test="searchKeyword!=null and searchKeyword!=''">
 							and (content LIKE '%'||#{searchKeyword}||'%' OR title LIKE '%'||#{searchKeyword}||'%')
 					</if>
-					 <if test="status!=null and status!=''">
+					 <if test="status!=null and status!='all'">
 							and post_status=#{status}
 					</if>
+					<choose>
+						<when test='price=="1"'>
+							and current_price between 0 and 99999
+						</when>
+						<when test='price=="2"'>
+							and current_price between 100000 and 499999
+						</when>
+						<when test='price=="3"'>
+							and current_price between 500000 and 999999
+						</when>
+						<when test='price=="4"'>
+							and current_price between 1000000 and 4999999
+						</when>
+						<when test='price=="5"'>
+							and current_price > 5000000
+						</when>
+					</choose>
+					
 			<![CDATA[ 
 			)where rm between #{pageStart} and #{perPageNum}*#{page}
 			]]>
 	</select>
 	
+<!-- 	
 	<select id="auctionBoardListCnt" resultType="int">
 		SELECT COUNT(*) FROM AuctionBoard WHERE post_status=1 or post_status=2 or post_status=3
-	</select>
+	</select> -->
 	
 	<!-- 경매 게시판 상세 게시물 조회  -->
 	<select id="findAuctionBoardPostDetail" parameterType="long" resultType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
@@ -135,78 +172,98 @@
 		WHERE post_no=#{postNo}
 	</select>
 	
+	<!-- 경매게시판 댓글 작성  -->
 	<select id="writeComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
 		INSERT INTO AuctionBoard_Comment VALUES(AuctionBoard_Comment_seq.nextval, #{postNo}, #{id}, #{content}, SYSDATE, 1)
 	</select>
 	
+	<!-- 경매게시판 댓글 상태 0으로 변경(댓글 삭제) -->
 	<update id="changeCommentStatus" parameterType="long">
 		UPDATE AuctionBoard_Comment SET comment_status=0 WHERE comment_no=#{value}
 	</update>
-	
+
+	<!-- 경매게시판 댓글 수정 - 댓글 조회 -->	
 	<select id="selectCommentByCommentNo" resultType="string" parameterType="long">
 		SELECT content FROM AuctionBoard_Comment WHERE comment_no=#{value}
 	</select>
 
+	<!-- 경매게시판 댓글 달기  -->
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,#{id},#{title},#{content},#{photo},#{startPrice},#{startPrice},#{sellPrice},DEFAULT,DEFAULT,TO_Date(#{endDate},'YYYY-MM-DD HH24:MI'),' ',DEFAULT)
 	</insert>
 
+	<!-- 경매게시판 댓글 수정  -->
 	<update id="updateComment" parameterType="org.goodomen.hiddenpiece.controller.AuctionBoardCommentVO">
 		UPDATE AuctionBoard_Comment SET content=#{content} WHERE comment_no=#{commentNo}
 	</update>
 	
-	<!-- 찜하기 버튼 눌렀을 때 -->
+	<!-- 찜하기 -->
 	<insert id="addToWishlist" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO">
 		INSERT INTO AuctionBoard_Likes VALUES(#{postNo}, #{id})
 	</insert>
 	
-	<!-- 글삭제 -->
+	<!-- 경매게시판 게시글 삭제 -->
 	<update id="deleteAuctionBoardPost" parameterType="long" >
 		UPDATE AuctionBoard SET post_status = 0 WHERE post_no=#{value}
 	</update>
 	
-	<!-- 글수정 -->
+	<!-- 경매게시판 게시글 수정 -->
 	<update id="updateAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE AuctionBoard SET title = #{title}, content=#{content} WHERE post_no=#{postNo} 
 	</update>
 	
+	<!--  -->
 	<update id="bidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE AuctionBoard SET now_id=#{id}, current_price=#{currentPrice} WHERE post_no = #{postNo}
 	</update>
 	
+	<!--  -->
 	<update id="updateMemberPoint" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point - #{currentPrice} WHERE id = #{id}
 	</update>
 	
+	<!--  -->
 	<update id="reverseBidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point + (SELECT current_price FROM AuctionBoard WHERE post_no = #{postNo})
 		 WHERE id = (SELECT now_id FROM AuctionBoard WHERE post_no = #{postNo})
 	</update>
 	
+	<!--  -->
 	<select id="findAuctionBoardPostNowId" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" resultType="string">
 		SELECT now_id FROM AuctionBoard WHERE post_no=#{postNo}
 	</select>
 	
+	<!--  -->
 	<update id="buyAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE AuctionBoard SET post_status = 2, now_id=#{id}, current_price=sell_price WHERE post_no=#{postNo}
 	</update>
 	
+	<!--  -->
 	<update id="updateMemberPointbuy" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point- #{sellPrice} WHERE id=#{id}
 	</update>
 	
+	<!--  -->
 	<update id="addHits" parameterType="long">
 		UPDATE AuctionBoard SET hits = hits+1 WHERE post_no = #{value}
 	</update>
+	
+	<!--  -->
 	<select id="checkBidList" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" resultType="int">
 		SELECT COUNT(*) FROM Bid_List WHERE id = #{id} AND post_no=#{postNo}
 	</select>
+	
+	<!--  -->
 	<insert id="addBidList" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		INSERT INTO Bid_List VALUES(#{id},Bid_List_seq.nextval,#{postNo})
 	</insert>
+	
+	<!--  -->
 	<update id="updatePostStatusTo2">
 		UPDATE AuctionBoard SET post_status = 2 WHERE sysdate>end_date AND now_id!=' ' 
 	</update>
+	
+	
 	<update id="updatePostStatusTo3">
 		UPDATE AuctionBoard SET post_status = 3 WHERE sysdate>end_date AND now_id=' '
 	</update>

@@ -57,17 +57,13 @@ INSERT INTO HP_Member VALUES('yerin0110',01093124050,'yerin0110@naver.com','봉�
 --회원 정보 수정
 select * from HP_Member
 update HP_Member set password='c',email='dkakaksl',tel='01038291023',address='수원',nickName='봉태시기',name='문쭈노' where id='jaja';
-		
 update spring_member set password='b',name='아이유2',address='종로' where id='java' ;	
-
 
 --포인트 충전 
 update HP_Member set point=point+ ? where id='jaja5' name = ? 
-
 update Account_Info set balance=balance- ?  where account_No=? and bank =?
 
-
-
+-- 경매게시판 테이블 생성
 CREATE TABLE AuctionBoard(
 	post_no NUMBER NOT NULL,
 	id VARCHAR2(100) NOT NULL,
@@ -98,18 +94,6 @@ INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,'yerin0110','녹지않�
 SELECT * FROM AuctionBoard WHERE post_status=1 or post_status=2 or post_status=3  order by post_no desc
 SELECT * FROM AuctionBoard WHERE post_no between 50 and 54 and (post_status=1 or post_status=2 or post_status=3)  order by post_no desc
 
--- 경매게시판 페이지네이션
-SELECT * from 
-	(select ROWNUM rm, post_no,content, title, photo, start_price, sell_price, current_price, id, time_posted, hits, end_date, now_id, post_status from
-		(select post_no,content, title,photo,start_price, sell_price, current_price, hpm.id,time_posted, hits, end_date, now_id, post_status
-		from auctionboard ab
-		inner join hp_member hpm on hpm.id=ab.id
-		where post_status=1 or post_status=2 or post_status=3 
-		order by post_no desc))
-		where rm between 1 and 70
-)
-
-
 -- 경매게시판 댓글 등록
 INSERT INTO AuctionBoard_Comment VALUES(AuctionBoard_Comment_seq.nextval, 1, 'yerin0110', '이거 어디서 사셨나요',sysdate, 1)
 INSERT INTO AuctionBoard_Comment VALUES(AuctionBoard_Comment_seq.nextval, 1, 'yerin0110', '귀엽네요',sysdate, 1)
@@ -125,7 +109,10 @@ UPDATE AuctionBoard_Comment SET comment_status=0 WHERE comment_no=23
 SELECT * FROM AuctionBoard_Comment WHERE comment_no=22
 
 -- 찜한 목록 조회
-SELECT * FROM AuctionBoard_Likes WHERE id='yerin0110';
+SELECT ab.post_no, ab.id, ab.title, ab.content, ab.photo, ab.start_price, ab.current_price, ab.sell_price, ab.time_posted, ab.hits, ab.end_date, ab.now_id, ab.post_status, abl.post_no
+		FROM AuctionBoard ab
+		INNER JOIN AuctionBoard_Likes abl ON ab.post_no=abl.post_no
+		WHERE abl.id='java1'
 
 이름 계좌번호 은행명 포인트 from
 UPDATE Account_Info 
@@ -140,7 +127,7 @@ UPDATE Account_Info
 
 CREATE OR REPLACE PROCEDURE Update_Post_Status_2 
 
--- 페이징 처리된 게시물 리스트
+-- 페이징 처리된 게시물 리스트 
 select * from (
 select ROWNUM rm, A.* 
 from (
@@ -163,10 +150,8 @@ from (
 						
 						order by post_no desc
 						) A
-						where  content LIKE '%요%' OR title LIKE '%요%' 
-						)
-								
-						
+						where  (content LIKE '%요%' OR title LIKE '%요%') and post_status=2 and current_price between 100000 and 500000
+						)				
 -- 정렬이 '입찰중'인  페이징 처리된 게시물 리스트
 select  	 post_no
 				,content
@@ -185,12 +170,6 @@ select  	 post_no
 		where post_status=1
 		and  hpm.id=ab.id
 		order by post_no desc
-								
-						
-select  *
-from auctionboard ab , hp_member hpm
-where post_status in (1,2,3) and  hpm.id=ab.id
-and (content LIKE '%요%' OR title LIKE '%요%')						
 
 CREATE OR REPLACE PROCEDURE Update_Post_Status_2 AS 
 BEGIN
@@ -209,8 +188,6 @@ DBMS_SCHEDULER.CREATE_JOB (
             DBMS_SCHEDULER.ENABLE('Update_Post_Status_2_Job')
  END;
             
-
- 
  CREATE OR REPLACE PROCEDURE INCREASE_SALARY
 BEGIN
   UPDATE employees SET salary = salary * 1.5
@@ -237,17 +214,7 @@ END;
     REPEAT_INTERVAL => 'FREQ=MINUTELY; INTERVAL =1', --1분에 1번
     COMMENTS => '잡객체 1'
     );
- select count(*) from (
-    	select  	*
-								from auctionboard ab , hp_member hpm
-								where post_status in (1,2,3)
-								and  hpm.id=ab.id
-								)
-									where 1=1
-								and post_status=2
-									
-									
-									
+    
 select * from (
 		select ROWNUM rm, A.* 
 		from (
@@ -271,17 +238,19 @@ select * from (
 								order by post_no desc
 								) A
 								where 1=1
-									and (content LIKE '%세요%' OR title LIKE '%세요%')
-										and post_status=1
+									and (content LIKE '%요%' OR title LIKE '%요%')
+										and post_status=1 
 								)
    
 
-    SELECT COUNT(*)
-		 FROM AuctionBoard a, Bid_List b
-		WHERE a.post_no = b.post_no
-		  		AND a.id = 'scardy'
-		  		AND a.post_status = 1
-		  		
+-- 입찰중인 목록 총 개수								
+SELECT COUNT(*)
+	 FROM AuctionBoard a, Bid_List b
+	WHERE a.post_no = b.post_no
+	  		AND a.id = 'scardy'
+	  		AND a.post_status = 1
+
+--	  		
 SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
   FROM AuctionBoard a, Bid_List b
  WHERE a.post_no = b.post_no
@@ -289,8 +258,8 @@ SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_pr
    			AND b.id = 'scardy'
    			AND a.post_no = b.post_no
    			AND a.post_status = 1
-   			
-   
+
+--   			
     post_no NUMBER NOT NULL,
 	id VARCHAR2(100) NOT NULL,
 	title VARCHAR2(100) NOT NULL,
@@ -305,9 +274,11 @@ SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_pr
 	now_id VARCHAR2(100) NOT NULL,
 	post_status NUMBER DEFAULT 1 NOT NULL,
 
-	SELECT * FROM AuctionBoard WHERE id='scardy' ORDER BY time_posted
-	SELECT * FROM AuctionBoard WHERE title = '12'
+--	
+SELECT * FROM AuctionBoard WHERE id='scardy' ORDER BY time_posted
+SELECT * FROM AuctionBoard WHERE title = '12'
 	
+--
 	SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
 		  FROM (
 		  			SELECT ROWNUM AS rnum, a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
@@ -318,7 +289,8 @@ SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_pr
 	   				 ORDER BY b.bid_no DESC
 		  		)
 		WHERE rnum BETWEEN 5 and 10
-		
+
+--		
 	SELECT *
 		  FROM (
 		  			SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
@@ -330,9 +302,11 @@ SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_pr
 		  		)
 		WHERE ROWNUM BETWEEN 5 and 11
 		
+--		
 select * from freeboard fb, hp_member hpm
 where fb.id=hpm.id
 
+--
 select * 
 from freeboard fb
 inner join hp_member hpm on  fb.id=hpm.id
@@ -342,9 +316,7 @@ SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_
 		  FROM AuctionBoard
 		 WHERE id='scardy'
 		 			AND post_status=3
-<<<<<<< HEAD
 		 ORDER BY post_no DESC;
-=======
-		 ORDER BY post_no DESC
->>>>>>> refs/heads/main
->>>>>>> refs/heads/main
+
+		 
+ALTER TABLE Freeboard RENAME COLUMN contend TO content

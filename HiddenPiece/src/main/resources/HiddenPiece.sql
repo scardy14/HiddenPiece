@@ -1,13 +1,16 @@
 -------------------------회원정보--------------------------------------
---계좌정보
+--계좌 테이블 생성
 CREATE TABLE Account_Info(
 	account_no VARCHAR2(100) NOT NULL,
 	bank VARCHAR2(100) NOT NULL,
 	balance NUMBER NOT NULL,
 	CONSTRAINT PK_Account_Info PRIMARY KEY (account_no)
 )
+
+-- 계좌 테이블 조회
 select * from ACCOUNT_INFO;
 
+-- 계좌 테이블 데이터 삽입
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111111','국한은행',763000);
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111112','신일은행',3000);
 insert into ACCOUNT_INFO(account_no, bank, balance) values('111113','코스타은행',21);
@@ -21,9 +24,7 @@ insert into ACCOUNT_INFO(account_no, bank, balance) values('111120','KBK은행',
 
 commit
 
-
-
---회원정보
+--회원정보 테이블 생성
 CREATE TABLE HP_Member(
 	id VARCHAR2(100) NOT NULL,
 	email VARCHAR2(100) NOT NULL,
@@ -39,9 +40,13 @@ CREATE TABLE HP_Member(
 	CONSTRAINT FK_HP_Member_accountno FOREIGN KEY (account_no) REFERENCES Account_Info(account_no) ON DELETE CASCADE
 )
 
+-- 회원정보 조회
 select * from HP_MEMBER
+
+-- 경매게시판 정보 조회
 SELECT * FROM AuctionBoard
---회원권한
+
+--회원권한 테이블 생성
 CREATE TABLE Grantee(
 	id VARCHAR2(100) NOT NULL,
 	HP_level NUMBER NOT NULL,
@@ -50,7 +55,7 @@ CREATE TABLE Grantee(
 )
 ---------------------------------------------------------------------
 ------------------------경매게시판--------------------------------------
---경매게시판
+--경매게시판 생성
 CREATE SEQUENCE AuctionBoard_seq;
 CREATE TABLE AuctionBoard(
 	post_no NUMBER NOT NULL,
@@ -69,7 +74,7 @@ CREATE TABLE AuctionBoard(
 	CONSTRAINT PK_AuctionBoard PRIMARY KEY (post_no),
 	CONSTRAINT FK_AuctionBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
---경매게시판댓글
+--경매게시판댓글 테이블 생성
 select * from AUCTIONBOARD;
 CREATE SEQUENCE AuctionBoard_Comment_seq;
 CREATE TABLE AuctionBoard_Comment (
@@ -83,7 +88,8 @@ CREATE TABLE AuctionBoard_Comment (
 	CONSTRAINT FK_AuctionBoard_Comment_PostNo FOREIGN KEY (post_no) REFERENCES AuctionBoard(post_no) ON DELETE CASCADE,
 	CONSTRAINT FK_AuctionBoard_Comment_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
---경매게시판 찜하기
+
+--경매게시판 찜하기 테이블 생성
 CREATE TABLE AuctionBoard_Likes (
 	post_no NUMBER NOT NULL,
 	id VARCHAR2(100) NOT NULL,
@@ -91,10 +97,11 @@ CREATE TABLE AuctionBoard_Likes (
 	CONSTRAINT FK_AuctionBoard_Likes_PostNo FOREIGN KEY (post_No) REFERENCES AuctionBoard(post_No) ON DELETE CASCADE,
 	CONSTRAINT FK_AuctionBoard_Likes_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+
 -- 경매게시판 찜하기 목록
 SELECT * FROM AuctionBoard_Likes 
 
---경매게시판경매참여물품
+--경매게시판경매참여물품 테이블 생성
 CREATE TABLE AuctionBoard_Entry (
 	post_no NUMBER NOT NULL,
 	id VARCHAR2(100) NOT NULL,
@@ -102,9 +109,10 @@ CREATE TABLE AuctionBoard_Entry (
 	CONSTRAINT FK_AuctionBoard_Entry_PostNo FOREIGN KEY (post_No) REFERENCES AuctionBoard(post_No) ON DELETE CASCADE,
 	CONSTRAINT FK_AuctionBoard_Entry_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+
 ---------------------------------------------------------------------
 ------------------------포인트입출력기록----------------------------------
---포인트입출력기록
+--포인트입출력기록 테이블 생성
 CREATE TABLE In_And_Out(
 	id VARCHAR2(100) NOT NULL,
 	time_posted DATE DEFAULT sysdate NOT NULL,
@@ -116,9 +124,10 @@ CREATE TABLE In_And_Out(
 	CONSTRAINT FK_In_And_Out_postno FOREIGN KEY (post_no) REFERENCES AuctionBoard(post_no) ON DELETE CASCADE,
 	CONSTRAINT CK_In_And_Out_method CHECK (method IN ('경매','계좌'))
 )
+
 ----------------------------------------------------------------------
 --------------------------자유게시판-------------------------------------
---자유게시판
+--자유게시판 테이블 생성
 CREATE SEQUENCE FreeBoard_seq;
 CREATE TABLE FreeBoard (
 	post_no NUMBER NOT NULL,
@@ -131,7 +140,8 @@ CREATE TABLE FreeBoard (
 	CONSTRAINT PK_FreeBoard PRIMARY KEY (post_no),
 	CONSTRAINT FK_FreeBoard_id FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
---자유게시판댓글
+
+--자유게시판댓글 생성
 CREATE SEQUENCE FreeBoard_Comment_seq;
 CREATE TABLE FreeBoard_Comment(
 	post_no NUMBER NOT NULL,
@@ -144,11 +154,14 @@ CREATE TABLE FreeBoard_Comment(
 	CONSTRAINT FK_FreeBoard_Comment_postno FOREIGN KEY (post_no) REFERENCES FreeBoard(post_no) ON DELETE CASCADE,
 	CONSTRAINT FK_FreeBoard_Comment_id FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE	
 )
+
 --자유게시판 댓글 조회
 SELECT * FROM FreeBoard_Comment
+
 -- 자유게시판 댓글 작성
 INSERT INTO freeboard_Comment VALUES(85,FreeBoard_Comment_seq.nextval,'scardy', sysdate, '내용', 1)
 ----------------------------------------------------------------------
+--
 CREATE SEQUENCE Bid_List_seq
 CREATE TABLE Bid_List(
 	id VARCHAR2(100) NOT NULL,
@@ -157,9 +170,12 @@ CREATE TABLE Bid_List(
 	CONSTRAINT PK_Bid_List PRIMARY KEY (id,bid_no),
 	CONSTRAINT FK_Bid_List FOREIGN KEY(id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+
+--
 SELECT * FROM Bid_List
 -----------------------------------------------------------------
 -----------------------------나눔게시판-------------------------------
+-- 나눔게시판 테이블 생성
 CREATE SEQUENCE ShareBoard_seq;
 CREATE TABLE ShareBoard(
 	post_no NUMBER NOT NULL,
@@ -173,7 +189,8 @@ CREATE TABLE ShareBoard(
 	CONSTRAINT PK_ShareBoard PRIMARY KEY (post_no),
 	CONSTRAINT FK_ShareBoard_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
---나눔게시판댓글
+
+--나눔게시판댓글 테이블 생성
 select * from ShareBoard;
 SELECT * FROM  ShareBoard_Comment
 CREATE TABLE ShareBoard_Comment (
@@ -187,4 +204,5 @@ CREATE TABLE ShareBoard_Comment (
 	CONSTRAINT FK_ShareBoard_Comment_PostNo FOREIGN KEY (post_no) REFERENCES AuctionBoard(post_no) ON DELETE CASCADE,
 	CONSTRAINT FK_ShareBoard_Comment_ID FOREIGN KEY (id) REFERENCES HP_Member(id) ON DELETE CASCADE
 )
+
 COMMIT

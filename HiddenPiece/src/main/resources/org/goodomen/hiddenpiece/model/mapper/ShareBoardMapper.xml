@@ -10,7 +10,7 @@
 	</select>
 	<select id="findShareList" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
 		SELECT post_no,id,title,content,photo,time_posted,hits,post_status
-		  FROM (SELECT ROWNUM AS rnum, post_no,id,title,content,photo,time_posted,hits,post_status  FROM ShareBoard ORDER BY post_no DESC)
+		  FROM (SELECT ROWNUM AS rnum, post_no,id,title,content,photo,time_posted,hits,post_status  FROM ShareBoard WHERE post_status!=0 ORDER BY post_no DESC)
 		 WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
 			
 	</select>
@@ -25,4 +25,13 @@
 	<select id="findShareBoardDetail" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
 		SELECT * FROM ShareBoard WHERE post_no = #{value}
 	</select>
+	<update id="updateShareboardVO" parameterType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+		UPDATE ShareBoard SET title = #{title}, content = #{content} WHERE post_no=#{postNo}
+	</update>
+	<update id="deleteShareboard" parameterType="long">
+		UPDATE ShareBoard SET post_status = 0 WHERE post_no = #{value}
+	</update>
+	<update id="finishShare" parameterType="long">
+		UPDATE ShareBoard SET post_status = 2 WHERE post_no = #{value}
+	</update>
 </mapper>
