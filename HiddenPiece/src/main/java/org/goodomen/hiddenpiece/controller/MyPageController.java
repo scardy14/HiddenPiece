@@ -35,10 +35,8 @@ public class MyPageController {
 		if(cri.getTag()==null || cri.getTag().equals("0")) {
 			cri.setTag("0");
 			biddingCount = mypageService.findBiddingCountFromBidList(id);
-			System.out.println(biddingCount);
 		}else {
 			biddingCount = mypageService.findBiddingCountFromBidListTag(cri);
-			System.out.println(biddingCount);
 		} 
 		paging.setCri(cri);
 		paging.setTotalCount(biddingCount);
