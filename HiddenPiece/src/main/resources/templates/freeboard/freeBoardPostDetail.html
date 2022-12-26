@@ -20,7 +20,7 @@
 						th:text="${postVO.id}"></span><br> <span
 						th:text="${postVO.timePosted}"></span> &nbsp 조회<span
 						th:text="${postVO.hits}"></span> <th:block th:if="${session.mvo}">
-							<th:block th:if=${session.mvo.id==postVO.id}>
+							<th:block th:if="${session.mvo.id==postVO.id} or ${session.mvo.status=='2'}">
 								<div align="right">
 									<a
 										th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font

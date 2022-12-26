@@ -30,7 +30,7 @@
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p>조회수: <span th:text="${postVO.hits}">조회수</span></p>
 			
 					<th:block th:if="${session.mvo!=null}">
-						<th:block th:if="${session.mvo.id==postVO.id}" >
+						<th:block th:if="${session.mvo.id==postVO.id} or ${session.mvo.status=='2'}" >
 								<div align="right">
 									<button onclick="updatePost()" style="background-color: transparent; border: none;" type = "button"><font color="gray">수정</font></button> 
 									<button onclick="deletePost()" style="background-color: transparent; border: none;" type = "button"><font color="gray">삭제</font></button> 
@@ -51,6 +51,7 @@
 									<div align="center">
 										<button type = "button" class="btn btn-primary px-3" style="width: 90%;" onclick="finishShare()">종료하기</button>
 									</div>
+									
 								 <br>
 						</th:block>
 					</th:block>
