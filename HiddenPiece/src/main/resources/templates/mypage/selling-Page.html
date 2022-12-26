@@ -81,8 +81,10 @@
 							<th:block th:if="${paging.prev}">
 								<li class="page-item active"><a class="page-link" th:onclick="sendinfoPagination([[${paging.startPage}]]-1)">Pre</a></li>
 							</th:block>
-							<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
-								<li class="page-item"><a class="page-link" th:onclick="sendinfoPagination([[${num}]])" th:text="${num}"></a></li>
+							<th:block th:if="${#numbers.formatInteger(paging.startPage,1)<#numbers.formatInteger(paging.endPage,1)}">
+								<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
+									<li class="page-item"><a class="page-link" th:onclick="sendinfoPagination([[${num}]])" th:text="${num}"></a></li>
+								 </th:block>
 							 </th:block>
 							 <th:block th:if="${paging.next && paging.endPage>0}">
 							 	<li class="page-item active"><a class="page-link"  th:onclick="sendinfoPagination([[${paging.startPage}]]+1)">Next</a></li>

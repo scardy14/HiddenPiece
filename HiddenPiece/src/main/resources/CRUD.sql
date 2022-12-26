@@ -320,3 +320,38 @@ SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_
 
 		 
 ALTER TABLE Freeboard RENAME COLUMN contend TO content
+SELECT b.bid_no, ab.title 
+  FROM bid_list b, auctionboard ab
+  WHERE b.post_no = ab.post_no
+  
+  SELECT * FROM auctionboard
+  SELECT * FROM bid_list
+  SELECT * FROM account_info
+  
+SELECT * FROM BID_LIST WHERE id = 'kadiner'
+
+SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  			  FROM (
+		  						SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+	  				  			  FROM AuctionBoard a, Bid_List b
+	 				 			 WHERE a.post_no = b.post_no
+	   										AND b.id = #{id}
+	   										AND a.post_no = b.post_no
+	   										AND a.post_status=#{tag}
+	   				 			 ORDER BY b.bid_no DESC
+		  					)
+		  			
+		  		)
+		WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+		
+		SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+			  		  FROM AuctionBoard
+					 WHERE id='kadiner'
+					 		AND post_status!=0
+			 		 ORDER BY post_no ASC		
+		  		)
+		  		 WHERE rnum BETWEEN 1 and 10

@@ -90,7 +90,7 @@ public class AuctionBoardController {
 		try (
 				// 윈도우일 경우
 				FileOutputStream fos = new FileOutputStream(
-						"C:/kosta250/HiddenPiece/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/"
+						"C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/"
 								+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
 				InputStream is = file.getInputStream();) {
 			int readCount = 0;
@@ -168,7 +168,7 @@ public class AuctionBoardController {
 		return "auctionboard/update-ok";
 	}
 
-	// 경매게치판 입찰
+	// 경매게시판 입찰
 	@RequestMapping("bid")
 	public String bid(AuctionBoardPostVO auctionBoardPostVO, long bidPrice, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
@@ -255,9 +255,12 @@ public class AuctionBoardController {
 			List<Map<String, Object>> auctionBoardList = auctionBoardService.searchPostByKeyword(cri);
 			model.addAttribute("postList", auctionBoardList);
 		}
-
 		model.addAttribute("mapList", mapList);
 		return "shop2";
+	}
+	@RequestMapping("auctionboardList")
+	public String auctionboardList(Model model) {
+		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=1&searchKeyworkd=";
 	}
 
 }

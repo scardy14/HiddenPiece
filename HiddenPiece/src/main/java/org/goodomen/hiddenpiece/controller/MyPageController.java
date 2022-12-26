@@ -19,6 +19,7 @@ public class MyPageController {
 	
 	@RequestMapping("buyingMyPage")
 	public String BiddingProduct(CriteriaAndIdVO cri, Model model) {
+	System.out.println(cri);
 		PagingAndId paging = new PagingAndId();
 		int biddingCount;
 		List<Map<String, Object>> biddingList = null;
@@ -30,10 +31,11 @@ public class MyPageController {
 		} 
 		paging.setCri(cri);
 		paging.setTotalCount(biddingCount);
+	System.out.println(biddingCount);
 		biddingList = mypageService.findBiddingListFromProductList(cri);
-		
 		model.addAttribute("biddingList", biddingList);
 		model.addAttribute("paging", paging);
+	System.out.println(paging);
 		return "mypage/buying-Page";
 	}
 	

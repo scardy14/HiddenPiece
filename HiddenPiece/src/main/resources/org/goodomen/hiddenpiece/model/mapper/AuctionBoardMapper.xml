@@ -212,28 +212,28 @@
 		UPDATE AuctionBoard SET title = #{title}, content=#{content} WHERE post_no=#{postNo} 
 	</update>
 	
-	<!--  -->
+	<!--경매게시판 입찰  -->
 	<update id="bidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE AuctionBoard SET now_id=#{id}, current_price=#{currentPrice} WHERE post_no = #{postNo}
 	</update>
 	
-	<!--  -->
+	<!--경매게시판에서 구매 및 경매 후 포인트 차람  -->
 	<update id="updateMemberPoint" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point - #{currentPrice} WHERE id = #{id}
 	</update>
 	
-	<!--  -->
+	<!--경매게시판에서 타인이 입찰할 경우 기존에 입찰한 사람한테 포인트 반환해줌 -->
 	<update id="reverseBidAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE HP_Member SET point = point + (SELECT current_price FROM AuctionBoard WHERE post_no = #{postNo})
 		 WHERE id = (SELECT now_id FROM AuctionBoard WHERE post_no = #{postNo})
 	</update>
 	
-	<!--  -->
+	<!--현재 입찰중인 사람의 아이디 찾음-->
 	<select id="findAuctionBoardPostNowId" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO" resultType="string">
 		SELECT now_id FROM AuctionBoard WHERE post_no=#{postNo}
 	</select>
 	
-	<!--  -->
+	<!--즉시구매 -->
 	<update id="buyAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		UPDATE AuctionBoard SET post_status = 2, now_id=#{id}, current_price=sell_price WHERE post_no=#{postNo}
 	</update>

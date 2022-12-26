@@ -107,8 +107,10 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
 			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
 		}
+		if(auctionBoardMapper.checkBidList(auctionBoardPostVO)!=1) {
+			auctionBoardMapper.addBidList(auctionBoardPostVO);
+		}
 		auctionBoardMapper.buyAuctionBoardPost(auctionBoardPostVO);
-		System.out.println(auctionBoardPostVO);
 		auctionBoardMapper.updateMemberPointbuy(auctionBoardPostVO);
 		return 0;
 	}
