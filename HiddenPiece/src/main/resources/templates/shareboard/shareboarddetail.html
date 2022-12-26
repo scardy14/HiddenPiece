@@ -48,20 +48,47 @@
 					<div>
 					<th:block th:if="${session.mvo!=null}">
 						<th:block th:if="${session.mvo.id==postVO.id}" >
+							<th:block th:if="${postVO.postStatus=='1'}">
 									<div align="center">
 										<button type = "button" class="btn btn-primary px-3" style="width: 90%;" onclick="finishShare()">종료하기</button>
 									</div>
-									
-								 <br>
+							</th:block>
+							<th:block th:if="${postVO.postStatus=='2'}">
+									<div align="center">
+										<button type = "button" style="width: 90%; color: gray; height: 40px;">종료되었습니다</button>
+									</div>
+							</th:block>
+						</th:block>
+						<th:block th:if="${session.mvo.id!=postVO.id}" >
+							<th:block th:if="${postVO.postStatus=='1'}">
+									<div align="center">
+										<button type = "button" class="btn btn-primary px-3" style="width: 90%;">나눔이 진행중입니다</button>
+									</div>
+							</th:block>
+							<th:block th:if="${postVO.postStatus=='2'}">
+									<div align="center">
+										<button type = "button" style="width: 90%; color: gray; height: 40px;">나눔이 종료되었습니다</button>
+									</div>
+							</th:block>
 						</th:block>
 					</th:block>
-					<div align="center">
-						<button type = "button" style="width: 90%; color: gray; height: 40px;">나눔이 종료되었습니다</button>
-					</div>
+					<th:block th:if="${session.mvo==null}">
+							<th:block th:if="${postVO.postStatus=='1'}">
+								<div align="center">
+									<button type = "button" class="btn btn-primary px-3" style="width: 90%;">나눔이 진행중입니다</button>
+								</div>
+							</th:block>
+							<th:block th:if="${postVO.postStatus=='2'}">
+								<div align="center">
+									<button type = "button" style="width: 90%; color: gray; height: 40px;">나눔이 종료되었습니다</button>
+								</div>
+							</th:block>
+							</th:block>
 					</div>
 				</div>
 			</div>
 		</div>
+		<span th:text="${postVO.postStatus}"></span>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript" th:inline="javascript">

@@ -34,33 +34,34 @@ public class ShareboardServiceImpl implements ShareboardService{
 	}
 
 	@Override
-	public int writeSharePost(ShareBoardVO shareboardVO) {
+	public long writeSharePost(ShareBoardVO shareboardVO) {
 		return shareboardMapper.writeSharePost(shareboardVO);
 	}
 
 	@Override
-	public ShareBoardVO findShareBoardDetail(String postNo) {
+	public ShareBoardVO findShareBoardDetail(long postNo) {
 		return shareboardMapper.findShareBoardDetail(postNo);
 	}
 
 	@Override
-	public int updateShareBoard(ShareBoardVO shareboardVO) {
+	public long updateShareBoard(ShareBoardVO shareboardVO) {
 		return shareboardMapper.updateShareboardVO(shareboardVO);
 	}
 
 	@Override
-	public int deleteShareboard(long postNo) {
+	public long deleteShareboard(long postNo) {
 		return shareboardMapper.deleteShareboard(postNo);
 	}
 
 	@Override
-	public int finishShare(long postNo) {
+	public long finishShare(long postNo) {
 		return shareboardMapper.finishShare(postNo);
 	}
 
 	@Override
-	public void addHits(String postNo) {
+	public void addHits(long postNo) {
 		shareboardMapper.addHits(postNo);
 	}
+
 
 }

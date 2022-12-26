@@ -48,20 +48,19 @@ public class ShareBoardController {
 		return "shareboard/shareboard";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("findShareBoardDetail")
-	public String findShareBoardDetail(String postNo,Model model,  HttpServletRequest request) {
+	public String findShareBoardDetail(long postNo,Model model,  HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			ArrayList<Long> shareBoardList = (ArrayList<Long>) session.getAttribute("shareBoardList");
 			if (shareBoardList.size() == 0 || !shareBoardList.contains(postNo)) {
 				shareboardService.addHits(postNo);
-				shareBoardList.add(Long.parseLong(postNo));
-				session.setAttribute("auctionBoardPostList", shareBoardList);
+				shareBoardList.add(postNo);
+				session.setAttribute("shareBoardList", shareBoardList);
 			}
 		}
-		shareboardService.addHits(postNo);
 		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
-		System.out.println(shareboardVO);
 		model.addAttribute("postVO",shareboardVO);
 		return "shareboard/shareboarddetail";
 	}
@@ -77,7 +76,7 @@ public class ShareBoardController {
 		Date now = new Date();
 		String photoname=shareboardVO.getId()+nowTime.format(now)+file.getOriginalFilename();
 		shareboardVO.setPhoto(photoname);
-		int result = shareboardService.writeSharePost(shareboardVO);
+		long result = shareboardService.writeSharePost(shareboardVO);
 	    try(
 	      // 윈도우일 경우 
 	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/shareboardimg/" + photoname);
@@ -112,14 +111,14 @@ public class ShareBoardController {
 	
 	//////////////////////////////////////////////////////////////
 	@RequestMapping("moveShareboardUpdate")
-	public String shardboardUpdate(String postNo, Model model, HttpServletRequest request) {
+	public String shardboardUpdate(long postNo, Model model, HttpServletRequest request) {
 		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
 		model.addAttribute("postVO",shareboardVO);
 		return "shareboard/update-form";
 	}
 	@PostMapping("updateShareboard")
 	public String updateShareboard (ShareBoardVO shareboardVO) {
-		int result = shareboardService.updateShareBoard(shareboardVO);
+		long result = shareboardService.updateShareBoard(shareboardVO);
 		if(result==1) {
 			return "redirect:updateok";
 		} else {
@@ -139,7 +138,7 @@ public class ShareBoardController {
 	//////////////////////////////////////////////////////////////
 	@RequestMapping("shareboardDelete")
 	public String shareboardDelete(long postNo) {
-		int result = shareboardService.deleteShareboard(postNo);
+		long result = shareboardService.deleteShareboard(postNo);
 		if(result ==1) {
 			return"redirect:deleteok";
 		} else {
@@ -159,7 +158,7 @@ public class ShareBoardController {
 	//////////////////////////////////////////////////////////////
 	@RequestMapping("finishShare")
 	public String finishShare(long postNo) {
-		int result = shareboardService.finishShare(postNo);
+		long result = shareboardService.finishShare(postNo);
 		if(result==1) {
 			return "redirect:finishOk";
 		} else {
