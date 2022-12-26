@@ -17,8 +17,14 @@ public interface ShareBoardMapper {
 	
 	List<Map<String, Object>> findShareListTag(CriteriaAndIdVO cri);
 
-	void writeSharePost(ShareBoardVO shareboardVO);
+	int writeSharePost(ShareBoardVO shareboardVO);
 
 	ShareBoardVO findShareBoardDetail(String postNo);
+
+	int updateShareboardVO(ShareBoardVO shareboardVO);
+
+	int deleteShareboard(long postNo);
+
+	int finishShare(long postNo);
 
 }

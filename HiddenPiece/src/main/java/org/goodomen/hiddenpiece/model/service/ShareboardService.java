@@ -14,8 +14,14 @@ public interface ShareboardService {
 
 	List<Map<String, Object>> findShareList(CriteriaAndIdVO cri);
 
-	void writeSharePost(ShareBoardVO shareboardVO);
+	int writeSharePost(ShareBoardVO shareboardVO);
 
 	ShareBoardVO findShareBoardDetail(String postNo);
+
+	int updateShareBoard(ShareBoardVO shareboardVO);
+
+	int deleteShareboard(long postNo);
+
+	int finishShare(long postNo);
 
 }

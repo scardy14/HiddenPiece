@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
-<title>HiddenPiece</title>
+<title>공지게시판 상세글보기</title>
 </head>
 <div layout:fragment="content">
 	<div align="center">
@@ -14,13 +14,15 @@
 		<div style="width: 60%; background-color: white;">
 			<table class="table table-bordered" style="width: 100%; table-layout: fixed;">
 					<tr>
-						<td style="word-break:break-all; padding: 30px;" colspan='4'>
+					<!-- 글길이가 텍스트 상자의 가로 길이보다 길때 글 자동 줄바꿈 -->
+						<td style="word-break:break-all; padding: 30px;" colspan='4'> 
 							<h3 th:text="${postVO.title}" id="postNo"></h3>
 							<span th:text="${postVO.id}"></span><br>
 							<span th:text="${postVO.timePosted}"></span> &nbsp
 							조회<span th:text="${postVO.hits}"></span>
 							<th:block th:if="${session.mvo}">
-							<th:block th:if=${session.mvo.id==postVO.id}>				
+							<!-- 관리자이기만 하다면 자기가 쓴 글이 아니어도 수정, 삭제가 가능함 -->
+							<th:block th:if=${session.mvo.status=='2'}>				
 								<div align="right">
 									<a th:href="@{/noticeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font color="gray">수정</font></a> 
 									<a th:href="@{/noticeBoardDeletePostForm(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a>
@@ -29,19 +31,12 @@
 						</th:block>
 						<hr>
 						<div style="margin-top: 30px; margin-bottom: 100px; font-size: 20px;">
-							<span th:text="${postVO.contend}"></span>
+							<span th:text="${postVO.content}"></span>
 						</div>
 						</td>
 					</tr>			
 			</table>
 		</div>
 	</div>
-
 </div>
-<!-- Shop Detail End -->
-
-
-<!-- Products Start -->
-
-<!-- Products End -->
 </html>

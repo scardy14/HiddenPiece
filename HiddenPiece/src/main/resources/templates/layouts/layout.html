@@ -4,6 +4,13 @@
 <head>
 <meta charset="utf-8">
 <title>HiddenPiece</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<style>
+	*{
+	font-family: 'Nanum Gothic', sans-serif;
+	}
+</style>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free HTML Templates" name="keywords">
 <meta content="Free HTML Templates" name="description">
@@ -81,7 +88,7 @@
 				</th:block>
 				<th:block th:if="${session.mvo!=null}">
 					<span th:text="|${session.mvo.name}님|"></span><br>
-					<span th:text="|보유포인트 : ${session.mvo.point}원|"></span><br>
+					<span th:text="|보유포인트 : ${#numbers.formatInteger(session.mvo.point, 0, 'COMMA')}원|"></span><br>
 					<th:block th:if="${session.mvo.status=='2'}"> 
 						<a href="#" id="adminBtn" th:href="@{/adminForm}"><font color="orange">관리자페이지로</font></a>
 					</th:block>

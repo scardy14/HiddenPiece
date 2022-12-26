@@ -18,7 +18,7 @@ public interface FreeBoardService {
 
 	void updatePost(FreeBoardVO freeBoardVO);
 
-	void deletePost(long postNo);
+	int deletePost(long postNo);
 
 	void updateHits(long postNo);
 

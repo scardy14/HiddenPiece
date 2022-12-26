@@ -8,7 +8,7 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<form id="writeAuctionBoardPostForm" action="updateShareboard" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data" class = "row px-xl-5">
+	<form id="writeAuctionBoardPostForm" action="writeShareBoard" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data" class = "row px-xl-5">
 	<!-- Shop Detail Start -->
 	<div class="container-fluid pb-5">
 		<div class="row px-xl-5">
@@ -17,26 +17,26 @@
 						data-ride="carousel">
 						<div class="carousel-inner bg-light">
 							<div class="carousel-item active">
-								<img width="100%" height="600" th:src="@{/shareboardimg/}+ ${postVO.photo}" alt="Image">
+								<img class="w-100 h-100" alt="Image">
 							</div>
 						</div>
 					</div>
+					<input name = "image" type="file" required="required">
 				</div>
 				
 				<div class="col-lg-7 h-auto mb-30">
 					<div class="h-100 bg-light p-30">
 						<input name="id" th:value="${session.mvo.id}" type = "hidden"> 
-						<input name="postNo" th:value = "${postVO.postNo}" type = "hidden">
-						<h3><input name="title" type="text" required="required" placeholder="제목" data-validation-required-message="제목을 입력해주세요" style="width: 80%; height: 40px; border: none;" th:value = "${postVO.title}"/></h3><br>
+						<h3><input name="title" type="text" required="required" placeholder="제목" data-validation-required-message="제목을 입력해주세요" style="width: 80%; height: 40px; border: none;" th:value="${shareboardVO.postVO.title}"/></h3><br>
 						<div class="nav nav-tabs mb-4">
 							<a class="nav-item nav-link text-dark active" data-toggle="tab">상품설명</a>
 						</div>
 						<div class="tab-content">
 							<div class="tab-pane fade show active" id="tab-pane-1">
-								<textarea name="content" style="width: 100%; height: 200px;" th:text="${postVO.content}"></textarea>
+								<textarea name="content" style="width: 100%; height: 200px;"></textarea>
 							</div>
 						</div>
-						<button class="btn btn-primary py-2 px-4" type="submit" >수정하기</button>
+						<button class="btn btn-primary py-2 px-4" type="submit" >판매글등록</button>
 					</div>
 				</div>
 		</div>

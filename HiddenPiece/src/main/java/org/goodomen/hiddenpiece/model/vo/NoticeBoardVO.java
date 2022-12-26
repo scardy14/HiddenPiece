@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NoticeBoardVO {
 	private long postNo;
-	private String contend;
+	private String content;
 	private String timePosted;
 	private String title;
 	private long hits;

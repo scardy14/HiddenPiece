@@ -42,7 +42,7 @@ public class AdminController {
 					viewPath = "admin/AuctionBoardStatus1-result";
 				}
 			} else {//분기점 티어2: 자유게시판
-				if(status.equals("2")) { //분기점 티어3
+				if(status.equals("1")) { //분기점 티어3
 					ArrayList<FreeBoardVO> freeboardList  = 	memberService.findFreeBoardStatus0ById(id);
 					model.addAttribute("freeList", freeboardList);
 					viewPath = "admin/FreeBoardStatus0-result";

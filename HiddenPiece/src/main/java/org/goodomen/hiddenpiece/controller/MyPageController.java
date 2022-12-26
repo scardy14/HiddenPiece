@@ -3,10 +3,7 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.goodomen.hiddenpiece.model.service.MyPageService;
-import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
 import org.springframework.stereotype.Controller;
