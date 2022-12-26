@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
@@ -168,7 +169,7 @@ public class AuctionBoardController {
 		return "auctionboard/update-ok";
 	}
 
-	// 경매게치판 입찰
+	// 경매게시판 입찰
 	@RequestMapping("bid")
 	public String bid(AuctionBoardPostVO auctionBoardPostVO, long bidPrice, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
