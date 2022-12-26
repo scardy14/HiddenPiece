@@ -24,14 +24,11 @@ public class MyPageController {
 	@RequestMapping("buyingMyPage")
 	public String BiddingProduct(CriteriaAndIdVO cri, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-	
 		MemberVO memberVO =  (MemberVO) session.getAttribute("mvo");
 		String id = memberVO.getId();
-
 		PagingAndId paging = new PagingAndId();
 		int biddingCount;
 		List<Map<String, Object>> biddingList = null;
-		
 		if(cri.getTag()==null || cri.getTag().equals("0")) {
 			cri.setTag("0");
 			biddingCount = mypageService.findBiddingCountFromBidList(id);
