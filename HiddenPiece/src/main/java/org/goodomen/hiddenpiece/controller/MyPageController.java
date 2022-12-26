@@ -3,8 +3,12 @@ package org.goodomen.hiddenpiece.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.goodomen.hiddenpiece.model.service.MyPageService;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,18 +22,29 @@ public class MyPageController {
 	private final MyPageService mypageService;
 	
 	@RequestMapping("buyingMyPage")
-	public String BiddingProduct(CriteriaAndIdVO cri, Model model) {
+	public String BiddingProduct(CriteriaAndIdVO cri, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+	
+		MemberVO memberVO =  (MemberVO) session.getAttribute("mvo");
+		String id = memberVO.getId();
+
 		PagingAndId paging = new PagingAndId();
 		int biddingCount;
 		List<Map<String, Object>> biddingList = null;
-		if(cri.getTag()==null||cri.getTag().equals("0")) {
+		
+		if(cri.getTag()==null || cri.getTag().equals("0")) {
 			cri.setTag("0");
-			biddingCount = mypageService.findBiddingCountFromBidList(cri.getId());
+			biddingCount = mypageService.findBiddingCountFromBidList(id);
+			System.out.println(biddingCount);
 		}else {
 			biddingCount = mypageService.findBiddingCountFromBidListTag(cri);
+			System.out.println(biddingCount);
 		} 
 		paging.setCri(cri);
 		paging.setTotalCount(biddingCount);
+		
+		System.out.println(paging);
+		cri.setId(id);
 		biddingList = mypageService.findBiddingListFromProductList(cri);
 		
 		model.addAttribute("biddingList", biddingList);
@@ -38,16 +53,22 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("sellingMyPage")
-	public String SellingProduct(CriteriaAndIdVO cri, Model model) {
+	public String SellingProduct(CriteriaAndIdVO cri, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
+		String id = memberVO.getId();
+		
 		PagingAndId paging = new PagingAndId();
 		int sellingCount;
 		List<Map<String, Object>> sellingList = null;
+		cri.setId(id);
 		if(cri.getTag()==null||cri.getTag().equals("0")) {
 			cri.setTag("0");
 			sellingCount = mypageService.findSellingCountFromBidList(cri.getId());
-		}else {
+		}else { //1,2,3
 			sellingCount = mypageService.findSellingCountFromBidListTag(cri);
 		} 
+		
 		paging.setCri(cri);
 		paging.setTotalCount(sellingCount);
 		sellingList = mypageService.findSellingListFromProductList(cri);
