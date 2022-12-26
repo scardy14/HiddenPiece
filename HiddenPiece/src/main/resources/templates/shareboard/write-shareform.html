@@ -8,7 +8,7 @@
 <title>HiddenPiece</title>
 </head>
 <div layout:fragment="content">
-	<form id="writeAuctionBoardPostForm" action="writeShareBoard" method="post" onsubmit="checkPrice(event)" enctype="multipart/form-data" class = "row px-xl-5">
+	<form id="writeAuctionBoardPostForm" action="writeShareBoard" method="post" onsubmit="checkWrite(event)" enctype="multipart/form-data" class = "row px-xl-5">
 	<!-- Shop Detail Start -->
 	<div class="container-fluid pb-5">
 		<div class="row px-xl-5">
@@ -43,5 +43,10 @@
 	</div>
 	</form>
 	<script type="text/javascript">
+		function checkWrite(event) {
+			if(!confirm("게시물 등록후에는 사진을 수정하지 못합니다. 등록하시겠습니까?")) {
+				event.preventDefault();
+			}
+		}
 	</script>
 </div>

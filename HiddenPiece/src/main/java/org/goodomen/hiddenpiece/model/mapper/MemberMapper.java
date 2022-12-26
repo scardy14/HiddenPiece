@@ -64,4 +64,6 @@ public interface MemberMapper {
 	int totalCountMember();
 
 	void updateMemberStatus(String status, String id);
+
+	long findBalanceByAccountNo(String accountNo);
 }

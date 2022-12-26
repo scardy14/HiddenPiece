@@ -25,24 +25,16 @@
 			<div class="col-lg-7 h-auto mb-30">
 				<div style="height: 800; background-color: white; padding: 30px;">
 				<form>
-				<input type="hidden" id="articleNo" name="articleNo" th:value="${postVO.postNo}" >
-			</form>
+					<input type="hidden" id="postNo" name="postsNo" th:value="${postVO.postNo}" >
+				</form>
 					<h3 th:text="${postVO.title}">Product Name Goes Here</h3> <p>조회수: <span th:text="${postVO.hits}">조회수</span></p>
 			
 					<th:block th:if="${session.mvo!=null}">
 						<th:block th:if="${session.mvo.id==postVO.id}" >
 								<div align="right">
-									<a th:href="@{/ShareboardUpdate(postNo=${postVO.postNo})}"><font color="gray">수정</font></a> 
-									<a th:href="@{/ShareboardDelete(postNo=${postVO.postNo})}"><font color="gray">삭제</font></a> 
-								</div>
-								<!-- <form style="width: 20; float: right;" id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardUpdate}" method="post">
-									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-									<button  type = "submit" style="border-color: gray; background-color: white;">수정하기</button> 
-								</form>
-								<form style="width: 20; float: right;" id = "moveAuctionBoardPostDelete" th:action="@{/ShareboardDelete}" method="post">
-									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-									<button  type = "submit" style="border-color: gray; background-color: white;">삭제하기</button>
-								</form> -->				
+									<button onclick="updatePost()" style="background-color: transparent; border: none;" type = "button"><font color="gray">수정</font></button> 
+									<button onclick="deletePost()" style="background-color: transparent; border: none;" type = "button"><font color="gray">삭제</font></button> 
+								</div>		
 						</th:block>
 					</th:block>
 					<div class="nav nav-tabs mb-4">
@@ -56,26 +48,47 @@
 					<div>
 					<th:block th:if="${session.mvo!=null}">
 						<th:block th:if="${session.mvo.id==postVO.id}" >
-								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/ShareboardEnd}" method="post">
-									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
 									<div align="center">
-										<button type = "submit" class="btn btn-primary px-3" style="width: 90%;">종료하기</button>
+										<button type = "button" class="btn btn-primary px-3" style="width: 90%;" onclick="finishShare()">종료하기</button>
 									</div>
-								</form> <br>
-								
+								 <br>
 						</th:block>
 					</th:block>
+					<div align="center">
+						<button type = "button" style="width: 90%; color: gray; height: 40px;">나눔이 종료되었습니다</button>
+					</div>
 					</div>
 				</div>
 			</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" th:inline="javascript">
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+	function updatePost() {
+		let postNo = document.getElementById("postNo").value;
+		if(confirm("수정하시겠습니까?")) {
+			location.href= "moveShareboardUpdate?postNo="+postNo ;
+		}
+	}
+	function deletePost() {
+		let postNo = document.getElementById("postNo").value;
+		if(confirm("삭제하시겠습니까?")) {
+			location.href= "shareboardDelete?postNo="+postNo ;
+		}
+	}
+	function finishShare() {
+		let postNo = document.getElementById("postNo").value;
+		if(confirm("나눔을 종료하시겠습니까?")) {
+			location.href="finishShare?postNo="+postNo;
+		}
+	}
+	
 	/* 댓글 삭제  : 댓글 상태 0으로 바꾸기*/
 	function changeCommentStatus(commentNo){
 		let result = confirm("댓글을 삭제하시겠습니까?");
 		if(result){
 			$.ajax({
-	   			type:"get",
+	   			type:"get", 
 	   			url:"changeCommentStatus",
 	   			data: {
 	   				"commentNo":commentNo
@@ -96,7 +109,8 @@
 	
    $(document).ready(function() {
 	   $("div[id^='commentUpdateZone']").hide();
-	   
+	  
+   
    		/*댓글 작성 */
    		$("#commentbtn").click(function() {
 			let content=$("#commentContent").val();
@@ -121,8 +135,7 @@
 	       			}
 	       		});
       		}
-      	});
-   
+      	});					
    })
 	                 
                         	   
@@ -176,13 +189,4 @@
 	 	}
 	}
    </script>
-					</div>
-				</div>
-			</div>
-
-<!-- Shop Detail End -->
-
-
-<!-- Products Start -->
-
-<!-- Products End -->
+</div>

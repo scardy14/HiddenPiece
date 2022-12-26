@@ -317,3 +317,6 @@ SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_
 		 WHERE id='scardy'
 		 			AND post_status=3
 		 ORDER BY post_no DESC;
+
+		 
+ALTER TABLE Freeboard RENAME COLUMN contend TO content

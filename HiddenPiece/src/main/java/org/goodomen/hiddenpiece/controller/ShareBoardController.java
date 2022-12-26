@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.goodomen.hiddenpiece.model.service.ShareboardService;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
@@ -42,20 +44,25 @@ public class ShareBoardController {
 		model.addAttribute("paging", paging);
 		return "shareboard/shareboard";
 	}
+	@RequestMapping("findShareBoardDetail")
+	public String findShareBoardDetail(String postNo,Model model) {
+		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
+		model.addAttribute("postVO",shareboardVO);
+		return "shareboard/shareboarddetail";
+	}
 	
+	//////////////////////////////////////////////////////////////
 	@RequestMapping("moveShareBoardWriteForm")
 	public String moveShareBoardWriteForm() {
 		return "shareboard/write-shareform";
 	}
-	
 	@PostMapping("writeShareBoard")
 	public String writeShareBoard(ShareBoardVO shareboardVO, @RequestParam("image") MultipartFile file) {
 		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date now = new Date();
 		String photoname=shareboardVO.getId()+nowTime.format(now)+file.getOriginalFilename();
 		shareboardVO.setPhoto(photoname);
-		shareboardService.writeSharePost(shareboardVO);
-		//////////////////////////////////////////////////////////////////
+		int result = shareboardService.writeSharePost(shareboardVO);
 	    try(
 	      // 윈도우일 경우 
 	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/shareboardimg/" + photoname);
@@ -67,16 +74,90 @@ public class ShareBoardController {
 	      fos.write(buffer,0,readCount);
 	    }
 	    }catch(Exception ex){
-	      throw new RuntimeException("file Save Error");
+	    	result = 0;
+	    	throw new RuntimeException("file Save Error");
 	    }
-	   ////////////////////////////////////////////////////////////////////
-		return "redirect:ShareBoardPostList";
+	    if(result == 1) {
+	    	return "redirect:writeOk";
+	    } else {
+	    	return "redirect:writeFail";
+	    }
 	}
+	@RequestMapping("writeOk")
+	public String writeOk() {
+		return"shareboard/write-ok";
+	}
+	@RequestMapping("writeFail")
+	public String writeFail() {
+		return "shareboard/write-fail";
+	}
+	//////////////////////////////////////////////////////////////
 	
-	@RequestMapping("findShareBoardDetail")
-	public String findShareBoardDetail(String postNo,Model model) {
+	
+	
+	//////////////////////////////////////////////////////////////
+	@RequestMapping("moveShareboardUpdate")
+	public String shardboardUpdate(String postNo, Model model, HttpServletRequest request) {
 		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
 		model.addAttribute("postVO",shareboardVO);
-		return "shareboard/shareboarddetail";
+		return "shareboard/update-form";
 	}
+	@PostMapping("updateShareboard")
+	public String updateShareboard (ShareBoardVO shareboardVO) {
+		int result = shareboardService.updateShareBoard(shareboardVO);
+		if(result==1) {
+			return "redirect:updateok";
+		} else {
+			return "redirect:updatefail";
+		}
+	}
+	@RequestMapping("updateok")
+	public String updateOk() {
+		return "shareboard/update-ok";
+	}
+	@RequestMapping("updatefail")
+	public String updateFail() {
+		return "shareboard/update-fail";
+	}
+	//////////////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////////////
+	@RequestMapping("shareboardDelete")
+	public String shareboardDelete(long postNo) {
+		int result = shareboardService.deleteShareboard(postNo);
+		if(result ==1) {
+			return"redirect:deleteok";
+		} else {
+			return"redirect:deletefail";
+		}
+	}
+	@RequestMapping("deleteok")
+	public String deleteOk() {
+		return "shareboard/delete-ok";
+	}
+	@RequestMapping("deletefail")
+	public String deleteFail() {
+		return "shareboard/delete-fail";
+	}
+	//////////////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////////////
+	@RequestMapping("finishShare")
+	public String finishShare(long postNo) {
+		int result = shareboardService.finishShare(postNo);
+		if(result==1) {
+			return "redirect:finishOk";
+		} else {
+			return "redirect:finishFail";
+		}
+	}
+	@RequestMapping("finishOk")
+	public String finishOk() {
+		return "shareboard/finish-ok";
+	}
+	@RequestMapping("finishFail")
+	public String finishFail() {
+		return "shareboard/finish-fail";
+	}
+	//////////////////////////////////////////////////////////////
 }

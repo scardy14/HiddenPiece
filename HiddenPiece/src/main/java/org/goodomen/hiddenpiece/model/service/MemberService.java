@@ -69,4 +69,6 @@ public interface MemberService {
 
 	int accountCheck(String accountNo);
 
+	long findBalanceByAccountNo(String accountNo);
+
 }
