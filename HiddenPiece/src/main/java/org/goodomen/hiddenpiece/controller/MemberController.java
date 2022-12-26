@@ -31,6 +31,7 @@ public class MemberController {
 		ArrayList<Long> freeBoardList = new ArrayList<>();
 		ArrayList<Long> auctionBoardList = new ArrayList<>();
 		ArrayList<Long> noticeBoardList = new ArrayList<>();
+		ArrayList<Long> shareBoardList = new ArrayList<>();
 		if (memberVO == null ) {
 			return "member/login-fail";
 		}
@@ -40,6 +41,7 @@ public class MemberController {
 			session.setAttribute("freeBoardList", freeBoardList);
 			session.setAttribute("auctionBoardList", auctionBoardList);
 			session.setAttribute("noticeBoardList", noticeBoardList);
+			session.setAttribute("shareBoardList", shareBoardList);
 			return "redirect:/";
 		}
 	}
@@ -100,7 +102,7 @@ public class MemberController {
 	
 	
 	@PostMapping("registerMember")
-	public String register(MemberVO memberVO) {
+	public String register(MemberVO memberVO,HttpServletRequest request) {
 		memberService.registerMember(memberVO);
 		return "member/register-result";
 	}
@@ -117,7 +119,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping("updateMemberResult")
-	public String updateMemberResult() {
+	public String updateMemberResult(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		session.invalidate();
 		return "member/update-result";
 	}
 	
@@ -162,6 +166,19 @@ public class MemberController {
 		return memberService.accountCheck(accountNo);
 	}
 	
+	@ResponseBody
+	@RequestMapping("ajaxBalanceCheck")
+	public long ajaxBalanceCheck(String accountNo) {
+		long result = memberService.findBalanceByAccountNo(accountNo);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping("ajaxPointCheck")
+	public long ajaxPointCheck(String id) {
+		long result = memberService.findPointbyId(id);
+		return result;
+	}
+
 	
 	
 
@@ -192,7 +209,7 @@ public class MemberController {
 		HttpSession session=request.getSession(false);
 		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");		
 		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
-		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank)	&& accountVO.getBalance()>=balance) {
+		if(accountVO.getBank().equals(bank)) {
 		memberService.depositPoint(balance, memberVO.getAccountNo(), bank);
 		memberService.exchangePoint(balance, name);
 		long newPoint = memberService.findPointbyId(memberVO.getId());
@@ -220,7 +237,7 @@ public class MemberController {
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 		AccountVO accountVO=memberService.findAccountInfoByAccountNo(memberVO.getAccountNo());
-		if(memberVO.getName().equals(name) && memberVO.getAccountNo().equals(accountNo) && accountVO.getBank().equals(bank) && memberVO.getPoint()>=point) {
+		if(accountVO.getBank().equals(bank)) {
 			memberService.withdrawPoint(point, name, memberVO.getId());
 			memberService.depositAccount(point, accountNo, bank);
 			long newPoint = memberService.findPointbyId(memberVO.getId());

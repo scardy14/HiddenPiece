@@ -8,6 +8,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 
 @Mapper
 public interface MemberMapper {
@@ -64,4 +65,10 @@ public interface MemberMapper {
 	int totalCountMember();
 
 	void updateMemberStatus(String status, String id);
+
+	long findBalanceByAccountNo(String accountNo);
+
+	ArrayList<ShareBoardVO> findShareBoardStatus1ById(String id);
+
+	ArrayList<ShareBoardVO> findShareBoardStatus0ById(String id);
 }

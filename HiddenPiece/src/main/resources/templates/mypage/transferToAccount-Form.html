@@ -20,12 +20,13 @@
 				<div class="bg-light p-30 mb-5">
 					<div class="row">
 						<div class="col-md-6 form-group">
+						<input type = "hidden" value = "" th:value="${session.mvo.id}" id="id" name = "id">
 							<label>이름</label> <input class="form-control" type="text"
-								th:value="${session.mvo.name}" id = "name" name = "name">
+								th:value="${session.mvo.name}" id = "name" name = "name" readonly="readonly">
 						</div>
 						<div class="col-md-6 form-group">
 							<label>환전할 포인트</label> <input class="form-control" type="number"
-							 value = "0" name="point">
+							 value = "" name="point" id="point">
 						</div>
 						<div class="col-md-6 form-group">
 							<label>은행명</label> <input class="form-control" type="text"
@@ -33,7 +34,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>계좌번호</label> <input class="form-control" type="text"
-								id = "accountNo" name="accountNo" th:value="${session.mvo.accountNo}">
+								id = "accountNo" name="accountNo" th:value="${session.mvo.accountNo}" readonly="readonly">
 
 						</div>
 					</div>
@@ -52,14 +53,20 @@
 					</div>
 					<div class="border-bottom pt-3 pb-2">
 						<div class="d-flex justify-content-between mb-3">
+							<h6>포인트 잔액</h6>
+							<h6><span id="ajaxPoint1"></span></h6>
+						</div>
+					</div>
+					<div class="border-bottom pt-3 pb-2">
+						<div class="d-flex justify-content-between mb-3">
 							<h6>환전할 포인트</h6>
-							<h6><span id="point"></span>원</h6>
+							<h6><span id="point1"></span></h6>
 						</div>
 					</div>
 					<div class="pt-2">
 						<div class="d-flex justify-content-between mt-2">
 							<h5>총계</h5>
-							<h5><span id="ajaxPoint"></span>원</h5>
+							<h5><span id="ajaxPoint"></span></h5>
 						</div>
 					</div>
 				</div>
@@ -85,13 +92,47 @@
      <script type="text/javascript" th:inline="javascript">
          $(function(){
             let pointKeyUp = $("input[name=point]")
+			
+        	 let checkPointFlag = "";
+        	 $("#transferAccount").submit(function() {
+        	 	if(checkPointFlag ==""){
+        	 		alert("포인트 잔액을 확인하세요");
+        	 		return false;
+        	 	}   
+        	 	});
+            pointKeyUp.keyup(function(){
+            	let id = $("#id").val();
+            	let point = pointKeyUp.val();
+            	checkPointFlag = "";
+            	$.ajax({
+    				type:"get",
+    				url:"ajaxPointCheck",
+    				data:"id="+id,
+    				success:function(result){
+    					if(result>=point){
+    						
+    						$("#ajaxPoint1").text(numberWithCommas(result-point).replace(/(^0+)/, "")+"원");
+    						checkPointFlag=pointKeyUp.val();
+    					}
+    					else {
+    						$("#ajaxPoint1").text("포인트 잔액을 초과합니다");
+    					}
+    				}
+    			});
+    		});
+        	 
+        	 
             	pointKeyUp.keyup(function(){
 					let point = pointKeyUp.val();
-				$("#point").text(point);
-                 $("#ajaxPoint").text(point);
+				$("#point1").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
+                 $("#ajaxPoint").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
                  
+        	 });
+            	
+           	function numberWithCommas(val) {
+           		return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+           	}
          });
-         })
       </script>		
 						
 	<!-- Checkout End -->

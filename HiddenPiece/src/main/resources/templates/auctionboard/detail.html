@@ -111,7 +111,7 @@
 						</div>
 					</div>
 					<th:block th:if="${session.mvo!=null}">
-						<th:block th:if="${session.mvo.id==postVO.id}">
+						<th:block th:if="${session.mvo.id==postVO.id} or ${session.mvo.status=='2'}">
 							<div class="row px-xl-5">
 							<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}">
 								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">

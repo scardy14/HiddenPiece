@@ -12,6 +12,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -192,6 +193,21 @@ public class MemberServiceImpl implements MemberService {
 	      }
 	     return result;
 	   }
+
+	@Override
+	public long findBalanceByAccountNo(String accountNo) {
+		return memberMapper.findBalanceByAccountNo(accountNo);
+	}
+
+	@Override
+	public ArrayList<ShareBoardVO> findShareBoardStatus0ById(String id) {
+		return memberMapper.findShareBoardStatus0ById(id);
+	}
+
+	@Override
+	public ArrayList<ShareBoardVO> findShareBoardStatus1ById(String id) {
+		return memberMapper.findShareBoardStatus1ById(id);
+	}
 
 }
 

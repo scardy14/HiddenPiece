@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
+import org.goodomen.hiddenpiece.model.vo.AuctionBoardCommentVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;

@@ -10,6 +10,7 @@ import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 
 public interface MemberService {
 
@@ -68,5 +69,11 @@ public interface MemberService {
 	void updateMemberStatus(String statusMember, String id);
 
 	int accountCheck(String accountNo);
+
+	long findBalanceByAccountNo(String accountNo);
+
+	ArrayList<ShareBoardVO> findShareBoardStatus0ById(String id);
+	
+	ArrayList<ShareBoardVO> findShareBoardStatus1ById(String id);
 
 }

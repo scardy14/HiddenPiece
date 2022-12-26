@@ -1,4 +1,4 @@
-package org.goodomen.hiddenpiece.controller;
+package org.goodomen.hiddenpiece.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -34,4 +34,7 @@
 	<update id="finishShare" parameterType="long">
 		UPDATE ShareBoard SET post_status = 2 WHERE post_no = #{value}
 	</update>
+	<update id="addHits" parameterType="String">
+		UPDATE ShareBoard SET hits = hits+1 WHERE post_no = #{value}
+	</update>
 </mapper>

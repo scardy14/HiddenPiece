@@ -112,4 +112,20 @@
 	<update id ="updateMemberStatus">
 		Update HP_Member set status=#{status} where id = #{id}
 	</update>
+	<select id="findBalanceByAccountNo" resultType="long">
+	Select balance from account_info where account_no = #{accountNo}
+	</select>
+	<select id="findShareBoardStatus1ById" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+		Select *
+		from ShareBoard sb
+		inner join hp_member hpm on sb.id=hpm.id
+		where post_status in (1,2) and sb.id=#{id} 
+	</select>
+	<select id="findShareBoardStatus0ById" resultType="org.goodomen.hiddenpiece.model.vo.ShareBoardVO">
+		Select *
+		from ShareBoard sb
+		inner join hp_member hpm on sb.id=hpm.id
+		where post_status = 0 and sb.id=#{id} 
+	</select>
+	
 </mapper>

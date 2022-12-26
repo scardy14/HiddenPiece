@@ -7,6 +7,7 @@ import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,8 +164,27 @@ public class HiddenPieceMemberTest {
 	@Test
 	public void totalCountMember() {
 		int result = memberMapper.totalCountMember();
-			System.out.println(result);
-		
+			System.out.println(result);	
+	}
+	@Test
+	public void findBalanceByAccountNo() {
+		String accountNo = "111113";
+		long result = memberMapper.findBalanceByAccountNo(accountNo);
+		System.out.println(result);
+	}
+	@Test
+	public void findShareBoardStatus1ById() {
+		String id = "scardy";
+		ArrayList<ShareBoardVO> list = memberMapper.findShareBoardStatus1ById(id);
+		for(ShareBoardVO vo:list)		
+			logger.debug("list:{}", vo);
+	}
+	@Test
+	public void findShareBoardStatus0ById() {
+		String id = "scardy";
+		ArrayList<ShareBoardVO> list = memberMapper.findShareBoardStatus0ById(id);
+		for(ShareBoardVO vo:list)		
+			logger.debug("list:{}", vo);
 	}
 	
 }
