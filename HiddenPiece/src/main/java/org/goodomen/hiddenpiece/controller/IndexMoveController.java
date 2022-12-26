@@ -40,6 +40,11 @@ public class IndexMoveController {
 		return "index3";
 	}
 	
+	@RequestMapping("needLogin")
+	public String needLogin() {
+		return "needLogin";
+	}
+	
 	@RequestMapping("layout")
 	public String layoutmove() {
 		return "layout";

@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import lombok.RequiredArgsConstructor;
-
 /*
  * 
  * **Thymeleaf Template Engine**
@@ -55,7 +53,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 			return true;
 		} else {//비인증 상태이며
 			//log.info("인터셉터 인증체크 비인증상태{}", request.getRequestURI());
-			response.sendRedirect("home"); // /or home으로 이동시킴
+			response.sendRedirect("needLogin"); // /or home으로 이동시킴
 			return false;
 		}
 	}

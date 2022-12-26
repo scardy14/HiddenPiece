@@ -21,6 +21,14 @@ public class HandlerIntercepterConfigure implements WebMvcConfigurer{
 		//excludePathPatterns("path") : 인터셉터 적용을 제외할 경로를 명시 ( home , 로그인폼이 있는 경로, 정적 자원정보, 비인증상태에서 서비스 할수 있는 경로 )
 		// /registerMember* : registerMember 문자열로 시작되는 모든 경로 
 		//registry.addInterceptor(loginCheckInterceptor).addPathPatterns().excludePathPatterns();
+	registry.addInterceptor(loginCheckInterceptor)
+	.addPathPatterns("/**")
+	.excludePathPatterns("/","/home","/loginForm","/registerForm","/needLogin","/login"
+			,"/css/**","/actionboardimg/**","/img/**","/js/**","/lib/**","/mail/**","/scss/**","/shareboardimg/**",
+			"/*List","/*list","/searchPostByKeyword",
+		"/*detail","/*Detail");
+	
+	
 	}
 	
 }
