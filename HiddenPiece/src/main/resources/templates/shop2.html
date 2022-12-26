@@ -170,7 +170,7 @@
 									</th:block>
 									<th:block th:if="${paging.next && paging.endPage>0}">
 										<li class="page-item active"><a class="page-link"
-											th:onclick="searchByKeyword([[${paging.startPage}]]+1)">Next</a></li>
+											th:onclick="searchByKeyword([[${paging.endPage}]]+1)">Next</a></li>
 									</th:block>
 									<th:block th:if="${mapList}">
 										<input type="hidden" name="pageIndex" id="pageIndex"
