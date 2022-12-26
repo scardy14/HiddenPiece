@@ -5,8 +5,8 @@
 	
 	<select id="boardList" resultType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO" parameterType="org.goodomen.hiddenpiece.model.vo.Criteria">
 			SELECT * from 
-	(select ROWNUM rm, post_no,contend, time_posted,title,hits,post_status,id from
-		(select post_no,contend, time_posted,title,hits, post_status, hpm.id
+	(select ROWNUM rm, post_no,content, time_posted,title,hits,post_status,id from
+		(select post_no,content, time_posted,title,hits, post_status, hpm.id
 		from freeboard fb
 		inner join hp_member hpm on hpm.id=fb.id
 		where post_status=1 or post_status=2 or post_status=3 
@@ -26,10 +26,10 @@
 		select * from freeboard where post_no=#{value}
 	</select>
 	<insert id="writePost" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
-		insert into freeboard(post_no,contend,time_posted,title,id) values(freeboard_seq.nextval,#{contend},sysdate,#{title},#{id})
+		insert into freeboard(post_no,content,time_posted,title,id) values(freeboard_seq.nextval,#{content},sysdate,#{title},#{id})
 	</insert>
 	<update id="updatePost" parameterType="org.goodomen.hiddenpiece.model.vo.FreeBoardVO">
-		update freeboard set title=#{title}, contend=#{contend} where post_no=#{postNo}
+		update freeboard set title=#{title}, content=#{content} where post_no=#{postNo}
 	</update>
 	<update id="deletePost" parameterType="long">
 		update freeboard set post_status =0 where post_no=#{value}
