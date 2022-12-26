@@ -6,6 +6,7 @@ import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
+import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class AdminController {
 					model.addAttribute("auctionList", auctionBoardlist);
 					viewPath = "admin/AuctionBoardStatus1-result";
 				}
-			} else {//분기점 티어2: 자유게시판
+			} else if(board.equals("free")) {//분기점 티어2: 자유게시판
 				if(status.equals("1")) { //분기점 티어3
 					ArrayList<FreeBoardVO> freeboardList  = 	memberService.findFreeBoardStatus0ById(id);
 					model.addAttribute("freeList", freeboardList);
@@ -52,6 +53,16 @@ public class AdminController {
 					ArrayList<FreeBoardVO> freeboardList  = 	memberService.findFreeBoardStatus1ById(id);
 					model.addAttribute("freeList", freeboardList);
 					viewPath = "admin/FreeBoardStatus1-result";
+				}
+			}else {
+				if(status.equals("1")) {
+					ArrayList<ShareBoardVO> shareboardList = memberService.findShareBoardStatus0ById(id);
+					model.addAttribute("shareList", shareboardList);
+					viewPath = "admin/ShareBoardStatus0-result";
+				}else {
+					ArrayList<ShareBoardVO> shareboardList = memberService.findShareBoardStatus1ById(id);
+					model.addAttribute("shareList", shareboardList);
+					viewPath = "admin/ShareBoardStatus1-result";
 				}
 			}
 		}

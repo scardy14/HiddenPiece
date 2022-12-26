@@ -23,6 +23,7 @@
 				<option value="" th:value="no" style="text-align: center">--게시판 선택--</option>
 				<option value="" th:value="auction" style="text-align: center">경매게시판</option>
 				<option value="" th:value="free" style="text-align: center">자유게시판</option>
+				<option value="" th:value="share" style="text-align: center">나눔게시판</option>
 			</select>
 			<button type="submit" id="searchPostBtn" style="width:50px;height:30px; text-align: center;">찾기</button>
 			<br><br>
@@ -62,7 +63,14 @@
 				success:function(member){
 						// $("#ajaxMember").text(result);
 						// alert("member Json result "+member);						
-								$("#ajaxMember").text("상태 : " + member.status);
+								$("#ajaxMember").text("아이디 : "+ member.id+
+										" 비밀번호 : "+member.password+
+										" 이메일 : "+member.email+
+										" 전화번호 : "+member.tel+
+										" 계좌번호 : "+member.accountNo+
+										" 이름 : "+member.name+
+										" 상태 : " + member.status
+										);
 					
 				},
 				error:function(xhr){
