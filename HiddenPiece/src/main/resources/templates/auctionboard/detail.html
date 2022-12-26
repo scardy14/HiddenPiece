@@ -110,20 +110,24 @@
 							<p th:text="${postVO.content}">상품설명란</p>
 						</div>
 					</div>
+					
 					<th:block th:if="${session.mvo!=null}">
 						<th:block th:if="${session.mvo.id==postVO.id} or ${session.mvo.status=='2'}">
-							<div class="row px-xl-5">
-							<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}">
-								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-								<button type = "submit" style="border-color: gray; background-color: white;">수정하기</button>
-							</form> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<form id = "moveAuctionBoardPostDelete" th:action="@{/AuctionBoardPostDelete}" method="post">
-								<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
-								<button  type = "submit" style="border-color: gray; background-color: white;">삭제하기</button> 
-							</form>
-							</div>
+								<form id = "moveAuctionBoardPostUpdateForm" th:action="@{/moveAuctionBoardPostUpdateForm}">
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button class="btn px-3" style="border-color: gray;" id="postUpdateBtn" onclick="postUpdate()">
+										<i class=""></i> 수정하기
+									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								</form> &nbsp;&nbsp;
+					
+								<form id = "moveAuctionBoardPostDelete" th:action="@{/AuctionBoardPostDelete}" method="post">
+									<input type = "hidden" name = "postNo" th:value ="${postVO.postNo}">
+									<button class="btn px-3" style="border-color: gray;">
+									<i class=""></i> 삭제하기
+									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								</form>
 						</th:block>
-					</th:block>
+						</th:block>
 				</div>
 			</div>
 		
@@ -300,8 +304,7 @@
       	});
    
    })
-	                 
-                        	   
+   
    /* 댓글 수정  */
    function updateCommentForm(commentNo) {
 	  	$("#commentUpdateZone"+commentNo).show();
