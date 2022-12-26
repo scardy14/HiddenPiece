@@ -112,4 +112,8 @@
 	<update id ="updateMemberStatus">
 		Update HP_Member set status=#{status} where id = #{id}
 	</update>
+	<select id="findBalanceByAccountNo" resultType="long">
+	Select balance from account_info where account_no = #{accountNo}
+	</select>
+	
 </mapper>

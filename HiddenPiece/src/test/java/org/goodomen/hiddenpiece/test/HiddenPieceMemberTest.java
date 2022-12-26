@@ -163,8 +163,14 @@ public class HiddenPieceMemberTest {
 	@Test
 	public void totalCountMember() {
 		int result = memberMapper.totalCountMember();
-			System.out.println(result);
-		
+			System.out.println(result);	
 	}
+	@Test
+	public void findBalanceByAccountNo() {
+		String accountNo = "111113";
+		long result = memberMapper.findBalanceByAccountNo(accountNo);
+		System.out.println(result);
+	}
+	
 	
 }

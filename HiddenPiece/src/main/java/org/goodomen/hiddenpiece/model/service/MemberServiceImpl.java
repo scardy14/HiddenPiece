@@ -193,5 +193,10 @@ public class MemberServiceImpl implements MemberService {
 	     return result;
 	   }
 
+	@Override
+	public long findBalanceByAccountNo(String accountNo) {
+		return memberMapper.findBalanceByAccountNo(accountNo);
+	}
+
 }
 
