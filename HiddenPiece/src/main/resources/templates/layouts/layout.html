@@ -127,6 +127,8 @@
 					<div class="nav-item dropdown dropright">
 					<a class="dropdown-item" th:onclick="searchByKeyword2()">경매게시판</a> 
 					<a class="dropdown-item" th:href="@{/freeBoardPostList}">자유게시판</a> 
+					<a class="dropdown-item" th:href="@{/ShareBoardPostList}">나눔게시판</a> 
+					<a class="dropdown-item" th:href="@{/noticeBoardPostList}">공지사항</a> 
 					</div>
 					
                       	<th:block th:if="${session.mvo!=null}">

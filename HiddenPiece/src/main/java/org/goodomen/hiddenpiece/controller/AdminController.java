@@ -28,9 +28,11 @@ public class AdminController {
 		String viewPath = null;
 		if(memberVO == null ) {//분기점 티어1:아이디가 없으면 무조건 실패로
 			viewPath = "admin/FindBoardListbyId-fail";
-		} else if(status.equals("0") || board.equals("no")) { // 분기점 티어1:조건값 두 개중 하나라도 입력 안하면 false
-			viewPath = "admin/FindBoardList-fail";
-		} else {//분기점 티어1: 모든값을 정상적으로 입력
+		} else if(status.equals("0")) { // 분기점 티어1:조건값 두 개중 하나라도 입력 안하면 false
+			viewPath = "admin/FindBoardList-failbyStatus";
+		}else if(board.equals("no")) {
+			viewPath = "admin/FindBoardList-failbyBoard";
+		}else {//분기점 티어1: 모든값을 정상적으로 입력
 			if(board.equals("auction")) { //분기점 티어2: 경매게시판 
 				if(status.equals("1")) { //분기점 티어3
 					ArrayList<AuctionBoardPostVO> auctionBoardlist  = memberService.findAuctionBoardStatus0ById(id);
