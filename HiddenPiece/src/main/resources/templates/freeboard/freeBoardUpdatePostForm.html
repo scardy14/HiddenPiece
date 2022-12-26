@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
-<title>HiddenPiece</title>
+<title>자유게시판 글수정</title>
 </head>
 <div layout:fragment="content">
 	<div class="row pt-4">
@@ -17,15 +17,15 @@
 					<td><input type="text" style="width: 100%; height: 40px;" name="title" required="required" th:value="${postVO.title}"></td>
 				</tr>
 				<tr>
-					<td><textarea rows="25" class="form-control" name="contend" required="required" th:value="${postVO.contend}">[[${postVO.contend}]]</textarea></td>
+					<td><textarea rows="20" class="form-control" name="content" required="required" th:value="${postVO.content}">[[${postVO.content}]]</textarea></td>
 				</tr>
 			</table>
 			<div class="text-center">
 				<button type="submit" class="btn btn-success">수정</button>
+				<button type="reset" class="btn btn-success">취소</button>
 				</div>
 				<br><br>
-				<div class="text-right">
-				
+				<div class="text-right">			
 			</div>
 			</form>
 		</div>
