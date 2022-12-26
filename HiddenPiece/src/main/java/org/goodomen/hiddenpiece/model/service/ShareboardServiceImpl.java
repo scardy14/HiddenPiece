@@ -58,4 +58,9 @@ public class ShareboardServiceImpl implements ShareboardService{
 		return shareboardMapper.finishShare(postNo);
 	}
 
+	@Override
+	public void addHits(String postNo) {
+		shareboardMapper.addHits(postNo);
+	}
+
 }

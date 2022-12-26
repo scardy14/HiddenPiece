@@ -3,14 +3,17 @@ package org.goodomen.hiddenpiece.controller;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.ShareboardService;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
 import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 import org.springframework.stereotype.Controller;
@@ -44,9 +47,21 @@ public class ShareBoardController {
 		model.addAttribute("paging", paging);
 		return "shareboard/shareboard";
 	}
+	
 	@RequestMapping("findShareBoardDetail")
-	public String findShareBoardDetail(String postNo,Model model) {
+	public String findShareBoardDetail(String postNo,Model model,  HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			ArrayList<Long> shareBoardList = (ArrayList<Long>) session.getAttribute("shareBoardList");
+			if (shareBoardList.size() == 0 || !shareBoardList.contains(postNo)) {
+				shareboardService.addHits(postNo);
+				shareBoardList.add(Long.parseLong(postNo));
+				session.setAttribute("auctionBoardPostList", shareBoardList);
+			}
+		}
+		shareboardService.addHits(postNo);
 		ShareBoardVO shareboardVO = shareboardService.findShareBoardDetail(postNo);
+		System.out.println(shareboardVO);
 		model.addAttribute("postVO",shareboardVO);
 		return "shareboard/shareboarddetail";
 	}

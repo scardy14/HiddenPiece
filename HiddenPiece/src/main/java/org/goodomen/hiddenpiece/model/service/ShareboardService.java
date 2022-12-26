@@ -24,4 +24,6 @@ public interface ShareboardService {
 
 	int finishShare(long postNo);
 
+	void addHits(String postNo);
+
 }

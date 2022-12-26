@@ -31,6 +31,7 @@ public class MemberController {
 		ArrayList<Long> freeBoardList = new ArrayList<>();
 		ArrayList<Long> auctionBoardList = new ArrayList<>();
 		ArrayList<Long> noticeBoardList = new ArrayList<>();
+		ArrayList<Long> shareBoardList = new ArrayList<>();
 		if (memberVO == null ) {
 			return "member/login-fail";
 		}
@@ -40,6 +41,7 @@ public class MemberController {
 			session.setAttribute("freeBoardList", freeBoardList);
 			session.setAttribute("auctionBoardList", auctionBoardList);
 			session.setAttribute("noticeBoardList", noticeBoardList);
+			session.setAttribute("shareBoardList", shareBoardList);
 			return "redirect:/";
 		}
 	}

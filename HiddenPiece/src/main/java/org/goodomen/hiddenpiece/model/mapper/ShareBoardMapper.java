@@ -27,4 +27,6 @@ public interface ShareBoardMapper {
 
 	int finishShare(long postNo);
 
+	void addHits(String postNo);
+
 }
