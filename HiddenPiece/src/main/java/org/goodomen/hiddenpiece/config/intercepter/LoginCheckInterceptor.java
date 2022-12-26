@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -47,14 +48,30 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		//System.out.println(((HttpServletRequest) request).getHeader("X-Requested-With"));
+		boolean isAjax = "XMLHttpRequest".equals(request.getHeader("x-requested-With"));
 		HttpSession session = request.getSession(false);
-		if(session!=null&&session.getAttribute("mvo")!=null) {
-			//log.info("인터셉터 인증체크 인증상태 {}", request.getRequestURI());
-			return true;
-		} else {//비인증 상태이며
-			//log.info("인터셉터 인증체크 비인증상태{}", request.getRequestURI());
-			response.sendRedirect("needLogin"); // /or home으로 이동시킴
-			return false;
-		}
+        if (isAjax) {
+        	if(session!=null&&session.getAttribute("mvo")!=null) {
+    			//log.info("인터셉터 인증체크 인증상태 {}", request.getRequestURI());
+    			return true;
+    		} else {//비인증 상태이며
+    			//log.info("인터셉터 인증체크 비인증상태{}", request.getRequestURI());
+    			response.sendError(HttpServletResponse.SC_FORBIDDEN, "사용자 인증이 필요합니다");
+    			return false;
+    		}	
+        } else {
+    		if(session!=null&&session.getAttribute("mvo")!=null) {
+    			//log.info("인터셉터 인증체크 인증상태 {}", request.getRequestURI());
+    			return true;
+    		} else {//비인증 상태이며
+    			//log.info("인터셉터 인증체크 비인증상태{}", request.getRequestURI());
+    			response.sendRedirect("needLogin"); // /or home으로 이동시킴
+    			return false;
+    		}
+        }	
 	}
 }
+
+
+

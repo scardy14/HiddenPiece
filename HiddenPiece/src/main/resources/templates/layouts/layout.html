@@ -241,6 +241,26 @@
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script type="text/javascript">
+
+	//ajaxSetup():  실행될  AJAX 요청에 대한 기본 속성을 정의해 재사용 
+	$.ajaxSetup({
+		success: function(result) {
+			alert(result);
+		},
+		error : function(jqXHR) {
+					//HttpServletResponse.SC_UNAUTHORIZED 401 error 인증이 필요한 ajax 요청을 비로그인상태에서 했을때 발생 
+					if (jqXHR.status == 401 || jqXHR.status == 403) {
+						alert("인증 및 권한이 필요한 서비스입니다");
+						$(location).attr('href',"needLogin");
+						//location.replace("/needLogin");//로그인 폼이 있는 home으로 페이지를 대체한다 
+				    }else{
+				   //post 방식 때 csrf 토큰이 없거나 기타 error 발생시 
+				   	alert("jqXHR status code:"+jqXHR.status+" message:"+jqXHR.responseText);
+				   }
+			}
+	});//ajaxSetup
+
+	
 	$(document).ready(function() {
 		
 		 $("#statusSelect").change(function(){

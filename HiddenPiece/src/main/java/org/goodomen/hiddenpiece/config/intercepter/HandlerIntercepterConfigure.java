@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import lombok.RequiredArgsConstructor;
-
-@Configuration	//핸들러 인터셉터 설정 클래스임을 스프링 컨테이너에 알린다
+@Configuration	
 public class HandlerIntercepterConfigure implements WebMvcConfigurer{
 	private final LoginCheckInterceptor loginCheckInterceptor;
 	@Autowired
@@ -17,13 +15,31 @@ public class HandlerIntercepterConfigure implements WebMvcConfigurer{
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginCheckInterceptor).
-		addPathPatterns("/delete*","/write*"); //: /** => 현재 경로(context path)와 하위의 모든 경로에 인터셉터를 적용, 모든 요청에 인터셉터 적용하겠다는 의미 
-		//: 인터셉터 적용을 제외할 경로를 명시 ( home , 로그인폼이 있는 경로, 정적 자원정보, 비인증상태에서 서비스 할수 있는 경로 )
-		// /registerMember* : registerMember 문자열로 시작되는 모든 경로 
-		//registry.addInterceptor(loginCheckInterceptor).addPathPatterns().excludePathPatterns();
-	
+		registry.addInterceptor(loginCheckInterceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns(
+				//adminController 제외
+				
+				"/findAuctionBoardPostDetail","/selectCommentByCommentNo","/searchPostByKeyword","/auctionboardList",//AuctionboardController
+				
+				"/findFreeBoardPostDetail","/selectFreeBoardCommentByCommentNo",//FreeboardController
+				
+				"/","index","home","//","/needLogin","/layout","/auctionboard","/auctionboarddetail","/registerForm",
+				"/registerMember","/loginForm","/freeBoardPostList","/freeboarddetail","/noticeBoardPostList","/noticeboarddetail",//IndexMoveController
+				
+				"/login","/findIdForm","/findId","/findIdresult","/findPasswordForm","/findPassword","/findPasswordresult",
+				"/registerMember","/ajaxIdCheck","/ajaxAccountCheck",//MemberController
+				
+				"/findNoticeBoardPostDetail",//NoticeBoardController
+				
+				//MyPageController 제외
+				
+				"/ShareBoardPostList","/findShareBoardDetail",//ShareBoardController
+				
+				"/auctionboardimg/**","/css/**","/auctionboardimg/**","/img/**","/js/**","/lib/**","/mail/**","/scss/**","/shareboardimg/**"
+			);
 	
 	}
+	
 	
 }
