@@ -17,11 +17,11 @@
 						data-ride="carousel">
 						<div class="carousel-inner bg-light">
 							<div class="carousel-item active">
-								<img class="w-100 h-100" alt="Image">
+								<img class="w-100 h-100" alt="Image" id="preview">
 							</div>
 						</div>
 					</div>
-					<input name = "image" type="file" required="required">
+					<input name = "image" type="file" required="required" onchange="readURL(this)">
 				</div>
 				
 				<div class="col-lg-7 h-auto mb-30">
@@ -47,6 +47,17 @@
 	</div>
 	</form>
 	<script type="text/javascript">
+	function readURL(input) {
+		  if (input.files && input.files[0]) {
+		    var reader = new FileReader();
+		    reader.onload = function(e) {
+		      document.getElementById('preview').src = e.target.result;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+		  } else {
+		    document.getElementById('preview').src = "";
+		  }
+		}
 		function checkPrice(event) {
         	let startPrice = document.getElementById("startPrice1").value*1;
             let sellPrice = document.getElementById("sellPrice1").value*1;

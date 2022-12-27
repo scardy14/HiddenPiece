@@ -1,5 +1,6 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -74,8 +75,13 @@ public class AuctionBoardController {
 
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,
-			@RequestParam("image") MultipartFile file) {
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) {
+		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/auctionboardimg/"; 
+	    // 시스템의 프로젝트 path에 해당하는 디렉토리가 없다면 동적으로 생성하도록 한다
+	    File dir=new File(projectpath);
+	    	if(dir.exists()==false) {
+	        dir.mkdirs();
+	    }
 		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date now = new Date();
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " "
@@ -89,9 +95,7 @@ public class AuctionBoardController {
 
 		try (
 				// 윈도우일 경우
-				FileOutputStream fos = new FileOutputStream(
-						"C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/"
-								+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
+				FileOutputStream fos = new FileOutputStream(projectpath+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
 				InputStream is = file.getInputStream();) {
 			int readCount = 0;
 			byte[] buffer = new byte[2048];
