@@ -1,19 +1,11 @@
 package org.goodomen.hiddenpiece.test;
 
-import java.util.ArrayList;
-
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import lombok.extern.slf4j.Slf4j;
-
 @SpringBootTest
-@Slf4j
+//@Slf4j
 public class WishlistUnitTest {
+	/*
 	private MemberMapper memberMapper;
 
 	@Autowired
@@ -44,5 +36,5 @@ public class WishlistUnitTest {
 		long result = memberMapper.checkWishlist(likesVO);
 		System.out.println(result);
 	}
-	
+	*/
 }

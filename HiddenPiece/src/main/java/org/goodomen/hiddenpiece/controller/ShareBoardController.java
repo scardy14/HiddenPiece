@@ -76,9 +76,10 @@ public class ShareBoardController {
 		String photoname=shareboardVO.getId()+nowTime.format(now)+file.getOriginalFilename();
 		shareboardVO.setPhoto(photoname);
 		long result = shareboardService.writeSharePost(shareboardVO);
+		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/shareboardimg/";
 	    try(
 	      // 윈도우일 경우 
-	      FileOutputStream fos = new FileOutputStream("C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/shareboardimg/" + photoname);
+	      FileOutputStream fos = new FileOutputStream(projectpath + photoname);
 	      InputStream is = file.getInputStream();
 	    ){
 	      int readCount = 0;

@@ -76,7 +76,7 @@ public class AuctionBoardController {
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) {
-		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/auctionboardimg/"; 
+		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/auctionboardimg";
 	    // 시스템의 프로젝트 path에 해당하는 디렉토리가 없다면 동적으로 생성하도록 한다
 	    File dir=new File(projectpath);
 	    	if(dir.exists()==false) {

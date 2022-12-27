@@ -1,20 +1,11 @@
 package org.goodomen.hiddenpiece.test;
 
-import java.util.ArrayList;
-
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardCommentVO;
-import org.goodomen.hiddenpiece.model.mapper.AuctionBoardMapper;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import lombok.extern.slf4j.Slf4j;
-
 @SpringBootTest
-@Slf4j
+//@Slf4j
 public class AuctionBoardUnitTest {
+	/*
 	AuctionBoardMapper auctionBoardMapper;
 	
 	@Autowired
@@ -64,4 +55,5 @@ public class AuctionBoardUnitTest {
 		AuctionBoardCommentVO commentVO = new AuctionBoardCommentVO(1, 44, "yerin0110", "2022-12-15 13:00:00.0","댓글22", "1");
 		auctionBoardMapper.updateComment(commentVO);
 	}
+	*/
 }

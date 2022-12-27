@@ -1,21 +1,10 @@
 package org.goodomen.hiddenpiece.test;
 
-import java.util.ArrayList;
-
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
-import org.goodomen.hiddenpiece.model.vo.AccountVO;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
-import org.goodomen.hiddenpiece.model.vo.MemberVO;
-import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class HiddenPieceMemberTest {
+	/*
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	private MemberMapper memberMapper;
 	
@@ -186,5 +175,6 @@ public class HiddenPieceMemberTest {
 		for(ShareBoardVO vo:list)		
 			logger.debug("list:{}", vo);
 	}
+	*/
 	
 }

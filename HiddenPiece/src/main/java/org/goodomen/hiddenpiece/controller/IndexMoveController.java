@@ -43,13 +43,7 @@ public class IndexMoveController {
 	public String layoutmove() {
 		return "layout";
 	}
-	
-	// 경매게시판 상세조회
-	@RequestMapping("auctionboarddetail")
-	public String auctionBoardDetailMove() {
-		return "detail2";
-	}
-	
+
 	// 경매게시판 게시글 작성
 	@RequestMapping("auctionboardwrite")
 	public String auctionBoardWriteMove() {

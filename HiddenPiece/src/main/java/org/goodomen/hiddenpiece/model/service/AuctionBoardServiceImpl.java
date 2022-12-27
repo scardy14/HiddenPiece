@@ -79,15 +79,21 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@Override
 	@Transactional
 	public int bidAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
-			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
-		}
-		if(auctionBoardMapper.checkBidList(auctionBoardPostVO)!=1) {
-			auctionBoardMapper.addBidList(auctionBoardPostVO);
-		}
-		auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
-		auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);		
-		return 0;
+		int result = 0;
+		try {
+			if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
+				auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+			}
+			if(auctionBoardMapper.checkBidList(auctionBoardPostVO)!=1) {
+				auctionBoardMapper.addBidList(auctionBoardPostVO);
+			}
+			auctionBoardMapper.bidAuctionBoardPost(auctionBoardPostVO);
+			auctionBoardMapper.updateMemberPoint(auctionBoardPostVO);
+			result = 1;
+		} catch (Exception e){
+			result = 0;
+		} 
+		return result;
 	}
 
 	@Override
@@ -102,15 +108,21 @@ public class AuctionBoardServiceImpl implements AuctionBoardService {
 	@Override
 	@Transactional
 	public int buyAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
-		if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
-			auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+		int result = 0;
+		try {
+			if(auctionBoardMapper.findAuctionBoardPostNowId(auctionBoardPostVO)!=null) {
+				auctionBoardMapper.reverseBidAuctionBoardPost(auctionBoardPostVO);
+			}
+			if(auctionBoardMapper.checkBidList(auctionBoardPostVO)!=1) {
+				auctionBoardMapper.addBidList(auctionBoardPostVO);
+			}
+			auctionBoardMapper.buyAuctionBoardPost(auctionBoardPostVO);
+			auctionBoardMapper.updateMemberPointbuy(auctionBoardPostVO);
+			result = 1;
+		} catch(Exception e) {
+			result = 0;
 		}
-		if(auctionBoardMapper.checkBidList(auctionBoardPostVO)!=1) {
-			auctionBoardMapper.addBidList(auctionBoardPostVO);
-		}
-		auctionBoardMapper.buyAuctionBoardPost(auctionBoardPostVO);
-		auctionBoardMapper.updateMemberPointbuy(auctionBoardPostVO);
-		return 0;
+		return result;
 	}
 
 	@Override

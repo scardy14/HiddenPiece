@@ -7,6 +7,7 @@
 		 FROM AuctionBoard a, Bid_List b
 		WHERE a.post_no = b.post_no
 		  		AND b.id = #{id}
+		  		AND a.post_status!=0
 	</select>
 	<select id="findfindBiddingCountFromBidListTag" parameterType="org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO" resultType="int">
 		SELECT COUNT(*)
@@ -25,6 +26,7 @@
 	 				 			 WHERE a.post_no = b.post_no
 	   										AND b.id = #{id}
 	   										AND a.post_no = b.post_no
+	   										AND a.post_status!=0
 	   				 			 ORDER BY b.bid_no DESC
 		  					)
 		  			
