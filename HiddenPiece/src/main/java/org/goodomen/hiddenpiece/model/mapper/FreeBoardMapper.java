@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardCommentVO;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 
 @Mapper

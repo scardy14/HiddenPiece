@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
-import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.NoticeBoardVO;
 
 @Mapper

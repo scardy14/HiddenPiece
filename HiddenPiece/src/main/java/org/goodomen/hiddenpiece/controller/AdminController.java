@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.goodomen.hiddenpiece.model.service.MemberService;
-import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardVO;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
-import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
-	
-	// private final MemberMapper memberMapper;
 	private final MemberService memberService;
 	
 	@RequestMapping("adminSearchBoard")
@@ -37,6 +32,7 @@ public class AdminController {
 		}
 		return viewPath;
 	}
+	
 	@RequestMapping("ajaxFindMemberVO")
 	@ResponseBody
 	public ResponseEntity<?> ajaxFindMemberVO(String memberId, Model model) {
@@ -50,9 +46,9 @@ public class AdminController {
 			
 		}
 	}
+	
 	@RequestMapping("adminSearchMember")
 	public String adminSearchMember(String memberId, String statusMember) {
-		System.out.println(memberId);
 		MemberVO memberVO = memberService.findMemberById(memberId);
 		if(memberVO != null) {
 		memberService.updateMemberStatus(statusMember,memberId);

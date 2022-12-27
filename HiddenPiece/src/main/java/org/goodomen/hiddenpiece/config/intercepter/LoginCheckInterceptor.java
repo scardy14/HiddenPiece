@@ -4,9 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.goodomen.hiddenpiece.model.vo.MemberVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -39,7 +36,7 @@ home으로 redirect 시킨다
  */
 @Component
 public class LoginCheckInterceptor implements HandlerInterceptor{
-	private Logger log = LoggerFactory.getLogger(getClass());
+	//private Logger log = LoggerFactory.getLogger(getClass());
 	/*
 	 *	해당 컨트롤러가 실행하기 전에 HandlerInterceptor가 요청을 가로채 실행되는 메서드
 	 	인증이 필요한 서비스에 한해서 
@@ -48,7 +45,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		//System.out.println(((HttpServletRequest) request).getHeader("X-Requested-With"));
 		boolean isAjax = "XMLHttpRequest".equals(request.getHeader("x-requested-With"));
 		HttpSession session = request.getSession(false);
         if (isAjax) {

@@ -22,7 +22,6 @@ import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -142,7 +141,6 @@ public class AuctionBoardController {
 	@RequestMapping("addToWishlist")
 	public String addToWishlist(String id, long postNo, AuctionBoardPostVO postVO) {
 		postVO.setLike(true);
-		System.out.println("controller");
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 		return "ok";
@@ -160,14 +158,22 @@ public class AuctionBoardController {
 	@PostMapping("AuctionBoardPostDelete")
 	public String moveAuctionBoardPostDelete(long postNo) {
 		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
-		return "auctionboard/delete-ok";
+		if(result==1) {
+			return "auctionboard/delete-ok";
+		} else {
+			return "auctionboard/delete-fail";
+		}
 	}
 
 	// 경매게시판 글 수정
 	@PostMapping("updateAuctionBoardPost")
 	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
-		return "auctionboard/update-ok";
+		if(result==1) {
+			return "auctionboard/update-ok";
+		} else {
+			return "auctionboard/update-fail";
+		}
 	}
 
 	// 경매게시판 입찰
@@ -180,7 +186,11 @@ public class AuctionBoardController {
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 		memberVO.setPoint(newPoint);
 		session.setAttribute("mvo", memberVO);
-		return "redirect:bidMove";
+		if(result==1) {
+			return "redirect:bidMove";
+		} else {
+			return"auctionboard/bid-fail";
+		}
 	}
 
 	@RequestMapping("bidMove")
@@ -196,7 +206,11 @@ public class AuctionBoardController {
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 		memberVO.setPoint(newPoint);
 		session.setAttribute("mvo", memberVO);
-		return "redirect:buymove";
+		if(result==1) {
+			return "redirect:buymove";
+		} else {
+			return "auctionboard/bid-fail";
+		}
 	}
 
 	@RequestMapping("buymove")
@@ -205,6 +219,7 @@ public class AuctionBoardController {
 	}
 
 	// 경매게시판으로 이동
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping("searchPostByKeyword")
 	public String searchPostByKeyword(@RequestParam HashMap<String, Object> mapList, Model model, HttpServletRequest request, Criteria cri) {
 		if (!mapList.get("pageIndex").equals("")) {
@@ -239,16 +254,13 @@ public class AuctionBoardController {
 			cri.setSearchKeyword(mapList.get("searchKeyword").toString()); 
 			cri.setPrice(mapList.get("price").toString());
 			List<Map<String, Object>> auctionBoardList = auctionBoardService.searchPostByKeyword(cri);
-			
 			for (int i = 0; i < auctionBoardList.size(); i++) {
 				if (myWishlist.contains(auctionBoardList.get(i))) {
 					((AuctionBoardPostVO) auctionBoardList.get(i)).setLike(true);
 				}
 			}
 			model.addAttribute("postList", auctionBoardList);
-		}
-
-		else {
+		} else {
 			cri.setSearchKeyword(mapList.get("searchKeyword").toString());
 			cri.setPrice(mapList.get("price").toString());
 			List<Map<String, Object>> auctionBoardList = auctionBoardService.searchPostByKeyword(cri);

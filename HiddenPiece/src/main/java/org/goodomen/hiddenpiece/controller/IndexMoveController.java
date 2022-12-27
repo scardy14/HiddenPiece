@@ -7,15 +7,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.service.NoticeBoardService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
-import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class IndexMoveController {
-	private final AuctionBoardService auctionBoardService;
 	private final FreeBoardService freeBoardService;
 	private final NoticeBoardService noticeBoardService;
 	private final MemberService memberService;
@@ -35,7 +31,7 @@ public class IndexMoveController {
 	@RequestMapping(value={"/","index","home","//"})
 	public String indexMove(Model model) {
 		model.addAttribute("viewPage","index");
-		return "index3";
+		return "index";
 	}
 	
 	@RequestMapping("needLogin")
@@ -98,7 +94,7 @@ public class IndexMoveController {
 		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");
 		ArrayList<AuctionBoardPostVO> list = memberService.selectMyWishlist(memberVO.getId());
 		model.addAttribute("mywishlist", list);
-		return "/wishlist";
+		return "/mypage/wishlist";
 	}
 	
 	//

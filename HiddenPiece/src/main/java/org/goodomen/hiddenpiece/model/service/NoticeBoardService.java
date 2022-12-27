@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.vo.Criteria;
-import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.NoticeBoardVO;
 
 public interface NoticeBoardService {

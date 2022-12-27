@@ -62,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
 		return list;
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public List<Map<String,Object>> selectComparedMyWishlist(String id, Criteria cri) {
 		ArrayList<AuctionBoardPostVO> myWishlist = memberMapper.selectMyWishlist(id);

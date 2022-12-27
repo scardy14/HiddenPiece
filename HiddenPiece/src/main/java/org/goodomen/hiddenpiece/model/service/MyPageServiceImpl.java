@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.mapper.MyPageMapper;
-import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 
