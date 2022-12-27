@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -204,6 +205,61 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<ShareBoardVO> findShareBoardStatus1ById(String id) {
 		return memberMapper.findShareBoardStatus1ById(id);
 	}
+
+	@Override
+	public HashMap<String, ?> findResult(MemberVO memberVO, String id, String status, String board) {
+		HashMap<String, Object> list = new HashMap<>();
+		String viewPath;
+		String boardName;
+		ArrayList<?> findList = new ArrayList<>();
+		
+		
+		if(memberVO == null ) {//분기점 티어1:아이디가 없으면 무조건 실패로
+			viewPath = "admin/FindBoardListbyId-fail";
+		} else if(status.equals("0")) { // 분기점 티어1:조건값 두 개중 하나라도 입력 안하면 false
+			viewPath = "admin/FindBoardList-failbyStatus";
+		}else if(board.equals("no")) {
+			viewPath = "admin/FindBoardList-failbyBoard";
+		}else {//분기점 티어1: 모든값을 정상적으로 입력
+			if(board.equals("auction")) { //분기점 티어2: 경매게시판 
+				if(status.equals("1")) { //분기점 티어3
+					findList  = findAuctionBoardStatus0ById(id);
+					boardName = "auctionList";
+					viewPath="admin/AuctionBoardStatus0-result";
+				} else { //분기점 티어3
+					findList = findAuctionBoardStatus1ById(id);
+					boardName = "auctionList";
+					viewPath = "admin/AuctionBoardStatus1-result";
+				}
+			} else if(board.equals("free")) {//분기점 티어2: 자유게시판
+				if(status.equals("1")) { //분기점 티어3
+					findList = findFreeBoardStatus0ById(id);
+					boardName = "freeList";
+					viewPath = "admin/FreeBoardStatus0-result";
+				} else { //분기점 티어3
+					findList = findFreeBoardStatus1ById(id);
+					boardName = "freeList";
+					viewPath = "admin/FreeBoardStatus1-result";
+				}
+			}else {
+				if(status.equals("1")) {
+					findList = findShareBoardStatus0ById(id);
+					boardName = "shareList";
+					viewPath = "admin/ShareBoardStatus0-result";
+				}else {
+					findList = findShareBoardStatus1ById(id);
+					boardName = "shareList";
+					viewPath = "admin/ShareBoardStatus1-result";
+				}
+			}
+		}
+		list.put("viewPath", viewPath);
+		list.put("boardName", boardName);
+		list.put("findList", findList);
+		
+		return list;
+	}
+
 
 }
 

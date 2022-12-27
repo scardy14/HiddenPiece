@@ -1,7 +1,6 @@
 package org.goodomen.hiddenpiece.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
@@ -19,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class AdminController {
+public class AdminController2 {
 	
 	// private final MemberMapper memberMapper;
 	private final MemberService memberService;
@@ -27,13 +26,7 @@ public class AdminController {
 	@RequestMapping("adminSearchBoard")
 	public String adminSearchBoard(String id,String status,String board, Model model) {
 		MemberVO memberVO = memberService.findMemberById(id);
-		HashMap<String,?> list = memberService.findResult(memberVO,id,status,board);
-		
-		String viewPath = (String) list.get("viewPath");
-		String boardName = (String) list.get("boardName");
-		ArrayList<?> findList = (ArrayList<?>) list.get("findList");
-		model.addAttribute(boardName, findList);
-		/*
+		String viewPath = null;
 		if(memberVO == null ) {//분기점 티어1:아이디가 없으면 무조건 실패로
 			viewPath = "admin/FindBoardListbyId-fail";
 		} else if(status.equals("0")) { // 분기점 티어1:조건값 두 개중 하나라도 입력 안하면 false
@@ -73,7 +66,6 @@ public class AdminController {
 				}
 			}
 		}
-		*/
 		return viewPath;
 	}
 	@RequestMapping("ajaxFindMemberVO")

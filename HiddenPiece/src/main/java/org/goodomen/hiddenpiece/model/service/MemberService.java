@@ -1,6 +1,7 @@
 package org.goodomen.hiddenpiece.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +76,7 @@ public interface MemberService {
 	ArrayList<ShareBoardVO> findShareBoardStatus0ById(String id);
 	
 	ArrayList<ShareBoardVO> findShareBoardStatus1ById(String id);
+
+	HashMap<String, ?> findResult(MemberVO memberVO, String id, String status, String board);
 
 }
