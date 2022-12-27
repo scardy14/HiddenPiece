@@ -210,7 +210,7 @@ public class MemberServiceImpl implements MemberService {
 	public HashMap<String, ?> findResult(MemberVO memberVO, String id, String status, String board) {
 		HashMap<String, Object> list = new HashMap<>();
 		String viewPath;
-		String boardName;
+		String boardName = null;
 		ArrayList<?> findList = new ArrayList<>();
 		
 		
@@ -256,7 +256,6 @@ public class MemberServiceImpl implements MemberService {
 		list.put("viewPath", viewPath);
 		list.put("boardName", boardName);
 		list.put("findList", findList);
-		
 		return list;
 	}
 
