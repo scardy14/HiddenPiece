@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.NoticeBoardVO;
 
@@ -15,7 +16,7 @@ public interface NoticeBoardMapper {
 
 	public int noticeBoardListCnt();
 
-	public List<Map<String, Object>> boardList(NoticeBoardCriteria ncri);
+	public List<Map<String, Object>> boardList(Criteria cri);
 
 	public NoticeBoardVO findNoticeBoardPostDetail(long postNo);
 

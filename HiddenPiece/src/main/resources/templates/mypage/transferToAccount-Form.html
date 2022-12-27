@@ -65,7 +65,7 @@
 					</div>
 					<div class="pt-2">
 						<div class="d-flex justify-content-between mt-2">
-							<h5>총계</h5>
+							<h5>환전 후 계좌잔액</h5>
 							<h5><span id="ajaxPoint"></span></h5>
 						</div>
 					</div>
@@ -88,7 +88,8 @@
 
 		</div>
 	</div>
-						</form>
+</form>
+<input type = "hidden" th:value = "${session.mvo.point}" name = "mpoint">
      <script type="text/javascript" th:inline="javascript">
          $(function(){
             let pointKeyUp = $("input[name=point]")
@@ -99,20 +100,33 @@
         	 		alert("포인트 잔액을 확인하세요");
         	 		return false;
         	 	}   
-        	 	});
+        	 });
             pointKeyUp.keyup(function(){
+            	let mpoint = $("input[name=mpoint]").val()*1;
             	let id = $("#id").val();
             	let point = pointKeyUp.val();
             	checkPointFlag = "";
+            	let accountNo = $("#accountNo").val();	
             	$.ajax({
     				type:"get",
     				url:"ajaxPointCheck",
     				data:"id="+id,
     				success:function(result){
     					if(result>=point){
-    						
-    						$("#ajaxPoint1").text(numberWithCommas(result-point).replace(/(^0+)/, "")+"원");
-    						checkPointFlag=pointKeyUp.val();
+    						$.ajax({
+    		    				type:"get",
+    		    				url:"ajaxBalanceCheck",
+    		    				data:"accountNo="+accountNo,
+    		    				success:function(bank){
+    		    					let intbank = bank*1;
+    		    					let intpoint = point*1;
+    		    					$("#ajaxPoint1").text(numberWithCommas(result-point).replace(/(^0+)/, "")+"원");
+    		    					$("#point1").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
+    		    	                 $("#ajaxPoint").text(numberWithCommas(intbank+intpoint).replace(/(^0+)/, "")+"원");
+    	    						checkPointFlag=pointKeyUp.val();
+    		    					let balance = result;
+    		    				}
+    		    			});
     					}
     					else {
     						$("#ajaxPoint1").text("포인트 잔액을 초과합니다");
@@ -122,12 +136,7 @@
     		});
         	 
         	 
-            	pointKeyUp.keyup(function(){
-					let point = pointKeyUp.val();
-				$("#point1").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
-                 $("#ajaxPoint").text(numberWithCommas(point).replace(/(^0+)/, "")+"원");
-                 
-        	 });
+            	
             	
            	function numberWithCommas(val) {
            		return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

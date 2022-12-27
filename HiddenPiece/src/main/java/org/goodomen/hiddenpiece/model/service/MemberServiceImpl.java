@@ -109,15 +109,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void exchangePoint(long balance, String name) {
 		memberMapper.exchangePoint(balance, name);
-		System.out.println("MemberServiceImpl exchangePoint  ");
 	}
 
 	@Override
 	public void depositPoint(long balance, String accountNo, String bank) {
-		memberMapper.depositPoint(balance, accountNo, bank);	
-		System.out.println("MemberServiceImpl withdrawPoint ");
-		
-		
+		memberMapper.depositPoint(balance, accountNo, bank);		
 	}
 	
 	@Override

@@ -53,12 +53,12 @@
 						</li>
 					</th:block>
 					<th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}" var="num">
-						<th:block th:if="${paging.ncri.page==num}">
+						<th:block th:if="${paging.cri.page==num}">
 							<li class="page-item active" th:value="${num}">
 								<a class="page-link active" th:href="@{/noticeBoardPostList(page=${num})}" th:text="${num}" id="pageIndex"></a>
 							</li>
 						</th:block>
-						<th:block th:if="${paging.ncri.page!=num}">
+						<th:block th:if="${paging.cri.page!=num}">
 							<li class="page-item" th:value="${num}">
 								<a class="page-link" th:href="@{/noticeBoardPostList(page=${num})}" th:text="${num}" id="pageIndex"></a>
 							</li>

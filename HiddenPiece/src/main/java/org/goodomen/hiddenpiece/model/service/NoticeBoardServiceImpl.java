@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.goodomen.hiddenpiece.model.mapper.NoticeBoardMapper;
-import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.NoticeBoardVO;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,8 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 		return noticeBoardMapper.noticeBoardListCnt();
 	}
 	@Override
-	public List<Map<String,Object>> boardList(NoticeBoardCriteria ncri){
-		return noticeBoardMapper.boardList(ncri);
+	public List<Map<String,Object>> boardList(Criteria cri){
+		return noticeBoardMapper.boardList(cri);
 	}
 	@Override
 	public NoticeBoardVO findNoticeBoardPostDetail(long postNo) {

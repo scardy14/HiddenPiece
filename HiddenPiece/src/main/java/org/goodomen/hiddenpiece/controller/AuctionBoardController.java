@@ -213,8 +213,6 @@ public class AuctionBoardController {
 		if (!mapList.containsKey("searchKeyword") || mapList.get("searchKeyword").equals("")) {
 			mapList.put("searchKeyword", "");
 		}
-		// if(mapList.containsKey("status") && !mapList.get("status").equals("all") &&
-		// !mapList.get("status").equals("")) {
 		String statusText = mapList.get("status").toString();
 		if (statusText.equals("")) {
 			statusText = "all";
@@ -223,11 +221,10 @@ public class AuctionBoardController {
 		String price = mapList.get("price").toString();
 		if (price.equals("")) {
 			price = "all";
+			mapList.put("price", "all");
 		}
 		cri.setPrice(price);
-		// }
 		int auctionBoardListCnt = auctionBoardService.searchAuctionBoardListCnt(cri);
-
 		Paging paging = new Paging();
 		paging.setCri(cri);
 		paging.setTotalCount(auctionBoardListCnt);
@@ -258,11 +255,11 @@ public class AuctionBoardController {
 			model.addAttribute("postList", auctionBoardList);
 		}
 		model.addAttribute("mapList", mapList);
-		return "shop2";
+		return "auctionboard/shop";
 	}
 	@RequestMapping("auctionboardList")
 	public String auctionboardList(Model model) {
-		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=1&searchKeyworkd=";
+		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=1&searchKeyword=";
 	}
 
 }

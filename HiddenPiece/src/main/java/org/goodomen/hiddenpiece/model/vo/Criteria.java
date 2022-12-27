@@ -53,7 +53,12 @@ public class Criteria {
 		this.page = 1;
 		this.perPageNum = 12;
 	}
-
+	
+	public Criteria(int perPageNum) {
+		// 기본 생성자 : 최초 게시판에 진입시 필요한 기본값
+		this.page = 1;
+		this.perPageNum = perPageNum;
+	}
 	// 현재 페이지 번호 page : getter, setter
 	public int getPage() {
 		return page;
@@ -75,15 +80,8 @@ public class Criteria {
 	}
 
 	public void setPerPageNum(int perPageNum) {
-		int cnt = this.perPageNum;
-		
-		if(perPageNum != cnt) {
-			this.perPageNum = cnt;	
-		} else {
-			this.perPageNum = perPageNum;
-		}
-		
-}
+		this.perPageNum = perPageNum;
+	}
 	
 	
 
