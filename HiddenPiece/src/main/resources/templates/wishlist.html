@@ -11,26 +11,28 @@
 <div layout:fragment="content">
     <!-- Cart Start -->
     <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-lg-10 table-responsive mb-5" style="padding-left:250px;">
+        <div align="center">
+            <div>
             	<h2>찜목록</h2><br>
-                <table class="table table-light table-borderless table-hover text-center mb-0" style="width:100%; text-align: center; align-content: text;" >
+                <table class="table table-light table-borderless table-hover text-center mb-0" style="width:80%; text-align: center; align-content: text; table-layout: fixed;" >
                     <thead class="thead-dark">
                         <tr>
-                            <th>글 제목</th>
-                            
+                            <th>글 제목</th>                    
                             <th>현재 입찰자</th>
                             <th>현재 입찰가</th>
                             <th>즉시 구매가</th>
-                            <th>남은 시간</th>
+                            <th>종료 시간</th>
                             <th>상품 현황</th>
-                            <th>찜취소</th>
+                            <th>찜 취소</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle" th:each="wl:${mywishlist}">
                         <tr>
                         <th:block th:if="${wl.postStatus}!=0">
-                            <td style="cursor:pointer;" th:onclick="|location.href='@{/findAuctionBoardPostDetail(postNo=${wl.postNo})}'|"  class="align-middle"><img th:src="@{/img/}+ ${wl.photo}" style="width: 50px;" th:text="${wl.title}"></td>
+                            <td style="cursor:pointer;" th:onclick="|location.href='@{/findAuctionBoardPostDetail(postNo=${wl.postNo})}'|" class="align-middle">
+                            <br>
+                            <span th:text="${wl.title}"></span>
+                            </td>
                             
                             <td class="align-middle" th:text="${wl.nowId}">현재 입찰자
                               
