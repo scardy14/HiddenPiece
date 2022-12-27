@@ -187,7 +187,7 @@
 		SELECT content FROM AuctionBoard_Comment WHERE comment_no=#{value}
 	</select>
 
-	<!-- 경매게시판 댓글 달기  -->
+	<!-- 경매게시판 글작성 -->
 	<insert id="writeAuctionBoardPost" parameterType="org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO">
 		INSERT INTO AuctionBoard VALUES(AuctionBoard_seq.nextval,#{id},#{title},#{content},#{photo},#{startPrice},#{startPrice},#{sellPrice},DEFAULT,DEFAULT,TO_Date(#{endDate},'YYYY-MM-DD HH24:MI'),' ',DEFAULT)
 	</insert>
@@ -260,11 +260,11 @@
 	
 	<!--  -->
 	<update id="updatePostStatusTo2">
-		UPDATE AuctionBoard SET post_status = 2 WHERE sysdate>end_date AND now_id!=' ' 
+		UPDATE AuctionBoard SET post_status = 2 WHERE sysdate>end_date AND now_id!=' ' AND post_status=1
 	</update>
 	
 	
 	<update id="updatePostStatusTo3">
-		UPDATE AuctionBoard SET post_status = 3 WHERE sysdate>end_date AND now_id=' '
+		UPDATE AuctionBoard SET post_status = 2 WHERE sysdate>end_date AND now_id=' 'AND post_status=1
 	</update>
 </mapper>

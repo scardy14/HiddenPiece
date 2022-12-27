@@ -88,7 +88,7 @@ public class IndexMoveController {
 		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");
 		ArrayList<AuctionBoardPostVO> list = memberService.selectMyWishlist(memberVO.getId());
 		model.addAttribute("mywishlist", list);
-		return "/mypage/wishlist";
+		return "mypage/wishlist";
 	}
 	
 	//

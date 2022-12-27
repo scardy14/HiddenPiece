@@ -84,8 +84,7 @@ public class AuctionBoardController {
 	    }
 		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date now = new Date();
-		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " "
-				+ auctionBoardPostVO.getEndDate().substring(11, 16));
+		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " "+ auctionBoardPostVO.getEndDate().substring(11, 16));
 		auctionBoardPostVO.setPhoto(auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
 		auctionBoardService.writeAuctionBoardPost(auctionBoardPostVO);
 
@@ -95,7 +94,7 @@ public class AuctionBoardController {
 
 		try (
 				// 윈도우일 경우
-				FileOutputStream fos = new FileOutputStream(projectpath+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
+				FileOutputStream fos = new FileOutputStream(projectpath+"/"+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
 				InputStream is = file.getInputStream();) {
 			int readCount = 0;
 			byte[] buffer = new byte[2048];
