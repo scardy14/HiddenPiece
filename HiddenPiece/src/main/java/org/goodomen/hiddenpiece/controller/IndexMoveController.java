@@ -168,7 +168,7 @@ public class IndexMoveController {
 	public String freeboard(FreeBoardCriteria fcri,Model model) {
 		int freeBoardListCnt = freeBoardService.freeBoardListCnt();
 		Paging2 paging = new Paging2();
-		paging.setCri(fcri);
+		paging.setFcri(fcri);
 		paging.setTotalCount(freeBoardListCnt);
 		List<Map<String, Object>> list = freeBoardService.boardList(fcri);
 		model.addAttribute("list", list);
@@ -187,7 +187,7 @@ public class IndexMoveController {
 	public String noticeboard(NoticeBoardCriteria ncri,Model model) {
 		int noticeBoardListCnt = noticeBoardService.noticeBoardListCnt();
 		Paging3 paging = new Paging3();
-		paging.setCri(ncri);
+		paging.setNcri(ncri);
 		paging.setTotalCount(noticeBoardListCnt);
 		List<Map<String, Object>> list = noticeBoardService.boardList(ncri);
 		model.addAttribute("list", list);

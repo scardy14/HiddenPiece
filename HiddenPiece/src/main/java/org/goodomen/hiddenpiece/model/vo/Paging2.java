@@ -1,6 +1,9 @@
 package org.goodomen.hiddenpiece.model.vo;
 
+import lombok.Data;
+
 // 게시판 하단의 페이징
+@Data
 public class Paging2 {
 	
 	private int totalCount; // 게시판 전체 데이터 개수
@@ -43,60 +46,14 @@ public class Paging2 {
 		// 다음 버튼 생성 여부 = 끝 페이지 번호 * 한 페이지당 보여줄 게시글의 개수가 총 게시글의 수보다
 		// 크거나 같으면 false, 아니면 true
 	}
-
-	public int getDisplayPageNum() {
-		return displayPageNum;
-	}
-
-	public void setDisplayPageNum(int displayPageNum) {
-		this.displayPageNum = displayPageNum;
-	}
-
-	public int getStartPage() {
-		return startPage;
-	}
-
-	public void setStartPage(int startPage) {
-		this.startPage = startPage;
-	}
-
-	public int getEndPage() {
-		return endPage;
-	}
-
-	public void setEndPage(int endPage) {
-		this.endPage = endPage;
-	}
-
+	
 	public boolean isPrev() {
 		return prev;
-	}
-
-	public void setPrev(boolean prev) {
-		this.prev = prev;
 	}
 
 	public boolean isNext() {
 		return next;
 	}
 
-	public void setNext(boolean next) {
-		this.next = next;
-	}
-
-	public FreeBoardCriteria getFreeBoardCri() {
-		return fcri;
-	}
-
-	public void setCri(FreeBoardCriteria fcri) {
-		this.fcri = fcri;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "PageMaker [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage + ", prev="
-				+ prev + ", next=" + next + ", displayPageNum=" + displayPageNum + ", fcri=" + fcri + "]";
-	}
 	
 }
