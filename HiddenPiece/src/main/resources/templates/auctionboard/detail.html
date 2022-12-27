@@ -56,12 +56,22 @@
 							<input type = "hidden" id = "id" th:value = "${session.mvo.id}">
 							<th:block th:if="${session.mvo.id!=null}">
 								<th:block th:if="${postVO.postStatus==1}">
-									<button class="btn px-3" style="border-color: gray;" onclick="bidok()">
-										<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
-									</button>&nbsp;&nbsp;&nbsp;&nbsp;
-									<button class="btn px-3" style="border-color: gray;" onclick = "buyok()">
-										<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
-									</button>&nbsp;&nbsp;&nbsp;&nbsp;
+									<th:block th:if="${session.mvo.id==postVO.id}">
+										<button class="btn px-3" style="border-color: gray;" onclick="bidsame()">
+											<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
+										</button>&nbsp;&nbsp;&nbsp;&nbsp;
+										<button class="btn px-3" style="border-color: gray;" onclick = "buysame()">
+											<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
+										</button>&nbsp;&nbsp;&nbsp;&nbsp;
+									</th:block>
+									<th:block th:if="${session.mvo.id!=postVO.id}">
+										<button class="btn px-3" style="border-color: gray;" onclick="bidok()">
+											<i class="fa fa-shopping-cart mr-1" ></i> 입찰하기
+										</button>&nbsp;&nbsp;&nbsp;&nbsp;
+										<button class="btn px-3" style="border-color: gray;" onclick = "buyok()">
+											<i class="fa fa-shopping-cart mr-1"></i> 즉시구매하기
+										</button>&nbsp;&nbsp;&nbsp;&nbsp;
+									</th:block>	
 								</th:block>
 								<th:block th:if="${postVO.postStatus!=1}">
 									<button class="btn px-3" style="border-color: gray;" onclick="bidend()">
@@ -441,6 +451,12 @@
   	}
   	function buyend() {
   		alert("경매가 종료되어 구매할 수 없습니다");
+  	}
+  	function bidsame() {
+  		alert("본인의 게시물을 입찰할 수 없습니다");
+  	}
+  	function buysame() {
+  		alert("본인의 게시물을 구매할 수 없습니다");
   	}
   	remainTime();
   	

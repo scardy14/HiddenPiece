@@ -355,5 +355,6 @@ SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_pric
 			 		 ORDER BY post_no ASC		
 		  		)
 		  		 WHERE rnum BETWEEN 1 and 10
-		  		 
+		  		
+SELECT * FROM HP_Member
 		  		
