@@ -19,14 +19,14 @@
 						<h3 th:text="${postVO.title}" id="postNo"></h3> <span
 						th:text="${postVO.id}"></span><br> <span
 						th:text="${postVO.timePosted}"></span> &nbsp 조회<span
-						th:text="${postVO.hits}"></span> <th:block th:if="${session.mvo}">
+						th:text="${postVO.hits}"></span>
+						 <th:block th:if="${session.mvo}">
 							<th:block th:if="${session.mvo.id==postVO.id} or ${session.mvo.status=='2'}">
 								<div align="right">
-									<a
-										th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}"><font
-										color="gray">수정</font></a> <a
-										th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}"><font
-										color="gray">삭제</font></a>
+									<a th:href="@{/freeBoardUpdatePostForm(postNo=${postVO.postNo})}">
+										<font color="gray">수정</font></a> 
+										<a th:href="@{/freeBoardDeletePostForm(postNo=${postVO.postNo})}">
+										<font color="gray">삭제</font></a>
 								</div>
 							</th:block>
 						</th:block>
