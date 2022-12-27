@@ -1,11 +1,10 @@
 package org.goodomen.hiddenpiece.controller;
-
+  
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.goodomen.hiddenpiece.model.mapper.MemberMapper;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.vo.AccountVO;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardLikesVO;
@@ -21,8 +20,6 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
-
-	private final MemberMapper memberMapper;
 	private final MemberService memberService;
 
 	@PostMapping("login")
@@ -179,16 +176,11 @@ public class MemberController {
 		return result;
 	}
 
-	
-	
-
 	@RequestMapping("deleteFromWishlistResult")
 	public String deleteFromWishlistResult() {
-		return "/wishlist";
+		return "mypage/wishlist";
 	}
 	
-	
-
 	// 찜 목록에 있는지 확인
 	@ResponseBody
 	@RequestMapping("checkToWishlist")

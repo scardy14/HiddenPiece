@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
+import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.NoticeBoardVO;
 
 public interface NoticeBoardService {
@@ -13,7 +13,7 @@ public interface NoticeBoardService {
 
 	int noticeBoardListCnt();
 
-	List<Map<String, Object>> boardList(NoticeBoardCriteria ncri);
+	List<Map<String, Object>> boardList(Criteria cri);
 
 	NoticeBoardVO findNoticeBoardPostDetail(long postNo);
 

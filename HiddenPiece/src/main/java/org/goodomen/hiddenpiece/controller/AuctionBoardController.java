@@ -1,5 +1,6 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -22,7 +23,6 @@ import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,8 +75,13 @@ public class AuctionBoardController {
 
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
-	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO,
-			@RequestParam("image") MultipartFile file) {
+	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) {
+		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/auctionboardimg/"; 
+	    // 시스템의 프로젝트 path에 해당하는 디렉토리가 없다면 동적으로 생성하도록 한다
+	    File dir=new File(projectpath);
+	    	if(dir.exists()==false) {
+	        dir.mkdirs();
+	    }
 		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date now = new Date();
 		auctionBoardPostVO.setEndDate(auctionBoardPostVO.getEndDate().substring(0, 10) + " "
@@ -90,9 +95,7 @@ public class AuctionBoardController {
 
 		try (
 				// 윈도우일 경우
-				FileOutputStream fos = new FileOutputStream(
-						"C:/kosta250/HiddenPieceGit/HiddenPiece/HiddenPiece/src/main/resources/static/auctionboardimg/"
-								+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
+				FileOutputStream fos = new FileOutputStream(projectpath+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
 				InputStream is = file.getInputStream();) {
 			int readCount = 0;
 			byte[] buffer = new byte[2048];
@@ -142,7 +145,6 @@ public class AuctionBoardController {
 	@RequestMapping("addToWishlist")
 	public String addToWishlist(String id, long postNo, AuctionBoardPostVO postVO) {
 		postVO.setLike(true);
-		System.out.println("controller");
 		AuctionBoardLikesVO likesVO = new AuctionBoardLikesVO(id, postNo);
 		auctionBoardService.addToWishlist(likesVO);
 		return "ok";
@@ -160,14 +162,22 @@ public class AuctionBoardController {
 	@PostMapping("AuctionBoardPostDelete")
 	public String moveAuctionBoardPostDelete(long postNo) {
 		int result = auctionBoardService.deleteAuctionBoardPost(postNo);
-		return "auctionboard/delete-ok";
+		if(result==1) {
+			return "auctionboard/delete-ok";
+		} else {
+			return "auctionboard/delete-fail";
+		}
 	}
 
 	// 경매게시판 글 수정
 	@PostMapping("updateAuctionBoardPost")
 	public String updateAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO) {
 		int result = auctionBoardService.updateAuctionBoardPost(auctionBoardPostVO);
-		return "auctionboard/update-ok";
+		if(result==1) {
+			return "auctionboard/update-ok";
+		} else {
+			return "auctionboard/update-fail";
+		}
 	}
 
 	// 경매게시판 입찰
@@ -180,7 +190,11 @@ public class AuctionBoardController {
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 		memberVO.setPoint(newPoint);
 		session.setAttribute("mvo", memberVO);
-		return "redirect:bidMove";
+		if(result==1) {
+			return "redirect:bidMove";
+		} else {
+			return"auctionboard/bid-fail";
+		}
 	}
 
 	@RequestMapping("bidMove")
@@ -196,7 +210,11 @@ public class AuctionBoardController {
 		MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
 		memberVO.setPoint(newPoint);
 		session.setAttribute("mvo", memberVO);
-		return "redirect:buymove";
+		if(result==1) {
+			return "redirect:buymove";
+		} else {
+			return "auctionboard/bid-fail";
+		}
 	}
 
 	@RequestMapping("buymove")
@@ -205,6 +223,7 @@ public class AuctionBoardController {
 	}
 
 	// 경매게시판으로 이동
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping("searchPostByKeyword")
 	public String searchPostByKeyword(@RequestParam HashMap<String, Object> mapList, Model model, HttpServletRequest request, Criteria cri) {
 		if (!mapList.get("pageIndex").equals("")) {
@@ -213,8 +232,6 @@ public class AuctionBoardController {
 		if (!mapList.containsKey("searchKeyword") || mapList.get("searchKeyword").equals("")) {
 			mapList.put("searchKeyword", "");
 		}
-		// if(mapList.containsKey("status") && !mapList.get("status").equals("all") &&
-		// !mapList.get("status").equals("")) {
 		String statusText = mapList.get("status").toString();
 		if (statusText.equals("")) {
 			statusText = "all";
@@ -223,11 +240,10 @@ public class AuctionBoardController {
 		String price = mapList.get("price").toString();
 		if (price.equals("")) {
 			price = "all";
+			mapList.put("price", "all");
 		}
 		cri.setPrice(price);
-		// }
 		int auctionBoardListCnt = auctionBoardService.searchAuctionBoardListCnt(cri);
-
 		Paging paging = new Paging();
 		paging.setCri(cri);
 		paging.setTotalCount(auctionBoardListCnt);
@@ -242,27 +258,24 @@ public class AuctionBoardController {
 			cri.setSearchKeyword(mapList.get("searchKeyword").toString()); 
 			cri.setPrice(mapList.get("price").toString());
 			List<Map<String, Object>> auctionBoardList = auctionBoardService.searchPostByKeyword(cri);
-			
 			for (int i = 0; i < auctionBoardList.size(); i++) {
 				if (myWishlist.contains(auctionBoardList.get(i))) {
 					((AuctionBoardPostVO) auctionBoardList.get(i)).setLike(true);
 				}
 			}
 			model.addAttribute("postList", auctionBoardList);
-		}
-
-		else {
+		} else {
 			cri.setSearchKeyword(mapList.get("searchKeyword").toString());
 			cri.setPrice(mapList.get("price").toString());
 			List<Map<String, Object>> auctionBoardList = auctionBoardService.searchPostByKeyword(cri);
 			model.addAttribute("postList", auctionBoardList);
 		}
 		model.addAttribute("mapList", mapList);
-		return "shop2";
+		return "auctionboard/shop";
 	}
 	@RequestMapping("auctionboardList")
 	public String auctionboardList(Model model) {
-		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=1&searchKeyworkd=";
+		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=1&searchKeyword=";
 	}
 
 }

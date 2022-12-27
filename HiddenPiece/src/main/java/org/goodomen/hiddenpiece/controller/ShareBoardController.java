@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.goodomen.hiddenpiece.model.service.ShareboardService;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
-import org.goodomen.hiddenpiece.model.vo.MemberVO;
 import org.goodomen.hiddenpiece.model.vo.PagingAndId;
 import org.goodomen.hiddenpiece.model.vo.ShareBoardVO;
 import org.springframework.stereotype.Controller;

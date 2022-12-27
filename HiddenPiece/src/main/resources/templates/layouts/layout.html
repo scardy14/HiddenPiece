@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <title>HiddenPiece</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com"><link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <style>
 	*{
 	font-family: 'Nanum Gothic', sans-serif;
@@ -138,7 +138,7 @@
 							<a href="" th:href="@{/myInfo}" class="dropdown-item">내정보</a> 
 							<a th:href="@{/wishlist}"  class="dropdown-item">찜목록</a> 
 							<a href="" th:href="@{/updateMemberForm}" class="dropdown-item">회원정보수정</a>
-							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트환전</a>
+							<a href="" th:href="@{/exchangePoint}" class="dropdown-item">포인트충전</a>
 							<a href="" th:href="@{/transferAccountForm}" class="dropdown-item" >계좌로환전하기</a>
 							<a href="" th:href="@{/deleteMemberForm}" class="dropdown-item">회원탈퇴</a>
 						</div>
@@ -164,35 +164,25 @@
 						class="h1 text-uppercase text-dark bg-light px-2">Hidden</span> <span
 						class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Piece</span>
 					</a>
-					<button type="button" class="navbar-toggler" data-toggle="collapse"
-						data-target="#navbarCollapse">
-						<span class="navbar-toggler-icon"></span>
-					</button>
 					<div class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse">
 						<div class="navbar-nav mr-auto py-0">
-						<span class="nav-item nav-link active text-dark">HiddenPiece</span>
-							<th:block th:if="${session.mvo}">
-								
+						
+							<th:block th:if="${session.mvo}">		
 							</th:block>
 							<div class="nav-item dropdown">
-								<!-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a> -->
 								<div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-									<!-- <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
-                                     -->
 								</div>
 							</div>
 
 						</div>
-						<th:block th:if="${session.mvo}">
 						<div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+						<th:block th:if="${session.mvo}">
 							<a href="" th:href="@{/wishlist}" class="btn px-0" id="heartBtn" >
 							 	<i class="fas fa-heart text-primary"></i> 
-								 <span class="badge text-secondary  border-secondary" style="padding-bottom: 2px;">찜목록</span>
+								 <span style="color: white; display: flex;">찜목록</span>
 							</a> 
-
-							</th:block>
+						</th:block>
 						</div>
 					</div>
 				</nav>

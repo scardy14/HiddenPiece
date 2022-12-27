@@ -24,7 +24,7 @@ public class HandlerIntercepterConfigure implements WebMvcConfigurer{
 				
 				"/findFreeBoardPostDetail","/selectFreeBoardCommentByCommentNo",//FreeboardController
 				
-				"/","index","home","//","/needLogin","/layout","/auctionboard","/auctionboarddetail","/registerForm",
+				"/","/index","/home","//","/needLogin","/layout","/auctionboard","/auctionboarddetail","/registerForm",
 				"/registerMember","/loginForm","/freeBoardPostList","/freeboarddetail","/noticeBoardPostList","/noticeboarddetail",//IndexMoveController
 				
 				"/login","/findIdForm","/findId","/findIdresult","/findPasswordForm","/findPassword","/findPasswordresult",

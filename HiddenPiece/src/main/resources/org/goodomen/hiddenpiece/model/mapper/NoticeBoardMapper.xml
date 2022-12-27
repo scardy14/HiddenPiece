@@ -3,7 +3,7 @@
 <mapper
 	namespace="org.goodomen.hiddenpiece.model.mapper.NoticeBoardMapper">
 	<!-- 페이지네이션과 글목록 -->
-	<select id="boardList" resultType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO" parameterType="org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria">
+	<select id="boardList" resultType="org.goodomen.hiddenpiece.model.vo.NoticeBoardVO" parameterType="org.goodomen.hiddenpiece.model.vo.Criteria">
 			SELECT * from 
 	(select ROWNUM rm, post_no,content, time_posted,title,hits,post_status,id from
 		(select post_no,content, time_posted,title,hits, post_status, hpm.id

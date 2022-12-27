@@ -25,7 +25,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>충전할 포인트</label> <input class="form-control" type="number" name="balance"
-								value="" >
+								value="" onchange="reloadResullt()" >
 						</div>
 						<div class="col-md-6 form-group">
 							<label>은행명</label> <input class="form-control" type="text" name="bank"
@@ -52,7 +52,6 @@
 							<h6>잔액</h6>
 							<h6><span id="ajaxPoint" ></span></h6>
 </div></div>
-
 					<div class="border-bottom pt-3 pb-2">
 						<div class="d-flex justify-content-between mb-3">
 							<h6>충전가능금액</h6>
@@ -62,7 +61,7 @@
 					</div>
 					<div class="pt-2">
 						<div class="d-flex justify-content-between mt-2">
-							<h5>총액</h5>
+							<h5>충전 후 포인트</h5>
 							<h5><span id="ajaxPoint1"></span></h5>
 						</div>
 					</div>
@@ -76,19 +75,15 @@
 					<h5 class="section-title position-relative text-uppercase mb-3">
 						<span class="bg-secondary pr-3">결제</span>
 					</h5>
-		
-					
 					<div class="bg-light p-30">
-						
 							<button class="btn btn-block btn-primary font-weight-bold py-3">충전하기</button>
-						
 					</div>
 				</div>
 			</div>
 		</div>
 </form>
+<input type = "hidden" th:value = "${session.mvo.point}" name = "mpoint">
 	<script type="text/javascript">
-	
 	$(function(){
 		let checkPointFlag="";
 		
@@ -100,7 +95,6 @@
 		});
 		
 		let pointKeyUp = $("input[name=balance]");
-		
 		pointKeyUp.keyup(function(){
 			let accountNo = $("#accountNo").val();
 			let point = pointKeyUp.val();
@@ -123,10 +117,12 @@
 		});
 		
     	pointKeyUp.keyup(function(){
-			let point = pointKeyUp.val();
+			let point = pointKeyUp.val()*1;
+			let impoint = $("input[name=mpoint]").val()*1;
 			let Rechargeable = numberWithCommas(point);
+			let Result = numberWithCommas(point+impoint);
 			$("#point1").text(Rechargeable+"원");
-     	   	$("#ajaxPoint1").text(Rechargeable+"원");
+     	   	$("#ajaxPoint1").text(Result+"원");
     	});
 		
     	
@@ -135,22 +131,7 @@
     	}
 	});
 	</script>
-
-	<!-- Checkout End -->
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -7,18 +7,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.goodomen.hiddenpiece.model.service.AuctionBoardService;
 import org.goodomen.hiddenpiece.model.service.FreeBoardService;
 import org.goodomen.hiddenpiece.model.service.MemberService;
 import org.goodomen.hiddenpiece.model.service.NoticeBoardService;
 import org.goodomen.hiddenpiece.model.vo.AuctionBoardPostVO;
 import org.goodomen.hiddenpiece.model.vo.Criteria;
-import org.goodomen.hiddenpiece.model.vo.FreeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.MemberVO;
-import org.goodomen.hiddenpiece.model.vo.NoticeBoardCriteria;
 import org.goodomen.hiddenpiece.model.vo.Paging;
-import org.goodomen.hiddenpiece.model.vo.Paging2;
-import org.goodomen.hiddenpiece.model.vo.Paging3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class IndexMoveController {
-	private final AuctionBoardService auctionBoardService;
 	private final FreeBoardService freeBoardService;
 	private final NoticeBoardService noticeBoardService;
 	private final MemberService memberService;
@@ -37,7 +31,7 @@ public class IndexMoveController {
 	@RequestMapping(value={"/","index","home","//"})
 	public String indexMove(Model model) {
 		model.addAttribute("viewPage","index");
-		return "index3";
+		return "index";
 	}
 	
 	@RequestMapping("needLogin")
@@ -48,52 +42,6 @@ public class IndexMoveController {
 	@RequestMapping("layout")
 	public String layoutmove() {
 		return "layout";
-	}
-	
-	/*
-	@RequestMapping("auctionboard")
-	public String auctionBoardMove(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if(session!=null) {
-			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-			ArrayList<AuctionBoardPostVO> selectComparedMyWishlist = memberService.selectComparedMyWishlist(memberVO.getId());//내가 찜한 리스트와 총 게시물 리스트를 비교해 setLike된 리스트 
-			model.addAttribute("postList", selectComparedMyWishlist);
-		}
-		else {
-			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList(); //전체 리스트 
-			model.addAttribute("postList", auctionBoardPostList);
-		}
-		return "shop2";
-	}
-	*/
-	
-	// 경매게시판 
-	@RequestMapping("auctionboard")
-	public String auctionBoardMove(Criteria cri, Model model, HttpServletRequest request) {
-		//전체 글 개수
-		int auctionBoardListCnt = auctionBoardService.auctionBoardListCnt();
-		Paging paging = new Paging();
-		paging.setCri(cri);
-		paging.setTotalCount(auctionBoardListCnt);
-		HttpSession session = request.getSession(false);
-		if(session!=null) {
-			MemberVO memberVO = (MemberVO) session.getAttribute("mvo");
-			List<Map<String, Object>> selectComparedMyWishlist = memberService.selectComparedMyWishlist(memberVO.getId(), cri);//내가 찜한 리스트와 총 게시물 리스트를 비교해 setLike된 리스트 
-			model.addAttribute("postList", selectComparedMyWishlist);
-			model.addAttribute("paging", paging);
-		}
-		/* else {
-			ArrayList<AuctionBoardPostVO> auctionBoardPostList =  auctionBoardService.findAuctionBoardPostList(); //전체 리스트 
-			model.addAttribute("postList", auctionBoardPostList);
-		}*/
-		
-		else {
-			List<Map<String, Object>> list = auctionBoardService.boardList(cri);
-			model.addAttribute("postList", list);
-			model.addAttribute("paging", paging);
-		}
-		return "shop2";
-		
 	}
 	
 	// 경매게시판 상세조회
@@ -146,7 +94,7 @@ public class IndexMoveController {
 		MemberVO memberVO=(MemberVO) session.getAttribute("mvo");
 		ArrayList<AuctionBoardPostVO> list = memberService.selectMyWishlist(memberVO.getId());
 		model.addAttribute("mywishlist", list);
-		return "/wishlist";
+		return "/mypage/wishlist";
 	}
 	
 	//
@@ -165,12 +113,13 @@ public class IndexMoveController {
 	
 	//
 	@RequestMapping("freeBoardPostList")
-	public String freeboard(FreeBoardCriteria fcri,Model model) {
+	public String freeboard(Criteria cri,Model model) {
+		cri.setPerPageNum(5);
 		int freeBoardListCnt = freeBoardService.freeBoardListCnt();
-		Paging2 paging = new Paging2();
-		paging.setCri(fcri);
+		Paging paging = new Paging();
+		paging.setCri(cri);
 		paging.setTotalCount(freeBoardListCnt);
-		List<Map<String, Object>> list = freeBoardService.boardList(fcri);
+		List<Map<String, Object>> list = freeBoardService.boardList(cri);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "freeboard/freeBoardPostList";
@@ -184,12 +133,13 @@ public class IndexMoveController {
 	
 	// 공지게시판 목록 보기
 	@RequestMapping("noticeBoardPostList")
-	public String noticeboard(NoticeBoardCriteria ncri,Model model) {
+	public String noticeboard(Criteria cri,Model model) {
+		cri.setPerPageNum(5);
 		int noticeBoardListCnt = noticeBoardService.noticeBoardListCnt();
-		Paging3 paging = new Paging3();
-		paging.setCri(ncri);
+		Paging paging = new Paging();
+		paging.setCri(cri);
 		paging.setTotalCount(noticeBoardListCnt);
-		List<Map<String, Object>> list = noticeBoardService.boardList(ncri);
+		List<Map<String, Object>> list = noticeBoardService.boardList(cri);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "noticeboard/noticeBoardPostList";

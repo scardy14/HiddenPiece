@@ -3,9 +3,7 @@ package org.goodomen.hiddenpiece.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.goodomen.hiddenpiece.model.vo.Criteria;
 import org.goodomen.hiddenpiece.model.vo.CriteriaAndIdVO;
-import org.springframework.ui.Model;
 
 public interface MyPageService {
 
