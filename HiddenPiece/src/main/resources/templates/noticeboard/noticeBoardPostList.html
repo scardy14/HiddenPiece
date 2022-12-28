@@ -7,80 +7,89 @@
 </head>
 <div layout:fragment="content">
 	<div class="row pt-4">
-		<div class="col-sm-6 offset-sm-3">
+		<div class="col-sm-8 offset-sm-2">
 			<h3>공지게시판</h3>
 			<table class="table" style="table-layout: fixed;">
 				<thead>
 					<tr>
-						<th >글번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
+						<th style="width: 10%; text-align: center;">글번호</th>
+						<th style="width: 50%; text-align: center;">제목</th>
+						<th style="width: 15%; text-align: center;">작성자</th>
+						<th style="width: 15%; text-align: center;">작성일</th>
+						<th style="width: 10%; text-align: center;">조회수</th>
 					</tr>
 				</thead>
 				<tbody>
-
 					<tr th:each="list:${list}">
-						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%;"><span th:text="${list.postNo}"></span></td>
-						
-						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%"><a href="" th:href="@{/findNoticeBoardPostDetail(postNo=${list.postNo})}"><font color ="gray"><span th:text="${list.title}"></span></font></a></td>
-					
-						<!--  -->
-						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%"><span th:text="${list.id}"></span></td>
-
-						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%"><span th:text="${list.timePosted}"></span></td>
-						<td style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; width: 20%"><span th:text="${list.hits}"></span></td>
+						<td
+							style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-align: center;">
+							<span th:text="${list.postNo}"></span>
+						</td>
+						<td
+							style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-align: center;">
+							<a href=""
+							th:href="@{/findNoticeBoardPostDetail(postNo=${list.postNo})}"><font
+								color="gray"><span th:text="${list.title}"></span></font></a>
+						</td>
+						<td
+							style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-align: center;"><span
+							th:text="${list.id}"></span></td>
+						<td
+							style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-align: center;"><span
+							th:text="${list.timePosted}"></span></td>
+						<td
+							style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-align: center;"><span
+							th:text="${list.hits}"></span></td>
 					</tr>
-					<!--  	-->
 				</tbody>
 			</table>
 			<th:block th:if="${session.mvo}">
 				<th:block th:if="${session.mvo.status == '2'}">
 					<div>
-						<a
-							href="" th:href="@{/moveNoticeBoardPostWriteForm}"><font color="gray">글작성</font></a>
+						<a href="" th:href="@{/moveNoticeBoardPostWriteForm}"><font
+							color="gray">글작성</font></a>
 					</div>
 				</th:block>
 			</th:block>
 			<br>
 			<nav>
-							<th:block th:if="${paging.totalCount}==0">
-								<p></p>
+				<th:block th:if="${paging.totalCount}==0">
+					<p></p>
+				</th:block>
+				<th:block th:if="${paging.totalCount}>0">
+					<ul class="pagination justify-content-center">
+						<th:block th:if="${paging.prev}">
+							<li class="page-item active"><a class="page-link"
+								th:onclick="searchByKeyword([[${paging.startPage}]]-1)">Pre</a></li>
+						</th:block>
+						<th:block
+							th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}"
+							var="num">
+							<th:block th:if="${paging.cri.page==num}">
+								<li class="page-item active" th:value="${num}"><a
+									class="page-link active"
+									th:onclick="searchByKeyword([[${num}]])" th:text="${num}"
+									id="pageIndex"></a></li>
 							</th:block>
-							<th:block th:if="${paging.totalCount}>0">
-								<ul class="pagination justify-content-center">
-									<th:block th:if="${paging.prev}">
-										<li class="page-item active"><a class="page-link"
-											th:onclick="searchByKeyword([[${paging.startPage}]]-1)">Pre</a></li>
-									</th:block>
-									<th:block
-										th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}"
-										var="num">
-										<th:block th:if="${paging.cri.page==num}">
-											<li class="page-item active" th:value="${num}"><a
-											class="page-link active" th:onclick="searchByKeyword([[${num}]])"
-											th:text="${num}" id="pageIndex"></a></li>
-										</th:block>
-										<th:block th:if="${paging.cri.page!=num}">
-											<li class="page-item" th:value="${num}"><a
-											class="page-link" th:onclick="searchByKeyword([[${num}]])"
-											th:text="${num}" id="pageIndex"></a></li>
-										</th:block>
-									</th:block>
-									<th:block th:if="${paging.next && paging.endPage>0}">
-										<li class="page-item active"><a class="page-link"
-											th:onclick="searchByKeyword([[${paging.endPage}]]+1)">Next</a></li>
-									</th:block>
-									<th:block th:if="${mapList}">
-										<input type="hidden" name="pageIndex" id="pageIndex"
-											th:value="${mapList.pageIndex}">
-										<input type="hidden" name="status" id="status"
-											th:value="${mapList.status}">
-									</th:block>
-								</ul>
-								</th:block>
-						</nav>
+							<th:block th:if="${paging.cri.page!=num}">
+								<li class="page-item" th:value="${num}"><a
+									class="page-link" th:onclick="searchByKeyword([[${num}]])"
+									th:text="${num}" id="pageIndex"></a></li>
+							</th:block>
+						</th:block>
+						<th:block th:if="${paging.next && paging.endPage>0}">
+							<li class="page-item active"><a class="page-link"
+								th:onclick="searchByKeyword([[${paging.endPage}]]+1)">Next</a></li>
+						</th:block>
+						<th:block th:if="${mapList}">
+							<input type="hidden" name="pageIndex" id="pageIndex"
+								th:value="${mapList.pageIndex}">
+							<input type="hidden" name="status" id="status"
+								th:value="${mapList.status}">
+						</th:block>
+					</ul>
+				</th:block>
+			</nav>
 		</div>
 	</div>
 </div>

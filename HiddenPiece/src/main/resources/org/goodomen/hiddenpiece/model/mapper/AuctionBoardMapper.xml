@@ -265,6 +265,6 @@
 	
 	
 	<update id="updatePostStatusTo3">
-		UPDATE AuctionBoard SET post_status = 2 WHERE sysdate>end_date AND now_id=' 'AND post_status=1
+		UPDATE AuctionBoard SET post_status = 3 WHERE sysdate>end_date AND now_id=' 'AND post_status=1
 	</update>
 </mapper>

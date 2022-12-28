@@ -1,6 +1,8 @@
 package org.goodomen.hiddenpiece.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,27 +72,22 @@ public class ShareBoardController {
 		return "shareboard/write-shareform";
 	}
 	@PostMapping("writeShareBoard")
-	public String writeShareBoard(ShareBoardVO shareboardVO, @RequestParam("image") MultipartFile file) {
+	public String writeShareBoard(ShareBoardVO shareboardVO, @RequestParam("image") MultipartFile file) throws IllegalStateException, IOException {
 		SimpleDateFormat nowTime = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date now = new Date();
 		String photoname=shareboardVO.getId()+nowTime.format(now)+file.getOriginalFilename();
 		shareboardVO.setPhoto(photoname);
 		long result = shareboardService.writeSharePost(shareboardVO);
-		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/shareboardimg/";
-	    try(
-	      // 윈도우일 경우 
-	      FileOutputStream fos = new FileOutputStream(projectpath + photoname);
-	      InputStream is = file.getInputStream();
-	    ){
-	      int readCount = 0;
-	      byte[] buffer = new byte[2048];
-	      while((readCount = is.read(buffer)) != -1){
-	      fos.write(buffer,0,readCount);
-	    }
-	    }catch(Exception ex){
-	    	result = 0;
-	    	throw new RuntimeException("file Save Error");
-	    }
+		String projectpath = "C:/kosta250/shareboardimg";
+			File dir=new File(projectpath);
+    		if(dir.exists()==false) {
+    		dir.mkdirs();
+    	}
+		//////////////////////////////////////////////////////////////////
+		// System.out.println("파일 이름 : " + file.getOriginalFilename());
+		// System.out.println("파일 크기 : " + file.getSize());
+		file.transferTo(new File(projectpath+"/"+ shareboardVO.getId() + nowTime.format(now) + file.getOriginalFilename()));
+		////////////////////////////////////////////////////////////////////
 	    if(result == 1) {
 	    	return "redirect:writeOk";
 	    } else {

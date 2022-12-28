@@ -1,9 +1,7 @@
 package org.goodomen.hiddenpiece.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,7 +75,7 @@ public class AuctionBoardController {
 	// 경매게시판 글 작성
 	@PostMapping("writeAuctionBoardPost")
 	public String writeAuctionBoardPost(AuctionBoardPostVO auctionBoardPostVO, @RequestParam("image") MultipartFile file) throws IllegalStateException, IOException {
-		String projectpath = System.getProperty("user.dir")+"/src/main/resources/static/auctionboardimg";
+		String projectpath = "C:/kosta250/auctionboardimg";
 	    // 시스템의 프로젝트 path에 해당하는 디렉토리가 없다면 동적으로 생성하도록 한다
 	    File dir=new File(projectpath);
 	    	if(dir.exists()==false) {
@@ -93,20 +91,6 @@ public class AuctionBoardController {
 		// System.out.println("파일 이름 : " + file.getOriginalFilename());
 		// System.out.println("파일 크기 : " + file.getSize());
 		file.transferTo(new File(projectpath+"/"+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename()));
-		/*
-		try (
-				// 윈도우일 경우
-				FileOutputStream fos = new FileOutputStream(projectpath+"/"+ auctionBoardPostVO.getId() + nowTime.format(now) + file.getOriginalFilename());
-				InputStream is = file.getInputStream();) {
-			int readCount = 0;
-			byte[] buffer = new byte[2048];
-			while ((readCount = is.read(buffer)) != -1) {
-				fos.write(buffer, 0, readCount);
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException("file Save Error");
-		}
-		*/
 		////////////////////////////////////////////////////////////////////
 		return "auctionboard/write-ok";
 	}
