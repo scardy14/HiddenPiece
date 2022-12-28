@@ -261,7 +261,7 @@ public class AuctionBoardController {
 	}
 	@RequestMapping("auctionboardList")
 	public String auctionboardList(Model model) {
-		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=1&searchKeyword=";
+		return"redirect:searchPostByKeyword?pageIndex=1&status=all&price=all&searchKeyword=";
 	}
 
 }

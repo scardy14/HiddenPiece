@@ -356,5 +356,33 @@ SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_pric
 		  		)
 		  		 WHERE rnum BETWEEN 1 and 10
 		  		
-SELECT * FROM AuctionBoard
-		  		
+SELECT a.title, a.post_no
+  FROM AuctionBoard a, Bid_List b
+ WHERE a.id='java1' AND b.id='java1' AND a.post_no = b.post_no
+ 
+
+ SELECT * FROM bid_list WHERE id = 'java1'
+
+
+ 
+ 	SELECT post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+		  FROM (
+		  			SELECT ROWNUM AS rnum, post_no ,id ,title ,content ,photo ,start_price ,current_price ,sell_price ,time_posted ,hits ,end_date ,now_id , post_status
+			  		  FROM (
+			  			SELECT a.post_no ,a.id ,a.title ,a.content ,a.photo ,a.start_price ,a.current_price ,a.sell_price ,a.time_posted ,a.hits ,a.end_date ,a.now_id , a.post_status
+				  		  FROM AuctionBoard a, Bid_List b
+						 WHERE b.id= 'java1'
+						 			AND a.post_status!=0
+						 			AND a.post_no = b.post_no
+				 		 ORDER BY a.post_no DESC
+				 		 )	
+		  		)
+		  WHERE rnum BETWEEN #{pageStart} and #{perPageNum}*#{page}
+		  
+		  SELECT * FROM AuctionBoard WHERE id = 'java1'
+		  SELECT * FROM BID_LIST
+		  UPDATE AuctionBoard SET now_id=' ' 
+		  DELETE FROM BID_LIST
+		  
+		  SELECT * FROM AuctionBOard WHERE id = 'java1' ORDER BY POST_no DESC
+		  UPDATE AuctionBoard SET post_status = 3 WHERE sysdate>end_date AND now_id=' ' AND post_status=1
