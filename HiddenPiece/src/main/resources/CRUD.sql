@@ -386,3 +386,20 @@ SELECT a.title, a.post_no
 		  
 		  SELECT * FROM AuctionBOard WHERE id = 'java1' ORDER BY POST_no DESC
 		  UPDATE AuctionBoard SET post_status = 3 WHERE sysdate>end_date AND now_id=' ' AND post_status=1
+		  
+		  SELECT * FROM NOTICEBOARD
+		  SELECT * FROM HP_Member
+		  
+		  SELECT * FROM NOTICEBOARD n , HP_MEMBER h WHERE n.id = h.id
+		  
+		  SELECT * from 
+	(select ROWNUM rm, post_no,content, time_posted,title,hits,post_status,id from
+		(select post_no,content, time_posted,title,hits, post_status, hpm.id
+		from noticeboard nb
+		inner join hp_member hpm on hpm.id=nb.id
+		where post_status=1
+		order by post_no desc))
+		where rm between #{pageStart} and #{perPageNum}*#{page}
+		
+		SELECT * FROM noticeboard
+		SELECT COUNT(*) FROM noticeboard WHERE post_status=1

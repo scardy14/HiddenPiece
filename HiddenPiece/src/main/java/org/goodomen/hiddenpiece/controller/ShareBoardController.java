@@ -30,6 +30,7 @@ public class ShareBoardController {
 	
 	@RequestMapping("ShareBoardPostList")
 	public String shareBoardPostList(CriteriaAndIdVO cri, Model model) {
+		cri.setPerPageNum(12);
 		PagingAndId paging = new PagingAndId();
 		int shareCount;
 		List<Map<String, Object>> shareList = null;

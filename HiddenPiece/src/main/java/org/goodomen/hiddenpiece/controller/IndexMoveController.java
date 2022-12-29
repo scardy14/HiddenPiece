@@ -130,6 +130,7 @@ public class IndexMoveController {
 	public String noticeboard(Criteria cri,Model model) {
 		cri.setPerPageNum(5);
 		int noticeBoardListCnt = noticeBoardService.noticeBoardListCnt();
+		System.out.println(noticeBoardListCnt);
 		Paging paging = new Paging();
 		paging.setCri(cri);
 		paging.setTotalCount(noticeBoardListCnt);
